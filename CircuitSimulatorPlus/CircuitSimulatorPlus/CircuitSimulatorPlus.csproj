@@ -66,6 +66,7 @@
     <Compile Include="Connection.cs" />
     <Compile Include="ElementaryConnection.cs" />
     <Compile Include="ElementaryGate.cs" />
+    <Compile Include="ElementaryGates.cs" />
     <Compile Include="Gate.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -10,12 +10,14 @@ namespace CircuitSimulatorPlus
 
         protected abstract bool Update();
 
-        bool state;
+        protected List<bool> state;
+
+        bool lastState;
 
         public List<ElementaryGate> Tick()
         {
             var tickedGates = new List<ElementaryGate>();
-            if ((state = Update()) != state)
+            if ((lastState = Update()) != lastState)
                 foreach (ElementaryConnection connection in connections)
                 {
                     tickedGates.Add(connection.Next);
