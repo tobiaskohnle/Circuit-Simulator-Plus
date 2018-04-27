@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
@@ -8,6 +9,7 @@ namespace CircuitSimulatorPlus
         bool mutable;
         string name;
         string tag;
+        Size size;
 
         List<Input> input;
         List<Output> output;
