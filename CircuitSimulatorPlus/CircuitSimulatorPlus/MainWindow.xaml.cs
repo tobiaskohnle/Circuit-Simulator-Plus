@@ -18,23 +18,26 @@ namespace CircuitSimulatorPlus
     public partial class MainWindow : Window
     {
         #region Contstans
-        public const string Title = "Circuit Simulator+";
-        public const string FileFilter = "Logic Circuit|*" + FileFormat;
-        public const string FileFormat = "tici";
-        public const string DefaultTitle = "untitled";
-        public const string Unsaved = "\u2022";
-        public const double ScaleFactor = 0.9;
-        public const int UndoBufferSize = 32;
+        const string Title = "Circuit Simulator Plus";
+        const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
+        const string FileFormat = "tici";
+        const string DefaultTitle = "untitled";
+        const string Unsaved = "\u2022";
+        const double ScaleFactor = 0.9;
+        const int UndoBufferSize = 32;
         #endregion
 
         #region Properties
-        public Point lastMousePos;
-        public Point lastMouseClick;
+        Point lastMousePos;
+        Point lastMouseClick;
+
+        List<Gate> selected;
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
+            base.Title = Title;
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
@@ -71,7 +74,12 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            Point currentPos = e.GetPosition(canvas);
+            double scale = e.Delta > 0 ? 1 / ScaleFactor : ScaleFactor;
 
+            Matrix matrix = canvas.RenderTransform.Value;
+            matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
+            canvas.RenderTransform = new MatrixTransform(matrix);
         }
     }
 }
