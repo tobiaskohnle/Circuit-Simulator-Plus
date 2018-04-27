@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
@@ -34,7 +32,15 @@ namespace CircuitSimulatorPlus
         {
             foreach (bool s in state)
                 return s == false;
-            return false;
+            return true;
+        }
+    }
+
+    public class RisingEdgeElementaryGate : ElementaryGate
+    {
+        protected override bool Update()
+        {
+            return true;
         }
     }
 }

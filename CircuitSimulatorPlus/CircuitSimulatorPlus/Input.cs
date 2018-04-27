@@ -6,5 +6,7 @@ namespace CircuitSimulatorPlus
 {
     public class Input : Connection
     {
+        bool risingEdge;
+        bool centered;
     }
 }
