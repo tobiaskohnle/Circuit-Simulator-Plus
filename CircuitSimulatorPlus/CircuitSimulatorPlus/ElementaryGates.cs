@@ -39,7 +39,9 @@ namespace CircuitSimulatorPlus
     {
         protected override bool Update()
         {
-            return true;
+            foreach (bool s in state)
+                return s != lastState;
+            return false;
         }
     }
 }
