@@ -9,7 +9,6 @@ namespace CircuitSimulatorPlus
         bool mutable;
         string name;
         string tag;
-        Size size;
 
         List<Input> input;
         List<Output> output;
