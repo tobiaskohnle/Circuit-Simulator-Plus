@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
 
         protected abstract bool Update();
 
-        protected List<bool> state;
+        protected List<bool> state;     //TODO: find a better name
 
         protected bool lastState;
 
