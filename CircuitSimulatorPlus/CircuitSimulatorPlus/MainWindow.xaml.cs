@@ -17,7 +17,7 @@ namespace CircuitSimulatorPlus
 {
     public partial class MainWindow : Window
     {
-        #region Contstans
+        #region Constants
         const string WindowTitle = "Circuit Simulator Plus";
         const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
         const string FileFormat = "tici";
