@@ -7,5 +7,6 @@ namespace CircuitSimulatorPlus
     {
         protected bool empty;
         protected string name;
+        ElementaryGate level;
     }
 }
