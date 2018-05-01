@@ -7,5 +7,6 @@ namespace CircuitSimulatorPlus
     {
         bool risingEdge;
         bool centered;
+        List<ElementaryGate> connectTo;
     }
 }
