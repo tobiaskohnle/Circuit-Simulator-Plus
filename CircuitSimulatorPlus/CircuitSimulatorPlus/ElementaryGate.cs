@@ -7,6 +7,8 @@ namespace CircuitSimulatorPlus
     {
         protected List<ElementaryConnection> connections;
 
+        protected abstract bool Update();
+
         protected List<bool> state;
 
         protected bool lastState;
