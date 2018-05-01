@@ -6,11 +6,11 @@ namespace CircuitSimulatorPlus
 {
     public class Gate
     {
-        bool mutable;
-        string name;
-        string tag;
         Point position;
         Size size;
+        string name;
+        string tag;
+        bool mutable;
 
         List<Input> input;
         List<Output> output;
