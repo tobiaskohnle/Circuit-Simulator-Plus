@@ -55,10 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Action.cs" />
+    <Compile Include="RisingEdgeElementaryGate.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AndElementaryGate.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -66,7 +69,6 @@
     <Compile Include="Connection.cs" />
     <Compile Include="ElementaryConnection.cs" />
     <Compile Include="ElementaryGate.cs" />
-    <Compile Include="ElementaryGates.cs" />
     <Compile Include="Gate.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -75,6 +77,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NotElementaryGate.cs" />
+    <Compile Include="OrElementaryGate.cs" />
     <Compile Include="Output.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
