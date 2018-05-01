@@ -18,7 +18,7 @@ namespace CircuitSimulatorPlus
     public partial class MainWindow : Window
     {
         #region Contstans
-        const string Title = "Circuit Simulator Plus";
+        const string WindowTitle = "Circuit Simulator Plus";
         const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
         const string FileFormat = "tici";
         const string DefaultTitle = "untitled";
@@ -37,7 +37,7 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
-            base.Title = Title;
+            Title = WindowTitle;
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
