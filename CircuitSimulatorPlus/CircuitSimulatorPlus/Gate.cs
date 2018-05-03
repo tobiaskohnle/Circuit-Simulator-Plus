@@ -13,7 +13,6 @@ namespace CircuitSimulatorPlus
 
         List<Input> input;
         List<Output> output;
-        
 
         public Int64 MikeStinktFaktor
         {
