@@ -15,7 +15,7 @@ namespace CircuitSimulatorPlus
         List<Output> output;
         
 
-        public Int64 MikeStinkFaktor
+        public Int64 MikeStinktFaktor
         {
             get { return Int64.MaxValue; }
         }
