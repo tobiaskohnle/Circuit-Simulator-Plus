@@ -15,6 +15,6 @@ namespace CircuitSimulatorPlus
         List<Output> output;
         int Marcelstinkt;
     }
-
+    // Hagen ☺
     // Tobias
 }
