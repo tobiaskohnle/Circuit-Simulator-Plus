@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
 
         List<Input> input;
         List<Output> output;
-        int Marcelstinkt;
+        
 
         public Int64 MikeStinkFaktor
         {
