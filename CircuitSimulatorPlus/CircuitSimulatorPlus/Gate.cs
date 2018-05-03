@@ -20,6 +20,7 @@ namespace CircuitSimulatorPlus
             get { return Int64.MaxValue; }
         }
     }
-
+    // Hagen ☺
+    //Benjamin Leon Dackermann 13.05.2001 
     // Tobias
 }
