@@ -24,12 +24,12 @@ namespace CircuitSimulatorPlus
 
         public void ConnectTo(ElementaryGate other)
         {
-
+            connections.Add(new ElementaryConnection(other, connections.Count));
         }
 
         public void DisconnectFrom(ElementaryGate other)
         {
-
+            connections.RemoveAll(conn => conn.Next == other);
         }
     }
 }
