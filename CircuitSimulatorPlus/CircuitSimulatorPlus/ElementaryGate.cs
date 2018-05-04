@@ -21,5 +21,15 @@ namespace CircuitSimulatorPlus
                     tickedGates.Add(connection.Next);
             return tickedGates;
         }
+
+        public void ConnectTo(ElementaryGate other)
+        {
+
+        }
+
+        public void DisconnectFrom(ElementaryGate other)
+        {
+
+        }
     }
 }
