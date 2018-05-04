@@ -8,6 +8,12 @@ namespace CircuitSimulatorPlus
         ElementaryGate next;
         int index;
 
+        public ElementaryConnection(ElementaryGate next, int index)
+        {
+            this.next = next;
+            this.index = index;
+        }
+
         public ElementaryGate Next
         {
             get {
