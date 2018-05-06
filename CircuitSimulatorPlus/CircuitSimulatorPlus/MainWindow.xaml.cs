@@ -32,12 +32,87 @@ namespace CircuitSimulatorPlus
         Point lastMouseClick;
 
         List<Gate> selected;
+        List<Gate> gates;
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
             Title = WindowTitle;
+
+            var g0 = new Gate();
+            var g1 = new Gate();
+            var g2 = new Gate();
+            var g3 = new Gate();
+
+            gates.Add(g0);
+            gates.Add(g1);
+            gates.Add(g2);
+            gates.Add(g3);
+
+            g0.position.X = 1;
+            g0.position.Y = 6;
+            g1.position.X = 0;
+            g1.position.Y = 0;
+            g2.position.X = 8;
+            g2.position.Y = 3;
+            g3.position.X = 8;
+            g3.position.Y = 9;
+
+            var eg0 = new OrElementaryGate();
+            var eg1 = new NotElementaryGate();
+            var eg2 = new AndElementaryGate();
+            var eg3 = new OrElementaryGate();
+            var eg4 = new AndElementaryGate();
+
+            eg0.ConnectTo(eg1);
+            eg0.ConnectTo(eg2);
+            eg0.ConnectTo(eg3);
+            eg0.ConnectTo(eg4);
+            eg1.ConnectTo(eg2);
+
+            var g0in0 = new Input();
+            var g0in1 = new Input();
+            var g0out0 = new Output();
+            var g1in0 = new Input();
+            var g1out0 = new Output();
+            var g2in0 = new Input();
+            var g2in1 = new Input();
+            var g2out0 = new Output();
+            var g3in0 = new Input();
+            var g3in1 = new Input();
+            var g3out0 = new Output();
+            var g3out1 = new Output();
+
+            g0.input.Add(g0in0);
+            g0.input.Add(g0in1);
+            g0.output.Add(g0out0);
+            g1.input.Add(g1in0);
+            g1.output.Add(g1out0);
+            g2.input.Add(g2in0);
+            g2.input.Add(g2in1);
+            g2.output.Add(g2out0);
+            g3.input.Add(g3in0);
+            g3.input.Add(g3in1);
+            g3.output.Add(g3out0);
+            g3.output.Add(g3out1);
+
+            g1out0.inverted = true;
+
+            g0.tag = ">=1";
+            g1.tag = "1";
+            g2.tag = "&";
+            g3.tag = "Custom";
+
+            g0.mutable = true;
+            g1.mutable = false;
+            g2.mutable = true;
+            g3.mutable = false;
+
+            g3in0.name = "a";
+            g3in1.name = "b";
+            g3out0.name = "c";
+            g3out1.name = "d";
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)

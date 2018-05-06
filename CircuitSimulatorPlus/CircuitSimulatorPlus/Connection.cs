@@ -5,8 +5,9 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Connection
     {
-        protected bool empty;
-        protected string name;
-        protected ElementaryGate level;
+        public bool empty;
+        public bool inverted;
+        public string name;
+        public ElementaryGate level;
     }
 }

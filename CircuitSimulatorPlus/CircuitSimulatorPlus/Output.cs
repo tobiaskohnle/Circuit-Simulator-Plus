@@ -5,6 +5,6 @@ namespace CircuitSimulatorPlus
 {
     public class Output : Connection
     {
-        bool masterSlave;
+        public bool masterSlave;
     }
 }

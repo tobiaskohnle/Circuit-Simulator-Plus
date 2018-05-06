@@ -5,12 +5,12 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ElementaryGate
     {
-        protected List<ElementaryConnection> connections;
+        public List<ElementaryConnection> connections;
 
-        protected List<bool> inputStates;
-        protected bool lastState;
+        public List<bool> inputStates;
+        public bool lastState;
 
-        protected abstract bool Update();
+        public abstract bool Update();
 
         public List<ElementaryGate> Tick()
         {
@@ -23,7 +23,7 @@ namespace CircuitSimulatorPlus
 
         public void ConnectTo(ElementaryGate other)
         {
-            connections.Add(new ElementaryConnection(other, connections.Count));
+            connections.Add(new ElementaryConnection(other, other.inputStates.Count));
         }
 
         public void DisconnectFrom(ElementaryGate other)

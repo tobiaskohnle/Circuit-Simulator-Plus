@@ -5,8 +5,8 @@ namespace CircuitSimulatorPlus
 {
     public class Input : Connection
     {
-        bool risingEdge;
-        bool centered;
-        List<ElementaryGate> connectTo;
+        public bool risingEdge;
+        public bool centered;
+        public List<ElementaryGate> connectTo;
     }
 }
