@@ -42,7 +42,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                gates = Json.Load(args[1]);
+                gates = Storage.Load(args[1]);
             else
                 gates = new List<Gate>();
 

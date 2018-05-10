@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
 {
     using StorageObject = List<Gate>;
 
-    static class Json
+    static class Storage
     {
         /// <summary>
         /// Loads a Context from a JSON file.
