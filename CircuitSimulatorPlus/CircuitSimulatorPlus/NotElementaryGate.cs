@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
 {
     public class NotElementaryGate : ElementaryGate
     {
-        protected override bool Update()
+        public override bool Update()
         {
             foreach (bool s in inputStates)
                 return s == false;
