@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
         public string tag;
         public Point position;
 
-        public List<Input> input;
-        public List<Output> output;
+        public List<Input> input = new List<Input>();
+        public List<Output> output = new List<Output>();
     }
 }
