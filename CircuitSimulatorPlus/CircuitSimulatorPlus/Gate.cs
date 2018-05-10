@@ -13,5 +13,10 @@ namespace CircuitSimulatorPlus
 
         public List<Input> input = new List<Input>();
         public List<Output> output = new List<Output>();
+
+        /// <summary>
+        /// Triggered when any of the output signals changed.
+        /// </summary>
+        public EventHandler OutputChanged;
     }
 }
