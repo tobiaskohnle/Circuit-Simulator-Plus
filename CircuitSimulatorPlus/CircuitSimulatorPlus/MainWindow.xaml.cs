@@ -40,6 +40,12 @@ namespace CircuitSimulatorPlus
             InitializeComponent();
             Title = WindowTitle;
 
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+                gates = Storage.Load(args[1]);
+            else
+                gates = new List<Gate>();
+
             var g0 = new Gate();
             var g1 = new Gate();
             var g2 = new Gate();
