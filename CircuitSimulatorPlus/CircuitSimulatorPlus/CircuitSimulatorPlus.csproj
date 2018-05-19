@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
+    <Compile Include="IRenderer.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="RisingEdgeElementaryGate.cs" />
     <Page Include="MainWindow.xaml">

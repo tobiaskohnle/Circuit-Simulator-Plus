@@ -18,5 +18,10 @@ namespace CircuitSimulatorPlus
         /// Triggered when any of the output signals changed.
         /// </summary>
         public EventHandler OutputChanged;
+
+        /// <summary>
+        /// Creates the Gate's visual representation on the Render() call.
+        /// </summary>
+        public IRenderer Renderer;
     }
 }
