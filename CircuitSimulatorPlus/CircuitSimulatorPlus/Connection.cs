@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CircuitSimulatorPlus
 {
-    public abstract class Connection
+    public abstract class ConnectionNode
     {
         public bool empty;
         public bool inverted;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CircuitSimulatorPlus
 {
-    public class Input : Connection
+    public class Input : ConnectionNode
     {
         public bool risingEdge;
         public bool centered;
