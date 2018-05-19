@@ -10,13 +10,14 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    using StorageObject = List<Gate>;
+    using StorageObject = SimulationContext;
 
     static class Storage
     {
         /// <summary>
         /// Loads a Context from a JSON file.
         /// Shows a MessageBox on error.
+        /// Mind the Gates won't be rendered.
         /// </summary>
         /// <param name="filepath">Path to load from</param>
         /// <returns>If successful returns a context object. Otherwise an "empty" representation is returned.</returns>
@@ -39,7 +40,7 @@ namespace CircuitSimulatorPlus
             }
 
             if (store == null)
-                store = new List<Gate>();
+                store = new StorageObject();
 
             return store;
         }

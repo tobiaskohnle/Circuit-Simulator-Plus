@@ -76,6 +76,8 @@
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
     <Compile Include="IRenderer.cs" />
+    <Compile Include="SimpleGateRenderer.cs" />
+    <Compile Include="SimulationContext.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="RisingEdgeElementaryGate.cs" />
     <Page Include="MainWindow.xaml">

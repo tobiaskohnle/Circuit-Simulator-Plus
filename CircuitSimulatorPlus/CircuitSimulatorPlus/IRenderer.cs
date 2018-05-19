@@ -9,5 +9,6 @@ namespace CircuitSimulatorPlus
     public interface IRenderer
     {
         void Render();
+        void Unrender();
     }
 }

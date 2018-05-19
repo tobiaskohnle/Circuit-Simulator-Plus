@@ -32,6 +32,7 @@ namespace CircuitSimulatorPlus
         Point lastMouseClick;
 
         List<Gate> selected;
+        SimulationContext context;
         List<Gate> gates = new List<Gate>();
         #endregion
 
@@ -42,9 +43,24 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                gates = Storage.Load(args[1]);
+                context = Storage.Load(args[1]);
             else
-                gates = new List<Gate>();
+                context = new SimulationContext();
+            foreach (Gate gate in context.Gates)
+                gate.Renderer.Render();
+
+            var gate0 = new Gate();
+            gate0.Renderer = new SimpleGateRenderer(this.canvas, gate0);
+            context.Add(gate0);
+            var gate1 = new Gate();
+            gate1.output.Add(new Output());
+            gate1.input.Add(new Input());
+            gate1.input.Add(new Input());
+            gate1.Renderer = new SimpleGateRenderer(this.canvas, gate1);
+            gate1.Position = new Point(40, 0);
+            context.Add(gate1);
+            gate1.Position = new Point(40, 20);
+            context.Remove(gate0);
 
             var g0 = new Gate();
             var g1 = new Gate();
@@ -56,14 +72,10 @@ namespace CircuitSimulatorPlus
             gates.Add(g2);
             gates.Add(g3);
 
-            g0.position.X = 1;
-            g0.position.Y = 6;
-            g1.position.X = 0;
-            g1.position.Y = 0;
-            g2.position.X = 8;
-            g2.position.Y = 3;
-            g3.position.X = 8;
-            g3.position.Y = 9;
+            g0.Position = new Point(1, 6);
+            g1.Position = new Point(0, 0);
+            g2.Position = new Point(8, 3);
+            g3.Position = new Point(8, 9);
 
             var eg0 = new OrElementaryGate();
             var eg1 = new NotElementaryGate();
