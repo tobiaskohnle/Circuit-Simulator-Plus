@@ -32,7 +32,7 @@ namespace CircuitSimulatorPlus
         Point lastMouseClick;
 
         List<Gate> selected;
-        List<Gate> gates;
+        List<Gate> gates = new List<Gate>();
         #endregion
 
         public MainWindow()

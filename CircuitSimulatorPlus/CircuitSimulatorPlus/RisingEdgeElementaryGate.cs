@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
 {
     public class RisingEdgeElementaryGate : ElementaryGate
     {
-        protected override bool Update()
+        public override bool Update()
         {
             foreach (bool s in inputStates)
                 return s != lastState;
