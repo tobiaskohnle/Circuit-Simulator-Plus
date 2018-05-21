@@ -28,6 +28,7 @@ namespace CircuitSimulatorPlus
         {
             rectangle = new Rectangle();
             rectangle.Stroke = Brushes.Black;
+            // TODO: rectangle border is inset -> change to centered
             rectangle.StrokeThickness = MainWindow.LineWidth;
             rectangle.Width = 3;
             rectangle.Height = 4;
