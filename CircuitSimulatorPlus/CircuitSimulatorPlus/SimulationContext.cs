@@ -11,12 +11,6 @@ namespace CircuitSimulatorPlus
         List<ElementaryGate> elementaryGates = new List<ElementaryGate>();
         List<Gate> gates = new List<Gate>();
 
-        public void RenderAllGates()
-        {
-            foreach (Gate gate in gates)
-                gate.Renderer.Render();
-        }
-
         public void Add(Gate gate)
         {
             gates.Add(gate);

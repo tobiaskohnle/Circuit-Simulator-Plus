@@ -46,5 +46,7 @@ namespace CircuitSimulatorPlus
         {
             get { return name; }
         }
+
+        public abstract void Clear();
     }
 }

@@ -28,16 +28,16 @@ namespace CircuitSimulatorPlus
         {
             rectangle = new Rectangle();
             rectangle.Stroke = Brushes.Black;
-            rectangle.StrokeThickness = 2;
-            rectangle.Width = 30;
-            rectangle.Height = 40;
+            rectangle.StrokeThickness = MainWindow.LineWidth;
+            rectangle.Width = 3;
+            rectangle.Height = 4;
             canvas.Children.Add(rectangle);
 
             for (int i = 0; i < gate.output.Count; i++)
             {
                 var line = new Line();
                 line.Stroke = Brushes.Black;
-                line.StrokeThickness = 2;
+                line.StrokeThickness = MainWindow.LineWidth;
                 outputLines.Add(line);
                 canvas.Children.Add(line);
             }
@@ -46,7 +46,7 @@ namespace CircuitSimulatorPlus
             {
                 var line = new Line();
                 line.Stroke = Brushes.Black;
-                line.StrokeThickness = 2;
+                line.StrokeThickness = MainWindow.LineWidth;
                 inputLines.Add(line);
                 canvas.Children.Add(line);
             }
@@ -71,10 +71,10 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < gate.output.Count; i++)
             {
                 Line line = outputLines[i];
-                line.X1 = pos.X + 30;
-                line.X2 = pos.X + 30 + 5;
+                line.X1 = pos.X + 3;
+                line.X2 = pos.X + 3 + 0.5;
 
-                double y = pos.Y + (40.0 / (gate.output.Count + 1)) * (i + 1);
+                double y = pos.Y + (4.0 / (gate.output.Count + 1)) * (i + 1);
                 line.Y1 = y;
                 line.Y2 = y;
             }
@@ -83,9 +83,9 @@ namespace CircuitSimulatorPlus
             {
                 Line line = inputLines[i];
                 line.X1 = pos.X;
-                line.X2 = pos.X - 5;
+                line.X2 = pos.X - 0.5;
 
-                double y = pos.Y + (40.0 / (gate.input.Count + 1)) * (i + 1);
+                double y = pos.Y + (4.0 / (gate.input.Count + 1)) * (i + 1);
                 line.Y1 = y;
                 line.Y2 = y;
             }

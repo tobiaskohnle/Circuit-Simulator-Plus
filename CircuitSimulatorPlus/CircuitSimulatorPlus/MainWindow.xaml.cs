@@ -18,13 +18,14 @@ namespace CircuitSimulatorPlus
     public partial class MainWindow : Window
     {
         #region Constants
-        const string WindowTitle = "Circuit Simulator Plus";
-        const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
-        const string FileFormat = "tici";
-        const string DefaultTitle = "untitled";
-        const string Unsaved = "\u2022";
-        const double ScaleFactor = 0.9;
-        const int UndoBufferSize = 32;
+        public const string WindowTitle = "Circuit Simulator Plus";
+        public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
+        public const string FileFormat = "tici";
+        public const string DefaultTitle = "untitled";
+        public const string Unsaved = "\u2022";
+        public const double ScaleFactor = 0.9;
+        public const double LineWidth = 0.1;
+        public const int UndoBufferSize = 32;
         #endregion
 
         #region Properties
@@ -39,6 +40,11 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
+            RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
+            canvas.SnapsToDevicePixels = true;
+
+            ResetView();
+
             Title = WindowTitle;
 
             string[] args = Environment.GetCommandLineArgs();
@@ -46,20 +52,34 @@ namespace CircuitSimulatorPlus
                 context = Storage.Load(args[1]);
             else
                 context = new SimulationContext();
-            context.RenderAllGates();
 
-            //var gate0 = new Gate();
-            //gate0.Renderer = new SimpleGateRenderer(canvas, gate0);
-            //context.Add(gate0);
+            var gate0 = new Gate();
+            gate0.Renderer = new SimpleGateRenderer(canvas, gate0);
+            context.Add(gate0);
+
+            var gate1 = new Gate();
+
+            gate1.Position = new Point(5, 5);
+            gate1.output.Add(new OutputNode());
+            gate1.input.Add(new InputNode());
+            gate1.input.Add(new InputNode());
+
+            gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
+            context.Add(gate1);
+
             //var gate1 = new Gate();
-            //gate1.output.Add(new OutputNode());
-            //gate1.input.Add(new InputNode());
-            //gate1.input.Add(new InputNode());
             //gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
             //gate1.Position = new Point(40, 0);
             //context.Add(gate1);
             //gate1.Position = new Point(40, 20);
             //context.Remove(gate0);
+        }
+
+        public void ResetView()
+        {
+            Matrix matrix = Matrix.Identity;
+            matrix.Scale(20, 20);
+            canvas.RenderTransform = new MatrixTransform(matrix);
         }
 
         public void PerformAction(Action action)
@@ -155,7 +175,7 @@ namespace CircuitSimulatorPlus
 
         void DefaultView_Click(object sender, RoutedEventArgs e)
         {
-
+            ResetView();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
