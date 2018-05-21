@@ -34,8 +34,7 @@ namespace CircuitSimulatorPlus
         {
             get { return position; }
 
-            set
-            {
+            set {
                 position = value;
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
