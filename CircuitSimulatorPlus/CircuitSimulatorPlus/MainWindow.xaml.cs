@@ -151,11 +151,11 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            lastMousePos = lastMouseClick = e.GetPosition(canvas);
+            lastMousePos = lastMouseClick = e.GetPosition(this);
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            Point currentPos = e.GetPosition(canvas);
+            Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
 
             if (e.RightButton == MouseButtonState.Pressed)
