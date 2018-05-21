@@ -7,6 +7,7 @@ namespace CircuitSimulatorPlus
     public class Gate
     {
         public bool mutable;
+        public bool selected;
         public string name;
         public string tag;
 
