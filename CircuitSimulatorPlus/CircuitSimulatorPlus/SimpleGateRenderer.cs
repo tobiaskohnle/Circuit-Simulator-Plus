@@ -72,9 +72,9 @@ namespace CircuitSimulatorPlus
             {
                 Line line = outputLines[i];
                 line.X1 = pos.X + 3;
-                line.X2 = pos.X + 3 + 0.5;
+                line.X2 = pos.X + 3 + 1;
 
-                double y = pos.Y + (4.0 / (gate.output.Count + 1)) * (i + 1);
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.output.Count);
                 line.Y1 = y;
                 line.Y2 = y;
             }
@@ -83,9 +83,9 @@ namespace CircuitSimulatorPlus
             {
                 Line line = inputLines[i];
                 line.X1 = pos.X;
-                line.X2 = pos.X - 0.5;
+                line.X2 = pos.X - 1;
 
-                double y = pos.Y + (4.0 / (gate.input.Count + 1)) * (i + 1);
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
             }
