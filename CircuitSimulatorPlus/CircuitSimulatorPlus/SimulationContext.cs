@@ -9,18 +9,24 @@ namespace CircuitSimulatorPlus
     public class SimulationContext
     {
         List<ElementaryGate> elementaryGates = new List<ElementaryGate>();
-        public List<Gate> Gates = new List<Gate>();
+        List<Gate> gates = new List<Gate>();
+
+        public void RenderAllGates()
+        {
+            foreach (Gate gate in gates)
+                gate.Renderer.Render();
+        }
 
         public void Add(Gate gate)
         {
-            Gates.Add(gate);
+            gates.Add(gate);
             gate.Renderer.Render();
         }
 
         public void Remove(Gate gate)
         {
             gate.Renderer.Unrender();
-            Gates.Remove(gate);
+            gates.Remove(gate);
         }
 
         public void Connect(Gate outputGate, int outputIndex, Gate inputGate, int inputIndex)

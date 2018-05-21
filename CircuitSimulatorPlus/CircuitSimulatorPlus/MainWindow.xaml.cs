@@ -46,17 +46,16 @@ namespace CircuitSimulatorPlus
                 context = Storage.Load(args[1]);
             else
                 context = new SimulationContext();
-            foreach (Gate gate in context.Gates)
-                gate.Renderer.Render();
+            context.RenderAllGates();
 
             var gate0 = new Gate();
-            gate0.Renderer = new SimpleGateRenderer(this.canvas, gate0);
+            gate0.Renderer = new SimpleGateRenderer(canvas, gate0);
             context.Add(gate0);
             var gate1 = new Gate();
             gate1.output.Add(new Output());
             gate1.input.Add(new Input());
             gate1.input.Add(new Input());
-            gate1.Renderer = new SimpleGateRenderer(this.canvas, gate1);
+            gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
             gate1.Position = new Point(40, 0);
             context.Add(gate1);
             gate1.Position = new Point(40, 20);
