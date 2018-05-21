@@ -5,9 +5,9 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode
     {
-        public bool empty;
-        public bool inverted;
-        public string name;
+        protected bool empty;
+        protected bool inverted;
+        protected string name;
         /// <summary>
         /// A reference to the ElementaryGate indicating the current state of this ConnectionNode
         /// </summary>

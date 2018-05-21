@@ -48,88 +48,18 @@ namespace CircuitSimulatorPlus
                 context = new SimulationContext();
             context.RenderAllGates();
 
-            var gate0 = new Gate();
-            gate0.Renderer = new SimpleGateRenderer(canvas, gate0);
-            context.Add(gate0);
-            var gate1 = new Gate();
-            gate1.output.Add(new OutputNode());
-            gate1.input.Add(new InputNode());
-            gate1.input.Add(new InputNode());
-            gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
-            gate1.Position = new Point(40, 0);
-            context.Add(gate1);
-            gate1.Position = new Point(40, 20);
-            context.Remove(gate0);
-
-            var g0 = new Gate();
-            var g1 = new Gate();
-            var g2 = new Gate();
-            var g3 = new Gate();
-
-            gates.Add(g0);
-            gates.Add(g1);
-            gates.Add(g2);
-            gates.Add(g3);
-
-            g0.Position = new Point(1, 6);
-            g1.Position = new Point(0, 0);
-            g2.Position = new Point(8, 3);
-            g3.Position = new Point(8, 9);
-
-            var eg0 = new OrElementaryGate();
-            var eg1 = new NotElementaryGate();
-            var eg2 = new AndElementaryGate();
-            var eg3 = new OrElementaryGate();
-            var eg4 = new AndElementaryGate();
-
-            eg0.ConnectTo(eg1);
-            eg0.ConnectTo(eg2);
-            eg0.ConnectTo(eg3);
-            eg0.ConnectTo(eg4);
-            eg1.ConnectTo(eg2);
-
-            var g0in0 = new InputNode();
-            var g0in1 = new InputNode();
-            var g0out0 = new OutputNode();
-            var g1in0 = new InputNode();
-            var g1out0 = new OutputNode();
-            var g2in0 = new InputNode();
-            var g2in1 = new InputNode();
-            var g2out0 = new OutputNode();
-            var g3in0 = new InputNode();
-            var g3in1 = new InputNode();
-            var g3out0 = new OutputNode();
-            var g3out1 = new OutputNode();
-
-            g0.input.Add(g0in0);
-            g0.input.Add(g0in1);
-            g0.output.Add(g0out0);
-            g1.input.Add(g1in0);
-            g1.output.Add(g1out0);
-            g2.input.Add(g2in0);
-            g2.input.Add(g2in1);
-            g2.output.Add(g2out0);
-            g3.input.Add(g3in0);
-            g3.input.Add(g3in1);
-            g3.output.Add(g3out0);
-            g3.output.Add(g3out1);
-
-            g1out0.inverted = true;
-
-            g0.tag = ">=1";
-            g1.tag = "1";
-            g2.tag = "&";
-            g3.tag = "Custom";
-
-            g0.mutable = true;
-            g1.mutable = false;
-            g2.mutable = true;
-            g3.mutable = false;
-
-            g3in0.name = "a";
-            g3in1.name = "b";
-            g3out0.name = "c";
-            g3out1.name = "d";
+            //var gate0 = new Gate();
+            //gate0.Renderer = new SimpleGateRenderer(canvas, gate0);
+            //context.Add(gate0);
+            //var gate1 = new Gate();
+            //gate1.output.Add(new OutputNode());
+            //gate1.input.Add(new InputNode());
+            //gate1.input.Add(new InputNode());
+            //gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
+            //gate1.Position = new Point(40, 0);
+            //context.Add(gate1);
+            //gate1.Position = new Point(40, 20);
+            //context.Remove(gate0);
         }
 
         public void PerformAction(Action action)
