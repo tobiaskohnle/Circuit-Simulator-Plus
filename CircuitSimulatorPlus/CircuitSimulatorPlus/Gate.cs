@@ -40,5 +40,11 @@ namespace CircuitSimulatorPlus
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public void Move(double x, double y)
+        {
+            position.X += x;
+            position.Y += y;
+        }
     }
 }
