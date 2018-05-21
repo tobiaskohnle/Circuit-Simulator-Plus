@@ -133,6 +133,12 @@ namespace CircuitSimulatorPlus
             g3out1.name = "d";
         }
 
+        public void PerformAction(Action action)
+        {
+            // TODO: Create undo / redo stack
+            action.Redo();
+        }
+
         #region Events
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
