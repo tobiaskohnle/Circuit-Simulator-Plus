@@ -133,6 +133,7 @@ namespace CircuitSimulatorPlus
             g3out1.name = "d";
         }
 
+        #region Events
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -174,5 +175,99 @@ namespace CircuitSimulatorPlus
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
         }
+
+        void NewFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void SaveFileAs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void Undo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void Redo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void Copy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void Cut_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void Paste_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void Delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void DefaultView_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void ZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void ZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void NewGate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void RenameGate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void ResizeGate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void EmptyInput_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void TrimInputs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void InvertConnection_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void Reset_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void Reload_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

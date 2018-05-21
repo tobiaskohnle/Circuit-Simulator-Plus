@@ -5,6 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CircuitSimulatorPlus"
         Title="MainWindow" Height="350" Width="525" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" MouseUp="Window_MouseUp" MouseWheel="Window_MouseWheel">
-    <Canvas x:Name="canvas" RenderTransformOrigin="0,0">
+    <Canvas x:Name="canvas">
+        <Menu Height="auto" Width="auto">
+            <MenuItem Header="File" Width="auto">
+                <MenuItem Header="New Circuit" Click="NewFile_Click"/>
+                <MenuItem Header="Open Circuit" Click="OpenFile_Click"/>
+                <MenuItem Header="Open Recent"/>
+                <MenuItem Header="Save" Click="SaveFile_Click"/>
+                <MenuItem Header="Save As..." Click="SaveFileAs_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit" Width="auto">
+                <MenuItem Header="Undo" Click="Undo_Click"/>
+                <MenuItem Header="Redo" Click="Redo_Click"/>
+                <MenuItem Header="Copy" Click="Copy_Click"/>
+                <MenuItem Header="Cut" Click="Cut_Click"/>
+                <MenuItem Header="Paste" Click="Paste_Click"/>
+                <MenuItem Header="Delete" Click="Delete_Click"/>
+            </MenuItem>
+            <MenuItem Header="View" Width="auto">
+                <MenuItem Header="Default View" Click="DefaultView_Click"/>
+                <MenuItem Header="Zoom In" Click="ZoomIn_Click"/>
+                <MenuItem Header="Zoom Out" Click="ZoomOut_Click"/>
+            </MenuItem>
+            <MenuItem Header="Tools" Width="auto">
+                <MenuItem Header="New Component" Click="NewGate_Click"/>
+                <MenuItem Header="Rename Gate" Click="RenameGate_Click"/>
+                <MenuItem Header="Resize Gate" Click="ResizeGate_Click"/>
+                <MenuItem Header="Empty Input" Click="EmptyInput_Click"/>
+                <MenuItem Header="Remove Extra Inputs" Click="TrimInputs_Click"/>
+                <MenuItem Header="Invert Connection" Click="InvertConnection_Click"/>
+                <MenuItem Header="Select All Gates" Click="SelectAll_Click"/>
+            </MenuItem>
+            <MenuItem Header="Debug" Width="auto">
+                <MenuItem Header="Reset Circuit" Click="Reset_Click"/>
+                <MenuItem Header="Reload Circuit" Click="Reload_Click"/>
+            </MenuItem>
+        </Menu>
     </Canvas>
 </Window>
