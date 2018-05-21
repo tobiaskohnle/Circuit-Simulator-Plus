@@ -6,6 +6,5 @@
         xmlns:local="clr-namespace:CircuitSimulatorPlus"
         Title="MainWindow" Height="350" Width="525" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" MouseUp="Window_MouseUp" MouseWheel="Window_MouseWheel">
     <Canvas x:Name="canvas" RenderTransformOrigin="0,0">
-        <Button x:Name="button" Content="Button" Canvas.Left="188" Canvas.Top="125" Width="155" Height="98"/>
     </Canvas>
 </Window>
