@@ -94,7 +94,7 @@
     <Compile Include="ElementaryConnection.cs" />
     <Compile Include="ElementaryGate.cs" />
     <Compile Include="Gate.cs" />
-    <Compile Include="Input.cs" />
+    <Compile Include="InputNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -103,7 +103,7 @@
   <ItemGroup>
     <Compile Include="NotElementaryGate.cs" />
     <Compile Include="OrElementaryGate.cs" />
-    <Compile Include="Output.cs" />
+    <Compile Include="OutputNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

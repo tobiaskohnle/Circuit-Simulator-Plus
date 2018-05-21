@@ -3,10 +3,14 @@ using System.Collections.Generic;
 
 namespace CircuitSimulatorPlus
 {
-    public class Input : ConnectionNode
+    public class InputNode : ConnectionNode
     {
         public bool risingEdge;
         public bool centered;
-        public List<ElementaryGate> connectTo;
+
+        public void ConnectTo(OutputNode outputNode)
+        {
+
+        }
     }
 }

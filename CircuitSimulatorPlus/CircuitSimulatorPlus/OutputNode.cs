@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CircuitSimulatorPlus
 {
-    public class Output : ConnectionNode
+    public class OutputNode : ConnectionNode
     {
         public bool masterSlave;
     }

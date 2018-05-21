@@ -52,9 +52,9 @@ namespace CircuitSimulatorPlus
             gate0.Renderer = new SimpleGateRenderer(canvas, gate0);
             context.Add(gate0);
             var gate1 = new Gate();
-            gate1.output.Add(new Output());
-            gate1.input.Add(new Input());
-            gate1.input.Add(new Input());
+            gate1.output.Add(new OutputNode());
+            gate1.input.Add(new InputNode());
+            gate1.input.Add(new InputNode());
             gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
             gate1.Position = new Point(40, 0);
             context.Add(gate1);
@@ -88,18 +88,18 @@ namespace CircuitSimulatorPlus
             eg0.ConnectTo(eg4);
             eg1.ConnectTo(eg2);
 
-            var g0in0 = new Input();
-            var g0in1 = new Input();
-            var g0out0 = new Output();
-            var g1in0 = new Input();
-            var g1out0 = new Output();
-            var g2in0 = new Input();
-            var g2in1 = new Input();
-            var g2out0 = new Output();
-            var g3in0 = new Input();
-            var g3in1 = new Input();
-            var g3out0 = new Output();
-            var g3out1 = new Output();
+            var g0in0 = new InputNode();
+            var g0in1 = new InputNode();
+            var g0out0 = new OutputNode();
+            var g1in0 = new InputNode();
+            var g1out0 = new OutputNode();
+            var g2in0 = new InputNode();
+            var g2in1 = new InputNode();
+            var g2out0 = new OutputNode();
+            var g3in0 = new InputNode();
+            var g3in1 = new InputNode();
+            var g3out0 = new OutputNode();
+            var g3out1 = new OutputNode();
 
             g0.input.Add(g0in0);
             g0.input.Add(g0in1);
