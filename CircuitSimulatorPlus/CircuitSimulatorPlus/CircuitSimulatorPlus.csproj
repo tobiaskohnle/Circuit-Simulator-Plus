@@ -90,7 +90,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionNode.cs" />
     <Compile Include="ElementaryConnection.cs" />
     <Compile Include="ElementaryGate.cs" />
     <Compile Include="Gate.cs" />
