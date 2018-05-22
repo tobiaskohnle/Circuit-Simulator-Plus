@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
         public bool risingEdge;
         public bool centered;
 
-        OutputNode connectedTo;
+        public OutputNode connectedTo;
 
         public void ConnectTo(OutputNode outputNode)
         {
@@ -27,6 +27,10 @@ namespace CircuitSimulatorPlus
             if (empty)
                 return;
             empty = true;
+            connectedTo.connectedTo.Remove(this);
+            connectedTo.empty = connectedTo.connectedTo.Count == 0;
+
+            connectedTo.state.DisconnectFrom(state);
 
             connectedTo = null;
         }

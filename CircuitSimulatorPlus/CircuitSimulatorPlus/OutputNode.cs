@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CircuitSimulatorPlus
 {
@@ -7,7 +8,7 @@ namespace CircuitSimulatorPlus
     {
         public bool masterSlave;
 
-        List<InputNode> connectedTo;
+        public List<InputNode> connectedTo = new List<InputNode>();
 
         public void ConnectTo(InputNode inputNode)
         {
@@ -27,9 +28,8 @@ namespace CircuitSimulatorPlus
         {
             if (empty)
                 return;
-            empty = true;
-
-            connectedTo.Clear();
+            foreach (InputNode inputNode in connectedTo.ToList())
+                inputNode.Clear();
         }
     }
 }

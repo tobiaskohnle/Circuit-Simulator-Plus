@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace CircuitSimulatorPlus
 {
+    [DebuggerDisplay("Id: {id}, Empty: {empty}, Inverted: {inverted}, Name: {name}, State==null: {state==null}, Repr==null: {repr==null}")]
     public abstract class ConnectionNode
     {
-        protected bool empty;
-        protected bool inverted;
-        protected string name;
+        public bool empty = true;
+        public bool inverted;
+        public string name;
+        public int id;
+
+        public ConnectionNode()
+        {
+            id = MainWindow.id++;
+        }
+
         /// <summary>
         /// A reference to the ElementaryGate indicating the current state of this ConnectionNode
         /// </summary>
@@ -48,5 +57,6 @@ namespace CircuitSimulatorPlus
         }
 
         public abstract void Clear();
+        public abstract void Invert();
     }
 }
