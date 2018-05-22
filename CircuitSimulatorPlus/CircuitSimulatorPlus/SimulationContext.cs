@@ -23,14 +23,19 @@ namespace CircuitSimulatorPlus
             gates.Remove(gate);
         }
 
-        public void Connect(Gate outputGate, int outputIndex, Gate inputGate, int inputIndex)
+        public void Connect(OutputNode output, InputNode input)
         {
-
+            output.ConnectTo(input);
         }
 
-        public void Disconnect(Gate outputGate, int outputIndex, Gate inputGate, int inputIndex)
+        public void Connect(InputNode input, OutputNode output)
         {
+            Connect(output, input);
+        }
 
+        public void ClearNode(ConnectionNode nodeToClear)
+        {
+            nodeToClear.Clear();
         }
     }
 }
