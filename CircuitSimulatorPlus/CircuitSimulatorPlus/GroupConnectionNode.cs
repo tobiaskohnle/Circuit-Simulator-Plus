@@ -5,6 +5,6 @@ namespace CircuitSimulatorPlus
 {
     public class GroupConnectionNode
     {
-        protected List<ElementaryConnection> refTo;
+        List<ElementaryConnection> refTo;
     }
 }
