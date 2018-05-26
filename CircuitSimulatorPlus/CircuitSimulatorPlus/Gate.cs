@@ -29,6 +29,7 @@ namespace CircuitSimulatorPlus
 
         /// <summary>
         /// Creates the Gate's visual representation on the Render() call.
+        /// Render() should only be called once.
         /// </summary>
         public IRenderer Renderer { get; set; }
 
