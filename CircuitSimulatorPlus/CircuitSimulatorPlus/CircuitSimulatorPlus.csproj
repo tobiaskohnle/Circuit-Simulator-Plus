@@ -75,8 +75,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
-    <Compile Include="ElementaryGateGroup.cs" />
-    <Compile Include="GroupConnectionNode.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="MoveGateAction.cs" />
     <Compile Include="SimpleGateRenderer.cs" />
@@ -93,8 +91,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ConnectionNode.cs" />
-    <Compile Include="ElementaryConnection.cs" />
-    <Compile Include="ElementaryGate.cs" />
     <Compile Include="Gate.cs" />
     <Compile Include="InputNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -103,8 +99,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NotElementaryGate.cs" />
-    <Compile Include="OrElementaryGate.cs" />
     <Compile Include="OutputNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
