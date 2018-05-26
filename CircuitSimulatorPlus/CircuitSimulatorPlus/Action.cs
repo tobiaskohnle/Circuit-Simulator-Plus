@@ -10,12 +10,12 @@ namespace CircuitSimulatorPlus
     {
         protected string message;
 
-        public abstract void Undo();
-        public abstract void Redo();
-
         protected Action(string message)
         {
             this.message = message;
         }
+
+        public abstract void Undo();
+        public abstract void Redo();
     }
 }

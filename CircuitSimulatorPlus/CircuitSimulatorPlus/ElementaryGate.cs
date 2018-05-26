@@ -5,10 +5,10 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ElementaryGate
     {
-        public List<ElementaryConnection> connections = new List<ElementaryConnection>();
+        protected List<ElementaryConnection> connections = new List<ElementaryConnection>();
 
-        public List<bool> inputStates = new List<bool>();
-        public bool lastState;
+        protected List<bool> inputStates = new List<bool>();
+        protected bool lastState;
 
         public abstract bool Update();
 

@@ -34,7 +34,7 @@ namespace CircuitSimulatorPlus
             rectangle.Height = 4;
             canvas.Children.Add(rectangle);
 
-            for (int i = 0; i < gate.output.Count; i++)
+            for (int i = 0; i < gate.Output.Count; i++)
             {
                 var line = new Line();
                 line.Stroke = Brushes.Black;
@@ -43,7 +43,7 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(line);
             }
 
-            for (int i = 0; i < gate.input.Count; i++)
+            for (int i = 0; i < gate.Input.Count; i++)
             {
                 var line = new Line();
                 line.Stroke = Brushes.Black;
@@ -69,24 +69,24 @@ namespace CircuitSimulatorPlus
             Canvas.SetLeft(rectangle, pos.X);
             Canvas.SetTop(rectangle, pos.Y);
 
-            for (int i = 0; i < gate.output.Count; i++)
+            for (int i = 0; i < gate.Output.Count; i++)
             {
                 Line line = outputLines[i];
                 line.X1 = pos.X + 3;
                 line.X2 = pos.X + 3 + 1;
 
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.output.Count);
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
                 line.Y1 = y;
                 line.Y2 = y;
             }
 
-            for (int i = 0; i < gate.input.Count; i++)
+            for (int i = 0; i < gate.Input.Count; i++)
             {
                 Line line = inputLines[i];
                 line.X1 = pos.X;
                 line.X2 = pos.X - 1;
 
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.input.Count);
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
             }

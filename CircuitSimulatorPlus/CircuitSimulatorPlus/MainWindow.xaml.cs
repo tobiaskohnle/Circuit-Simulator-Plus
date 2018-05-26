@@ -37,8 +37,6 @@ namespace CircuitSimulatorPlus
         List<Gate> gates = new List<Gate>();
         #endregion
 
-        public static int id = 0;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -54,52 +52,6 @@ namespace CircuitSimulatorPlus
                 context = Storage.Load(args[1]);
             else
                 context = new SimulationContext();
-
-            var or_el_gate = new OrElementaryGate();
-            var and_el_gate = new AndElementaryGate();
-
-            var or_gate = new Gate();
-            or_gate.Position = new Point(0, 0);
-            or_gate.input.Add(new InputNode());
-            or_gate.input.Add(new InputNode());
-            or_gate.output.Add(new OutputNode());
-
-            or_gate.input[0].repr = null;
-            or_gate.input[1].repr = null;
-            or_gate.input[0].state = or_el_gate;
-            or_gate.input[1].state = or_el_gate;
-            or_gate.output[0].repr = or_el_gate;
-            or_gate.output[0].state = or_el_gate;
-
-            or_gate.Renderer = new SimpleGateRenderer(canvas, or_gate);
-            context.Add(or_gate);
-
-            var and_gate = new Gate();
-
-            and_gate.Position = new Point(5, 5);
-            and_gate.input.Add(new InputNode());
-            and_gate.input.Add(new InputNode());
-            and_gate.output.Add(new OutputNode());
-
-            and_gate.input[0].repr = or_el_gate;
-            and_gate.input[1].repr = or_el_gate;
-            and_gate.input[0].state = and_el_gate;
-            and_gate.input[1].state = and_el_gate;
-            and_gate.output[0].repr = and_el_gate;
-            and_gate.output[0].state = and_el_gate;
-
-            and_gate.Renderer = new SimpleGateRenderer(canvas, and_gate);
-            context.Add(and_gate);
-
-            or_gate.output[0].ConnectTo(and_gate.input[0]);
-            or_gate.output[0].Clear();
-
-            //var gate1 = new Gate();
-            //gate1.Renderer = new SimpleGateRenderer(canvas, gate1);
-            //gate1.Position = new Point(40, 0);
-            //context.Add(gate1);
-            //gate1.Position = new Point(40, 20);
-            //context.Remove(gate0);
         }
 
         public void ResetView()

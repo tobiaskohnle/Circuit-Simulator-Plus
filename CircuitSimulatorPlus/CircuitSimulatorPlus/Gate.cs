@@ -6,30 +6,33 @@ namespace CircuitSimulatorPlus
 {
     public class Gate
     {
-        public bool mutable;
-        public bool selected;
-        public string name;
-        public string tag;
+        bool mutable;
+        bool selected;
+        string name;
+        string tag;
 
-        public List<InputNode> input = new List<InputNode>();
-        public List<OutputNode> output = new List<OutputNode>();
+        public List<InputNode> Input { get; set; }
 
-        Point position;
+        public List<OutputNode> Output { get; set; }
+
+        public ElementaryGateGroup ElementaryGates { get; set; }
 
         /// <summary>
         /// Triggered when any of the output signals changed.
         /// </summary>
-        public EventHandler OutputChanged;
+        public EventHandler OutputChanged { get; set; }
 
         /// <summary>
         /// Triggered when the Gate's position is changed.
         /// </summary>
-        public EventHandler PositionChanged;
+        public EventHandler PositionChanged { get; set; }
 
         /// <summary>
         /// Creates the Gate's visual representation on the Render() call.
         /// </summary>
-        public IRenderer Renderer;
+        public IRenderer Renderer { get; set; }
+
+        Point position;
 
         public Point Position
         {

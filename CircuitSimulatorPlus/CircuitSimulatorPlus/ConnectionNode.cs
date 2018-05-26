@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CircuitSimulatorPlus
 {
-    [DebuggerDisplay("Id: {id}, Empty: {empty}, Inverted: {inverted}, Name: {name}, State==null: {state==null}, Repr==null: {repr==null}")]
     public abstract class ConnectionNode
     {
-        public bool empty = true;
-        public bool inverted;
-        public string name;
-        public int id;
+        protected bool empty = true;
+        protected bool inverted;
+        protected string name;
 
-        public ConnectionNode()
-        {
-            id = MainWindow.id++;
-        }
+        protected ElementaryGateGroup elementaryGates;
 
         /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1);
@@ -23,7 +17,7 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public bool State
         {
-            get { return state.lastState; }
+            get { return false/*state.lastState*/; }
         }
         /// <summary>
         /// True, if this ConnectionNode is NOT connected to another ConnectionNode

@@ -5,8 +5,8 @@ namespace CircuitSimulatorPlus
 {
     public class ElementaryConnection
     {
-        ElementaryGate next;
-        int index;
+        protected ElementaryGate next;
+        protected int index;
 
         public ElementaryConnection(ElementaryGate next, int index)
         {
