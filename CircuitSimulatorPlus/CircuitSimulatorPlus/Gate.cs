@@ -15,8 +15,6 @@ namespace CircuitSimulatorPlus
 
         public List<OutputNode> Output { get; set; }
 
-        public ElementaryGateGroup ElementaryGates { get; set; }
-
         /// <summary>
         /// Triggered when any of the output signals changed.
         /// </summary>

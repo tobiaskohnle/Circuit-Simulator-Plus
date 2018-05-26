@@ -9,8 +9,6 @@ namespace CircuitSimulatorPlus
         protected bool inverted;
         protected string name;
 
-        protected ElementaryGateGroup elementaryGates;
-
         /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1);
         /// False, if this ConnectionNode is displayed as 'low' (0)
