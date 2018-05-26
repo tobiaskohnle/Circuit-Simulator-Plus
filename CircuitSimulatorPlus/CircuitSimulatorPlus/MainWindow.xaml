@@ -9,7 +9,10 @@
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel">
     <Grid>
-        <Canvas x:Name="canvas"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="File" Width="auto">
                 <MenuItem Header="New Circuit" Click="NewFile_Click"/>
@@ -45,5 +48,6 @@
                 <MenuItem Header="Reload Circuit" Click="Reload_Click"/>
             </MenuItem>
         </Menu>
+        <Canvas x:Name="canvas" Grid.Row="1"/>
     </Grid>
 </Window>
