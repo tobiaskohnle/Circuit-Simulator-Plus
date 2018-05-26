@@ -52,6 +52,16 @@ namespace CircuitSimulatorPlus
                 context = Storage.Load(args[1]);
             else
                 context = new SimulationContext();
+
+            var gate = new Gate();
+            var renderer = new SimpleGateRenderer(canvas, gate);
+            gate.Renderer = renderer;
+            gate.Input = new List<InputNode>();
+            gate.Input.Add(new InputNode());
+            gate.Input.Add(new InputNode());
+            gate.Output = new List<OutputNode>();
+            gate.Output.Add(new OutputNode());
+            context.Add(gate);
         }
 
         public void ResetView()
