@@ -8,8 +8,6 @@ namespace CircuitSimulatorPlus
     {
         protected bool masterSlave;
 
-        protected List<InputNode> connectedTo = new List<InputNode>();
-
         public void ConnectTo(InputNode inputNode)
         {
         }

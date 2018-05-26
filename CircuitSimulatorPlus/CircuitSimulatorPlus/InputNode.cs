@@ -8,8 +8,6 @@ namespace CircuitSimulatorPlus
         protected bool risingEdge;
         protected bool centered;
 
-        protected OutputNode connectedTo;
-
         public void ConnectTo(OutputNode outputNode)
         {
         }

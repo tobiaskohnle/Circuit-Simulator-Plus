@@ -9,6 +9,9 @@ namespace CircuitSimulatorPlus
         protected bool inverted;
         protected string name;
 
+        protected List<InputNode> next_connectedTo = new List<InputNode>();
+        protected OutputNode back_connectedTo;
+
         /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1);
         /// False, if this ConnectionNode is displayed as 'low' (0)
