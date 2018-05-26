@@ -18,15 +18,6 @@ namespace CircuitSimulatorPlus
         }
 
         /// <summary>
-        /// A reference to the ElementaryGate indicating the current state of this ConnectionNode
-        /// </summary>
-        public ElementaryGate state;
-        /// <summary>
-        /// Represents the ElementaryGate that is interacted with (i.e. used to create connections)
-        /// </summary>
-        public ElementaryGate repr;
-
-        /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1);
         /// False, if this ConnectionNode is displayed as 'low' (0)
         /// </summary>

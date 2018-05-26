@@ -34,5 +34,16 @@ namespace CircuitSimulatorPlus
 
             connectedTo = null;
         }
+
+        public override void Invert()
+        {
+            if (inverted)
+            {
+            }
+            else
+            {
+            }
+            inverted = !inverted;
+        }
     }
 }

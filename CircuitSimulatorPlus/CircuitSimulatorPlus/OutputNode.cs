@@ -26,10 +26,21 @@ namespace CircuitSimulatorPlus
 
         public override void Clear()
         {
-            if (empty)
-                return;
+            //if (empty)
+            //    return;
             foreach (InputNode inputNode in connectedTo.ToList())
                 inputNode.Clear();
+        }
+
+        public override void Invert()
+        {
+            if (inverted)
+            {
+            }
+            else
+            {
+            }
+            inverted = !inverted;
         }
     }
 }

@@ -75,6 +75,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
+    <Compile Include="ElementaryGateGroup.cs" />
+    <Compile Include="ElementaryGateGroupConnectionNode.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="MoveGateAction.cs" />
     <Compile Include="SimpleGateRenderer.cs" />
