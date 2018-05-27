@@ -15,16 +15,5 @@ namespace CircuitSimulatorPlus
         public override void Clear()
         {
         }
-
-        public override void Invert()
-        {
-            if (inverted)
-            {
-            }
-            else
-            {
-            }
-            inverted = !inverted;
-        }
     }
 }

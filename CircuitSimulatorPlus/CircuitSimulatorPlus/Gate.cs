@@ -11,8 +11,14 @@ namespace CircuitSimulatorPlus
         string name;
         string tag;
 
+        /// <summary>
+        /// InputNodes of the gate
+        /// </summary>
         public List<InputNode> Input { get; set; }
 
+        /// <summary>
+        /// OutputNodes of the gate
+        /// </summary>
         public List<OutputNode> Output { get; set; }
 
         /// <summary>
@@ -43,6 +49,43 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        /// <summary>
+        /// Name displayed on top of the gate
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
+
+        /// <summary>
+        /// True, if you can add or remove inputs of this gate
+        /// </summary>
+        public bool IsMutable
+        {
+            get { return mutable; }
+        }
+
+        /// <summary>
+        /// True, if the gate is currently selected
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return selected; }
+        }
+
+        /// <summary>
+        /// Tag displayed inside of the gate (e.g ">=1" for OR)
+        /// </summary>
+        public string Tag
+        {
+            get { return tag; }
+        }
+
+        /// <summary>
+        /// Moves the gate
+        /// </summary>
+        /// <param name="x">Offset along x-axis in units</param>
+        /// <param name="y">Offset along y-axis in units</param>
         public void Move(double x, double y)
         {
             position.X += x;

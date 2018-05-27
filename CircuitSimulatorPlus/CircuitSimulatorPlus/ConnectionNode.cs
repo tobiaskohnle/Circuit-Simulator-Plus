@@ -9,8 +9,7 @@ namespace CircuitSimulatorPlus
         protected bool inverted;
         protected string name;
 
-        protected List<InputNode> next_connectedTo = new List<InputNode>();
-        protected OutputNode back_connectedTo;
+        protected List<InputNode> connectedTo = new List<InputNode>();
 
         /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1);
@@ -43,6 +42,10 @@ namespace CircuitSimulatorPlus
         }
 
         public abstract void Clear();
-        public abstract void Invert();
+
+        public void Invert()
+        {
+            inverted = !inverted;
+        }
     }
 }
