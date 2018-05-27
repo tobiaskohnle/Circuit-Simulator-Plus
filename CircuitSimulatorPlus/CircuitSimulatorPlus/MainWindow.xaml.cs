@@ -125,7 +125,7 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);*/
-            scale = e.Delta > 0 ? 1.1 : scale - 1 / 1.1 + scale;
+            scale = e.Delta > 0 ? 1.1 : scale -1  / 1.1 + scale;
             ScaleTransform scle = new ScaleTransform(scale, scale, position.X, position.X);
             canvas.RenderTransform = scle;
             e.Handled = true;
