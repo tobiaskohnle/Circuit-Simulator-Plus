@@ -75,9 +75,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
+    <Compile Include="Grid.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="MoveGateAction.cs" />
-    <Compile Include="SimpleGateRenderer.cs" />
+    <Compile Include="..\..\..\..\..\Desktop\SimpleGateRenderer.cs">
+      <Link>SimpleGateRenderer.cs</Link>
+    </Compile>
     <Compile Include="SimulationContext.cs" />
     <Compile Include="Storage.cs" />
     <Page Include="MainWindow.xaml">
