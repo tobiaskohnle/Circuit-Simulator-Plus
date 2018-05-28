@@ -27,8 +27,8 @@ namespace CircuitSimulatorPlus
         public const double LineWidth = 0.1;
         public const int UndoBufferSize = 32;
         #endregion
-        double scale = 1.0;
-        Point position;
+        //double scale = 1.0;
+        //Point position;
 
         #region Properties
         Point lastMousePos;
@@ -122,18 +122,18 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            /*Point currentPos = e.GetPosition(canvas);
+            Point currentPos = e.GetPosition(canvas);
             double scale = e.Delta > 0 ? 1 / ScaleFactor : ScaleFactor;
 
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
-            canvas.RenderTransform = new MatrixTransform(matrix);*/
-            scale = e.Delta > 0 ? scale + 2 : scale-2;
+            canvas.RenderTransform = new MatrixTransform(matrix);
+            //scale = e.Delta > 0 ? scale + 2 : scale-2;
             
             //scale = e.Delta > 1 ? 0 : scale + 1;
-            ScaleTransform scle = new ScaleTransform(scale, scale, 1/position.X, 1/position.Y);
-            canvas.RenderTransform = scle;
-            e.Handled = true;
+            //ScaleTransform scle = new ScaleTransform(scale, scale, 1/position.X, 1/position.Y);
+            //canvas.RenderTransform = scle;
+            //e.Handled = true;
         }
 
         void NewFile_Click(object sender, RoutedEventArgs e)
