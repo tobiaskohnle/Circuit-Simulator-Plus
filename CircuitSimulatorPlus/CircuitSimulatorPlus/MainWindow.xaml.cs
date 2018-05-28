@@ -27,6 +27,8 @@ namespace CircuitSimulatorPlus
         public const double LineWidth = 0.1;
         public const int UndoBufferSize = 32;
         #endregion
+        double scale = 1.0;
+        Point position;
 
         #region Properties
         Point lastMousePos;
@@ -40,6 +42,9 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
+            Grid gitter = new Grid(canvas);
+
+            gitter.Draw();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -53,6 +58,10 @@ namespace CircuitSimulatorPlus
             else
                 context = new SimulationContext();
 
+            //testing <--
+
+            // -->
+
             var gate = new Gate();
             var renderer = new SimpleGateRenderer(canvas, gate);
             gate.Renderer = renderer;
@@ -63,7 +72,6 @@ namespace CircuitSimulatorPlus
             gate.Output.Add(new OutputNode());
             context.Add(gate);
         }
-
         public void ResetView()
         {
             Matrix matrix = Matrix.Identity;
@@ -93,7 +101,7 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            Point currentPos = e.GetPosition(this);
+            /*Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
 
             if (e.RightButton == MouseButtonState.Pressed)
@@ -103,7 +111,8 @@ namespace CircuitSimulatorPlus
                 canvas.RenderTransform = new MatrixTransform(matrix);
             }
 
-            lastMousePos = currentPos;
+            lastMousePos = currentPos;*/
+            position = Mouse.GetPosition(canvas);
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -112,12 +121,18 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Point currentPos = e.GetPosition(canvas);
+            /*Point currentPos = e.GetPosition(canvas);
             double scale = e.Delta > 0 ? 1 / ScaleFactor : ScaleFactor;
 
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
-            canvas.RenderTransform = new MatrixTransform(matrix);
+            canvas.RenderTransform = new MatrixTransform(matrix);*/
+            scale = e.Delta > 0 ? scale + 2 : scale-2;
+            
+            //scale = e.Delta > 1 ? 0 : scale + 1;
+            ScaleTransform scle = new ScaleTransform(scale, scale, 1/position.X, 1/position.Y);
+            canvas.RenderTransform = scle;
+            e.Handled = true;
         }
 
         void NewFile_Click(object sender, RoutedEventArgs e)
