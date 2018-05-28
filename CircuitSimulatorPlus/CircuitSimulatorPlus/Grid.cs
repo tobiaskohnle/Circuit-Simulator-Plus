@@ -19,10 +19,10 @@ namespace CircuitSimulatorPlus
         {
             this.canvas = canvas;
         }
-        public void Draw ()
+        public void Draw()
         {
 
-            for (int i = 0; i <= canvas.ActualHeight; i+=2)
+            for (int i = 0; i < canvas.ActualHeight; i+=2)
             {
                 var line = new Line();
                 line.Stroke = Brushes.Black;
@@ -34,7 +34,7 @@ namespace CircuitSimulatorPlus
                 verticalLines.Add(line);
                 canvas.Children.Add(line);
             }
-            for (int i = 0; i <= canvas.ActualWidth; i += 2)
+            for (int i = 0; i < canvas.ActualWidth; i += 2)
             {
                 var line = new Line();
                 line.Stroke = Brushes.Black;
