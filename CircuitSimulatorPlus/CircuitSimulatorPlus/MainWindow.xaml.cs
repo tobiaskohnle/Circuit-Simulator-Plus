@@ -29,6 +29,7 @@ namespace CircuitSimulatorPlus
         #endregion
         double scale = 1.0;
         Point position;
+
         #region Properties
         Point lastMousePos;
         Point lastMouseClick;
@@ -41,7 +42,9 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
+            Grid gitter = new Grid(canvas);
 
+            gitter.Draw();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -56,8 +59,7 @@ namespace CircuitSimulatorPlus
                 context = new SimulationContext();
 
             //testing <--
-            Grid gitter = new Grid(canvas);
-            gitter.Draw();
+
             // -->
 
             var gate = new Gate();
@@ -126,8 +128,9 @@ namespace CircuitSimulatorPlus
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);*/
             scale = e.Delta > 0 ? scale + 2 : scale-2;
+            
             //scale = e.Delta > 1 ? 0 : scale + 1;
-            ScaleTransform scle = new ScaleTransform(scale, scale, position.X, position.Y);
+            ScaleTransform scle = new ScaleTransform(scale, scale, 1/position.X, 1/position.Y);
             canvas.RenderTransform = scle;
             e.Handled = true;
         }
