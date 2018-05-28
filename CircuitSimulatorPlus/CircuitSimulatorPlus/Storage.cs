@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    using StorageObject = SimulationContext;
+    //using StorageObject = SimulationContext;
 
     static class Storage
     {

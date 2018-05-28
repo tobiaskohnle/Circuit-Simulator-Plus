@@ -35,16 +35,16 @@ namespace CircuitSimulatorPlus
         Point lastMouseClick;
 
         List<Gate> selected;
-        SimulationContext context;
+        //SimulationContext context;
         List<Gate> gates = new List<Gate>();
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
-            Grid gitter = new Grid(canvas);
+            //Grid gitter = new Grid(canvas);
 
-            gitter.Draw();
+            //gitter.Draw();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -52,11 +52,11 @@ namespace CircuitSimulatorPlus
 
             Title = WindowTitle;
 
-            string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
-                context = Storage.Load(args[1]);
-            else
-                context = new SimulationContext();
+            //string[] args = Environment.GetCommandLineArgs();
+            //if (args.Length > 1)
+            //    context = Storage.Load(args[1]);
+            //else
+            //    context = new SimulationContext();
 
             //testing <--
 
@@ -70,7 +70,8 @@ namespace CircuitSimulatorPlus
             gate.Input.Add(new InputNode());
             gate.Output = new List<OutputNode>();
             gate.Output.Add(new OutputNode());
-            context.Add(gate);
+            gate.Renderer.Render();
+            //context.Add(gate);
         }
         public void ResetView()
         {
@@ -101,7 +102,7 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            /*Point currentPos = e.GetPosition(this);
+            Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
 
             if (e.RightButton == MouseButtonState.Pressed)
@@ -111,8 +112,8 @@ namespace CircuitSimulatorPlus
                 canvas.RenderTransform = new MatrixTransform(matrix);
             }
 
-            lastMousePos = currentPos;*/
-            position = Mouse.GetPosition(canvas);
+            lastMousePos = currentPos;
+            //position = Mouse.GetPosition(canvas);
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
