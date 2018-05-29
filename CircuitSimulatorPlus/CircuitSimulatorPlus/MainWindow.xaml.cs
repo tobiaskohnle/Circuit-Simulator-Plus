@@ -69,6 +69,7 @@ namespace CircuitSimulatorPlus
             DEBUG_Test1();
             DEBUG_Test2();
             DEBUG_Test3();
+            //DEBUG_Test4();
             MessageBox.Show("All Tests completed.");
         }
 
@@ -99,10 +100,7 @@ namespace CircuitSimulatorPlus
 
             DEBUG_TickAll();
 
-            if (gates[0].Output[0].State != true)
-                throw new InvalidOperationException();
-            if (gates[1].Output[0].State != true)
-                throw new InvalidOperationException();
+            DEBUG_CheckStates(gates.ToArray(), new[] { true, false, true, true, false, true });
         }
 
         public void DEBUG_Test2()
@@ -115,8 +113,7 @@ namespace CircuitSimulatorPlus
 
             DEBUG_TickAll();
 
-            if (gates[0].Output[0].State != true)
-                throw new InvalidOperationException();
+            DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true });
         }
 
         public void DEBUG_Test3()
@@ -136,36 +133,34 @@ namespace CircuitSimulatorPlus
             b.Output[0].Tick(tickedNodes);
             DEBUG_TickAll();
 
-            if (a.Input[0].State != false)
-                throw new InvalidOperationException();
-            if (a.Input[1].State != false)
-                throw new InvalidOperationException();
-            if (a.Output[0].State != true)
-                throw new InvalidOperationException();
-
-            if (b.Input[0].State != true)
-                throw new InvalidOperationException();
-            if (b.Input[1].State != false)
-                throw new InvalidOperationException();
-            if (b.Output[0].State != false)
-                throw new InvalidOperationException();
+            DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true, true, false, false });
 
             a.Input[0].State = true;
             a.Input[0].Tick(tickedNodes);
             DEBUG_TickAll();
 
-            if (a.Input[0].State != true)
-                throw new InvalidOperationException();
-            if (a.Input[1].State != true)
-                throw new InvalidOperationException();
-            if (a.Output[0].State != false)
-                throw new InvalidOperationException();
+            DEBUG_CheckStates(gates.ToArray(), new[] { true, true, false, false, false, true });
 
-            if (b.Input[0].State != false)
-                throw new InvalidOperationException();
-            if (b.Input[1].State != false)
-                throw new InvalidOperationException();
-            if (b.Output[0].State != true)
+            a.Input[0].State = false;
+            a.Input[0].Tick(tickedNodes);
+            DEBUG_TickAll();
+
+            DEBUG_CheckStates(gates.ToArray(), new[] { false, true, false, false, false, true });
+        }
+
+        public void DEBUG_CheckStates(Gate[] gates, bool[] states)
+        {
+            int state_i = 0;
+            foreach (Gate gate in gates)
+            {
+                foreach (InputNode input in gate.Input)
+                    if (input.State != states[state_i++])
+                        throw new InvalidOperationException();
+                foreach (OutputNode output in gate.Output)
+                    if (output.State != states[state_i++])
+                        throw new InvalidOperationException();
+            }
+            if (state_i != states.Length)
                 throw new InvalidOperationException();
         }
 
@@ -236,7 +231,7 @@ namespace CircuitSimulatorPlus
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
             //scale = e.Delta > 0 ? scale + 2 : scale-2;
-            
+
             //scale = e.Delta > 1 ? 0 : scale + 1;
             //ScaleTransform scle = new ScaleTransform(scale, scale, 1/position.X, 1/position.Y);
             //canvas.RenderTransform = scle;
