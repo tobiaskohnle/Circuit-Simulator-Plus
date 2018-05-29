@@ -69,15 +69,15 @@ namespace CircuitSimulatorPlus
             // -->
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Interval = TimeSpan.FromMilliseconds(500);
             timer.Tick += (sender, e) =>
             {
                 DEBUG_TickAll();
             };
             timer.Start();
 
-            DEBUG_Test1();
-            DEBUG_Test2();
+            //DEBUG_Test1();
+            //DEBUG_Test2();
             DEBUG_Test3();
             //DEBUG_Test4();
             //MessageBox.Show("All Tests completed.");
@@ -87,7 +87,7 @@ namespace CircuitSimulatorPlus
         {
             gates.Add(gate);
             gate.Renderer = new SimpleGateRenderer(canvas, gate);
-            gate.Position = new Point(gates.Count * 5, 5);
+            gate.Position = new Point(5, gates.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
                 gate.Input.Add(new InputNode(gate));
@@ -139,9 +139,9 @@ namespace CircuitSimulatorPlus
             b.Output[0].ConnectTo(a.Input[1]);
 
             a.Output[0].Tick(tickedNodes);
-            //DEBUG_TickAll();
+            DEBUG_TickAll();
             b.Output[0].Tick(tickedNodes);
-            //DEBUG_TickAll();
+            DEBUG_TickAll();
 
             DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true, true, false, false });
 
