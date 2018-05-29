@@ -31,18 +31,12 @@ namespace CircuitSimulatorPlus
             line.Y2 = positionY2;
             verticalLines.Add(line);
             canvas.Children.Add(line);
-            line = new Line();
-            line.Stroke = Brushes.Black;
-            line.StrokeThickness = MainWindow.LineWidth;
             line.X1 = positionX1;
             line.X2 = positionX2/2;
             line.Y1 = positionY1;
             line.Y2 = positionY1;
             horizontalLines.Add(line);
             canvas.Children.Add(line);
-            line = new Line();
-            line.Stroke = Brushes.Black;
-            line.StrokeThickness = MainWindow.LineWidth;
             line.X1 = positionX2/2;
             line.X2 = positionX2;
             line.Y1 = positionY2;
