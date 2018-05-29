@@ -161,15 +161,21 @@ namespace CircuitSimulatorPlus
         public void DEBUG_Test4()
         {
             gates.Clear();
+            Gate xor = DEBUG_CreateGate(new Gate(), 2, 1);
             Gate and0 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
             Gate and1 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
             Gate or = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+
+            xor.Context.Add(and0);
+            xor.Context.Add(and1);
+            xor.Context.Add(or);
 
             and0.Input[0].Invert();
             and1.Input[0].Invert();
             and0.Output[0].ConnectTo(or.Input[0]);
             and1.Output[0].ConnectTo(or.Input[1]);
 
+            //xor.Input[0].Conn
         }
 
         public void DEBUG_CheckStates(Gate[] gates, bool[] states)
@@ -239,16 +245,16 @@ namespace CircuitSimulatorPlus
                 gates[0].Input[0].State = false;
                 gates[0].Input[0].Tick(tickedNodes);
             }
-            if (e.Key == Key.C)
-            {
-                gates[1].Input[1].State = true;
-                gates[1].Input[1].Tick(tickedNodes);
-            }
-            if (e.Key == Key.D)
-            {
-                gates[1].Input[1].State = false;
-                gates[1].Input[1].Tick(tickedNodes);
-            }
+            //if (e.Key == Key.C)
+            //{
+            //    gates[1].Input[1].State = true;
+            //    gates[1].Input[1].Tick(tickedNodes);
+            //}
+            //if (e.Key == Key.D)
+            //{
+            //    gates[1].Input[1].State = false;
+            //    gates[1].Input[1].Tick(tickedNodes);
+            //}
         }
         void Window_KeyUp(object sender, KeyEventArgs e)
         {
