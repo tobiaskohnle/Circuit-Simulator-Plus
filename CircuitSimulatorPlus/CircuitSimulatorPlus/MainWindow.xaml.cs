@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CircuitSimulatorPlus
 {
@@ -41,6 +42,7 @@ namespace CircuitSimulatorPlus
         Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
         List<Gate> selected = new List<Gate>();
         //SimulationContext context;
+        DispatcherTimer timer;
         List<Gate> gates = new List<Gate>();
         #endregion
 
@@ -65,6 +67,14 @@ namespace CircuitSimulatorPlus
             //var grid = new Grid(canvas, (int)Width, (int)Height);
             //grid.Draw();
             // -->
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Tick += (sender, e) =>
+            {
+                DEBUG_TickAll();
+            };
+            timer.Start();
 
             DEBUG_Test1();
             DEBUG_Test2();
@@ -98,7 +108,7 @@ namespace CircuitSimulatorPlus
             gates[0].Output[0].ConnectTo(gates[1].Input[0]);
             gates[0].Input[0].Tick(tickedNodes);
 
-            DEBUG_TickAll();
+            //DEBUG_TickAll();
 
             DEBUG_CheckStates(gates.ToArray(), new[] { true, false, true, true, false, true });
         }
@@ -111,7 +121,7 @@ namespace CircuitSimulatorPlus
             gates[0].Output[0].Invert();
             gates[0].Output[0].Tick(tickedNodes);
 
-            DEBUG_TickAll();
+            //DEBUG_TickAll();
 
             DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true });
         }
@@ -129,27 +139,28 @@ namespace CircuitSimulatorPlus
             b.Output[0].ConnectTo(a.Input[1]);
 
             a.Output[0].Tick(tickedNodes);
-            DEBUG_TickAll();
+            //DEBUG_TickAll();
             b.Output[0].Tick(tickedNodes);
-            DEBUG_TickAll();
+            //DEBUG_TickAll();
 
             DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true, true, false, false });
 
             a.Input[0].State = true;
             a.Input[0].Tick(tickedNodes);
-            DEBUG_TickAll();
+            //DEBUG_TickAll();
 
             DEBUG_CheckStates(gates.ToArray(), new[] { true, true, false, false, false, true });
 
             a.Input[0].State = false;
             a.Input[0].Tick(tickedNodes);
-            DEBUG_TickAll();
+            //DEBUG_TickAll();
 
             DEBUG_CheckStates(gates.ToArray(), new[] { false, true, false, false, false, true });
         }
 
         public void DEBUG_CheckStates(Gate[] gates, bool[] states)
         {
+            return;
             int state_i = 0;
             foreach (Gate gate in gates)
             {
@@ -166,13 +177,13 @@ namespace CircuitSimulatorPlus
 
         public void DEBUG_TickAll()
         {
-            while (tickedNodes.Any())
-            {
-                List<ConnectionNode> copy = tickedNodes.ToList();
-                tickedNodes.Clear();
-                foreach (ConnectionNode ticked in copy)
-                    ticked.Tick(tickedNodes);
-            }
+            //while (tickedNodes.Any())
+            //{
+            List<ConnectionNode> copy = tickedNodes.ToList();
+            tickedNodes.Clear();
+            foreach (ConnectionNode ticked in copy)
+                ticked.Tick(tickedNodes);
+            //}
         }
 
         public void ResetView()
@@ -191,11 +202,9 @@ namespace CircuitSimulatorPlus
         #region Events
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
         void Window_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
