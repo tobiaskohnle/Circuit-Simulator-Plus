@@ -17,6 +17,7 @@ namespace CircuitSimulatorPlus
         Rectangle rectangle;
         List<Line> inputLines = new List<Line>();
         List<Line> outputLines = new List<Line>();
+        List<Line> connectionLines = new List<Line>();
 
         public SimpleGateRenderer(Canvas canvas, Gate gate)
         {
@@ -109,6 +110,10 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                if (!gate.Output[i].IsEmpty)
+                {
+                    connectionLines[i].Stroke = outputLines[i].Stroke;
+                }
             }
         }
     }
