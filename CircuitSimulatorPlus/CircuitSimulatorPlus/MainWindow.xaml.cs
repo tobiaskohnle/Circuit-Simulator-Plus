@@ -99,7 +99,10 @@ namespace CircuitSimulatorPlus
                     ticked.Tick(tickedNodes);
             }
 
-            bool true_expected = or2.Output[0].State;
+            if (or1.Output[0].State == false)
+                throw new InvalidOperationException();
+            if (or2.Output[0].State == false)
+                throw new InvalidOperationException();
         }
         public void ResetView()
         {
