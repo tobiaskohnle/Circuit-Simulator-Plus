@@ -5,6 +5,11 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode
     {
+        protected ConnectionNode(Gate owner)
+        {
+            Owner = owner;
+        }
+
         public List<ConnectionNode> NextConnectedTo { get; set; }
         public ConnectionNode BackConnectedTo { get; set; }
 
@@ -25,6 +30,10 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+        /// <summary>
+        /// A reference to the Gate which the ConnectionNode is connected to.
+        /// </summary>
+        public Gate Owner { get; private set; }
         /// <summary>
         /// True, if this ConnectionNode is NOT connected to another ConnectionNode.
         /// </summary>
@@ -53,13 +62,12 @@ namespace CircuitSimulatorPlus
         {
             bool nextIsElementary = false;
             bool lastWasElementary = false;
-            Gate self = null;
 
             if (IsEmpty)
             {
                 if (lastWasElementary)
                 {
-                    State = self.Eval();
+                    State = Owner.Eval();
                 }
             }
             else
@@ -73,7 +81,7 @@ namespace CircuitSimulatorPlus
 
                 if (nextIsElementary)
                 {
-                    foreach (OutputNode output in self.Output)
+                    foreach (OutputNode output in Owner.Output)
                     {
                         foreach (ConnectionNode node in output.NextConnectedTo)
                         {

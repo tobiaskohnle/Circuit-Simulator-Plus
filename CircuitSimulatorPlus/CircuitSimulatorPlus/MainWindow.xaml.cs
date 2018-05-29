@@ -47,9 +47,7 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
-            //Grid gitter = new Grid(canvas);
 
-            //gitter.Draw();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 

@@ -5,6 +5,10 @@ namespace CircuitSimulatorPlus
 {
     public class InputNode : ConnectionNode
     {
+        public InputNode(Gate owner) : base(owner)
+        {
+        }
+
         /// <summary>
         /// True, if this InputNode reacts to rising edges.
         /// </summary>

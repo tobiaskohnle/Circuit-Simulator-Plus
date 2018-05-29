@@ -6,6 +6,10 @@ namespace CircuitSimulatorPlus
 {
     public class OutputNode : ConnectionNode
     {
+        public OutputNode(Gate owner) : base(owner)
+        {
+        }
+
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
         /// </summary>
