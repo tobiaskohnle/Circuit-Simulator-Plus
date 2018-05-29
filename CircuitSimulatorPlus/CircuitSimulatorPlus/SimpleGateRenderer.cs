@@ -55,6 +55,8 @@ namespace CircuitSimulatorPlus
 
             OnPositionChanged(this, EventArgs.Empty);
             gate.PositionChanged += OnPositionChanged;
+            //OnConnectionCreated(this, EventArgs.Empty);
+            //gate.ConnectionCreated += OnConnectionCreated;
             OnInputChanged(this, EventArgs.Empty);
             gate.ConnectionChanged += OnInputChanged;
             OnOutputChanged(this, EventArgs.Empty);
@@ -97,6 +99,18 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        void OnConnectionCreated(object sender, EventArgs e)
+        {
+            for (int i = 0; i < gate.Output.Count; i++)
+            {
+                //if ()
+                foreach (InputNode inConn in gate.Output[i].NextConnectedTo)
+                {
+
+                }
+            }
+        }
+
         void OnInputChanged(object sender, EventArgs e)
         {
             for (int i = 0; i < inputLines.Count; i++)
@@ -110,9 +124,9 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
-                if (!gate.Output[i].IsEmpty)
+                if (outputLines[i] != null)
                 {
-                    connectionLines[i].Stroke = outputLines[i].Stroke;
+                    //connectionLines[i].Stroke = outputLines[i].Stroke;
                 }
             }
         }
