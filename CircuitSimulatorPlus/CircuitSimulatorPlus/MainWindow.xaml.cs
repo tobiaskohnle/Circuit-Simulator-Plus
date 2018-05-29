@@ -70,7 +70,7 @@ namespace CircuitSimulatorPlus
             DEBUG_Test2();
             DEBUG_Test3();
             //DEBUG_Test4();
-            MessageBox.Show("All Tests completed.");
+            //MessageBox.Show("All Tests completed.");
         }
 
         public Gate DEBUG_CreateGate(Gate gate, int amtInputs, int amtOutputs)
