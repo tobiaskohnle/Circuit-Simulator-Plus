@@ -62,8 +62,8 @@ namespace CircuitSimulatorPlus
             //    context = new SimulationContext();
 
             //testing <--
-            var grid = new Grid(canvas, (int)Width, (int)Height);
-            grid.Draw();
+            //var grid = new Grid(canvas, (int)Width, (int)Height);
+            //grid.Draw();
             // -->
 
             DEBUG_Test1();
