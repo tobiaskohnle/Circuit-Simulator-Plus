@@ -42,6 +42,9 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public EventHandler ConnectionChanged { get; set; }
         /// <summary>
+        /// </summary>
+        public EventHandler ConnectionCreated { get; set; }
+        /// <summary>
         /// Triggered when the Gate's position is changed.
         /// </summary>
         public EventHandler PositionChanged { get; set; }

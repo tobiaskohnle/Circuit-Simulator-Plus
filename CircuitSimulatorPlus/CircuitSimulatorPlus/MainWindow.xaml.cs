@@ -158,6 +158,20 @@ namespace CircuitSimulatorPlus
             DEBUG_CheckStates(gates.ToArray(), new[] { false, true, false, false, false, true });
         }
 
+        public void DEBUG_Test4()
+        {
+            gates.Clear();
+            Gate and0 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
+            Gate and1 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
+            Gate or = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+
+            and0.Input[0].Invert();
+            and1.Input[0].Invert();
+            and0.Output[0].ConnectTo(or.Input[0]);
+            and1.Output[0].ConnectTo(or.Input[1]);
+
+        }
+
         public void DEBUG_CheckStates(Gate[] gates, bool[] states)
         {
             return;
@@ -200,6 +214,19 @@ namespace CircuitSimulatorPlus
         }
 
         #region Events
+        void DEBUG_AddAndGate(object sender, EventArgs e)
+        {
+            DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);//.Position = lastMouseClick;
+        }
+        void DEBUG_AddOrGate(object sender, EventArgs e)
+        {
+            DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);//.Position = lastMouseClick;
+        }
+        void DEBUG_AddNotGate(object sender, EventArgs e)
+        {
+            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 2, 1);//.Position = lastMouseClick;
+        }
+
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.A)
