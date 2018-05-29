@@ -28,5 +28,10 @@ namespace CircuitSimulatorPlus
             BackConnectedTo = null;
             IsEmpty = true;
         }
+
+        public override void Tick(Queue<ConnectionNode> tickedNodes)
+        {
+            Tick(tickedNodes, false);
+        }
     }
 }

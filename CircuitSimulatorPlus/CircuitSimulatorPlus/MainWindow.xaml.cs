@@ -66,16 +66,19 @@ namespace CircuitSimulatorPlus
             grid.Draw();
             // -->
 
-            var gate = new Gate();
+            var gate = new Gate(Gate.GateType.Or);
+
             var renderer = new SimpleGateRenderer(canvas, gate);
             gate.Renderer = renderer;
-            gate.Input = new List<InputNode>();
+
             gate.Input.Add(new InputNode(gate));
             gate.Input.Add(new InputNode(gate));
-            gate.Output = new List<OutputNode>();
             gate.Output.Add(new OutputNode(gate));
+
             gate.Renderer.Render();
-            //context.Add(gate);
+
+            gate.Input[0].State = true;
+            gate.Input[0].Tick(tickedNodes);
         }
         public void ResetView()
         {

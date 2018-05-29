@@ -8,6 +8,8 @@ namespace CircuitSimulatorPlus
         protected ConnectionNode(Gate owner)
         {
             Owner = owner;
+            IsEmpty = true;
+            NextConnectedTo = new List<ConnectionNode>();
         }
 
         public List<ConnectionNode> NextConnectedTo { get; set; }
@@ -58,10 +60,12 @@ namespace CircuitSimulatorPlus
             IsInverted = !IsInverted;
         }
 
-        public void Tick(Queue<ConnectionNode> tickedNodes)
+        public abstract void Tick(Queue<ConnectionNode> tickedNodes);
+
+        protected void Tick(Queue<ConnectionNode> tickedNodes, bool isOutput)
         {
-            bool nextIsElementary = false;
-            bool lastWasElementary = false;
+            bool nextIsElementary = !Owner.HasContext && !isOutput;
+            bool lastWasElementary = !Owner.HasContext && isOutput;
 
             if (IsEmpty)
             {

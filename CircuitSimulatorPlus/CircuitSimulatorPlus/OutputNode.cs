@@ -31,5 +31,10 @@ namespace CircuitSimulatorPlus
             foreach (InputNode input in NextConnectedTo.ToList())
                 input.Clear();
         }
+
+        public override void Tick(Queue<ConnectionNode> tickedNodes)
+        {
+            Tick(tickedNodes, true);
+        }
     }
 }
