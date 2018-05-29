@@ -16,6 +16,7 @@ namespace CircuitSimulatorPlus
         public ConnectionNode BackConnectedTo { get; set; }
 
         bool state;
+        bool inverted;
         bool stateChanged;
         /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1).
@@ -29,6 +30,7 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
+                    Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -43,7 +45,14 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// True, if this ConnectionNode is inverted.
         /// </summary>
-        public bool IsInverted { get; set; }
+        public bool IsInverted
+        {
+            get { return inverted; }
+            set {
+                inverted = value;
+                Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
         /// <summary>
         /// Name displayed next to the ConnectionNode.
         /// (inside the Gate it is connected to)
