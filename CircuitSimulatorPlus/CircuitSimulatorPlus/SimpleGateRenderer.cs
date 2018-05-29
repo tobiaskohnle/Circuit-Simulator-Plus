@@ -54,7 +54,9 @@ namespace CircuitSimulatorPlus
 
             OnPositionChanged(this, EventArgs.Empty);
             gate.PositionChanged += OnPositionChanged;
+            OnInputChanged(this, EventArgs.Empty);
             gate.ConnectionChanged += OnInputChanged;
+            OnOutputChanged(this, EventArgs.Empty);
             gate.ConnectionChanged += OnOutputChanged;
         }
 
