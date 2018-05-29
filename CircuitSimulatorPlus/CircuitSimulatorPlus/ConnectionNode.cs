@@ -67,14 +67,18 @@ namespace CircuitSimulatorPlus
             bool nextIsElementary = !Owner.HasContext && !isOutput;
             bool lastWasElementary = !Owner.HasContext && isOutput;
 
-            if (IsEmpty)
+            if (lastWasElementary)
             {
-                if (lastWasElementary)
-                    State = Owner.Eval();
+                State = Owner.Eval();
             }
-            else
+            else if (!IsEmpty)
             {
-                State = BackConnectedTo.State != IsInverted;
+                State = BackConnectedTo.State;
+            }
+
+            if (IsInverted)
+            {
+                State = !State;
             }
 
             if (stateChanged)

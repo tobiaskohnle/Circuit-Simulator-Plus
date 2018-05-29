@@ -66,19 +66,31 @@ namespace CircuitSimulatorPlus
             grid.Draw();
             // -->
 
-            var gate = new Gate(Gate.GateType.Or);
+            var or1 = new Gate(Gate.GateType.Or);
 
-            var renderer = new SimpleGateRenderer(canvas, gate);
-            gate.Renderer = renderer;
+            var or2 = new Gate(Gate.GateType.Or);
 
-            gate.Input.Add(new InputNode(gate));
-            gate.Input.Add(new InputNode(gate));
-            gate.Output.Add(new OutputNode(gate));
+            or1.Renderer = new SimpleGateRenderer(canvas, or1);
+            or1.Position = new Point(5, 5);
 
-            gate.Renderer.Render();
+            or2.Renderer = new SimpleGateRenderer(canvas, or2);
+            or2.Position = new Point(10, 5);
 
-            gate.Input[0].State = true;
-            gate.Input[0].Tick(tickedNodes);
+            or1.Input.Add(new InputNode(or1));
+            or1.Input.Add(new InputNode(or1));
+            or1.Output.Add(new OutputNode(or1));
+
+            or2.Input.Add(new InputNode(or2));
+            or2.Input.Add(new InputNode(or2));
+            or2.Output.Add(new OutputNode(or2));
+
+            or1.Renderer.Render();
+            or2.Renderer.Render();
+
+            or1.Input[0].State = true;
+            or1.Output[0].ConnectTo(or2.Input[0]);
+            or1.Input[0].Tick(tickedNodes);
+
             while (tickedNodes.Any())
             {
                 List<ConnectionNode> copy = tickedNodes.ToList();
@@ -86,6 +98,8 @@ namespace CircuitSimulatorPlus
                 foreach (ConnectionNode ticked in copy)
                     ticked.Tick(tickedNodes);
             }
+
+            bool true_expected = or2.Output[0].State;
         }
         public void ResetView()
         {
