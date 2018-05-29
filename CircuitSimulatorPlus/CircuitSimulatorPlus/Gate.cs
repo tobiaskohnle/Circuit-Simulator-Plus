@@ -10,6 +10,7 @@ namespace CircuitSimulatorPlus
         {
             Type = type;
             HasContext = type == GateType.Context;
+            Context = new List<Gate>();
             Input = new List<InputNode>();
             Output = new List<OutputNode>();
         }
