@@ -8,12 +8,20 @@
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Add And Gate" Click="DEBUG_AddAndGate"></MenuItem>
+            <MenuItem Header="Add Or Gate" Click="DEBUG_AddOrGate"></MenuItem>
+            <MenuItem Header="Add Not Gate" Click="DEBUG_AddNotGate"></MenuItem>
+        </ContextMenu>
+    </Window.ContextMenu>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="canvas" Grid.Row="1"/>
+        <Canvas x:Name="canvas" Grid.Row="1">
+        </Canvas>
         <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="File" Width="auto">
                 <MenuItem Header="New Circuit" Click="NewFile_Click"/>

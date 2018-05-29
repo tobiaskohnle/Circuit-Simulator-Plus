@@ -22,6 +22,7 @@ namespace CircuitSimulatorPlus
             NextConnectedTo.Add(inputNode);
             inputNode.BackConnectedTo = this;
             IsEmpty = inputNode.IsEmpty = false;
+            Owner.ConnectionCreated?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Clears this OutputNode.
