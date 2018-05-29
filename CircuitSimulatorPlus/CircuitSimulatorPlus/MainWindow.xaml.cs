@@ -69,7 +69,7 @@ namespace CircuitSimulatorPlus
             // -->
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Tick += (sender, e) =>
             {
                 DEBUG_TickAll();

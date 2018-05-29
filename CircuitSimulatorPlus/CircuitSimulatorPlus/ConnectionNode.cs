@@ -86,7 +86,7 @@ namespace CircuitSimulatorPlus
             {
                 State = Owner.Eval();
             }
-            else if (!IsEmpty)
+            else if (/*!IsEmpty*/BackConnectedTo != null)
             {
                 State = BackConnectedTo.State;
             }
