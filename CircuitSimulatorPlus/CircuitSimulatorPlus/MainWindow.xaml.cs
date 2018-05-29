@@ -66,31 +66,111 @@ namespace CircuitSimulatorPlus
             grid.Draw();
             // -->
 
-            var or1 = new Gate(Gate.GateType.Or);
+            DEBUG_Test1();
+            DEBUG_Test2();
+            DEBUG_Test3();
+            MessageBox.Show("All Tests completed.");
+        }
 
-            var or2 = new Gate(Gate.GateType.Or);
+        public Gate DEBUG_CreateGate(Gate gate, int amtInputs, int amtOutputs)
+        {
+            gates.Add(gate);
+            gate.Renderer = new SimpleGateRenderer(canvas, gate);
+            gate.Position = new Point(gates.Count * 5, 5);
 
-            or1.Renderer = new SimpleGateRenderer(canvas, or1);
-            or1.Position = new Point(5, 5);
+            for (int i = 0; i < amtInputs; i++)
+                gate.Input.Add(new InputNode(gate));
+            for (int i = 0; i < amtOutputs; i++)
+                gate.Output.Add(new OutputNode(gate));
 
-            or2.Renderer = new SimpleGateRenderer(canvas, or2);
-            or2.Position = new Point(10, 5);
+            gate.Renderer.Render();
+            return gate;
+        }
 
-            or1.Input.Add(new InputNode(or1));
-            or1.Input.Add(new InputNode(or1));
-            or1.Output.Add(new OutputNode(or1));
+        public void DEBUG_Test1()
+        {
+            gates.Clear();
+            DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+            DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
 
-            or2.Input.Add(new InputNode(or2));
-            or2.Input.Add(new InputNode(or2));
-            or2.Output.Add(new OutputNode(or2));
+            gates[0].Input[0].State = true;
+            gates[0].Output[0].ConnectTo(gates[1].Input[0]);
+            gates[0].Input[0].Tick(tickedNodes);
 
-            or1.Renderer.Render();
-            or2.Renderer.Render();
+            DEBUG_TickAll();
 
-            or1.Input[0].State = true;
-            or1.Output[0].ConnectTo(or2.Input[0]);
-            or1.Input[0].Tick(tickedNodes);
+            if (gates[0].Output[0].State != true)
+                throw new InvalidOperationException();
+            if (gates[1].Output[0].State != true)
+                throw new InvalidOperationException();
+        }
 
+        public void DEBUG_Test2()
+        {
+            gates.Clear();
+            DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
+
+            gates[0].Output[0].Invert();
+            gates[0].Output[0].Tick(tickedNodes);
+
+            DEBUG_TickAll();
+
+            if (gates[0].Output[0].State != true)
+                throw new InvalidOperationException();
+        }
+
+        public void DEBUG_Test3()
+        {
+            gates.Clear();
+            Gate a = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+            Gate b = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+
+            a.Output[0].Invert();
+            b.Output[0].Invert();
+
+            a.Output[0].ConnectTo(b.Input[0]);
+            b.Output[0].ConnectTo(a.Input[1]);
+
+            a.Output[0].Tick(tickedNodes);
+            DEBUG_TickAll();
+            b.Output[0].Tick(tickedNodes);
+            DEBUG_TickAll();
+
+            if (a.Input[0].State != false)
+                throw new InvalidOperationException();
+            if (a.Input[1].State != false)
+                throw new InvalidOperationException();
+            if (a.Output[0].State != true)
+                throw new InvalidOperationException();
+
+            if (b.Input[0].State != true)
+                throw new InvalidOperationException();
+            if (b.Input[1].State != false)
+                throw new InvalidOperationException();
+            if (b.Output[0].State != false)
+                throw new InvalidOperationException();
+
+            a.Input[0].State = true;
+            a.Input[0].Tick(tickedNodes);
+            DEBUG_TickAll();
+
+            if (a.Input[0].State != true)
+                throw new InvalidOperationException();
+            if (a.Input[1].State != true)
+                throw new InvalidOperationException();
+            if (a.Output[0].State != false)
+                throw new InvalidOperationException();
+
+            if (b.Input[0].State != false)
+                throw new InvalidOperationException();
+            if (b.Input[1].State != false)
+                throw new InvalidOperationException();
+            if (b.Output[0].State != true)
+                throw new InvalidOperationException();
+        }
+
+        public void DEBUG_TickAll()
+        {
             while (tickedNodes.Any())
             {
                 List<ConnectionNode> copy = tickedNodes.ToList();
@@ -98,12 +178,8 @@ namespace CircuitSimulatorPlus
                 foreach (ConnectionNode ticked in copy)
                     ticked.Tick(tickedNodes);
             }
-
-            if (or1.Output[0].State == false)
-                throw new InvalidOperationException();
-            if (or2.Output[0].State == false)
-                throw new InvalidOperationException();
         }
+
         public void ResetView()
         {
             Matrix matrix = Matrix.Identity;
