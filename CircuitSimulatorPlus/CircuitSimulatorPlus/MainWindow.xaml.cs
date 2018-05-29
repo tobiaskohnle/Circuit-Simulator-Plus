@@ -70,10 +70,10 @@ namespace CircuitSimulatorPlus
             var renderer = new SimpleGateRenderer(canvas, gate);
             gate.Renderer = renderer;
             gate.Input = new List<InputNode>();
-            gate.Input.Add(new InputNode());
-            gate.Input.Add(new InputNode());
+            gate.Input.Add(new InputNode(gate));
+            gate.Input.Add(new InputNode(gate));
             gate.Output = new List<OutputNode>();
-            gate.Output.Add(new OutputNode());
+            gate.Output.Add(new OutputNode(gate));
             gate.Renderer.Render();
             //context.Add(gate);
         }
