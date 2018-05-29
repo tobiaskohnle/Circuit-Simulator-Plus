@@ -29,6 +29,7 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
+                    Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
