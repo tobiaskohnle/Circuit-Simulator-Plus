@@ -202,6 +202,26 @@ namespace CircuitSimulatorPlus
         #region Events
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.A)
+            {
+                gates[0].Input[0].State = true;
+                gates[0].Input[0].Tick(tickedNodes);
+            }
+            if (e.Key == Key.B)
+            {
+                gates[0].Input[0].State = false;
+                gates[0].Input[0].Tick(tickedNodes);
+            }
+            if (e.Key == Key.C)
+            {
+                gates[1].Input[1].State = true;
+                gates[1].Input[1].Tick(tickedNodes);
+            }
+            if (e.Key == Key.D)
+            {
+                gates[1].Input[1].State = false;
+                gates[1].Input[1].Tick(tickedNodes);
+            }
         }
         void Window_KeyUp(object sender, KeyEventArgs e)
         {
