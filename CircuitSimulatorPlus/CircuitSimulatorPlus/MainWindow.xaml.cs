@@ -160,7 +160,6 @@ namespace CircuitSimulatorPlus
 
         public void DEBUG_Test4()
         {
-            gates.Clear();
             Gate xor = DEBUG_CreateGate(new Gate(), 2, 1);
             Gate and0 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
             Gate and1 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
@@ -175,7 +174,14 @@ namespace CircuitSimulatorPlus
             and0.Output[0].ConnectTo(or.Input[0]);
             and1.Output[0].ConnectTo(or.Input[1]);
 
-            //xor.Input[0].Conn
+            xor.Input[0].ConnectTo(and0.Input[0]);
+            xor.Input[0].ConnectTo(and1.Input[1]);
+            xor.Input[1].ConnectTo(and0.Input[1]);
+            xor.Input[1].ConnectTo(and1.Input[0]);
+            or.Output[0].ConnectTo(xor.Output[0]);
+
+            gates.Clear();
+            gates.Add(xor);
         }
 
         public void DEBUG_CheckStates(Gate[] gates, bool[] states)
@@ -237,13 +243,13 @@ namespace CircuitSimulatorPlus
         {
             if (e.Key == Key.A)
             {
-                gates[0].Input[0].State = true;
+                gates[0].Input[0].State = !gates[0].Input[0].State;
                 gates[0].Input[0].Tick(tickedNodes);
             }
             if (e.Key == Key.B)
             {
-                gates[0].Input[0].State = false;
-                gates[0].Input[0].Tick(tickedNodes);
+                gates[0].Input[1].State = !gates[0].Input[1].State;
+                gates[0].Input[1].Tick(tickedNodes);
             }
             //if (e.Key == Key.C)
             //{

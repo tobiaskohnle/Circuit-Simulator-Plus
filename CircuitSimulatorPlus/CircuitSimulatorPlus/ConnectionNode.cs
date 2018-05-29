@@ -69,6 +69,12 @@ namespace CircuitSimulatorPlus
             IsInverted = !IsInverted;
         }
 
+        public void ConnectTo(ConnectionNode connectionNode)
+        {
+            connectionNode.NextConnectedTo.Add(connectionNode);
+            connectionNode.BackConnectedTo = this;
+        }
+
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);
 
         protected void Tick(Queue<ConnectionNode> tickedNodes, bool isOutput)
