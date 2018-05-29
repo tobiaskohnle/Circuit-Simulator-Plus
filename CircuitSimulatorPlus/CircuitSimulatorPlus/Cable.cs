@@ -10,13 +10,13 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    class Cabel
+    class Cable
     {
         Canvas canvas;
         List<Line> verticalLines = new List<Line>();
         List<Line> horizontalLines = new List<Line>();
         double positionX1, positionX2, positionY1, positionY2;
-        public Cabel(Canvas canvas)
+        public Cable(Canvas canvas)
         {
             this.canvas = canvas;
         }
