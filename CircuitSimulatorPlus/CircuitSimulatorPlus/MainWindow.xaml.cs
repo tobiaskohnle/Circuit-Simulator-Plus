@@ -27,13 +27,18 @@ namespace CircuitSimulatorPlus
         public const double LineWidth = 0.1;
         public const int UndoBufferSize = 32;
         #endregion
-        //double scale = 1.0;
-        //Point position;
 
         #region Properties
         Point lastMousePos;
         Point lastMouseClick;
 
+        //double scale = 1.0;
+        //Point position;
+
+        /// <summary>
+        /// ConnectionNodes scheduled to be updated.
+        /// </summary>
+        Queue<ConnectionNode> tickedNodes;
         List<Gate> selected;
         //SimulationContext context;
         List<Gate> gates = new List<Gate>();
