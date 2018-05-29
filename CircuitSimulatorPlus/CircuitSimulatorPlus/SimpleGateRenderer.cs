@@ -54,6 +54,8 @@ namespace CircuitSimulatorPlus
 
             OnPositionChanged(this, EventArgs.Empty);
             gate.PositionChanged += OnPositionChanged;
+            gate.ConnectionChanged += OnInputChanged;
+            gate.ConnectionChanged += OnOutputChanged;
         }
 
         public void Unrender()
@@ -89,6 +91,22 @@ namespace CircuitSimulatorPlus
                 double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
+            }
+        }
+
+        void OnInputChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < inputLines.Count; i++)
+            {
+                inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
+            }
+        }
+
+        void OnOutputChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < outputLines.Count; i++)
+            {
+                outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
             }
         }
     }
