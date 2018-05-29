@@ -25,10 +25,10 @@ namespace CircuitSimulatorPlus
         }
         public void Draw()
         {
-            for (int i = 0; i < width; i += 2)
+            for (int i = 0; i < width; i++)
             {
                 var line = new Line();
-                line.Stroke = Brushes.Black;
+                line.Stroke = Brushes.LightGray;
                 line.StrokeThickness = MainWindow.LineWidth;
                 line.X1 = i;
                 line.X2 = i;
@@ -37,10 +37,10 @@ namespace CircuitSimulatorPlus
                 verticalLines.Add(line);
                 canvas.Children.Add(line);
             }
-            for (int i = 0; i < height; i += 2)
+            for (int i = 0; i < height; i++)
             {
                 var line = new Line();
-                line.Stroke = Brushes.Black;
+                line.Stroke = Brushes.LightGray;
                 line.StrokeThickness = MainWindow.LineWidth;
                 line.X1 = 0;
                 line.X2 = width;
