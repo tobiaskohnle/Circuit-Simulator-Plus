@@ -38,8 +38,8 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// ConnectionNodes scheduled to be updated.
         /// </summary>
-        Queue<ConnectionNode> tickedNodes;
-        List<Gate> selected;
+        Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
+        List<Gate> selected = new List<Gate>();
         //SimulationContext context;
         List<Gate> gates = new List<Gate>();
         #endregion
@@ -79,6 +79,13 @@ namespace CircuitSimulatorPlus
 
             gate.Input[0].State = true;
             gate.Input[0].Tick(tickedNodes);
+            while (tickedNodes.Any())
+            {
+                List<ConnectionNode> copy = tickedNodes.ToList();
+                tickedNodes.Clear();
+                foreach (ConnectionNode ticked in copy)
+                    ticked.Tick(tickedNodes);
+            }
         }
         public void ResetView()
         {

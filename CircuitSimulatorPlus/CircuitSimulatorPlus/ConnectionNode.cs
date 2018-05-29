@@ -70,9 +70,7 @@ namespace CircuitSimulatorPlus
             if (IsEmpty)
             {
                 if (lastWasElementary)
-                {
                     State = Owner.Eval();
-                }
             }
             else
             {
@@ -85,13 +83,8 @@ namespace CircuitSimulatorPlus
 
                 if (nextIsElementary)
                 {
-                    foreach (OutputNode output in Owner.Output)
-                    {
-                        foreach (ConnectionNode node in output.NextConnectedTo)
-                        {
-                            tickedNodes.Enqueue(node);
-                        }
-                    }
+                    foreach (OutputNode node in Owner.Output)
+                        tickedNodes.Enqueue(node);
                 }
                 else
                 {
