@@ -165,10 +165,14 @@ namespace CircuitSimulatorPlus
             Gate and1 = DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
             Gate or = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
 
+            xor.Position = new Point(0, 5);
+            and0.Position = new Point(5, 2);
+            and1.Position = new Point(5, 8);
+            or.Position = new Point(10, 5);
+
             xor.Context.Add(and0);
             xor.Context.Add(and1);
             xor.Context.Add(or);
-
 
             and0.Input[0].Invert();
             and1.Input[0].Invert();
@@ -180,11 +184,6 @@ namespace CircuitSimulatorPlus
             xor.Input[1].ConnectTo(and0.Input[1]);
             xor.Input[1].ConnectTo(and1.Input[0]);
             or.Output[0].ConnectTo(xor.Output[0]);
-
-            xor.Position = new Point(0, 5);
-            and0.Position = new Point(5, 2);
-            and1.Position = new Point(5, 8);
-            or.Position = new Point(10, 5);
 
             gates.Clear();
             gates.Add(xor);
