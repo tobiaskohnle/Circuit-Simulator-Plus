@@ -11,8 +11,8 @@ namespace CircuitSimulatorPlus
     {
         public string Name;
         public Point Position;
+        public string Type;
         public List<StorageObject> Context;
-        public Gate.GateType Type;
         public int[] OutputConnections;
         public int[] InputConnections;
         public List<int> InvertedInputs;
