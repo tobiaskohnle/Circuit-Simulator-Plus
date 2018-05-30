@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -322,7 +323,14 @@ namespace CircuitSimulatorPlus
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
         {
-
+            var dialog = new SaveFileDialog();
+            dialog.FileName = "Circuit";
+            dialog.DefaultExt = ".json";
+            if (dialog.ShowDialog() == true)
+            {
+                string path = dialog.FileName;
+                Storage.Save(path, mainGate);
+            }
         }
         void SaveFileAs_Click(object sender, RoutedEventArgs e)
         {

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    //using StorageObject = SimulationContext;
+    using StorageObject = Gate;
 
     static class Storage
     {
@@ -53,6 +53,8 @@ namespace CircuitSimulatorPlus
         public static void Save(string filepath, StorageObject store)
         {
             var ser = new JsonSerializer();
+            ser.Formatting = Formatting.Indented;
+            ser.PreserveReferencesHandling = PreserveReferencesHandling.All;
 
             try
             {
