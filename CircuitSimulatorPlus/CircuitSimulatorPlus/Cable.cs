@@ -19,6 +19,8 @@ namespace CircuitSimulatorPlus
 
         public void AddPoint(Point point)
         {
+            if (Points.Count > 0)
+                Points.Add(new Point(Points.Last().X, point.Y));
             Points.Add(point);
             if (Renderer != null)
                 Renderer.Update();

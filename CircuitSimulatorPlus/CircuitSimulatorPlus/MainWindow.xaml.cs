@@ -292,7 +292,10 @@ namespace CircuitSimulatorPlus
             if (drawingcable)
             {
                 Cable lastcable = cables.Last();
-                lastcable.AddPoint(e.GetPosition(canvas));
+                Point pos = e.GetPosition(canvas);
+                pos.X = Math.Round(pos.X);
+                pos.Y = Math.Round(pos.Y);
+                lastcable.AddPoint(pos);
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
