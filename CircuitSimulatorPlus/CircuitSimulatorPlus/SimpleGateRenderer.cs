@@ -17,7 +17,7 @@ namespace CircuitSimulatorPlus
         Rectangle rectangle;
         List<Line> inputLines = new List<Line>();
         List<Line> outputLines = new List<Line>();
-        List<Line> connectionLines = new List<Line>();
+        List<Line>[] connectionLines;
 
         public SimpleGateRenderer(Canvas canvas, Gate gate)
         {
@@ -53,14 +53,14 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(line);
             }
 
-            OnPositionChanged(this, EventArgs.Empty);
-            gate.PositionChanged += OnPositionChanged;
-            //OnConnectionCreated(this, EventArgs.Empty);
-            //gate.ConnectionCreated += OnConnectionCreated;
+            OnConnectionCreated(this, EventArgs.Empty);
+            gate.ConnectionCreated += OnConnectionCreated;
             OnInputChanged(this, EventArgs.Empty);
             gate.ConnectionChanged += OnInputChanged;
             OnOutputChanged(this, EventArgs.Empty);
             gate.ConnectionChanged += OnOutputChanged;
+            OnPositionChanged(this, EventArgs.Empty);
+            gate.PositionChanged += OnPositionChanged;
         }
 
         public void Unrender()
@@ -85,6 +85,24 @@ namespace CircuitSimulatorPlus
                 double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
                 line.Y1 = y;
                 line.Y2 = y;
+
+                for (int j = 0; j < connectionLines[i].Count; j++)
+                {
+                    connectionLines[i][j].X1 = pos.X + 3;
+                    connectionLines[i][j].Y1 = y;
+                    Gate nextOwner = gate.Output[i].NextConnectedTo[j].Owner;
+                    int nextIndex = 0;
+                    for (int k = 0; k < nextOwner.Input.Count; k++)
+                    {
+                        if (nextOwner.Input[k] == gate.Output[i].NextConnectedTo[j])
+                        {
+                            nextIndex = k;
+                            break;
+                        }
+                    }
+                    connectionLines[i][j].X2 = nextOwner.Position.X - 1;
+                    connectionLines[i][j].Y2 = nextOwner.Position.Y + (double)4 * (1 + 2 * nextIndex) / (2 * nextOwner.Input.Count);
+                }
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -101,12 +119,24 @@ namespace CircuitSimulatorPlus
 
         void OnConnectionCreated(object sender, EventArgs e)
         {
+            connectionLines = new List<Line>[gate.Output.Count];
             for (int i = 0; i < gate.Output.Count; i++)
             {
-                //if ()
+                if (connectionLines[i] != null)
+                {
+                    foreach (Line line in connectionLines[i])
+                    {
+                        canvas.Children.Remove(line);
+                    }
+                }
+                connectionLines[i] = new List<Line>();
                 foreach (InputNode inConn in gate.Output[i].NextConnectedTo)
                 {
-
+                    Line line = new Line();
+                    line.Stroke = Brushes.Black;
+                    line.StrokeThickness = MainWindow.LineWidth;
+                    connectionLines[i].Add(line);
+                    canvas.Children.Add(line);
                 }
             }
         }
@@ -124,9 +154,9 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
-                if (outputLines[i] != null)
+                foreach (Line line in connectionLines[i])
                 {
-                    //connectionLines[i].Stroke = outputLines[i].Stroke;
+                    line.Stroke = outputLines[i].Stroke;
                 }
             }
         }
