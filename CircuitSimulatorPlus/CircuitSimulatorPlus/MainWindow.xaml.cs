@@ -289,7 +289,7 @@ namespace CircuitSimulatorPlus
             }
             if (drawingcable)
             {
-                var lastcable = cables.Last();
+                Cable lastcable = cables.Last();
                 lastcable.create_points(e.GetPosition(this));
             }
         }
@@ -460,6 +460,7 @@ namespace CircuitSimulatorPlus
             Point point = new Point();
             point.X = gate.Position.X;
             point.Y = gate.Position.Y + 2;
+            Cable lastcable = cables.Last();
         }
         #endregion
     }
