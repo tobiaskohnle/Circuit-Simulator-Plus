@@ -64,7 +64,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                mainGate = Storage.Load(args[1]);
+                mainGate = StorageConverter.ToGate(Storage.Load(args[1]));
             else
                 mainGate = new Gate();
             foreach (Gate gate in mainGate.Context)
@@ -349,7 +349,7 @@ namespace CircuitSimulatorPlus
             dialog.Filter = "Circuit File (.json)|*.json";
             if (dialog.ShowDialog() == true)
             {
-                mainGate = Storage.Load(dialog.FileName);
+                mainGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
             }
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -360,7 +360,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 string path = dialog.FileName;
-                Storage.Save(path, mainGate);
+                Storage.Save(path, StorageConverter.ToStorageObject(mainGate));
             }
         }
         void SaveFileAs_Click(object sender, RoutedEventArgs e)

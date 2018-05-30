@@ -9,8 +9,6 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    using StorageObject = Gate;
-
     static class Storage
     {
         /// <summary>
