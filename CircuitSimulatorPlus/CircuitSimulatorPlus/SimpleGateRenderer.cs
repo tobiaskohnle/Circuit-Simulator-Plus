@@ -71,6 +71,14 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Remove(line);
             foreach (Line line in inputLines)
                 canvas.Children.Remove(line);
+            foreach (List<Line> lines in connectionLines)
+            {
+                foreach (Line line in lines)
+                {
+                    if (line != null)
+                        canvas.Children.Remove(line);
+                }
+            }
         }
 
         void OnPositionChanged(object sender, EventArgs e)
