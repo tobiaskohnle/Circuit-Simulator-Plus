@@ -55,8 +55,8 @@ namespace CircuitSimulatorPlus
         {
             InitializeComponent();
 
-            RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
-            canvas.SnapsToDevicePixels = true;
+            //RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
+            //canvas.SnapsToDevicePixels = true;
 
             ResetView();
 
@@ -93,7 +93,10 @@ namespace CircuitSimulatorPlus
         public Gate DEBUG_CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             mainGate.Context.Add(gate);
-            gate.Renderer = new SimpleGateRenderer(canvas, gate);
+            var renderer = new SimpleGateRenderer(canvas, gate);
+            renderer.InputClicked += OnGateInputClicked;
+            renderer.OutputClicked += OnGateOutputClicked;
+            gate.Renderer = renderer;
             gate.Position = new Point(5, mainGate.Context.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
@@ -289,7 +292,7 @@ namespace CircuitSimulatorPlus
             if (drawingcable)
             {
                 Cable lastcable = cables.Last();
-                lastcable.AddPoint(e.GetPosition(this));
+                lastcable.AddPoint(e.GetPosition(canvas));
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -444,9 +447,10 @@ namespace CircuitSimulatorPlus
             int index = ((IndexEventArgs)e).Index;
 
             Point point = new Point();
-            point.X = gate.Position.X + 3;
-            point.Y = gate.Position.Y + 2;
-            Cable cable = new Cable(point);
+            point.X = gate.Position.X + 3 + 1;
+            point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Output.Count);
+            Cable cable = new Cable();
+            cable.AddPoint(point);
             cables.Add(cable);
             cable.Renderer = new CableRenderer(canvas, cable);
             cable.Output = gate.Output[index];
@@ -459,9 +463,10 @@ namespace CircuitSimulatorPlus
             int index = ((IndexEventArgs)e).Index;
 
             Point point = new Point();
-            point.X = gate.Position.X;
-            point.Y = gate.Position.Y + 2;
+            point.X = gate.Position.X - 1;
+            point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Input.Count);
             Cable lastcable = cables.Last();
+            lastcable.AddPoint(point);
             lastcable.Input = gate.Input[index];
             drawingcable = false;
         }

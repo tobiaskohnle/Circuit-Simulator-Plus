@@ -17,12 +17,6 @@ namespace CircuitSimulatorPlus
         public OutputNode Output;
         public InputNode Input;
 
-        public Cable(Point point)
-        {
-            if (Renderer != null)
-                Renderer.Update();
-        }
-
         public void AddPoint(Point point)
         {
             Points.Add(point);

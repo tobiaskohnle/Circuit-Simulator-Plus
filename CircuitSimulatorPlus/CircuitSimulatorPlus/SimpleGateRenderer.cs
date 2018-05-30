@@ -20,6 +20,9 @@ namespace CircuitSimulatorPlus
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
+        List<Rectangle> outputHitboxes = new List<Rectangle>();
+        List<Rectangle> inputHitboxes = new List<Rectangle>();
+
         public EventHandler InputClicked;
         public EventHandler OutputClicked;
 
@@ -46,6 +49,13 @@ namespace CircuitSimulatorPlus
                 line.StrokeThickness = MainWindow.LineWidth;
                 outputLines.Add(line);
                 canvas.Children.Add(line);
+                Rectangle hitbox = new Rectangle();
+                hitbox.Fill = new SolidColorBrush(Color.FromArgb(63, 255, 0, 0));
+                hitbox.Width = 1;
+                hitbox.Height = 1;
+                hitbox.MouseDown += OnOutputClicked;
+                outputHitboxes.Add(hitbox);
+                canvas.Children.Add(hitbox);
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -55,6 +65,13 @@ namespace CircuitSimulatorPlus
                 line.StrokeThickness = MainWindow.LineWidth;
                 inputLines.Add(line);
                 canvas.Children.Add(line);
+                Rectangle hitbox = new Rectangle();
+                hitbox.Fill = new SolidColorBrush(Color.FromArgb(63, 255, 0, 0));
+                hitbox.Width = 1;
+                hitbox.Height = 1;
+                hitbox.MouseDown += OnInputClicked;
+                inputHitboxes.Add(hitbox);
+                canvas.Children.Add(hitbox);
             }
 
             OnConnectionCreated(this, EventArgs.Empty);
@@ -86,14 +103,32 @@ namespace CircuitSimulatorPlus
 
         void OnInputClicked(object sender, EventArgs e)
         {
-            IndexEventArgs args = new IndexEventArgs(0);
-            InputClicked?.Invoke(this, args);
+            int index = 0;
+            for (int i = 0; i < inputHitboxes.Count; i++)
+            {
+                if (sender == inputHitboxes[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            IndexEventArgs args = new IndexEventArgs(index);
+            InputClicked?.Invoke(gate, args);
         }
 
         void OnOutputClicked(object sender, EventArgs e)
         {
-            IndexEventArgs args = new IndexEventArgs(0);
-            OutputClicked?.Invoke(this, args);
+            int index = 0;
+            for (int i = 0; i < outputHitboxes.Count; i++)
+            {
+                if (sender == outputHitboxes[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            IndexEventArgs args = new IndexEventArgs(index);
+            OutputClicked?.Invoke(gate, args);
         }
 
         void OnPositionChanged(object sender, EventArgs e)
@@ -117,6 +152,9 @@ namespace CircuitSimulatorPlus
                     connectionLines[i][j].X1 = pos.X + 3 + 1;
                     connectionLines[i][j].Y1 = y;
                 }
+
+                Canvas.SetLeft(outputHitboxes[i], pos.X + 3);
+                Canvas.SetTop(outputHitboxes[i], y - 0.5);
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -128,6 +166,9 @@ namespace CircuitSimulatorPlus
                 double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
+
+                Canvas.SetLeft(inputHitboxes[i], pos.X - 1);
+                Canvas.SetTop(inputHitboxes[i], y - 0.5);
             }
         }
 

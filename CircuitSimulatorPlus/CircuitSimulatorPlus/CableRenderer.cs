@@ -42,6 +42,7 @@ namespace CircuitSimulatorPlus
                 line.X2 = pos2.X;
                 line.Y2 = pos2.Y;
                 canvas.Children.Add(line);
+                lines.Add(line);
             }
         }
 
