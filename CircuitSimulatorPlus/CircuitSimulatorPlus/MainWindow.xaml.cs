@@ -68,6 +68,9 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in mainGate.Context)
                 gate.Renderer.Render();
 
+            ImageBrush ib = new ImageBrush();
+            ib.ImageSource = new BitmapImage(new Uri(@"Grid.png", UriKind.Relative));
+            canvas.Background = ib;
             //testing <--
             //var grid = new Grid(canvas, (int)Width, (int)Height);
             //grid.Draw();
