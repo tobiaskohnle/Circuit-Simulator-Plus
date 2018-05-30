@@ -33,7 +33,9 @@ namespace CircuitSimulatorPlus
         #region Properties
         Point lastMousePos;
         Point lastMouseClick;
-        bool dragging = false;
+        Point lastCanvasClick;
+        bool dragging;
+        bool showContextMenu;
 
         //double scale = 1.0;
         //Point position;
@@ -234,6 +236,15 @@ namespace CircuitSimulatorPlus
             canvas.RenderTransform = new MatrixTransform(matrix);
         }
 
+        public void Select(Gate gate)
+        {
+            if (!gate.IsSelected)
+            {
+                selected.Add(gate);
+                gate.IsSelected = true;
+            }
+        }
+
         public void PerformAction(Action action)
         {
             // TODO: Create undo / redo stack
@@ -243,15 +254,21 @@ namespace CircuitSimulatorPlus
         #region Events
         void DEBUG_AddAndGate(object sender, EventArgs e)
         {
-            DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);//.Position = lastMouseClick;
+            DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1).Position = lastCanvasClick;
+            foreach (Gate gate in mainGate.Context)
+                gate.SnapToGrid();
         }
         void DEBUG_AddOrGate(object sender, EventArgs e)
         {
-            DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);//.Position = lastMouseClick;
+            DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1).Position = lastCanvasClick;
+            foreach (Gate gate in mainGate.Context)
+                gate.SnapToGrid();
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 2, 1);//.Position = lastMouseClick;
+            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 2, 1).Position = lastCanvasClick;
+            foreach (Gate gate in mainGate.Context)
+                gate.SnapToGrid();
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
@@ -283,8 +300,13 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.OriginalSource is Gate)
+                Select(e.OriginalSource as Gate);
+
+            lastCanvasClick = e.GetPosition(canvas);
             lastMousePos = lastMouseClick = e.GetPosition(this);
-            if (e.LeftButton == MouseButtonState.Pressed)
+            showContextMenu = true;
+            if (e.RightButton == MouseButtonState.Pressed)
             {
                 dragging = true;
                 CaptureMouse();
@@ -310,12 +332,20 @@ namespace CircuitSimulatorPlus
                 canvas.RenderTransform = new MatrixTransform(matrix);
             }
 
+            if (e.LeftButton == MouseButtonState.Pressed)
+                foreach (Gate gate in selected)
+                    gate.Move(moved);
+
             lastMousePos = currentPos;
+            if (moved.Length > 0)
+                showContextMenu = false;
             //position = Mouse.GetPosition(canvas);
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
             dragging = false;
+            foreach (Gate gate in selected)
+                gate.SnapToGrid();
             ReleaseMouseCapture();
         }
 
@@ -333,6 +363,11 @@ namespace CircuitSimulatorPlus
             //ScaleTransform scle = new ScaleTransform(scale, scale, 1/position.X, 1/position.Y);
             //canvas.RenderTransform = scle;
             //e.Handled = true;
+        }
+
+        void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            e.Handled = !showContextMenu;
         }
 
         void NewFile_Click(object sender, RoutedEventArgs e)

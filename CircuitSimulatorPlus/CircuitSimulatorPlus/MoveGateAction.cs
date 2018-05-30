@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
@@ -11,26 +12,25 @@ namespace CircuitSimulatorPlus
     /// </summary>
     public class MoveGateAction : Action
     {
-        double moveX, moveY;
+        Vector move;
         List<Gate> movedGates;
 
-        public MoveGateAction(List<Gate> movedGates, double moveX, double moveY, string message) : base(message)
+        public MoveGateAction(List<Gate> movedGates, Vector move, string message) : base(message)
         {
-            this.moveX = moveX;
-            this.moveY = moveY;
+            this.move = move;
             this.movedGates = movedGates;
         }
 
         public override void Redo()
         {
             foreach (Gate gate in movedGates)
-                gate.Move(moveX, moveY);
+                gate.Move(move);
         }
 
         public override void Undo()
         {
             foreach (Gate gate in movedGates)
-                gate.Move(-moveX, -moveY);
+                gate.Move(-move);
         }
     }
 }
