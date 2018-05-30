@@ -10,6 +10,9 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
+    /// <summary>
+    /// Comments are for pussies.
+    /// </summary>
     public class SimpleGateRenderer : IRenderer
     {
         Canvas canvas;
@@ -99,6 +102,10 @@ namespace CircuitSimulatorPlus
                         canvas.Children.Remove(line);
                 }
             }
+            foreach (Rectangle box in inputHitboxes)
+                canvas.Children.Remove(box);
+            foreach (Rectangle box in outputHitboxes)
+                canvas.Children.Remove(box);
         }
 
         void OnInputClicked(object sender, EventArgs e)
@@ -153,7 +160,7 @@ namespace CircuitSimulatorPlus
                     connectionLines[i][j].Y1 = y;
                 }
 
-                Canvas.SetLeft(outputHitboxes[i], pos.X + 3);
+                Canvas.SetLeft(outputHitboxes[i], pos.X + 3 + 0.5);
                 Canvas.SetTop(outputHitboxes[i], y - 0.5);
             }
 
@@ -167,7 +174,7 @@ namespace CircuitSimulatorPlus
                 line.Y1 = y;
                 line.Y2 = y;
 
-                Canvas.SetLeft(inputHitboxes[i], pos.X - 1);
+                Canvas.SetLeft(inputHitboxes[i], pos.X - 1 - 0.5);
                 Canvas.SetTop(inputHitboxes[i], y - 0.5);
             }
         }

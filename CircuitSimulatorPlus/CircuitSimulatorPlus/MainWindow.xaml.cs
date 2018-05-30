@@ -251,7 +251,7 @@ namespace CircuitSimulatorPlus
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 2, 1);//.Position = lastMouseClick;
+            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 1, 1);//.Position = lastMouseClick;
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
@@ -338,9 +338,9 @@ namespace CircuitSimulatorPlus
         void NewFile_Click(object sender, RoutedEventArgs e)
         {
             foreach (Gate gate in mainGate.Context)
-            {
                 gate.Renderer.Unrender();
-            }
+            foreach (Cable cable in cables)
+                cable.Renderer.Unrender();
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
         {
