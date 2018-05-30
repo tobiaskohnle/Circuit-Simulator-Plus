@@ -430,6 +430,10 @@ namespace CircuitSimulatorPlus
         {
 
         }
+        void Output_Click(object sender, RoutedCommand e)
+        {
+
+        }
         #endregion
     }
 }
