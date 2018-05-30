@@ -56,7 +56,9 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(line);
         }
         */
-        List<Point> points= new List<Point>();
+        public List<Point> points= new List<Point>();
+        public IRenderer Renderer;
+
         public void create_points(Point point)
         {
             points.Add(point);
