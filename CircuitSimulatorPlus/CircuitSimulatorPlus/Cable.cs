@@ -57,7 +57,7 @@ namespace CircuitSimulatorPlus
         }
         */
         MainWindow push = new MainWindow();
-        public void create_points(push.Window_MouseDown)
+        public void create_points(Point point)
         {
 
         }

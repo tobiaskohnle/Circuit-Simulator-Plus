@@ -278,6 +278,8 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            Cable cable = new Cable();
+            cable.create_points(e.GetPosition(this));
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -427,10 +429,6 @@ namespace CircuitSimulatorPlus
 
         }
         void Reload_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        void Output_Click(object sender, RoutedCommand e)
         {
 
         }
