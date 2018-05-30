@@ -279,9 +279,7 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Cable cable = new Cable(e.GetPosition(this));
-            cable.create_points(e.GetPosition(this));
-            cables.Add(cable);
+            
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -439,6 +437,13 @@ namespace CircuitSimulatorPlus
         {
             Gate gate = (Gate)sender;
             int index = ((IndexEventArgs)e).Index;
+            Point point = new Point();
+            point.X = gate.Position.X + 3;
+            point.Y = gate.Position.Y + 2;
+            Cable cable = new Cable(point);
+            cable.create_points(point);
+            cables.Add(cable);
+            
         }
         #endregion
     }
