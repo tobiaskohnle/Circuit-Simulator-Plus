@@ -280,7 +280,6 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -290,7 +289,7 @@ namespace CircuitSimulatorPlus
             if (drawingcable)
             {
                 Cable lastcable = cables.Last();
-                lastcable.create_points(e.GetPosition(this));
+                lastcable.AddPoint(e.GetPosition(this));
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -443,26 +442,28 @@ namespace CircuitSimulatorPlus
         {
             Gate gate = (Gate)sender;
             int index = ((IndexEventArgs)e).Index;
+
             Point point = new Point();
             point.X = gate.Position.X + 3;
             point.Y = gate.Position.Y + 2;
             Cable cable = new Cable(point);
             cables.Add(cable);
             cable.Renderer = new CableRenderer(canvas, cable);
+            cable.Output = gate.Output[index];
             drawingcable = true;
-            cable.output=gate.Output[index];
         }
 
         void OnGateInputClicked(object sender, EventArgs e)
         {
             Gate gate = (Gate)sender;
             int index = ((IndexEventArgs)e).Index;
-            drawingcable = false;
+
             Point point = new Point();
             point.X = gate.Position.X;
             point.Y = gate.Position.Y + 2;
             Cable lastcable = cables.Last();
-            lastcable.input = gate.Input[index];
+            lastcable.Input = gate.Input[index];
+            drawingcable = false;
         }
         #endregion
     }
