@@ -447,8 +447,8 @@ namespace CircuitSimulatorPlus
             point.X = gate.Position.X + 3;
             point.Y = gate.Position.Y + 2;
             Cable cable = new Cable(point);
-            cable.create_points(point);
             cables.Add(cable);
+            cable.Renderer = new CableRenderer(canvas, cable);
             drawingcable = true;
             cable.output=gate.Output[index];
         }
