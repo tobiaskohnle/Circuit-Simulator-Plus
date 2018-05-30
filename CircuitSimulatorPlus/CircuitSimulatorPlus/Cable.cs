@@ -57,11 +57,15 @@ namespace CircuitSimulatorPlus
         }
         */
         public List<Point> points= new List<Point>();
-        public IRenderer Renderer;
-
+        public CableRenderer Renderer;
+        public Cable(Point point)
+        {
+            Renderer.Update;
+        }
         public void create_points(Point point)
         {
             points.Add(point);
+            Renderer.Update;
         }
     }
 }
