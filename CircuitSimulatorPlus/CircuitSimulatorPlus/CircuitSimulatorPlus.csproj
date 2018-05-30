@@ -76,6 +76,7 @@
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
     <Compile Include="Cable.cs" />
+    <Compile Include="CableRenderer.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="IndexEventArgs.cs" />
     <Compile Include="IRenderer.cs" />
