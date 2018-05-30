@@ -456,7 +456,10 @@ namespace CircuitSimulatorPlus
         {
             Gate gate = (Gate)sender;
             int index = ((IndexEventArgs)e).Index;
-
+            drawingcable = false;
+            Point point = new Point();
+            point.X = gate.Position.X;
+            point.Y = gate.Position.Y + 2;
         }
         #endregion
     }
