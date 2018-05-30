@@ -203,7 +203,7 @@ namespace CircuitSimulatorPlus
                 {
                     Line line = new Line();
                     line.Stroke = Brushes.Black;
-                    line.StrokeThickness = MainWindow.LineWidth;
+                    line.StrokeThickness = MainWindow.LineWidth / 2;
                     connectionLines[i].Add(line);
                     canvas.Children.Add(line);
 

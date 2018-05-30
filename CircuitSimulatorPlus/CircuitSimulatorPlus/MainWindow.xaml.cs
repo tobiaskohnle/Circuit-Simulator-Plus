@@ -471,6 +471,8 @@ namespace CircuitSimulatorPlus
             Cable lastcable = cables.Last();
             lastcable.AddPoint(point);
             lastcable.Input = gate.Input[index];
+            lastcable.Output.ConnectTo(lastcable.Input);
+            lastcable.Input.Tick(tickedNodes);
             drawingcable = false;
         }
         #endregion
