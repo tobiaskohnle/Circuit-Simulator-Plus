@@ -56,6 +56,10 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(line);
         }
         */
+        MainWindow push = new MainWindow();
+        public void create_points(push.Window_MouseDown)
+        {
 
+        }
     }
 }
