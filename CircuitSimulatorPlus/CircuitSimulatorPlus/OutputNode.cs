@@ -19,9 +19,9 @@ namespace CircuitSimulatorPlus
         /// <param name="inputNode"></param>
         public void ConnectTo(InputNode inputNode)
         {
-            NextConnectedTo.Add(inputNode);
-            inputNode.BackConnectedTo = this;
+            base.ConnectTo(inputNode);
             IsEmpty = inputNode.IsEmpty = false;
+            Owner.ConnectionCreated?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Clears this OutputNode.

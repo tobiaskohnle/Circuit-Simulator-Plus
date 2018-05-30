@@ -10,6 +10,7 @@ namespace CircuitSimulatorPlus
         {
             Type = type;
             HasContext = type == GateType.Context;
+            Context = new List<Gate>();
             Input = new List<InputNode>();
             Output = new List<OutputNode>();
         }
@@ -38,9 +39,12 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public List<OutputNode> Output { get; set; }
         /// <summary>
-        /// Triggered when any of the output signals changed.
+        /// Triggered when any of the connection signals changed.
         /// </summary>
-        public EventHandler OutputChanged { get; set; }
+        public EventHandler ConnectionChanged { get; set; }
+        /// <summary>
+        /// </summary>
+        public EventHandler ConnectionCreated { get; set; }
         /// <summary>
         /// Triggered when the Gate's position is changed.
         /// </summary>

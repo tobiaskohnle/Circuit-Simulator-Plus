@@ -8,24 +8,19 @@
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Add And Gate" Click="DEBUG_AddAndGate"></MenuItem>
+            <MenuItem Header="Add Or Gate" Click="DEBUG_AddOrGate"></MenuItem>
+            <MenuItem Header="Add Not Gate" Click="DEBUG_AddNotGate"></MenuItem>
+        </ContextMenu>
+    </Window.ContextMenu>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Canvas x:Name="canvas" Grid.Row="1">
-            <Canvas.Background>
-            <VisualBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20"
-                     ViewboxUnits="Absolute">
-                <VisualBrush.Visual>
-                    <!--<Ellipse Fill="#FF000000" Width="3" Height="3" />-->
-                    <Grid>
-                        <Line Fill="#FF000000" Stroke="#FF000000" X1="0" Y1="0" X2="20" Y2="0" StrokeThickness="2" ></Line>
-                        <Line Fill="#FF000000" Stroke="#FF000000" X1="0" Y1="20" X2="0" Y2="0" StrokeThickness="2" ></Line>
-                    </Grid>
-                </VisualBrush.Visual>
-            </VisualBrush>
-            </Canvas.Background>
         </Canvas>
         <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="File" Width="auto">
