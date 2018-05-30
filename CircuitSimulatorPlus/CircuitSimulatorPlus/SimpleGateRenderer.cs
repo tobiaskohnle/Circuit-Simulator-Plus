@@ -86,13 +86,14 @@ namespace CircuitSimulatorPlus
 
         void OnInputClicked(object sender, EventArgs e)
         {
-            EventArgs args = new 
-            InputClicked?.Invoke(this, );
+            IndexEventArgs args = new IndexEventArgs(0);
+            InputClicked?.Invoke(this, args);
         }
 
         void OnOutputClicked(object sender, EventArgs e)
         {
-            OutputClicked?.Invoke(this, 0);
+            IndexEventArgs args = new IndexEventArgs(0);
+            OutputClicked?.Invoke(this, args);
         }
 
         void OnPositionChanged(object sender, EventArgs e)

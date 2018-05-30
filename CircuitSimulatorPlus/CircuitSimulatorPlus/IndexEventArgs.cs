@@ -8,5 +8,11 @@ namespace CircuitSimulatorPlus
 {
     public class IndexEventArgs : EventArgs
     {
+        public int Index;
+
+        public IndexEventArgs(int index)
+        {
+            Index = index;
+        }
     }
 }
