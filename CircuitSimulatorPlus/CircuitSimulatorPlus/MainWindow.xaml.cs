@@ -462,6 +462,7 @@ namespace CircuitSimulatorPlus
             point.X = gate.Position.X;
             point.Y = gate.Position.Y + 2;
             Cable lastcable = cables.Last();
+            lastcable.input = gate.Input[index];
         }
         #endregion
     }
