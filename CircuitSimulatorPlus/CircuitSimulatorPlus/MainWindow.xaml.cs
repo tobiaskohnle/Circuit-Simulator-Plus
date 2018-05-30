@@ -450,6 +450,7 @@ namespace CircuitSimulatorPlus
             cable.create_points(point);
             cables.Add(cable);
             drawingcable = true;
+            cable.output=gate.Output[index];
         }
 
         void OnGateInputClicked(object sender, EventArgs e)
