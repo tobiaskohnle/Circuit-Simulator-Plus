@@ -43,7 +43,8 @@ namespace CircuitSimulatorPlus
         List<Gate> selected = new List<Gate>();
         //SimulationContext context;
         DispatcherTimer timer;
-        List<Gate> gates = new List<Gate>();
+        //List<Gate> gates = new List<Gate>();
+        Gate mainGate = new Gate();
         #endregion
 
         public MainWindow()
@@ -85,9 +86,9 @@ namespace CircuitSimulatorPlus
 
         public Gate DEBUG_CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
-            gates.Add(gate);
+            mainGate.Context.Add(gate);
             gate.Renderer = new SimpleGateRenderer(canvas, gate);
-            gate.Position = new Point(5, gates.Count * 5);
+            gate.Position = new Point(5, mainGate.Context.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
                 gate.Input.Add(new InputNode(gate));
@@ -100,35 +101,35 @@ namespace CircuitSimulatorPlus
 
         public void DEBUG_Test1()
         {
-            gates.Clear();
+            mainGate.Context.Clear();
             DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
             DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
 
-            gates[0].Input[0].State = true;
-            gates[0].Output[0].ConnectTo(gates[1].Input[0]);
-            gates[0].Input[0].Tick(tickedNodes);
+            mainGate.Context[0].Input[0].State = true;
+            mainGate.Context[0].Output[0].ConnectTo(mainGate.Context[1].Input[0]);
+            mainGate.Context[0].Input[0].Tick(tickedNodes);
 
             //DEBUG_TickAll();
 
-            DEBUG_CheckStates(gates.ToArray(), new[] { true, false, true, true, false, true });
+            DEBUG_CheckStates(mainGate.Context.ToArray(), new[] { true, false, true, true, false, true });
         }
 
         public void DEBUG_Test2()
         {
-            gates.Clear();
+            mainGate.Context.Clear();
             DEBUG_CreateGate(new Gate(Gate.GateType.And), 2, 1);
 
-            gates[0].Output[0].Invert();
-            gates[0].Output[0].Tick(tickedNodes);
+            mainGate.Context[0].Output[0].Invert();
+            mainGate.Context[0].Output[0].Tick(tickedNodes);
 
             //DEBUG_TickAll();
 
-            DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true });
+            DEBUG_CheckStates(mainGate.Context.ToArray(), new[] { false, false, true });
         }
 
         public void DEBUG_Test3()
         {
-            gates.Clear();
+            mainGate.Context.Clear();
             Gate a = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
             Gate b = DEBUG_CreateGate(new Gate(Gate.GateType.Or), 2, 1);
 
@@ -143,19 +144,19 @@ namespace CircuitSimulatorPlus
             b.Output[0].Tick(tickedNodes);
             DEBUG_TickAll();
 
-            DEBUG_CheckStates(gates.ToArray(), new[] { false, false, true, true, false, false });
+            DEBUG_CheckStates(mainGate.Context.ToArray(), new[] { false, false, true, true, false, false });
 
             a.Input[0].State = true;
             a.Input[0].Tick(tickedNodes);
             //DEBUG_TickAll();
 
-            DEBUG_CheckStates(gates.ToArray(), new[] { true, true, false, false, false, true });
+            DEBUG_CheckStates(mainGate.Context.ToArray(), new[] { true, true, false, false, false, true });
 
             a.Input[0].State = false;
             a.Input[0].Tick(tickedNodes);
             //DEBUG_TickAll();
 
-            DEBUG_CheckStates(gates.ToArray(), new[] { false, true, false, false, false, true });
+            DEBUG_CheckStates(mainGate.Context.ToArray(), new[] { false, true, false, false, false, true });
         }
 
         public void DEBUG_Test4()
@@ -185,8 +186,8 @@ namespace CircuitSimulatorPlus
             xor.Input[1].ConnectTo(and1.Input[0]);
             or.Output[0].ConnectTo(xor.Output[0]);
 
-            gates.Clear();
-            gates.Add(xor);
+            mainGate.Context.Clear();
+            mainGate.Context.Add(xor);
         }
 
         public void DEBUG_CheckStates(Gate[] gates, bool[] states)
@@ -248,23 +249,23 @@ namespace CircuitSimulatorPlus
         {
             if (e.Key == Key.A)
             {
-                gates[0].Input[0].State = !gates[0].Input[0].State;
-                gates[0].Input[0].Tick(tickedNodes);
+                mainGate.Context[0].Input[0].State = !mainGate.Context[0].Input[0].State;
+                mainGate.Context[0].Input[0].Tick(tickedNodes);
             }
             if (e.Key == Key.B)
             {
-                gates[0].Input[1].State = !gates[0].Input[1].State;
-                gates[0].Input[1].Tick(tickedNodes);
+                mainGate.Context[0].Input[1].State = !mainGate.Context[0].Input[1].State;
+                mainGate.Context[0].Input[1].Tick(tickedNodes);
             }
             //if (e.Key == Key.C)
             //{
-            //    gates[1].Input[1].State = true;
-            //    gates[1].Input[1].Tick(tickedNodes);
+            //    mainGate.Context[1].Input[1].State = true;
+            //    mainGate.Context[1].Input[1].Tick(tickedNodes);
             //}
             //if (e.Key == Key.D)
             //{
-            //    gates[1].Input[1].State = false;
-            //    gates[1].Input[1].Tick(tickedNodes);
+            //    mainGate.Context[1].Input[1].State = false;
+            //    mainGate.Context[1].Input[1].Tick(tickedNodes);
             //}
         }
         void Window_KeyUp(object sender, KeyEventArgs e)
