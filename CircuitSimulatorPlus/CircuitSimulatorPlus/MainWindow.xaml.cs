@@ -284,7 +284,7 @@ namespace CircuitSimulatorPlus
             Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
 
-            if (e.RightButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
