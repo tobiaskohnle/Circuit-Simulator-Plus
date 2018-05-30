@@ -48,6 +48,7 @@ namespace CircuitSimulatorPlus
         //List<Gate> gates = new List<Gate>();
         Gate mainGate = new Gate();
         List<Cable> cables = new List<Cable>();
+        bool drawingcable;
         #endregion
 
         public MainWindow()
@@ -286,6 +287,11 @@ namespace CircuitSimulatorPlus
                 dragging = true;
                 CaptureMouse();
             }
+            if (drawingcable)
+            {
+                var lastcable = cables.Last();
+                lastcable.create_points(e.GetPosition(this));
+            }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
@@ -443,7 +449,7 @@ namespace CircuitSimulatorPlus
             Cable cable = new Cable(point);
             cable.create_points(point);
             cables.Add(cable);
-            
+            drawingcable = true;
         }
         #endregion
     }
