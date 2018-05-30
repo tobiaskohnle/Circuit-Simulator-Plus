@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
 {
     class Cable
     {
-        Canvas canvas;
+        /*Canvas canvas;
         List<Line> verticalLines = new List<Line>();
         List<Line> horizontalLines = new List<Line>();
         double positionX1, positionX2, positionY1, positionY2;
@@ -50,5 +50,7 @@ namespace CircuitSimulatorPlus
             horizontalLines.Add(line);
             canvas.Children.Add(line);
         }
+        */
+
     }
 }

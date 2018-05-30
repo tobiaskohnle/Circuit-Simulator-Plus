@@ -51,7 +51,7 @@ namespace CircuitSimulatorPlus
         public string Name { get; set; }
 
         public abstract void Clear();
-
+        
         /// <summary>
         /// Inverts the ConnectionNode.
         /// </summary>
