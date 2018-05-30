@@ -33,6 +33,7 @@ namespace CircuitSimulatorPlus
         #region Properties
         Point lastMousePos;
         Point lastMouseClick;
+        bool dragging = false;
 
         //double scale = 1.0;
         //Point position;
@@ -278,13 +279,15 @@ namespace CircuitSimulatorPlus
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             lastMousePos = lastMouseClick = e.GetPosition(this);
+            if (e.LeftButton == MouseButtonState.Pressed)
+                dragging = true;
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
             Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
 
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (dragging)
             {
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
@@ -296,7 +299,7 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            dragging = false;
         }
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
