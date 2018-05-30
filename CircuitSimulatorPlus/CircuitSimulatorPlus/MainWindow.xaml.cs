@@ -432,6 +432,12 @@ namespace CircuitSimulatorPlus
         {
 
         }
+
+        void OnGateOutputClicked(object sender, EventArgs e)
+        {
+            Gate gate = (Gate)sender;
+            int index = ((IndexEventArgs)e).Index;
+        }
         #endregion
     }
 }
