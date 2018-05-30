@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    class Cable
+    public class Cable
     {
         /*Canvas canvas;
         List<Line> verticalLines = new List<Line>();
