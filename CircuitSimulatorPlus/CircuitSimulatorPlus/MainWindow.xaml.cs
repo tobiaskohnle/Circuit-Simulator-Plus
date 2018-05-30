@@ -47,6 +47,8 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer;
         //List<Gate> gates = new List<Gate>();
         Gate mainGate = new Gate();
+        List<Cable> cables = new List<Cable>();
+        bool drawingcable;
         #endregion
 
         public MainWindow()
@@ -278,13 +280,17 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Cable cable = new Cable(e.GetPosition(this));
-            cable.create_points(e.GetPosition(this));
+            
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 dragging = true;
                 CaptureMouse();
+            }
+            if (drawingcable)
+            {
+                Cable lastcable = cables.Last();
+                lastcable.create_points(e.GetPosition(this));
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -431,6 +437,32 @@ namespace CircuitSimulatorPlus
         void Reload_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        void OnGateOutputClicked(object sender, EventArgs e)
+        {
+            Gate gate = (Gate)sender;
+            int index = ((IndexEventArgs)e).Index;
+            Point point = new Point();
+            point.X = gate.Position.X + 3;
+            point.Y = gate.Position.Y + 2;
+            Cable cable = new Cable(point);
+            cables.Add(cable);
+            cable.Renderer = new CableRenderer(canvas, cable);
+            drawingcable = true;
+            cable.output=gate.Output[index];
+        }
+
+        void OnGateInputClicked(object sender, EventArgs e)
+        {
+            Gate gate = (Gate)sender;
+            int index = ((IndexEventArgs)e).Index;
+            drawingcable = false;
+            Point point = new Point();
+            point.X = gate.Position.X;
+            point.Y = gate.Position.Y + 2;
+            Cable lastcable = cables.Last();
+            lastcable.input = gate.Input[index];
         }
         #endregion
     }

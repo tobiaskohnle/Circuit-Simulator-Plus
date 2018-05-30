@@ -67,5 +67,8 @@ namespace CircuitSimulatorPlus
             points.Add(point);
             if(Renderer!=null)Renderer.Update();
         }
+        public OutputNode output;
+        public InputNode input;
+        
     }
 }
