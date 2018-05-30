@@ -451,6 +451,13 @@ namespace CircuitSimulatorPlus
             cables.Add(cable);
             drawingcable = true;
         }
+
+        void OnGateInputClicked(object sender, EventArgs e)
+        {
+            Gate gate = (Gate)sender;
+            int index = ((IndexEventArgs)e).Index;
+
+        }
         #endregion
     }
 }
