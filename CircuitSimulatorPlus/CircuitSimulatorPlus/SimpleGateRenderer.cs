@@ -20,6 +20,9 @@ namespace CircuitSimulatorPlus
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
+        public EventHandler InputClicked;
+        public EventHandler OutputClicked;
+
         public SimpleGateRenderer(Canvas canvas, Gate gate)
         {
             this.canvas = canvas;
@@ -79,6 +82,17 @@ namespace CircuitSimulatorPlus
                         canvas.Children.Remove(line);
                 }
             }
+        }
+
+        void OnInputClicked(object sender, EventArgs e)
+        {
+            EventArgs args = new 
+            InputClicked?.Invoke(this, );
+        }
+
+        void OnOutputClicked(object sender, EventArgs e)
+        {
+            OutputClicked?.Invoke(this, 0);
         }
 
         void OnPositionChanged(object sender, EventArgs e)
