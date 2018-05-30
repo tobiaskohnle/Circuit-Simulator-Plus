@@ -71,7 +71,7 @@ namespace CircuitSimulatorPlus
 
         public void ConnectTo(ConnectionNode connectionNode)
         {
-            connectionNode.NextConnectedTo.Add(connectionNode);
+            NextConnectedTo.Add(connectionNode);
             connectionNode.BackConnectedTo = this;
         }
 

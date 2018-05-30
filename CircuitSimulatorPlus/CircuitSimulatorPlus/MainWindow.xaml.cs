@@ -78,8 +78,8 @@ namespace CircuitSimulatorPlus
 
             //DEBUG_Test1();
             //DEBUG_Test2();
-            DEBUG_Test3();
-            //DEBUG_Test4();
+            //DEBUG_Test3();
+            DEBUG_Test4();
             //MessageBox.Show("All Tests completed.");
         }
 
