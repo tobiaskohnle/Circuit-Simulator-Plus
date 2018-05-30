@@ -73,6 +73,7 @@ namespace CircuitSimulatorPlus
         {
             NextConnectedTo.Add(connectionNode);
             connectionNode.BackConnectedTo = this;
+            Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);
