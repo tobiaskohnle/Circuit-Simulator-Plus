@@ -69,6 +69,8 @@ namespace CircuitSimulatorPlus
             canvas.Children.Remove(rectangle);
             foreach (Line line in outputLines)
                 canvas.Children.Remove(line);
+            foreach (Line line in inputLines)
+                canvas.Children.Remove(line);
         }
 
         void OnPositionChanged(object sender, EventArgs e)

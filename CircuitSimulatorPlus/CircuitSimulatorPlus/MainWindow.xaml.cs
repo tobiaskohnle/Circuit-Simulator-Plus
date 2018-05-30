@@ -59,11 +59,13 @@ namespace CircuitSimulatorPlus
 
             Title = WindowTitle;
 
-            //string[] args = Environment.GetCommandLineArgs();
-            //if (args.Length > 1)
-            //    context = Storage.Load(args[1]);
-            //else
-            //    context = new SimulationContext();
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+                mainGate = Storage.Load(args[1]);
+            else
+                mainGate = new Gate();
+            foreach (Gate gate in mainGate.Context)
+                gate.Renderer.Render();
 
             //testing <--
             //var grid = new Grid(canvas, (int)Width, (int)Height);
@@ -315,11 +317,20 @@ namespace CircuitSimulatorPlus
 
         void NewFile_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (Gate gate in mainGate.Context)
+            {
+                gate.Renderer.Unrender();
+            }
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
         {
-
+            NewFile_Click(sender, e);
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Circuit File (.json)|*.json";
+            if (dialog.ShowDialog() == true)
+            {
+                mainGate = Storage.Load(dialog.FileName);
+            }
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
         {
