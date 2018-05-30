@@ -60,12 +60,12 @@ namespace CircuitSimulatorPlus
         public CableRenderer Renderer;
         public Cable(Point point)
         {
-            Renderer.Update;
+            if(Renderer!=null)Renderer.Update();
         }
         public void create_points(Point point)
         {
             points.Add(point);
-            Renderer.Update;
+            if(Renderer!=null)Renderer.Update();
         }
     }
 }

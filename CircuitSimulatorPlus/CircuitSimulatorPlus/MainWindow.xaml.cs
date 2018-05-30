@@ -278,7 +278,7 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Cable cable = new Cable();
+            Cable cable = new Cable(e.GetPosition(this));
             cable.create_points(e.GetPosition(this));
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
