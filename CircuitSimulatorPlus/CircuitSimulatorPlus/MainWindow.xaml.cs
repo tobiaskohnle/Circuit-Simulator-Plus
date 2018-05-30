@@ -65,10 +65,10 @@ namespace CircuitSimulatorPlus
             Title = WindowTitle;
 
             string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
-                mainGate = Storage.Load(args[1]);
-            else
-                mainGate = new Gate();
+            //if (args.Length > 1)
+                //mainGate = Storage.Load(args[1]);
+            //else
+                //mainGate = new Gate();
             foreach (Gate gate in mainGate.Context)
                 gate.Renderer.Render();
 
@@ -266,7 +266,7 @@ namespace CircuitSimulatorPlus
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 2, 1).Position = lastCanvasClick;
+            DEBUG_CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
             foreach (Gate gate in mainGate.Context)
                 gate.SnapToGrid();
         }
@@ -373,9 +373,7 @@ namespace CircuitSimulatorPlus
         void NewFile_Click(object sender, RoutedEventArgs e)
         {
             foreach (Gate gate in mainGate.Context)
-            {
                 gate.Renderer.Unrender();
-            }
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
         {
@@ -384,7 +382,7 @@ namespace CircuitSimulatorPlus
             dialog.Filter = "Circuit File (.json)|*.json";
             if (dialog.ShowDialog() == true)
             {
-                mainGate = Storage.Load(dialog.FileName);
+                //mainGate = Storage.Load(dialog.FileName);
             }
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -395,7 +393,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 string path = dialog.FileName;
-                Storage.Save(path, mainGate);
+                //Storage.Save(path, mainGate);
             }
         }
         void SaveFileAs_Click(object sender, RoutedEventArgs e)
