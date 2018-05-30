@@ -169,6 +169,7 @@ namespace CircuitSimulatorPlus
             xor.Context.Add(and1);
             xor.Context.Add(or);
 
+
             and0.Input[0].Invert();
             and1.Input[0].Invert();
             and0.Output[0].ConnectTo(or.Input[0]);
@@ -179,6 +180,11 @@ namespace CircuitSimulatorPlus
             xor.Input[1].ConnectTo(and0.Input[1]);
             xor.Input[1].ConnectTo(and1.Input[0]);
             or.Output[0].ConnectTo(xor.Output[0]);
+
+            xor.Position = new Point(0, 5);
+            and0.Position = new Point(5, 2);
+            and1.Position = new Point(5, 8);
+            or.Position = new Point(10, 5);
 
             gates.Clear();
             gates.Add(xor);
