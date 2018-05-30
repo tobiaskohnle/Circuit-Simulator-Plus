@@ -47,6 +47,7 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer;
         //List<Gate> gates = new List<Gate>();
         Gate mainGate = new Gate();
+        List<Cable> cables = new List<Cable>();
         #endregion
 
         public MainWindow()
@@ -280,6 +281,7 @@ namespace CircuitSimulatorPlus
         {
             Cable cable = new Cable(e.GetPosition(this));
             cable.create_points(e.GetPosition(this));
+            cables.Add(cable);
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
