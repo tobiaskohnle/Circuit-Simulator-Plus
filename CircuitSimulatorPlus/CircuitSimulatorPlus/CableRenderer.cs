@@ -14,6 +14,11 @@ namespace CircuitSimulatorPlus
 
         }
 
+        public void Update()
+        {
+
+        }
+
         public void Render()
         {
             throw new NotImplementedException();
