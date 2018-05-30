@@ -280,7 +280,10 @@ namespace CircuitSimulatorPlus
         {
             lastMousePos = lastMouseClick = e.GetPosition(this);
             if (e.LeftButton == MouseButtonState.Pressed)
+            {
                 dragging = true;
+                CaptureMouse();
+            }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
@@ -300,6 +303,7 @@ namespace CircuitSimulatorPlus
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
             dragging = false;
+            ReleaseMouseCapture();
         }
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
