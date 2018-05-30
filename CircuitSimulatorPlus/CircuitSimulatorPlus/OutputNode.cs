@@ -8,6 +8,8 @@ namespace CircuitSimulatorPlus
     {
         public OutputNode(Gate owner) : base(owner)
         {
+            if (owner.Type == Gate.GateType.Not)
+                State = true;
         }
 
         /// <summary>

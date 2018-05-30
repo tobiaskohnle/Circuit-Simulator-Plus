@@ -7,7 +7,8 @@
         Height="700" Width="1000"
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
-        MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel">
+        MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel"
+        ContextMenuOpening="Window_ContextMenuOpening">
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Add And Gate" Click="DEBUG_AddAndGate"></MenuItem>

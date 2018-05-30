@@ -9,8 +9,6 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    using StorageObject = Gate;
-
     static class Storage
     {
         /// <summary>
@@ -54,7 +52,7 @@ namespace CircuitSimulatorPlus
         {
             var ser = new JsonSerializer();
             ser.Formatting = Formatting.Indented;
-            ser.PreserveReferencesHandling = PreserveReferencesHandling.All;
+            ser.NullValueHandling = NullValueHandling.Ignore;
 
             try
             {

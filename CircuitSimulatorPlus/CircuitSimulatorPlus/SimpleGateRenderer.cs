@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
+    /// <summary>
+    /// Comments are for pussies.
+    /// </summary>
     public class SimpleGateRenderer : IRenderer
     {
         Canvas canvas;
@@ -19,6 +23,12 @@ namespace CircuitSimulatorPlus
         List<Line> outputLines = new List<Line>();
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
+
+        List<Rectangle> outputHitboxes = new List<Rectangle>();
+        List<Rectangle> inputHitboxes = new List<Rectangle>();
+
+        public EventHandler InputClicked;
+        public EventHandler OutputClicked;
 
         public SimpleGateRenderer(Canvas canvas, Gate gate)
         {
@@ -43,6 +53,13 @@ namespace CircuitSimulatorPlus
                 line.StrokeThickness = MainWindow.LineWidth;
                 outputLines.Add(line);
                 canvas.Children.Add(line);
+                Rectangle hitbox = new Rectangle();
+                hitbox.Fill = new SolidColorBrush(Color.FromArgb(63, 255, 0, 0));
+                hitbox.Width = 1;
+                hitbox.Height = 1;
+                hitbox.MouseDown += OnOutputClicked;
+                outputHitboxes.Add(hitbox);
+                canvas.Children.Add(hitbox);
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -52,6 +69,13 @@ namespace CircuitSimulatorPlus
                 line.StrokeThickness = MainWindow.LineWidth;
                 inputLines.Add(line);
                 canvas.Children.Add(line);
+                Rectangle hitbox = new Rectangle();
+                hitbox.Fill = new SolidColorBrush(Color.FromArgb(63, 255, 0, 0));
+                hitbox.Width = 1;
+                hitbox.Height = 1;
+                hitbox.MouseDown += OnInputClicked;
+                inputHitboxes.Add(hitbox);
+                canvas.Children.Add(hitbox);
             }
 
             OnConnectionCreated(this, EventArgs.Empty);
@@ -71,6 +95,48 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Remove(line);
             foreach (Line line in inputLines)
                 canvas.Children.Remove(line);
+            foreach (List<Line> lines in connectionLines)
+            {
+                foreach (Line line in lines)
+                {
+                    if (line != null)
+                        canvas.Children.Remove(line);
+                }
+            }
+            foreach (Rectangle box in inputHitboxes)
+                canvas.Children.Remove(box);
+            foreach (Rectangle box in outputHitboxes)
+                canvas.Children.Remove(box);
+        }
+
+        void OnInputClicked(object sender, EventArgs e)
+        {
+            int index = 0;
+            for (int i = 0; i < inputHitboxes.Count; i++)
+            {
+                if (sender == inputHitboxes[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            IndexEventArgs args = new IndexEventArgs(index);
+            InputClicked?.Invoke(gate, args);
+        }
+
+        void OnOutputClicked(object sender, EventArgs e)
+        {
+            int index = 0;
+            for (int i = 0; i < outputHitboxes.Count; i++)
+            {
+                if (sender == outputHitboxes[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            IndexEventArgs args = new IndexEventArgs(index);
+            OutputClicked?.Invoke(gate, args);
         }
 
         void OnPositionChanged(object sender, EventArgs e)
@@ -94,6 +160,9 @@ namespace CircuitSimulatorPlus
                     connectionLines[i][j].X1 = pos.X + 3 + 1;
                     connectionLines[i][j].Y1 = y;
                 }
+
+                Canvas.SetLeft(outputHitboxes[i], pos.X + 3 + 0.5);
+                Canvas.SetTop(outputHitboxes[i], y - 0.5);
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -105,6 +174,9 @@ namespace CircuitSimulatorPlus
                 double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
+
+                Canvas.SetLeft(inputHitboxes[i], pos.X - 1 - 0.5);
+                Canvas.SetTop(inputHitboxes[i], y - 0.5);
             }
         }
 
@@ -139,7 +211,7 @@ namespace CircuitSimulatorPlus
                 {
                     Line line = new Line();
                     line.Stroke = Brushes.Black;
-                    line.StrokeThickness = MainWindow.LineWidth;
+                    line.StrokeThickness = MainWindow.LineWidth / 2;
                     connectionLines[i].Add(line);
                     canvas.Children.Add(line);
 

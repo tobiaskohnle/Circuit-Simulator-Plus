@@ -88,10 +88,15 @@ namespace CircuitSimulatorPlus
         /// </summary>
         /// <param name="x">Movement along x-axis in units</param>
         /// <param name="y">Movement along y-axis in units</param>
-        public void Move(double x, double y)
+        public void Move(Vector move)
         {
-            position.X += x;
-            position.Y += y;
+            Position = new Point(Position.X + move.X, Position.Y + move.Y);
+        }
+        /// <summary>
+        /// </summary>
+        public void SnapToGrid()
+        {
+            Position = new Point(Math.Round(Position.X), Math.Round(Position.Y));
         }
         /// <summary>
         /// 

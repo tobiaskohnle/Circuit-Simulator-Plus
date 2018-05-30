@@ -60,7 +60,7 @@ namespace CircuitSimulatorPlus
         public string Name { get; set; }
 
         public abstract void Clear();
-
+        
         /// <summary>
         /// Inverts the ConnectionNode.
         /// </summary>
@@ -73,6 +73,7 @@ namespace CircuitSimulatorPlus
         {
             NextConnectedTo.Add(connectionNode);
             connectionNode.BackConnectedTo = this;
+            Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);

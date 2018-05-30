@@ -32,7 +32,18 @@ namespace CircuitSimulatorPlus
 
         public override void Tick(Queue<ConnectionNode> tickedNodes)
         {
-            Tick(tickedNodes, false);
+            if (IsRisingEdge)
+            {
+                State = BackConnectedTo.State && !State;
+                if (State)
+                    tickedNodes.Enqueue(this);
+                foreach (ConnectionNode node in NextConnectedTo)
+                    tickedNodes.Enqueue(node);
+            }
+            else
+            {
+                Tick(tickedNodes, false);
+            }
         }
     }
 }
