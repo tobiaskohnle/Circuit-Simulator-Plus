@@ -139,9 +139,13 @@ namespace CircuitSimulatorPlus
         #region Misc
         public void PerformAction(Action action)
         {
-            // TODO: Create undo / redo stack
             action.Redo();
         }
+        public void RevokeAction(Action action)
+        {
+            action.Undo();
+        }
+
         #endregion
 
         #region Events
@@ -271,11 +275,11 @@ namespace CircuitSimulatorPlus
 
         void Undo_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
