@@ -8,8 +8,6 @@ namespace CircuitSimulatorPlus
     {
         public OutputNode(Gate owner) : base(owner)
         {
-            if (owner.Type == Gate.GateType.Not)
-                State = true;
         }
 
         /// <summary>
@@ -30,6 +28,8 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public override void Clear()
         {
+            if (IsEmpty)
+                return;
             foreach (InputNode input in NextConnectedTo.ToList())
                 input.Clear();
         }

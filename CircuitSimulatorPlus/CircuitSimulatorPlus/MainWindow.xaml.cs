@@ -23,8 +23,8 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
-            grid = new Grid(canvas, 992, 648, 1.0);
-            grid.Render();
+            //grid = new Grid(canvas, 992, 648, 1.0);
+            //grid.Render();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -137,6 +137,29 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in selected)
                 gate.SnapToGrid();
         }
+        public Gate GateAt(Point pos)
+        {
+            foreach (Gate gate in contextGate.Context)
+            {
+                if (gate.Position.X <= pos.X
+                    && gate.Position.Y <= pos.Y
+                    && gate.Position.Y + gate.Size.Width >= pos.Y
+                    && gate.Position.X + gate.Size.Height >= pos.X)
+                {
+                    return gate;
+                }
+            }
+            return null;
+        }
+        public void Delete(Gate gate)
+        {
+            foreach (InputNode input in gate.Input)
+                input.Clear();
+            foreach (OutputNode output in gate.Output)
+                output.Clear();
+            gate.Renderer.Unrender();
+            contextGate.Context.Remove(gate);
+        }
         #endregion
 
         #region Visuals
@@ -175,9 +198,27 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in contextGate.Context)
                 gate.SnapToGrid();
         }
+        void DEBUG_AddNandGate(object sender, EventArgs e)
+        {
+            var newGate = CreateGate(new Gate(Gate.GateType.And), 2, 1);
+            newGate.Position = lastCanvasClick;
+            newGate.Output[0].Invert();
+            Tick(newGate.Output[0]);
+            foreach (Gate gate in contextGate.Context)
+                gate.SnapToGrid();
+        }
         void DEBUG_AddOrGate(object sender, EventArgs e)
         {
             CreateGate(new Gate(Gate.GateType.Or), 2, 1).Position = lastCanvasClick;
+            foreach (Gate gate in contextGate.Context)
+                gate.SnapToGrid();
+        }
+        void DEBUG_AddNorGate(object sender, EventArgs e)
+        {
+            var newGate = CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+            newGate.Position = lastCanvasClick;
+            newGate.Output[0].Invert();
+            Tick(newGate.Output[0]);
             foreach (Gate gate in contextGate.Context)
                 gate.SnapToGrid();
         }
@@ -198,6 +239,22 @@ namespace CircuitSimulatorPlus
             gate.Position = lastCanvasClick;
             gate.SnapToGrid();
         }
+        void DEBUG_DeleteGate(object sender, EventArgs e)
+        {
+            Gate clicked = GateAt(lastCanvasClick);
+            if (clicked != null)
+                Delete(clicked);
+        }
+        void DEBUG_ToggleGate(object sender, EventArgs e)
+        {
+            Gate clicked = GateAt(lastCanvasClick);
+            if (clicked != null)
+            {
+                clicked.Input[0].State = !clicked.Input[0].State;
+                clicked.Output[0].State = !clicked.Output[0].State;
+                Tick(clicked.Output[0]);
+            }
+        }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -212,16 +269,9 @@ namespace CircuitSimulatorPlus
 
             lastMousePos = lastMouseClick = e.GetPosition(this);
 
-            foreach (Gate gate in contextGate.Context)
-            {
-                if (gate.Position.X <= lastCanvasClick.X
-                    && gate.Position.Y <= lastCanvasClick.Y
-                    && gate.Position.Y + 4 >= lastCanvasClick.Y
-                    && gate.Position.X + 3 >= lastCanvasClick.X)
-                {
-                    Select(gate);
-                }
-            }
+            Gate clicked = GateAt(lastCanvasClick);
+            if (clicked != null)
+                Select(clicked);
 
             showContextMenu = true;
             if (e.RightButton == MouseButtonState.Pressed)
@@ -280,8 +330,8 @@ namespace CircuitSimulatorPlus
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
 
-            grid.scale = scale;
-            grid.Gridlinewidth();
+            //grid.scale = scale;
+            //grid.Gridlinewidth();
 
         }
 
