@@ -120,7 +120,6 @@ namespace CircuitSimulatorPlus
                     innerLabel.Content = "\u22651";  // greater than one
                     break;
                 case Gate.GateType.Identity:
-                case Gate.GateType.Not:
                     innerLabel.Content = '1';
                     break;
             }
