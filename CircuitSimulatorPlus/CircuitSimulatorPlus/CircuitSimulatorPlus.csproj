@@ -79,6 +79,7 @@
     <Compile Include="Cable.cs" />
     <Compile Include="CableRenderer.cs" />
     <Compile Include="ChangeConnectionAction.cs" />
+    <Compile Include="ChangeGateTypeAction.cs" />
     <Compile Include="CreateConnectionAction.cs" />
     <Compile Include="CreateGateAction.cs" />
     <Compile Include="CutAction.cs" />
