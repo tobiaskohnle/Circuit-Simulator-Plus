@@ -40,6 +40,7 @@ namespace CircuitSimulatorPlus
         {
             rectangle = new Rectangle();
             rectangle.Stroke = Brushes.Black;
+            rectangle.Fill = new SolidColorBrush(Color.FromArgb(63, 255, 0, 0));
             // TODO: rectangle border is inset -> change to centered
             rectangle.StrokeThickness = MainWindow.LineWidth;
             rectangle.Width = 3;
