@@ -19,6 +19,7 @@ namespace CircuitSimulatorPlus
             this.gate = gate;
             this.gateType = gateType;
             this.position = position;
+            this.createdGates = createdGates;
         }
         public override void Redo()
         {

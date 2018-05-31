@@ -68,6 +68,8 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer = new DispatcherTimer();
         List<Cable> cables = new List<Cable>();
         List<Gate> selected = new List<Gate>();
+        List<Action> Undo = new List<Action>();
+        List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
         #endregion
 
@@ -87,6 +89,10 @@ namespace CircuitSimulatorPlus
                 gate.Output.Add(new OutputNode(gate));
 
             gate.Renderer.Render();
+
+            CreateGateAction CreateGateAction = new CreateGateAction(gate,gate.Type,gate.Position,contextGate.Context,"Create Gate");
+            Undo.Add(CreateGateAction);
+
             return gate;
         }
         public void Tick(ConnectionNode node)
@@ -144,9 +150,13 @@ namespace CircuitSimulatorPlus
         #region Misc
         public void PerformAction(Action action)
         {
-            // TODO: Create undo / redo stack
             action.Redo();
         }
+        public void RevokeAction(Action action)
+        {
+            action.Undo();
+        }
+
         #endregion
 
         #region Events
@@ -289,11 +299,15 @@ namespace CircuitSimulatorPlus
 
         void Undo_Click(object sender, RoutedEventArgs e)
         {
-
+            RevokeAction(Undo.Last());
+            Redo.Add(Undo.Last());
+            Undo.Remove(Undo.Last());
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-
+            PerformAction(Undo.Last());
+            Undo.Add(Redo.Last());
+            Redo.Remove(Redo.Last());
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
