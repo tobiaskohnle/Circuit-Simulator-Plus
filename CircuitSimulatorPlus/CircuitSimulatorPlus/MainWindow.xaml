@@ -56,6 +56,7 @@
             <MenuItem Header="Debug" Width="auto">
                 <MenuItem Header="Reset Circuit" Click="Reset_Click"/>
                 <MenuItem Header="Reload Circuit" Click="Reload_Click"/>
+                <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

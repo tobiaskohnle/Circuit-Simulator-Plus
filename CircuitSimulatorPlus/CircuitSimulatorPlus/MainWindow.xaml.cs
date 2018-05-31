@@ -54,12 +54,13 @@ namespace CircuitSimulatorPlus
 
         #region Properties
         Point lastMousePos;
+        Point lastCanvasPos;
         Point lastMouseClick;
         Point lastCanvasClick;
         bool showContextMenu;
         bool drawingcable;
         bool dragging;
-        bool saved;
+        bool saved = true;
         string title = DefaultTitle;
 
         Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
@@ -202,6 +203,8 @@ namespace CircuitSimulatorPlus
                     gate.Move(moved);
 
             lastMousePos = currentPos;
+            lastCanvasPos = e.GetPosition(canvas);
+
             if (moved.Length > 0)
                 showContextMenu = false;
         }
@@ -332,7 +335,16 @@ namespace CircuitSimulatorPlus
         }
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-
+        }
+        void TickAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Gate gate in context.Context)
+            {
+                foreach (InputNode inputNode in gate.Input)
+                    Tick(inputNode);
+                foreach (OutputNode outputNode in gate.Output)
+                    Tick(outputNode);
+            }
         }
 
         void OnGateOutputClicked(object sender, EventArgs e)
@@ -350,7 +362,6 @@ namespace CircuitSimulatorPlus
             cable.Output = gate.Output[index];
             drawingcable = true;
         }
-
         void OnGateInputClicked(object sender, EventArgs e)
         {
             Gate gate = (Gate)sender;
