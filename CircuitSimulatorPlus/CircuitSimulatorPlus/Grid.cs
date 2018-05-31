@@ -13,18 +13,21 @@ namespace CircuitSimulatorPlus
     class Grid
     {
         Canvas canvas;
-        int width, height;
+        double width, height, Linewidth = MainWindow.LineWidth;
+        public double scale;
         List<Line> verticalLines = new List<Line>();
         List<Line> horizontalLines = new List<Line>();
 
-        public Grid(Canvas canvas, int width, int height)
+        public Grid(Canvas canvas, double width, double height, double scale)
         {
+            this.scale = scale;
             this.width = width;
             this.height = height;
             this.canvas = canvas;
         }
-        public void Draw()
+        public void Render()
         {
+            scale = scale * 2;
             for (int i = 0; i < width; i++)
             {
                 var line = new Line();
@@ -34,7 +37,7 @@ namespace CircuitSimulatorPlus
                 line.X2 = i;
                 line.Y1 = 0;
                 line.Y2 = height;
-                verticalLines.Add(line);
+                horizontalLines.Add(line);
                 canvas.Children.Add(line);
             }
             for (int i = 0; i < height; i++)
@@ -49,6 +52,14 @@ namespace CircuitSimulatorPlus
                 verticalLines.Add(line);
                 canvas.Children.Add(line);
             }
+        }
+        public void Gridlinewidth()
+        {
+            Linewidth = Linewidth / scale;
+            foreach (Line line in verticalLines)
+                line.StrokeThickness = Linewidth;
+            foreach (Line line in horizontalLines)
+                line.StrokeThickness = Linewidth;
         }
     }
 }

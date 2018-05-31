@@ -19,10 +19,12 @@ namespace CircuitSimulatorPlus
 {
     public partial class MainWindow : Window
     {
+        Grid grid;
         public MainWindow()
         {
             InitializeComponent();
-
+            grid = new Grid(canvas, 992, 648, 1.0);
+            grid.Render();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -39,7 +41,10 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
+
+
         }
+        double rescale;
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
@@ -126,6 +131,10 @@ namespace CircuitSimulatorPlus
         public void UpdateTitle()
         {
             Title = $"{title}{(saved ? "" : " " + Unsaved)} - {WindowTitle}";
+        }
+        public void Gridlinewidth()
+        {
+            grid.Gridlinewidth();
         }
         #endregion
 
@@ -224,6 +233,10 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
+
+            grid.scale = scale;
+            grid.Gridlinewidth();
+
         }
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
