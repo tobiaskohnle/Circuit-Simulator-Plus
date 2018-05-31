@@ -183,9 +183,14 @@ namespace CircuitSimulatorPlus
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
-            foreach (Gate gate in contextGate.Context)
-                gate.SnapToGrid();
+            //CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
+            //foreach (Gate gate in contextGate.Context)
+            //    gate.SnapToGrid();
+            Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
+            gate.Position = lastCanvasClick;
+            gate.Output[0].Invert();
+            gate.Output[0].Tick(tickedNodes);
+            gate.SnapToGrid();
         }
         void DEBUG_AddIdentityGate(object sender, EventArgs e)
         {

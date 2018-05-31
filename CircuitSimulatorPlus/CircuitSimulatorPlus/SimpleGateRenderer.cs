@@ -205,10 +205,18 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < gate.Output.Count; i++)
             {
                 Line line = outputLines[i];
-                line.X1 = pos.X + 3;
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
+
+                if (gate.Output[i].IsInverted)
+                {
+                    line.X1 = pos.X + 3 + 0.5;
+                    Canvas.SetLeft(outputNegationCircles[i], pos.X + 3);
+                    Canvas.SetTop(outputNegationCircles[i], y - 0.25);
+                }
+                else
+                    line.X1 = pos.X + 3;
                 line.X2 = pos.X + 3 + 1;
 
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
                 line.Y1 = y;
                 line.Y2 = y;
 
@@ -303,6 +311,9 @@ namespace CircuitSimulatorPlus
                     if (inputNegationCircles[i] == null)
                     {
                         inputNegationCircles[i] = new Ellipse();
+                        inputNegationCircles[i].StrokeThickness = MainWindow.LineWidth;
+                        inputNegationCircles[i].Width = 0.5;
+                        inputNegationCircles[i].Height = 0.5;
                         canvas.Children.Add(inputNegationCircles[i]);
                     }
                     inputNegationCircles[i].Stroke = !gate.Input[i].State ? Brushes.Red : Brushes.Black;
@@ -325,9 +336,12 @@ namespace CircuitSimulatorPlus
                     if (outputNegationCircles[i] == null)
                     {
                         outputNegationCircles[i] = new Ellipse();
+                        outputNegationCircles[i].StrokeThickness = MainWindow.LineWidth;
+                        outputNegationCircles[i].Width = 0.5;
+                        outputNegationCircles[i].Height = 0.5;
                         canvas.Children.Add(outputNegationCircles[i]);
                     }
-                    outputNegationCircles[i].Stroke = !gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                    outputNegationCircles[i].Stroke = outputLines[i].Stroke;
                 }
                 else if (outputNegationCircles[i] != null)
                 {
