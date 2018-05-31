@@ -23,6 +23,8 @@ namespace CircuitSimulatorPlus
         Label outerLabel;
         List<Line> inputLines = new List<Line>();
         List<Line> outputLines = new List<Line>();
+        Ellipse[] inputNegationCircles;
+        Ellipse[] outputNegationCircles;
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
@@ -116,6 +118,9 @@ namespace CircuitSimulatorPlus
                     break;
             }
             canvas.Children.Add(innerLabel);
+
+            inputNegationCircles = new Ellipse[gate.Input.Count];
+            outputNegationCircles = new Ellipse[gate.Output.Count];
 
             OnConnectionCreated(this, EventArgs.Empty);
             gate.ConnectionCreated += OnConnectionCreated;
@@ -292,6 +297,20 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < inputLines.Count; i++)
             {
                 inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Input[i].IsInverted)
+                {
+                    if (inputNegationCircles[i] == null)
+                    {
+                        inputNegationCircles[i] = new Ellipse();
+                        canvas.Children.Add(inputNegationCircles[i]);
+                    }
+                    inputNegationCircles[i].Stroke = !gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                }
+                else if (inputNegationCircles[i] != null)
+                {
+                    canvas.Children.Remove(inputNegationCircles[i]);
+                    inputNegationCircles[i] = null;
+                }
             }
         }
 
@@ -300,6 +319,20 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Output[i].IsInverted)
+                {
+                    if (outputNegationCircles[i] == null)
+                    {
+                        outputNegationCircles[i] = new Ellipse();
+                        canvas.Children.Add(outputNegationCircles[i]);
+                    }
+                    outputNegationCircles[i].Stroke = !gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                }
+                else if (outputNegationCircles[i] != null)
+                {
+                    canvas.Children.Remove(outputNegationCircles[i]);
+                    outputNegationCircles[i] = null;
+                }
                 foreach (Line line in connectionLines[i])
                 {
                     line.Stroke = outputLines[i].Stroke;
