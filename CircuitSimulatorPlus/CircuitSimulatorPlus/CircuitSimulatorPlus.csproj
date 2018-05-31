@@ -78,6 +78,7 @@
     <Compile Include="Cable.cs" />
     <Compile Include="CableRenderer.cs" />
     <Compile Include="CreateGateAction.cs" />
+    <Compile Include="DeleteGateAction.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="IndexEventArgs.cs" />
     <Compile Include="IRenderer.cs" />
