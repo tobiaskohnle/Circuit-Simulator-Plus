@@ -87,6 +87,7 @@
     <Compile Include="IRenderer.cs" />
     <Compile Include="MoveGateAction.cs" />
     <Compile Include="PasteAction.cs" />
+    <Compile Include="RenameGateAction.cs" />
     <Compile Include="SimpleGateRenderer.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StorageConverter.cs" />
