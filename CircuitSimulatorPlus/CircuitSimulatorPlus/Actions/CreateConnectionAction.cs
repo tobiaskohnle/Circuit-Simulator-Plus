@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-   public class CreateConnectionAction : Action
+    public class CreateConnectionAction : Action
     {
         ConnectionNode firstNode, secondNode;
 
-        public CreateConnectionAction(ConnectionNode firstNode,ConnectionNode secondNode,string message) : base(message)
+        public CreateConnectionAction(ConnectionNode firstNode, ConnectionNode secondNode, string message) : base(message)
         {
             this.firstNode = firstNode;
             this.secondNode = secondNode;
@@ -19,7 +19,7 @@ namespace CircuitSimulatorPlus
         {
             firstNode.ConnectTo(secondNode);
         }
-        
+
         public override void Undo()
         {
             //waiting for implementation of disconnect-function

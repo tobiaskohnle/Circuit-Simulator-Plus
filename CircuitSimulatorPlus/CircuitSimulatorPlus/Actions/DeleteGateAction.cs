@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-   public class DeleteGateAction : Action
+    public class DeleteGateAction : Action
     {
         List<Gate> createdGates;
         Gate gate;

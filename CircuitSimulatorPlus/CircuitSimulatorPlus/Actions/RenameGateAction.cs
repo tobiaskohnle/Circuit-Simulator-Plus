@@ -11,12 +11,12 @@ namespace CircuitSimulatorPlus
         //waiting for implementaion of rename-function
         public RenameGateAction(string message) : base(message)
         {
-            
+
         }
 
         public override void Redo()
         {
-            
+
         }
 
         public override void Undo()

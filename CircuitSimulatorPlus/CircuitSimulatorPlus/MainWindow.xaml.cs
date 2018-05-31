@@ -90,7 +90,7 @@ namespace CircuitSimulatorPlus
 
             gate.Renderer.Render();
 
-            CreateGateAction CreateGateAction = new CreateGateAction(gate,gate.Type,gate.Position,contextGate.Context,"Create Gate");
+            var CreateGateAction = new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate");
             Undo.Add(CreateGateAction);
 
             return gate;
@@ -120,6 +120,17 @@ namespace CircuitSimulatorPlus
                 selected.Add(gate);
                 gate.IsSelected = true;
             }
+        }
+        public void UnselectAll()
+        {
+            foreach (Gate gate in selected)
+                gate.IsSelected = false;
+            selected.Clear();
+        }
+        public void SnapSelectedToGrid()
+        {
+            foreach (Gate gate in selected)
+                gate.SnapToGrid();
         }
         #endregion
 
@@ -177,11 +188,21 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.OriginalSource is Gate)
-                Select(e.OriginalSource as Gate);
-
             lastCanvasClick = e.GetPosition(canvas);
+
             lastMousePos = lastMouseClick = e.GetPosition(this);
+
+            foreach (Gate gate in contextGate.Context)
+            {
+                if (gate.Position.X <= lastCanvasClick.X
+                    && gate.Position.Y <= lastCanvasClick.Y
+                    && gate.Position.Y + 4 >= lastCanvasClick.Y
+                    && gate.Position.X + 3 >= lastCanvasClick.X)
+                {
+                    Select(gate);
+                }
+            }
+
             showContextMenu = true;
             if (e.RightButton == MouseButtonState.Pressed)
             {
@@ -201,6 +222,7 @@ namespace CircuitSimulatorPlus
         {
             Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
+            Vector canvasMoved = e.GetPosition(canvas) - lastCanvasPos;
 
             if (dragging)
             {
@@ -211,7 +233,7 @@ namespace CircuitSimulatorPlus
 
             if (e.LeftButton == MouseButtonState.Pressed)
                 foreach (Gate gate in selected)
-                    gate.Move(moved);
+                    gate.Move(canvasMoved);
 
             lastMousePos = currentPos;
             lastCanvasPos = e.GetPosition(canvas);
@@ -221,6 +243,8 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            SnapSelectedToGrid();
+            UnselectAll();
             dragging = false;
             foreach (Gate gate in selected)
                 gate.SnapToGrid();
@@ -376,7 +400,7 @@ namespace CircuitSimulatorPlus
                 cables.Add(cable);
                 cable.Renderer = new CableRenderer(canvas, cable);
                 cable.Output = gate.Output[index];
-                drawingcable = true; 
+                drawingcable = true;
             }
         }
         void OnGateInputClicked(object sender, EventArgs e)
@@ -394,7 +418,7 @@ namespace CircuitSimulatorPlus
                 lastcable.Input = gate.Input[index];
                 lastcable.Output.ConnectTo(lastcable.Input);
                 Tick(lastcable.Input);
-                drawingcable = false; 
+                drawingcable = false;
             }
         }
         #endregion
