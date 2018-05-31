@@ -341,6 +341,8 @@ namespace CircuitSimulatorPlus
         {
             foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Unrender();
+            foreach (Cable cable in cables)
+                cable.Renderer.Unrender();
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
         {
