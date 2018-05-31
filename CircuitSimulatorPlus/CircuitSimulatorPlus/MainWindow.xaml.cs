@@ -68,6 +68,8 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer = new DispatcherTimer();
         List<Cable> cables = new List<Cable>();
         List<Gate> selected = new List<Gate>();
+        List<Action> Undo = new List<Action>();
+        List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
         #endregion
 
@@ -87,6 +89,10 @@ namespace CircuitSimulatorPlus
                 gate.Output.Add(new OutputNode(gate));
 
             gate.Renderer.Render();
+
+            CreateGateAction CreateGateAction = new CreateGateAction(gate,gate.Type,gate.Position,contextGate.Context,"Create Gate");
+            Undo.Add(CreateGateAction);
+
             return gate;
         }
         public void Tick(ConnectionNode node)
