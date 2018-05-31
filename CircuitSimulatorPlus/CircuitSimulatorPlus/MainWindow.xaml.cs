@@ -178,6 +178,12 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in contextGate.Context)
                 gate.SnapToGrid();
         }
+        void DEBUG_AddIdentityGate(object sender, EventArgs e)
+        {
+            Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
+            gate.Position = lastCanvasClick;
+            gate.SnapToGrid();
+        }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
