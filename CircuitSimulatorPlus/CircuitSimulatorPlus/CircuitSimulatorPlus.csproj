@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Action.cs" />
+    <Compile Include="AddInputAction.cs" />
     <Compile Include="Cable.cs" />
     <Compile Include="CableRenderer.cs" />
     <Compile Include="ChangeConnectionAction.cs" />
