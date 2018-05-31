@@ -86,6 +86,7 @@
     <Compile Include="IndexEventArgs.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="MoveGateAction.cs" />
+    <Compile Include="PasteAction.cs" />
     <Compile Include="SimpleGateRenderer.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StorageConverter.cs" />
