@@ -31,10 +31,10 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                context = StorageConverter.ToGate(Storage.Load(args[1]));
+                contextGate = StorageConverter.ToGate(Storage.Load(args[1]));
             else
-                context = new Gate();
-            foreach (Gate gate in context.Context)
+                contextGate = new Gate();
+            foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Render();
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
@@ -67,18 +67,18 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer = new DispatcherTimer();
         List<Cable> cables = new List<Cable>();
         List<Gate> selected = new List<Gate>();
-        Gate context = new Gate();
+        Gate contextGate = new Gate();
         #endregion
 
         #region Gates
         public Gate CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
-            context.Context.Add(gate);
+            contextGate.Context.Add(gate);
             var renderer = new SimpleGateRenderer(canvas, gate);
             renderer.InputClicked += OnGateInputClicked;
             renderer.OutputClicked += OnGateOutputClicked;
             gate.Renderer = renderer;
-            gate.Position = new Point(5, context.Context.Count * 5);
+            gate.Position = new Point(5, contextGate.Context.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
                 gate.Input.Add(new InputNode(gate));
@@ -141,19 +141,19 @@ namespace CircuitSimulatorPlus
         void DEBUG_AddAndGate(object sender, EventArgs e)
         {
             CreateGate(new Gate(Gate.GateType.And), 2, 1).Position = lastCanvasClick;
-            foreach (Gate gate in context.Context)
+            foreach (Gate gate in contextGate.Context)
                 gate.SnapToGrid();
         }
         void DEBUG_AddOrGate(object sender, EventArgs e)
         {
             CreateGate(new Gate(Gate.GateType.Or), 2, 1).Position = lastCanvasClick;
-            foreach (Gate gate in context.Context)
+            foreach (Gate gate in contextGate.Context)
                 gate.SnapToGrid();
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
             CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
-            foreach (Gate gate in context.Context)
+            foreach (Gate gate in contextGate.Context)
                 gate.SnapToGrid();
         }
 
@@ -233,7 +233,7 @@ namespace CircuitSimulatorPlus
 
         void NewFile_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Gate gate in context.Context)
+            foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Unrender();
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -243,7 +243,7 @@ namespace CircuitSimulatorPlus
             dialog.Filter = "Circuit File (.json)|*.json";
             if (dialog.ShowDialog() == true)
             {
-                context = StorageConverter.ToGate(Storage.Load(dialog.FileName));
+                contextGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
             }
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -254,7 +254,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 string path = dialog.FileName;
-                Storage.Save(path, StorageConverter.ToStorageObject(context));
+                Storage.Save(path, StorageConverter.ToStorageObject(contextGate));
             }
         }
         void SaveFileAs_Click(object sender, RoutedEventArgs e)
@@ -338,7 +338,7 @@ namespace CircuitSimulatorPlus
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Gate gate in context.Context)
+            foreach (Gate gate in contextGate.Context)
             {
                 foreach (InputNode inputNode in gate.Input)
                     Tick(inputNode);
