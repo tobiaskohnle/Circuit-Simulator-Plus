@@ -295,6 +295,7 @@ namespace CircuitSimulatorPlus
                     Line line = new Line();
                     line.Stroke = outputLines[i].Stroke;
                     line.StrokeThickness = MainWindow.LineWidth / 2;
+                    line.IsHitTestVisible = false;
                     connectionLines[i].Add(line);
                     canvas.Children.Add(line);
 
