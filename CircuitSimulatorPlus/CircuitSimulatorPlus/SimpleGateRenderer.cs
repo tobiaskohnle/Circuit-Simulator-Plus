@@ -155,6 +155,16 @@ namespace CircuitSimulatorPlus
             if (outerLabel != null)
                 canvas.Children.Remove(outerLabel);
             canvas.Children.Remove(innerLabel);
+            foreach (Ellipse inputNegationCircle in inputNegationCircles)
+            {
+                if (inputNegationCircle != null)
+                    canvas.Children.Remove(inputNegationCircle);
+            }
+            foreach (Ellipse outputNegationCircle in outputNegationCircles)
+            {
+                if (outputNegationCircle != null)
+                    canvas.Children.Remove(outputNegationCircle);
+            }
         }
 
         void OnInputClicked(object sender, EventArgs e)
@@ -233,10 +243,18 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < gate.Input.Count; i++)
             {
                 Line line = inputLines[i];
-                line.X1 = pos.X;
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
+
+                if (gate.Input[i].IsInverted)
+                {
+                    line.X1 = pos.X - 0.5;
+                    Canvas.SetLeft(inputNegationCircles[i], pos.X + 3);
+                    Canvas.SetTop(inputNegationCircles[i], y - 0.25);
+                }
+                else
+                    line.X1 = pos.X;
                 line.X2 = pos.X - 1;
 
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
 
@@ -275,7 +293,7 @@ namespace CircuitSimulatorPlus
                 foreach (InputNode nextNode in gate.Output[i].NextConnectedTo)
                 {
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = outputLines[i].Stroke;
                     line.StrokeThickness = MainWindow.LineWidth / 2;
                     connectionLines[i].Add(line);
                     canvas.Children.Add(line);
