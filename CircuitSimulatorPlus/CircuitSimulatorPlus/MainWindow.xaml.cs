@@ -82,7 +82,7 @@ namespace CircuitSimulatorPlus
         public Gate CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             contextGate.Context.Add(gate);
-            gate.Renderer = new SimpleGateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
+            gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
             gate.Position = new Point(5, contextGate.Context.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
@@ -354,7 +354,7 @@ namespace CircuitSimulatorPlus
                 contextGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 foreach (Gate gate in contextGate.Context)
                 {
-                    gate.Renderer = new SimpleGateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
+                    gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
                     gate.Renderer.Render();
                 }
             }
