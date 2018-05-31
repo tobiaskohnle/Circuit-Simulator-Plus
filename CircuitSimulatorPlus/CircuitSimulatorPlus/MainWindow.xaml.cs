@@ -340,15 +340,17 @@ namespace CircuitSimulatorPlus
             Gate gate = (Gate)sender;
             int index = ((IndexEventArgs)e).Index;
 
-            Point point = new Point();
-            point.X = gate.Position.X + 3 + 1;
-            point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Output.Count);
-            Cable cable = new Cable();
-            cable.AddPoint(point);
-            cables.Add(cable);
-            cable.Renderer = new CableRenderer(canvas, cable);
-            cable.Output = gate.Output[index];
-            drawingcable = true;
+            if (!drawingcable)
+            {
+                Point point = new Point();
+                point.X = gate.Position.X + 3 + 1;
+                point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Output.Count);
+                Cable cable = new Cable();
+                cables.Add(cable);
+                cable.Renderer = new CableRenderer(canvas, cable);
+                cable.Output = gate.Output[index];
+                drawingcable = true; 
+            }
         }
 
         void OnGateInputClicked(object sender, EventArgs e)
@@ -356,15 +358,18 @@ namespace CircuitSimulatorPlus
             Gate gate = (Gate)sender;
             int index = ((IndexEventArgs)e).Index;
 
-            Point point = new Point();
-            point.X = gate.Position.X - 1;
-            point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Input.Count);
-            Cable lastcable = cables.Last();
-            lastcable.AddPoint(point);
-            lastcable.Input = gate.Input[index];
-            lastcable.Output.ConnectTo(lastcable.Input);
-            Tick(lastcable.Input);
-            drawingcable = false;
+            if (drawingcable)
+            {
+                Point point = new Point();
+                point.X = gate.Position.X - 1;
+                point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Input.Count);
+                Cable lastcable = cables.Last();
+                lastcable.AddPoint(point, true);
+                lastcable.Input = gate.Input[index];
+                lastcable.Output.ConnectTo(lastcable.Input);
+                Tick(lastcable.Input);
+                drawingcable = false; 
+            }
         }
         #endregion
     }
