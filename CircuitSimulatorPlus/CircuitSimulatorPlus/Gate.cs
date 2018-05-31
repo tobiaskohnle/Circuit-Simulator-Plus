@@ -86,8 +86,6 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// Moves the gate.
         /// </summary>
-        /// <param name="x">Movement along x-axis in units</param>
-        /// <param name="y">Movement along y-axis in units</param>
         public void Move(Vector move)
         {
             Position = new Point(Position.X + move.X, Position.Y + move.Y);

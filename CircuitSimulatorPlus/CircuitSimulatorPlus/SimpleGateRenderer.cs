@@ -12,15 +12,19 @@ using System.Windows.Shapes;
 namespace CircuitSimulatorPlus
 {
     /// <summary>
-    /// Comments are for pussies.
+    /// Documentation is elementary.
     /// </summary>
     public class SimpleGateRenderer : IRenderer
     {
         Canvas canvas;
         Gate gate;
         Rectangle rectangle;
+        Label innerLabel;
+        Label outerLabel;
         List<Line> inputLines = new List<Line>();
         List<Line> outputLines = new List<Line>();
+        Ellipse[] inputNegationCircles;
+        Ellipse[] outputNegationCircles;
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
@@ -40,6 +44,7 @@ namespace CircuitSimulatorPlus
         {
             rectangle = new Rectangle();
             rectangle.Stroke = Brushes.Black;
+            rectangle.Fill = new SolidColorBrush(Color.FromArgb(63, 255, 0, 0));
             // TODO: rectangle border is inset -> change to centered
             rectangle.StrokeThickness = MainWindow.LineWidth;
             rectangle.Width = 3;
@@ -78,6 +83,45 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(hitbox);
             }
 
+            if (gate.Name != null)
+            {
+                outerLabel = new Label();
+                outerLabel.Width = 3;
+                outerLabel.Height = 1;
+                outerLabel.Padding = new Thickness(0);
+                outerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+                outerLabel.FontSize = 0.5;
+                outerLabel.Content = gate.Name;
+                canvas.Children.Add(outerLabel);
+            }
+
+
+            innerLabel = new Label();
+            innerLabel.Width = 3;
+            innerLabel.Height = 4;
+            innerLabel.Padding = new Thickness(0);
+            innerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
+            innerLabel.FontSize = 1;
+            switch (gate.Type)
+            {
+                case Gate.GateType.Context:
+                    innerLabel.Content = '#';
+                    break;
+                case Gate.GateType.And:
+                    innerLabel.Content = '&';
+                    break;
+                case Gate.GateType.Or:
+                    innerLabel.Content = "\u22651";  // greater than one
+                    break;
+                case Gate.GateType.Not:
+                    innerLabel.Content = '1';
+                    break;
+            }
+            canvas.Children.Add(innerLabel);
+
+            inputNegationCircles = new Ellipse[gate.Input.Count];
+            outputNegationCircles = new Ellipse[gate.Output.Count];
+
             OnConnectionCreated(this, EventArgs.Empty);
             gate.ConnectionCreated += OnConnectionCreated;
             OnInputChanged(this, EventArgs.Empty);
@@ -107,6 +151,9 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Remove(box);
             foreach (Rectangle box in outputHitboxes)
                 canvas.Children.Remove(box);
+            if (outerLabel != null)
+                canvas.Children.Remove(outerLabel);
+            canvas.Children.Remove(innerLabel);
         }
 
         void OnInputClicked(object sender, EventArgs e)
@@ -144,6 +191,15 @@ namespace CircuitSimulatorPlus
             Point pos = gate.Position;
             Canvas.SetLeft(rectangle, pos.X);
             Canvas.SetTop(rectangle, pos.Y);
+
+            Canvas.SetLeft(innerLabel, pos.X);
+            Canvas.SetTop(innerLabel, pos.Y);
+
+            if (outerLabel != null)
+            {
+                Canvas.SetLeft(outerLabel, pos.X);
+                Canvas.SetBottom(outerLabel, pos.Y);
+            }
 
             for (int i = 0; i < gate.Output.Count; i++)
             {
@@ -241,6 +297,20 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < inputLines.Count; i++)
             {
                 inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Input[i].IsInverted)
+                {
+                    if (inputNegationCircles[i] == null)
+                    {
+                        inputNegationCircles[i] = new Ellipse();
+                        canvas.Children.Add(inputNegationCircles[i]);
+                    }
+                    inputNegationCircles[i].Stroke = !gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                }
+                else if (inputNegationCircles[i] != null)
+                {
+                    canvas.Children.Remove(inputNegationCircles[i]);
+                    inputNegationCircles[i] = null;
+                }
             }
         }
 
@@ -249,6 +319,20 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Output[i].IsInverted)
+                {
+                    if (outputNegationCircles[i] == null)
+                    {
+                        outputNegationCircles[i] = new Ellipse();
+                        canvas.Children.Add(outputNegationCircles[i]);
+                    }
+                    outputNegationCircles[i].Stroke = !gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                }
+                else if (outputNegationCircles[i] != null)
+                {
+                    canvas.Children.Remove(outputNegationCircles[i]);
+                    outputNegationCircles[i] = null;
+                }
                 foreach (Line line in connectionLines[i])
                 {
                     line.Stroke = outputLines[i].Stroke;

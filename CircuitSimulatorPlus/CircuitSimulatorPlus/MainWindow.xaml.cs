@@ -38,6 +38,7 @@ namespace CircuitSimulatorPlus
                 contextGate = new Gate();
             foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Render();
+            List<Gate> createdGates = contextGate.Context;
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
@@ -72,6 +73,8 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer = new DispatcherTimer();
         List<Cable> cables = new List<Cable>();
         List<Gate> selected = new List<Gate>();
+        List<Action> Undo = new List<Action>();
+        List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
         #endregion
 
@@ -91,6 +94,10 @@ namespace CircuitSimulatorPlus
                 gate.Output.Add(new OutputNode(gate));
 
             gate.Renderer.Render();
+
+            var CreateGateAction = new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate");
+            Undo.Add(CreateGateAction);
+
             return gate;
         }
         public void Tick(ConnectionNode node)
@@ -119,6 +126,17 @@ namespace CircuitSimulatorPlus
                 gate.IsSelected = true;
             }
         }
+        public void UnselectAll()
+        {
+            foreach (Gate gate in selected)
+                gate.IsSelected = false;
+            selected.Clear();
+        }
+        public void SnapSelectedToGrid()
+        {
+            foreach (Gate gate in selected)
+                gate.SnapToGrid();
+        }
         #endregion
 
         #region Visuals
@@ -141,9 +159,13 @@ namespace CircuitSimulatorPlus
         #region Misc
         public void PerformAction(Action action)
         {
-            // TODO: Create undo / redo stack
             action.Redo();
         }
+        public void RevokeAction(Action action)
+        {
+            action.Undo();
+        }
+
         #endregion
 
         #region Events
@@ -175,11 +197,21 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.OriginalSource is Gate)
-                Select(e.OriginalSource as Gate);
-
             lastCanvasClick = e.GetPosition(canvas);
+
             lastMousePos = lastMouseClick = e.GetPosition(this);
+
+            foreach (Gate gate in contextGate.Context)
+            {
+                if (gate.Position.X <= lastCanvasClick.X
+                    && gate.Position.Y <= lastCanvasClick.Y
+                    && gate.Position.Y + 4 >= lastCanvasClick.Y
+                    && gate.Position.X + 3 >= lastCanvasClick.X)
+                {
+                    Select(gate);
+                }
+            }
+
             showContextMenu = true;
             if (e.RightButton == MouseButtonState.Pressed)
             {
@@ -199,6 +231,7 @@ namespace CircuitSimulatorPlus
         {
             Point currentPos = e.GetPosition(this);
             Vector moved = currentPos - lastMousePos;
+            Vector canvasMoved = e.GetPosition(canvas) - lastCanvasPos;
 
             if (dragging)
             {
@@ -209,7 +242,7 @@ namespace CircuitSimulatorPlus
 
             if (e.LeftButton == MouseButtonState.Pressed)
                 foreach (Gate gate in selected)
-                    gate.Move(moved);
+                    gate.Move(canvasMoved);
 
             lastMousePos = currentPos;
             lastCanvasPos = e.GetPosition(canvas);
@@ -219,6 +252,8 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            SnapSelectedToGrid();
+            UnselectAll();
             dragging = false;
             foreach (Gate gate in selected)
                 gate.SnapToGrid();
@@ -277,11 +312,15 @@ namespace CircuitSimulatorPlus
 
         void Undo_Click(object sender, RoutedEventArgs e)
         {
-
+            RevokeAction(Undo.Last());
+            Redo.Add(Undo.Last());
+            Undo.Remove(Undo.Last());
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-
+            PerformAction(Undo.Last());
+            Undo.Add(Redo.Last());
+            Redo.Remove(Redo.Last());
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -374,7 +413,7 @@ namespace CircuitSimulatorPlus
                 cables.Add(cable);
                 cable.Renderer = new CableRenderer(canvas, cable);
                 cable.Output = gate.Output[index];
-                drawingcable = true; 
+                drawingcable = true;
             }
         }
         void OnGateInputClicked(object sender, EventArgs e)
@@ -392,7 +431,7 @@ namespace CircuitSimulatorPlus
                 lastcable.Input = gate.Input[index];
                 lastcable.Output.ConnectTo(lastcable.Input);
                 Tick(lastcable.Input);
-                drawingcable = false; 
+                drawingcable = false;
             }
         }
         #endregion

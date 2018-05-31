@@ -74,13 +74,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Action.cs" />
+    <Compile Include="Actions\Action.cs" />
+    <Compile Include="AddInputAction.cs" />
     <Compile Include="Cable.cs" />
     <Compile Include="CableRenderer.cs" />
+    <Compile Include="Actions\ChangeConnectionAction.cs" />
+    <Compile Include="Actions\ChangeGateTypeAction.cs" />
+    <Compile Include="Actions\CreateConnectionAction.cs" />
+    <Compile Include="Actions\CreateGateAction.cs" />
+    <Compile Include="Actions\CutAction.cs" />
+    <Compile Include="Actions\DeleteGateAction.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="IndexEventArgs.cs" />
     <Compile Include="IRenderer.cs" />
-    <Compile Include="MoveGateAction.cs" />
+    <Compile Include="Actions\MoveGateAction.cs" />
+    <Compile Include="Actions\PasteAction.cs" />
+    <Compile Include="Actions\RemoveInputAction.cs" />
+    <Compile Include="Actions\RenameGateAction.cs" />
     <Compile Include="SimpleGateRenderer.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StorageConverter.cs" />
