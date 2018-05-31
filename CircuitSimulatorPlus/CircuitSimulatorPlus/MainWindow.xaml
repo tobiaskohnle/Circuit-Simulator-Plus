@@ -18,7 +18,7 @@
     </Window.ContextMenu>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\User\source\repos\Circuit-Simulator-Plus\CircuitSimulatorPlus\CircuitSimulatorPlus\bin\Debug\Grid.png" Stretch="None"/>
+            <ImageBrush ImageSource="C:\Users\User\source\repos\Circuit-Simulator-Plus\CircuitSimulatorPlus\CircuitSimulatorPlus\Grid.png" Stretch="None"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
