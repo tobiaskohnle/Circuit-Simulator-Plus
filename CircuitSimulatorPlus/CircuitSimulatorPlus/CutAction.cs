@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class ChangeConnectionAction : Action
+    public class CutAction : Action
     {
-        //waiting for implementation of disconnect-function
-        public ChangeConnectionAction(string message) : base(message)
+        //waiting for implementation of tag-function
+        public CutAction (string message) : base(message)
         {
 
         }

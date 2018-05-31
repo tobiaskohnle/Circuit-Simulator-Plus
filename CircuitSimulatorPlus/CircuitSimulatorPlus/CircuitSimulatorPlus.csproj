@@ -80,6 +80,7 @@
     <Compile Include="ChangeConnectionAction.cs" />
     <Compile Include="CreateConnectionAction.cs" />
     <Compile Include="CreateGateAction.cs" />
+    <Compile Include="CutAction.cs" />
     <Compile Include="DeleteGateAction.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="IndexEventArgs.cs" />

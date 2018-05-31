@@ -22,7 +22,7 @@ namespace CircuitSimulatorPlus
         
         public override void Undo()
         {
-            //waiting for disconnect-function
-        }        
+            //waiting for implementation of disconnect-function
+        }
     }
 }
