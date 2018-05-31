@@ -14,6 +14,7 @@
             <MenuItem Header="Add And Gate" Click="DEBUG_AddAndGate"></MenuItem>
             <MenuItem Header="Add Or Gate" Click="DEBUG_AddOrGate"></MenuItem>
             <MenuItem Header="Add Not Gate" Click="DEBUG_AddNotGate"></MenuItem>
+            <MenuItem Header="Add Identity Gate" Click="DEBUG_AddIdentityGate"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

@@ -19,10 +19,12 @@ namespace CircuitSimulatorPlus
 {
     public partial class MainWindow : Window
     {
+        Grid grid;
         public MainWindow()
         {
             InitializeComponent();
-
+            grid = new Grid(canvas, 992, 648, 1.0);
+            grid.Render();
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -40,7 +42,10 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
+
+
         }
+        double rescale;
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
@@ -145,6 +150,10 @@ namespace CircuitSimulatorPlus
         {
             Title = $"{title}{(saved ? "" : " " + Unsaved)} - {WindowTitle}";
         }
+        public void Gridlinewidth()
+        {
+            grid.Gridlinewidth();
+        }
         #endregion
 
         #region Misc
@@ -174,9 +183,20 @@ namespace CircuitSimulatorPlus
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
-            foreach (Gate gate in contextGate.Context)
-                gate.SnapToGrid();
+            //CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
+            //foreach (Gate gate in contextGate.Context)
+            //    gate.SnapToGrid();
+            Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
+            gate.Position = lastCanvasClick;
+            gate.Output[0].Invert();
+            gate.Output[0].Tick(tickedNodes);
+            gate.SnapToGrid();
+        }
+        void DEBUG_AddIdentityGate(object sender, EventArgs e)
+        {
+            Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
+            gate.Position = lastCanvasClick;
+            gate.SnapToGrid();
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
@@ -259,6 +279,10 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
+
+            grid.scale = scale;
+            grid.Gridlinewidth();
+
         }
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)

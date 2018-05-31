@@ -14,10 +14,26 @@ namespace CircuitSimulatorPlus
     {
         public List<Point> Points = new List<Point>();
         public CableRenderer Renderer;
-        public OutputNode Output;
         public InputNode Input;
 
+        private OutputNode output;
+
+        public EventHandler StateChanged;
+
         bool lastSegmentHorizontal = true;
+
+        public OutputNode Output
+        {
+            get { return output; }
+
+            set
+            {
+                if (output != null)
+                    output.Owner.ConnectionChanged -= OnOutputChanged;
+                output = value;
+                output.Owner.ConnectionChanged += OnOutputChanged;
+            }
+        }
 
         public void AddPoint(Point point, bool toConnection = false)
         {
@@ -67,6 +83,11 @@ namespace CircuitSimulatorPlus
             Points.Add(point);
             if (Renderer != null)
                 Renderer.Update();
+        }
+
+        void OnOutputChanged(object sender, EventArgs e)
+        {
+            StateChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

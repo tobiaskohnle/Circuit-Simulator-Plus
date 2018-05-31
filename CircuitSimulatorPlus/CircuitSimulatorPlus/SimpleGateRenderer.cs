@@ -23,6 +23,8 @@ namespace CircuitSimulatorPlus
         Label outerLabel;
         List<Line> inputLines = new List<Line>();
         List<Line> outputLines = new List<Line>();
+        Ellipse[] inputNegationCircles;
+        Ellipse[] outputNegationCircles;
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
@@ -111,11 +113,15 @@ namespace CircuitSimulatorPlus
                 case Gate.GateType.Or:
                     innerLabel.Content = "\u22651";  // greater than one
                     break;
+                case Gate.GateType.Identity:
                 case Gate.GateType.Not:
                     innerLabel.Content = '1';
                     break;
             }
             canvas.Children.Add(innerLabel);
+
+            inputNegationCircles = new Ellipse[gate.Input.Count];
+            outputNegationCircles = new Ellipse[gate.Output.Count];
 
             OnConnectionCreated(this, EventArgs.Empty);
             gate.ConnectionCreated += OnConnectionCreated;
@@ -149,6 +155,16 @@ namespace CircuitSimulatorPlus
             if (outerLabel != null)
                 canvas.Children.Remove(outerLabel);
             canvas.Children.Remove(innerLabel);
+            foreach (Ellipse inputNegationCircle in inputNegationCircles)
+            {
+                if (inputNegationCircle != null)
+                    canvas.Children.Remove(inputNegationCircle);
+            }
+            foreach (Ellipse outputNegationCircle in outputNegationCircles)
+            {
+                if (outputNegationCircle != null)
+                    canvas.Children.Remove(outputNegationCircle);
+            }
         }
 
         void OnInputClicked(object sender, EventArgs e)
@@ -199,10 +215,18 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < gate.Output.Count; i++)
             {
                 Line line = outputLines[i];
-                line.X1 = pos.X + 3;
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
+
+                if (gate.Output[i].IsInverted)
+                {
+                    line.X1 = pos.X + 3 + 0.5;
+                    Canvas.SetLeft(outputNegationCircles[i], pos.X + 3);
+                    Canvas.SetTop(outputNegationCircles[i], y - 0.25);
+                }
+                else
+                    line.X1 = pos.X + 3;
                 line.X2 = pos.X + 3 + 1;
 
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
                 line.Y1 = y;
                 line.Y2 = y;
 
@@ -219,10 +243,18 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < gate.Input.Count; i++)
             {
                 Line line = inputLines[i];
-                line.X1 = pos.X;
+                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
+
+                if (gate.Input[i].IsInverted)
+                {
+                    line.X1 = pos.X - 0.5;
+                    Canvas.SetLeft(inputNegationCircles[i], pos.X + 3);
+                    Canvas.SetTop(inputNegationCircles[i], y - 0.25);
+                }
+                else
+                    line.X1 = pos.X;
                 line.X2 = pos.X - 1;
 
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
                 line.Y1 = y;
                 line.Y2 = y;
 
@@ -261,8 +293,9 @@ namespace CircuitSimulatorPlus
                 foreach (InputNode nextNode in gate.Output[i].NextConnectedTo)
                 {
                     Line line = new Line();
-                    line.Stroke = Brushes.Black;
+                    line.Stroke = outputLines[i].Stroke;
                     line.StrokeThickness = MainWindow.LineWidth / 2;
+                    line.IsHitTestVisible = false;
                     connectionLines[i].Add(line);
                     canvas.Children.Add(line);
 
@@ -292,6 +325,23 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < inputLines.Count; i++)
             {
                 inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Input[i].IsInverted)
+                {
+                    if (inputNegationCircles[i] == null)
+                    {
+                        inputNegationCircles[i] = new Ellipse();
+                        inputNegationCircles[i].StrokeThickness = MainWindow.LineWidth;
+                        inputNegationCircles[i].Width = 0.5;
+                        inputNegationCircles[i].Height = 0.5;
+                        canvas.Children.Add(inputNegationCircles[i]);
+                    }
+                    inputNegationCircles[i].Stroke = !gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                }
+                else if (inputNegationCircles[i] != null)
+                {
+                    canvas.Children.Remove(inputNegationCircles[i]);
+                    inputNegationCircles[i] = null;
+                }
             }
         }
 
@@ -300,6 +350,23 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Output[i].IsInverted)
+                {
+                    if (outputNegationCircles[i] == null)
+                    {
+                        outputNegationCircles[i] = new Ellipse();
+                        outputNegationCircles[i].StrokeThickness = MainWindow.LineWidth;
+                        outputNegationCircles[i].Width = 0.5;
+                        outputNegationCircles[i].Height = 0.5;
+                        canvas.Children.Add(outputNegationCircles[i]);
+                    }
+                    outputNegationCircles[i].Stroke = outputLines[i].Stroke;
+                }
+                else if (outputNegationCircles[i] != null)
+                {
+                    canvas.Children.Remove(outputNegationCircles[i]);
+                    outputNegationCircles[i] = null;
+                }
                 foreach (Line line in connectionLines[i])
                 {
                     line.Stroke = outputLines[i].Stroke;

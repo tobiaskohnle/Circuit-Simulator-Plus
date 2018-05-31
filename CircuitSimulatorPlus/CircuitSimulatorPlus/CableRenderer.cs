@@ -20,6 +20,7 @@ namespace CircuitSimulatorPlus
         {
             this.canvas = canvas;
             this.cable = cable;
+            cable.StateChanged += OnGateOutputChanged;
         }
 
         public void Update()
@@ -51,6 +52,15 @@ namespace CircuitSimulatorPlus
             foreach (Line line in lines)
             {
                 canvas.Children.Remove(line);
+            }
+        }
+
+        void OnGateOutputChanged(object sender, EventArgs e)
+        {
+            Brush brush = cable.Output.State ? Brushes.Red : Brushes.Black;
+            foreach (Line line in lines)
+            {
+                line.Stroke = brush;
             }
         }
     }
