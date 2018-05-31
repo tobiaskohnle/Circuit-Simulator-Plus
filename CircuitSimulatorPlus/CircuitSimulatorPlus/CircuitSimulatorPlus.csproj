@@ -77,6 +77,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="Cable.cs" />
     <Compile Include="CableRenderer.cs" />
+    <Compile Include="CreateConnectionAction.cs" />
     <Compile Include="CreateGateAction.cs" />
     <Compile Include="DeleteGateAction.cs" />
     <Compile Include="Grid.cs" />
