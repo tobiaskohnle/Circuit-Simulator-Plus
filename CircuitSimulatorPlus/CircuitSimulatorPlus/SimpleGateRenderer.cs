@@ -40,6 +40,12 @@ namespace CircuitSimulatorPlus
             this.gate = gate;
         }
 
+        public SimpleGateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked) : this(canvas, gate)
+        {
+            InputClicked += onInputClicked;
+            OutputClicked += onOutputClicked;
+        }
+
         public void Render()
         {
             rectangle = new Rectangle();

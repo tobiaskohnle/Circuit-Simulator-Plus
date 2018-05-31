@@ -88,7 +88,45 @@ namespace CircuitSimulatorPlus
 
         public static Gate ToGate(StorageObject storageObject)
         {
-            throw new NotImplementedException();
+            Gate.GateType type;
+            switch (storageObject.Type)
+            {
+                case "Context":
+                    type = Gate.GateType.Context;
+                    break;
+                case "And":
+                    type = Gate.GateType.And;
+                    break;
+                case "Or":
+                    type = Gate.GateType.Or;
+                    break;
+                case "Not":
+                    type = Gate.GateType.Not;
+                    break;
+                case "Identity":
+                    type = Gate.GateType.Identity;
+                    break;
+                default:
+                    throw new Exception("Unknown Type");
+            }
+            Gate gate = new Gate(type);
+            gate.Name = storageObject.Name;
+            gate.Position = storageObject.Position;
+            if (type == Gate.GateType.Context)
+            {
+                foreach (StorageObject innerStore in storageObject.Context)
+                    gate.Context.Add(ToGate(innerStore));
+            }
+            foreach (int id in storageObject.InputConnections)
+            {
+                gate.Input.Add(new InputNode(gate));
+            }
+            foreach (int id in storageObject.OutputConnections)
+            {
+                gate.Output.Add(new OutputNode(gate));
+            }
+
+            return gate;
         }
     }
 }
