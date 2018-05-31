@@ -17,6 +17,9 @@
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\User\source\repos\Circuit-Simulator-Plus\CircuitSimulatorPlus\CircuitSimulatorPlus\bin\Debug\Grid.png" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -25,9 +28,6 @@
         </Canvas>
         <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="File" Width="auto">
-                <MenuItem.Background>
-                    <ImageBrush ImageSource="C:\Users\User\source\repos\Circuit-Simulator-Plus\CircuitSimulatorPlus\CircuitSimulatorPlus\bin\Debug\Grid.png"/>
-                </MenuItem.Background>
                 <MenuItem Header="New Circuit" Click="NewFile_Click"/>
                 <MenuItem Header="Open Circuit" Click="OpenFile_Click"/>
                 <MenuItem Header="Open Recent"/>
