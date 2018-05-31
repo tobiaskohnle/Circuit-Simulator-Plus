@@ -67,6 +67,12 @@ namespace CircuitSimulatorPlus
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+        public Size Size { get; private set; }
+
+        public void UpdateSize()
+        {
+            Size = new Size(3, 4);
+        }
         /// <summary>
         /// Name displayed on top of the gate.
         /// </summary>
