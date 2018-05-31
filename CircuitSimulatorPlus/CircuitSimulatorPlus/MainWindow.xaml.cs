@@ -90,7 +90,7 @@ namespace CircuitSimulatorPlus
 
             gate.Renderer.Render();
 
-            CreateGateAction CreateGateAction = new CreateGateAction(gate,gate.Type,gate.Position,contextGate.Context,"Create Gate");
+            var CreateGateAction = new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate");
             Undo.Add(CreateGateAction);
 
             return gate;
@@ -194,7 +194,7 @@ namespace CircuitSimulatorPlus
 
             foreach (Gate gate in contextGate.Context)
             {
-                if (   gate.Position.X <= lastCanvasClick.X
+                if (gate.Position.X <= lastCanvasClick.X
                     && gate.Position.Y <= lastCanvasClick.Y
                     && gate.Position.Y + 4 >= lastCanvasClick.Y
                     && gate.Position.X + 3 >= lastCanvasClick.X)
@@ -400,7 +400,7 @@ namespace CircuitSimulatorPlus
                 cables.Add(cable);
                 cable.Renderer = new CableRenderer(canvas, cable);
                 cable.Output = gate.Output[index];
-                drawingcable = true; 
+                drawingcable = true;
             }
         }
         void OnGateInputClicked(object sender, EventArgs e)
@@ -418,7 +418,7 @@ namespace CircuitSimulatorPlus
                 lastcable.Input = gate.Input[index];
                 lastcable.Output.ConnectTo(lastcable.Input);
                 Tick(lastcable.Input);
-                drawingcable = false; 
+                drawingcable = false;
             }
         }
         #endregion
