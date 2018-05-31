@@ -36,6 +36,7 @@ namespace CircuitSimulatorPlus
                 contextGate = new Gate();
             foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Render();
+            List<Gate> createdGates = contextGate.Context;
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
