@@ -67,7 +67,7 @@ namespace CircuitSimulatorPlus
         Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
         DispatcherTimer timer = new DispatcherTimer();
         List<Cable> cables = new List<Cable>();
-        List<Gate> selected = new List<Gate>();
+        List<IClickable> selected = new List<IClickable>();
         List<Action> Undo = new List<Action>();
         List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
@@ -124,18 +124,24 @@ namespace CircuitSimulatorPlus
             TickQueue();
         }
 
-        public void Select(Gate gate)
+        public void Select(IClickable obj)
         {
-            if (!gate.IsSelected)
+            if (!obj.IsSelected)
             {
-                selected.Add(gate);
-                gate.IsSelected = true;
+                selected.Add(obj);
+                obj.IsSelected = true;
             }
+        }
+        public void SelectAllIn(Rect rect)
+        {
+            foreach (IClickable obj in clickableObjects)
+                if (obj.Hitbox.IsIncludedIn(rect))
+                    Select(obj);
         }
         public void UnselectAll()
         {
-            foreach (Gate gate in selected)
-                gate.IsSelected = false;
+            foreach (IClickable obj in selected)
+                obj.IsSelected = false;
             selected.Clear();
         }
         public void SnapSelectedToGrid()

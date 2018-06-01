@@ -9,5 +9,6 @@ namespace CircuitSimulatorPlus
     public interface IClickable
     {
         Hitbox Hitbox { get; set; }
+        bool IsSelected { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace CircuitSimulatorPlus
                 && pos.Y <= Bounds.Y + Bounds.Height;
         }
 
-        public override bool IncludedIn(Rect rect)
+        public override bool IsIncludedIn(Rect rect)
         {
             return Bounds.X >= rect.X - Bounds.Width
                 && Bounds.X <= rect.X + rect.Width

@@ -80,6 +80,8 @@ namespace CircuitSimulatorPlus
             set { hitbox = value as CircleHitbox; }
         }
 
+        public bool IsSelected { get; set; }
+
         public abstract void Clear();
         
         /// <summary>

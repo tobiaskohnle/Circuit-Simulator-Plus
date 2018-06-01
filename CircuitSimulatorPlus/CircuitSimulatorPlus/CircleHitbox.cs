@@ -34,20 +34,24 @@ namespace CircuitSimulatorPlus
             return Dist(pos - Center) <= radius * radius;
         }
 
-        public override bool IncludedIn(Rect rect)
+        public override bool IsIncludedIn(Rect rect)
         {
             double distCenterX = Math.Abs(Center.X - rect.X - rect.Width / 2);
             double distCenterY = Math.Abs(Center.Y - rect.Y - rect.Height / 2);
+            double halfWidth = rect.Width / 2;
+            double halfHeight = rect.Height / 2;
 
-            if (rect.Width / 2 + radius > distCenterX)
+            if (halfWidth + radius > distCenterX)
                 return false;
-            if (rect.Height / 2 + radius > distCenterY)
+            if (halfHeight + radius > distCenterY)
                 return false;
-            if (rect.Width / 2 <= distCenterX)
+            if (halfWidth <= distCenterX)
                 return true;
-            if (rect.Height / 2 <= distCenterY)
+            if (halfHeight <= distCenterY)
                 return true;
-            return (Center - new Point(rect.Width / 2, rect.Height / 2)).LengthSquared < radius * radius;
+            return (Center.X - halfWidth) * (Center.X - halfWidth)
+                + (Center.Y - halfHeight) * (Center.Y - halfHeight)
+                < radius * radius;
         }
     }
 }
