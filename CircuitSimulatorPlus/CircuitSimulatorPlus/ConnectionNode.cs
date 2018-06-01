@@ -14,7 +14,6 @@ namespace CircuitSimulatorPlus
             Owner = owner;
             IsEmpty = true;
             NextConnectedTo = new List<ConnectionNode>();
-            UpdatePosition();
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
@@ -40,12 +39,7 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        public Point Position { get; private set; }
-
-        void UpdatePosition()
-        {
-            Position = new Point(0, 0);
-        }
+        public Point Position { get; set; }
 
         /// <summary>
         /// A reference to the Gate which the ConnectionNode is connected to.

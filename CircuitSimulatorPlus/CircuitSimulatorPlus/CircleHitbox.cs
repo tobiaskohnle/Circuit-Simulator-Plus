@@ -19,19 +19,14 @@ namespace CircuitSimulatorPlus
             this.radius = radius;
         }
 
-        double Dist(Vector vector)
-        {
-            return vector.X * vector.X + vector.Y * vector.Y;
-        }
-
         public override double DistanceTo(Point pos)
         {
-            return distanceFactor * Dist(pos - Center);
+            return distanceFactor * (pos - Center).LengthSquared;
         }
 
         public override bool IncludesPos(Point pos)
         {
-            return Dist(pos - Center) <= radius * radius;
+            return (pos - Center).LengthSquared <= radius * radius;
         }
 
         public override bool IsIncludedIn(Rect rect)
