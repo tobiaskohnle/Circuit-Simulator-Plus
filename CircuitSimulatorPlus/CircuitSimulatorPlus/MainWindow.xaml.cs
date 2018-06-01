@@ -140,8 +140,8 @@ namespace CircuitSimulatorPlus
             {
                 if (gate.Position.X <= pos.X
                     && gate.Position.Y <= pos.Y
-                    && gate.Position.Y + gate.Size.Width >= pos.Y
-                    && gate.Position.X + gate.Size.Height >= pos.X)
+                    && gate.Position.Y + gate.Size.Height >= pos.Y
+                    && gate.Position.X + gate.Size.Width >= pos.X)
                 {
                     return gate;
                 }
