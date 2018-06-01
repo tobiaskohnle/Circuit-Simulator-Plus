@@ -6,11 +6,16 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode : IClickable
     {
+        public const double HitboxRadius = 3.5;
+        public const double DistanceFactor = 0.3;
+
         protected ConnectionNode(Gate owner)
         {
             Owner = owner;
             IsEmpty = true;
             NextConnectedTo = new List<ConnectionNode>();
+            UpdatePosition();
+            hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
         public List<ConnectionNode> NextConnectedTo { get; set; }
@@ -35,19 +40,13 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        Point position;
-        ///<summary>
-        ///</summary>
-        public Point Position
+        public Point Position { get; private set; }
+
+        void UpdatePosition()
         {
-            get {
-                return position;
-            }
-            set {
-                hitbox.Center = value;
-                position = value;
-            }
+            Position = new Point(0, 0);
         }
+
         /// <summary>
         /// A reference to the Gate which the ConnectionNode is connected to.
         /// </summary>

@@ -6,6 +6,8 @@ namespace CircuitSimulatorPlus
 {
     public class Gate : IClickable
     {
+        public const double DistanceFactor = 0.7;
+
         public Gate(GateType type = GateType.Context)
         {
             Type = type;
@@ -13,7 +15,9 @@ namespace CircuitSimulatorPlus
             Context = new List<Gate>();
             Input = new List<InputNode>();
             Output = new List<OutputNode>();
+            hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             UpdateSize();
+            UpdateHitbox();
         }
 
         public enum GateType
