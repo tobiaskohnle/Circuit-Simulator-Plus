@@ -75,6 +75,16 @@ namespace CircuitSimulatorPlus
         }
         public Size Size { get; private set; }
 
+        public void UpdateConnectionNodePos()
+        {
+            for (int i = 0; i < Input.Count; i++)
+                Input[i].Position = new Point(Position.X, Position.Y + 
+                    + 4.0 * (1 + 2 * i) / (2 * Input.Count));
+            for (int i = 0; i < Output.Count; i++)
+                Output[i].Position = new Point(Position.X + Size.Width, Position.Y + 
+                    + 4.0 * (1 + 2 * i) / (2 * Output.Count));
+        }
+
         public void UpdateSize()
         {
             Size = new Size(3, 4);
@@ -116,15 +126,16 @@ namespace CircuitSimulatorPlus
         public void Move(Vector move)
         {
             Position = new Point(Position.X + move.X, Position.Y + move.Y);
+            UpdateConnectionNodePos();
         }
         /// <summary>
         /// </summary>
         public void SnapToGrid()
         {
             Position = new Point(Math.Round(Position.X), Math.Round(Position.Y));
+            UpdateConnectionNodePos();
         }
         /// <summary>
-        /// 
         /// </summary>
         public bool Eval()
         {

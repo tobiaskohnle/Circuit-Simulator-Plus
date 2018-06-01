@@ -14,7 +14,6 @@ namespace CircuitSimulatorPlus
             Owner = owner;
             IsEmpty = true;
             NextConnectedTo = new List<ConnectionNode>();
-            UpdatePosition();
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
@@ -40,11 +39,17 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        public Point Position { get; private set; }
 
-        void UpdatePosition()
+        Point position;
+
+        public Point Position
         {
-            Position = new Point(0, 0);
+            get { return position; }
+            set {
+                position = value;
+                hitbox.Center = value;
+                Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>

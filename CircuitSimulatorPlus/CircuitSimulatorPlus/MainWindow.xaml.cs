@@ -92,7 +92,6 @@ namespace CircuitSimulatorPlus
         #region Properties
         Point lastMousePos;
         Point lastCanvasPos;
-        Point lastMouseClick;
         Point lastCanvasClick;
         bool showContextMenu;
         bool drawingcable;
@@ -118,6 +117,10 @@ namespace CircuitSimulatorPlus
         {
             contextGate.Context.Add(gate);
             clickableObjects.Add(gate);
+            foreach (InputNode input in gate.Input)
+                Add(input);
+            foreach (OutputNode output in gate.Output)
+                Add(output);
         }
         public void Add(ConnectionNode connectionNode)
         {
@@ -127,7 +130,6 @@ namespace CircuitSimulatorPlus
         {
             contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
-            gate.Position = new Point(5, contextGate.Context.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
                 gate.Input.Add(new InputNode(gate));
@@ -136,8 +138,7 @@ namespace CircuitSimulatorPlus
 
             gate.Renderer.Render();
 
-            var CreateGateAction = new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate");
-            Undo.Add(CreateGateAction);
+            Undo.Add(new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate"));
 
             Add(gate);
 
@@ -177,6 +178,11 @@ namespace CircuitSimulatorPlus
                 if (obj.Hitbox.IsIncludedIn(rect))
                     Select(obj);
         }
+        public void SelectAll()
+        {
+            foreach (IClickable obj in clickableObjects)
+                Select(obj);
+        }
         public void UnselectAll()
         {
             foreach (IClickable obj in selected)
@@ -202,16 +208,13 @@ namespace CircuitSimulatorPlus
             Undo.Add(DeleteGateAction);
         }
 
-        public List<IClickable> FindObjectsAt(Point pos)
-        {
-            return clickableObjects.Where(obj => obj.Hitbox.IncludesPos(pos)).ToList();
-        }
         public IClickable FindNearestObjectAt(Point pos)
         {
             IClickable nearest = null;
             double best = Double.PositiveInfinity;
 
-            foreach (IClickable obj in FindObjectsAt(pos))
+            var objectsAtPos = clickableObjects.Where(obj => obj.Hitbox.IncludesPos(pos));
+            foreach (IClickable obj in objectsAtPos)
             {
                 double dist = obj.Hitbox.DistanceTo(pos);
                 if (dist < best)
@@ -326,9 +329,9 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            lastCanvasClick = e.GetPosition(canvas);
+            lastCanvasClick = lastCanvasPos = e.GetPosition(canvas);
 
-            lastMousePos = lastMouseClick = e.GetPosition(this);
+            lastMousePos = e.GetPosition(this);
 
             IClickable clickedObject = FindNearestObjectAt(lastCanvasClick);
 
