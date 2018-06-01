@@ -107,9 +107,7 @@ namespace CircuitSimulatorPlus
         List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
         List<IClickable> clickableObjects = new List<IClickable>();
-        List<Vector> MoveGateActionInfo = new List<Vector>();
-        Vector completeMove = new Vector(0, 0);
-        int n = 0;
+        List<Vector> moveGateActionInfo = new List<Vector>();
         #endregion
 
         #region Gates
@@ -372,12 +370,14 @@ namespace CircuitSimulatorPlus
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
                 canvas.RenderTransform = new MatrixTransform(matrix);
-                MoveGateActionInfo.Add(moved);
             }
 
             if (e.LeftButton == MouseButtonState.Pressed)
+            {
                 foreach (Gate gate in selected)
                     gate.Move(canvasMoved);
+                moveGateActionInfo.Add(canvasMoved);
+            }
 
             lastMousePos = currentPos;
             lastCanvasPos = e.GetPosition(canvas);
@@ -388,22 +388,21 @@ namespace CircuitSimulatorPlus
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
             SnapSelectedToGrid();
-            UnselectAll();
             dragging = false;
-            foreach (Gate gate in selected)
-                gate.SnapToGrid();
             ReleaseMouseCapture();
-            int max = MoveGateActionInfo.Count();
-            foreach (Vector moved in MoveGateActionInfo)
+            if (selected.Count > 0)
             {
-                if (n <= max)
+                Vector completeMove = new Vector(0, 0);
+                foreach (Vector moved in moveGateActionInfo)
                 {
-                    completeMove += MoveGateActionInfo.ElementAt(n);
-                    n++;
+                    completeMove += moved;
                 }
+                moveGateActionInfo.Clear();
+                List<IClickable> selectedCopy = new List<IClickable>(selected);
+                MoveGateAction moveGateAction = new MoveGateAction(selectedCopy, completeMove, "Gate moved");
+                Undo.Add(moveGateAction);
             }
-            MoveGateActionInfo.Clear();
-            MoveGateAction MoveGateAction = new MoveGateAction(selected, completeMove, "Gate moved");
+            UnselectAll();
         }
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
