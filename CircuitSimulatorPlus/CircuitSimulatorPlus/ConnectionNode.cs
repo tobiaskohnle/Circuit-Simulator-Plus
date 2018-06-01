@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public abstract class ConnectionNode
+    public abstract class ConnectionNode : IClickable
     {
         protected ConnectionNode(Gate owner)
         {
@@ -44,6 +44,7 @@ namespace CircuitSimulatorPlus
                 return position;
             }
             set {
+                hitbox.Center = value;
                 position = value;
             }
         }
@@ -71,6 +72,14 @@ namespace CircuitSimulatorPlus
         /// (inside the Gate it is connected to)
         /// </summary>
         public string Name { get; set; }
+
+        CircleHitbox hitbox;
+
+        public Hitbox Hitbox
+        {
+            get { return hitbox; }
+            set { hitbox = value as CircleHitbox; }
+        }
 
         public abstract void Clear();
         

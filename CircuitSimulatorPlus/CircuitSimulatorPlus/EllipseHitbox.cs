@@ -7,17 +7,31 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class EllipseHitbox : Hitbox
+    public class CircleHitbox : Hitbox
     {
-        public EllipseHitbox(Rect bounds) : base(bounds)
+        public Point Center { get; set; }
+        double radius;
+
+        public CircleHitbox(object attachedObject, Point center, double radius, double distanceFactor)
+            : base(attachedObject, distanceFactor)
         {
+            Center = center;
+            this.radius = radius;
         }
 
-        public new bool IncludesPos(Point pos)
+        double Dist(Vector vector)
         {
-            Vector vector = pos - Center;
-            return vector.X * vector.X / bounds.Width / bounds.Width
-                + vector.Y * vector.Y / bounds.Height / bounds.Height <= 1;
+            return vector.X * vector.X + vector.Y * vector.Y;
+        }
+
+        public override double DistanceTo(Point pos)
+        {
+            return distanceFactor * Dist(pos - Center);
+        }
+
+        public override bool IncludesPos(Point pos)
+        {
+            return Dist(pos - Center) <= radius * radius;
         }
     }
 }

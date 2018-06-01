@@ -3,35 +3,20 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class Hitbox
+    public abstract class Hitbox
     {
-        protected Rect bounds;
-        protected object attachedObject;
+        public Hitbox(object attachedObject, double distanceFactor)
+        {
+            this.distanceFactor = distanceFactor;
+            AttachedObject = attachedObject;
+        }
+
         protected double distanceFactor;
 
-        public Hitbox(Rect bounds)
-        {
-            this.bounds = bounds;
-        }
+        public object AttachedObject { get; protected set; }
 
-        public bool IncludesPos(Point pos)
-        {
-            return pos.X >= bounds.X
-                && pos.Y >= bounds.Y
-                && pos.X <= bounds.X + bounds.Width
-                && pos.Y <= bounds.Y + bounds.Height;
-        }
+        public abstract bool IncludesPos(Point pos);
 
-        public Point Center
-        {
-            get {
-                return new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
-            }
-        }
-
-        public double DistanceSquaredTo(Point pos)
-        {
-            return (pos - Center).LengthSquared;
-        }
+        public abstract double DistanceTo(Point pos);
     }
 }

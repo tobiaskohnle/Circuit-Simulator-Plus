@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class Gate
+    public class Gate : IClickable
     {
         public Gate(GateType type = GateType.Context)
         {
@@ -65,6 +65,7 @@ namespace CircuitSimulatorPlus
             get { return position; }
             set {
                 position = value;
+                UpdateHitbox();
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -73,6 +74,12 @@ namespace CircuitSimulatorPlus
         public void UpdateSize()
         {
             Size = new Size(3, 4);
+            UpdateHitbox();
+        }
+
+        void UpdateHitbox()
+        {
+            hitbox.Bounds = new Rect(Position, Size);
         }
         /// <summary>
         /// Name displayed on top of the gate.
@@ -90,6 +97,15 @@ namespace CircuitSimulatorPlus
         /// Tag displayed inside of the gate. (e.g. ">=1" for OR)
         /// </summary>
         public string Tag { get; set; }
+
+        RectHitbox hitbox;
+
+        public Hitbox Hitbox
+        {
+            get { return hitbox; }
+            set { hitbox = value as RectHitbox; }
+        }
+
         /// <summary>
         /// Moves the gate.
         /// </summary>
