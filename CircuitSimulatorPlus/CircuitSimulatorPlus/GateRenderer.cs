@@ -230,7 +230,7 @@ namespace CircuitSimulatorPlus
                 {
                     line.X1 = pos.X + 3 + 0.5;
                     Canvas.SetLeft(outputNegationCircles[i], pos.X + 3);
-                    Canvas.SetTop(outputNegationCircles[i], y - 0.25);
+                    Canvas.SetTop(outputNegationCircles[i], y - (0.5 + 0.1) / 2);
                 }
                 else
                     line.X1 = pos.X + 3;
@@ -258,7 +258,7 @@ namespace CircuitSimulatorPlus
                 {
                     line.X1 = pos.X - 0.5;
                     Canvas.SetLeft(inputNegationCircles[i], pos.X + 3);
-                    Canvas.SetTop(inputNegationCircles[i], y - 0.25);
+                    Canvas.SetTop(inputNegationCircles[i], y - (0.5 + 0.1) / 2);
                 }
                 else
                     line.X1 = pos.X;
@@ -340,8 +340,8 @@ namespace CircuitSimulatorPlus
                     {
                         inputNegationCircles[i] = new Ellipse();
                         inputNegationCircles[i].StrokeThickness = MainWindow.LineWidth;
-                        inputNegationCircles[i].Width = 0.5;
-                        inputNegationCircles[i].Height = 0.5;
+                        inputNegationCircles[i].Width = 0.5 + 0.1;
+                        inputNegationCircles[i].Height = 0.5 + 0.1;
                         canvas.Children.Add(inputNegationCircles[i]);
                     }
                     inputNegationCircles[i].Stroke = !gate.Input[i].State ? Brushes.Red : Brushes.Black;
@@ -365,8 +365,8 @@ namespace CircuitSimulatorPlus
                     {
                         outputNegationCircles[i] = new Ellipse();
                         outputNegationCircles[i].StrokeThickness = MainWindow.LineWidth;
-                        outputNegationCircles[i].Width = 0.5;
-                        outputNegationCircles[i].Height = 0.5;
+                        outputNegationCircles[i].Width = 0.5 + 0.1;
+                        outputNegationCircles[i].Height = 0.5 + 0.1;
                         canvas.Children.Add(outputNegationCircles[i]);
                     }
                     outputNegationCircles[i].Stroke = outputLines[i].Stroke;
