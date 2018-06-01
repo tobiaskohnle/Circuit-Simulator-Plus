@@ -21,8 +21,8 @@ namespace CircuitSimulatorPlus
         Rectangle rectangle;
         Label innerLabel;
         Label outerLabel;
-        List<Line> inputLines = new List<Line>();
-        List<Line> outputLines = new List<Line>();
+        List<Line> inputLines;
+        List<Line> outputLines;
         Ellipse[] inputNegationCircles;
         Ellipse[] outputNegationCircles;
         List<Line>[] connectionLines;
@@ -57,6 +57,7 @@ namespace CircuitSimulatorPlus
             rectangle.Height = 4;
             canvas.Children.Add(rectangle);
 
+            outputLines = new List<Line>();
             for (int i = 0; i < gate.Output.Count; i++)
             {
                 var line = new Line();
@@ -73,6 +74,7 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(hitbox);
             }
 
+            inputLines = new List<Line>();
             for (int i = 0; i < gate.Input.Count; i++)
             {
                 var line = new Line();
