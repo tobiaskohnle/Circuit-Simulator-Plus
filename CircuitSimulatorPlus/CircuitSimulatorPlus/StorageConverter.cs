@@ -147,8 +147,9 @@ namespace CircuitSimulatorPlus
                     idToNodes[id].Add(node);
                 }
             }
-            foreach (int index in storageObject.InvertedInputs)
-                gate.Input[index].Invert();
+            if (storageObject.InvertedInputs != null)
+                foreach (int index in storageObject.InvertedInputs)
+                    gate.Input[index].Invert();
             foreach (int id in storageObject.OutputConnections)
             {
                 OutputNode node = new OutputNode(gate);
@@ -181,8 +182,9 @@ namespace CircuitSimulatorPlus
                     idToNodes[id].Add(node);
                 }
             }
-            foreach (int index in storageObject.InvertedOutputs)
-                gate.Output[index].Invert();
+            if (storageObject.InvertedOutputs != null)
+                foreach (int index in storageObject.InvertedOutputs)
+                    gate.Output[index].Invert();
 
             return gate;
         }
