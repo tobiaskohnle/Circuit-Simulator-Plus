@@ -354,6 +354,36 @@ namespace CircuitSimulatorPlus
                 {
                     gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
                     gate.Renderer.Render();
+                    for (int i = 0; i < gate.Output.Count; i++)
+                    {
+                        OutputNode node = gate.Output[i];
+                        Point p1 = new Point();
+                        p1.X = gate.Position.X + 3 + 1;
+                        p1.Y = gate.Position.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
+                        foreach (InputNode inNode in node.NextConnectedTo)
+                        {
+                            Gate inGate = inNode.Owner;
+                            int index = 0;
+                            for (int j = 0; j < inGate.Input.Count; j++)
+                            {
+                                if (inGate.Input[j] == inNode)
+                                {
+                                    index = j;
+                                    break;
+                                }
+                            }
+                            Point p2 = new Point();
+                            p2.X = inGate.Position.X - 1;
+                            p2.Y = inGate.Position.Y + (double)4 * (1 + 2 * index) / (2 * inGate.Input.Count);
+                            Cable cable = new Cable();
+                            cable.Output = node;
+                            cable.Input = inNode;
+                            cable.Renderer = new CableRenderer(canvas, cable);
+                            cable.AddPoint(p1, true);
+                            cable.AddPoint(p2, true);
+                            cables.Add(cable);
+                        }
+                    }
                 }
             }
         }
