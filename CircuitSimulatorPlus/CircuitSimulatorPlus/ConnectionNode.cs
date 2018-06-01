@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
@@ -32,6 +33,18 @@ namespace CircuitSimulatorPlus
                     state = value;
                     Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
                 }
+            }
+        }
+        Point position;
+        ///<summary>
+        ///</summary>
+        public Point Position
+        {
+            get {
+                return position;
+            }
+            set {
+                position = value;
             }
         }
         /// <summary>

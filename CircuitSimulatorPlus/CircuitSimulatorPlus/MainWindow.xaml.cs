@@ -173,6 +173,8 @@ namespace CircuitSimulatorPlus
         #region Misc
         public void PerformAction(Action action)
         {
+            saved = false;
+            UpdateTitle();
             action.Redo();
         }
         public void RevokeAction(Action action)
