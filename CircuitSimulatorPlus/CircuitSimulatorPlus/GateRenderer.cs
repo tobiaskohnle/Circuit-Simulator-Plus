@@ -226,7 +226,7 @@ namespace CircuitSimulatorPlus
                 Line line = outputLines[i];
                 double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
 
-                if (gate.Output[i].IsInverted)
+                if (outputNegationCircles[i] != null)
                 {
                     line.X1 = pos.X + 3 + 0.5;
                     Canvas.SetLeft(outputNegationCircles[i], pos.X + 3);
@@ -254,7 +254,7 @@ namespace CircuitSimulatorPlus
                 Line line = inputLines[i];
                 double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
 
-                if (gate.Input[i].IsInverted)
+                if (inputNegationCircles[i] != null)
                 {
                     line.X1 = pos.X - 0.5;
                     Canvas.SetLeft(inputNegationCircles[i], pos.X + 3);
