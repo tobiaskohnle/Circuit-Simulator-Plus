@@ -156,6 +156,9 @@ namespace CircuitSimulatorPlus
                 output.Clear();
             gate.Renderer.Unrender();
             contextGate.Context.Remove(gate);
+
+            DeleteGateAction DeleteGateAction = new DeleteGateAction(gate,gate.Type,gate.Position, contextGate.Context, "Gate deleted");
+            Undo.Add(DeleteGateAction);
         }
         #endregion
 
