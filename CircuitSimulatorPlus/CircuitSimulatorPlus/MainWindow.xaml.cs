@@ -40,8 +40,44 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
+            drawgrid(ScaleFactor);
         }
+        double linewidth = LineWidth;
 
+        public void drawgrid(double scale)
+        {
+           
+            linewidth = linewidth / scale;
+            VisualBrush brush = new VisualBrush
+            {
+                Viewport = new Rect(0, 0, 1, 1),
+                ViewportUnits = BrushMappingMode.Absolute,
+                TileMode = TileMode.Tile,
+                Stretch = Stretch.Fill
+            };
+
+            Grid grid = new Grid { Width = 992, Height = 648 };
+            grid.Children.Add(new Rectangle
+            {
+                Width = 1,
+                Height = linewidth,
+                Fill = new SolidColorBrush(Colors.LightGray),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+            });
+
+            grid.Children.Add(new Rectangle
+            {
+                Height = 1,
+                Width = linewidth,
+                Fill = new SolidColorBrush(Colors.LightGray),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+            });
+
+            brush.Visual = grid;
+            canvas.Background = brush;
+        }
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
@@ -360,6 +396,7 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
+            drawgrid(scale);
         }
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
