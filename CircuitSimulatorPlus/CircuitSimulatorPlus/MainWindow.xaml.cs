@@ -56,7 +56,6 @@ namespace CircuitSimulatorPlus
         #region Properties
         Point lastMousePos;
         Point lastCanvasPos;
-        Point lastMouseClick;
         Point lastCanvasClick;
         bool showContextMenu;
         bool drawingcable;
@@ -137,6 +136,11 @@ namespace CircuitSimulatorPlus
             foreach (IClickable obj in clickableObjects)
                 if (obj.Hitbox.IsIncludedIn(rect))
                     Select(obj);
+        }
+        public void SelectAll()
+        {
+            foreach (IClickable obj in clickableObjects)
+                Select(obj);
         }
         public void UnselectAll()
         {
@@ -289,7 +293,7 @@ namespace CircuitSimulatorPlus
         {
             lastCanvasClick = e.GetPosition(canvas);
 
-            lastMousePos = lastMouseClick = e.GetPosition(this);
+            lastMousePos = e.GetPosition(this);
 
             IClickable clickedObject = FindNearestObjectAt(lastCanvasClick);
 
