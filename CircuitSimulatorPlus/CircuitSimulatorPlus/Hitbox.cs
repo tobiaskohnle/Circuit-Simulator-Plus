@@ -17,6 +17,8 @@ namespace CircuitSimulatorPlus
 
         public abstract bool IncludesPos(Point pos);
 
+        public abstract bool IncludedIn(Rect rect);
+
         public abstract double DistanceTo(Point pos);
     }
 }

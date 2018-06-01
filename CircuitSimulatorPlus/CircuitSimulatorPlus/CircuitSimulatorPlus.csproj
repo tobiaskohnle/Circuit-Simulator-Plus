@@ -84,7 +84,7 @@
     <Compile Include="Actions\CreateGateAction.cs" />
     <Compile Include="Actions\CutAction.cs" />
     <Compile Include="Actions\DeleteGateAction.cs" />
-    <Compile Include="EllipseHitbox.cs" />
+    <Compile Include="CircleHitbox.cs" />
     <Compile Include="Hitbox.cs" />
     <Compile Include="IClickable.cs" />
     <Compile Include="IndexEventArgs.cs" />
