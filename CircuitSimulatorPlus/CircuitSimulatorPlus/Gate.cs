@@ -13,11 +13,12 @@ namespace CircuitSimulatorPlus
             Context = new List<Gate>();
             Input = new List<InputNode>();
             Output = new List<OutputNode>();
+            UpdateSize();
         }
 
         public enum GateType
         {
-            Context, And, Or, Not, Identity
+            Context, And, Or, Identity
         }
         /// <summary>
         /// </summary>
@@ -119,12 +120,10 @@ namespace CircuitSimulatorPlus
                     if (input.State)
                         return true;
                 return false;
-            case GateType.Not:
-                foreach (InputNode input in Input)
-                    return !input.State;
-                return true;
             case GateType.Identity:
-                return Input[0].State;
+                foreach (InputNode input in Input)
+                    return input.State;
+                return false;
             }
             throw new InvalidOperationException($"Can't Eval() gate of type {Type}.");
         }

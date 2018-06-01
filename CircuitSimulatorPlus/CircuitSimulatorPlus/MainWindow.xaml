@@ -12,9 +12,13 @@
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Add And Gate" Click="DEBUG_AddAndGate"></MenuItem>
+            <MenuItem Header="Add Nand Gate" Click="DEBUG_AddNandGate"></MenuItem>
             <MenuItem Header="Add Or Gate" Click="DEBUG_AddOrGate"></MenuItem>
+            <MenuItem Header="Add Nor Gate" Click="DEBUG_AddNorGate"></MenuItem>
             <MenuItem Header="Add Not Gate" Click="DEBUG_AddNotGate"></MenuItem>
             <MenuItem Header="Add Identity Gate" Click="DEBUG_AddIdentityGate"></MenuItem>
+            <MenuItem Header="Delete" Click="DEBUG_DeleteGate"></MenuItem>
+            <MenuItem Header="Toggle" Click="DEBUG_ToggleGate"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

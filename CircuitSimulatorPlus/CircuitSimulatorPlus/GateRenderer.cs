@@ -14,7 +14,7 @@ namespace CircuitSimulatorPlus
     /// <summary>
     /// Documentation is elementary.
     /// </summary>
-    public class SimpleGateRenderer : IRenderer
+    public class GateRenderer : IRenderer
     {
         Canvas canvas;
         Gate gate;
@@ -34,13 +34,13 @@ namespace CircuitSimulatorPlus
         public EventHandler InputClicked;
         public EventHandler OutputClicked;
 
-        public SimpleGateRenderer(Canvas canvas, Gate gate)
+        public GateRenderer(Canvas canvas, Gate gate)
         {
             this.canvas = canvas;
             this.gate = gate;
         }
 
-        public SimpleGateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked) : this(canvas, gate)
+        public GateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked) : this(canvas, gate)
         {
             InputClicked += onInputClicked;
             OutputClicked += onOutputClicked;
@@ -120,7 +120,6 @@ namespace CircuitSimulatorPlus
                     innerLabel.Content = "\u22651";  // greater than one
                     break;
                 case Gate.GateType.Identity:
-                case Gate.GateType.Not:
                     innerLabel.Content = '1';
                     break;
             }

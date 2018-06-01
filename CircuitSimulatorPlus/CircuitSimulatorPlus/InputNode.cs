@@ -23,6 +23,8 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public override void Clear()
         {
+            if (IsEmpty)
+                return;
             BackConnectedTo.NextConnectedTo.Remove(this);
             BackConnectedTo.IsEmpty = BackConnectedTo.NextConnectedTo.Count == 0;
             BackConnectedTo = null;

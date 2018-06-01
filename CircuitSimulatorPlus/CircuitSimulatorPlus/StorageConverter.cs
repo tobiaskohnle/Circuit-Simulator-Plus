@@ -100,9 +100,6 @@ namespace CircuitSimulatorPlus
                 case "Or":
                     type = Gate.GateType.Or;
                     break;
-                case "Not":
-                    type = Gate.GateType.Not;
-                    break;
                 case "Identity":
                     type = Gate.GateType.Identity;
                     break;
