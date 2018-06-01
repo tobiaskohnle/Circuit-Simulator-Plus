@@ -84,7 +84,6 @@
     <Compile Include="Actions\CreateGateAction.cs" />
     <Compile Include="Actions\CutAction.cs" />
     <Compile Include="Actions\DeleteGateAction.cs" />
-    <Compile Include="Grid.cs" />
     <Compile Include="IndexEventArgs.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="Actions\MoveGateAction.cs" />

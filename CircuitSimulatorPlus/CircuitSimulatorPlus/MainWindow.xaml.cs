@@ -19,12 +19,10 @@ namespace CircuitSimulatorPlus
 {
     public partial class MainWindow : Window
     {
-        Grid grid;
         public MainWindow()
         {
             InitializeComponent();
-            //grid = new Grid(canvas, 992, 648, 1.0);
-            //grid.Render();
+
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
@@ -42,10 +40,7 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
-
-
         }
-        double rescale;
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
@@ -140,8 +135,8 @@ namespace CircuitSimulatorPlus
             {
                 if (gate.Position.X <= pos.X
                     && gate.Position.Y <= pos.Y
-                    && gate.Position.Y + gate.Size.Width >= pos.Y
-                    && gate.Position.X + gate.Size.Height >= pos.X)
+                    && gate.Position.Y + gate.Size.Height >= pos.Y
+                    && gate.Position.X + gate.Size.Width >= pos.X)
                 {
                     return gate;
                 }
@@ -172,10 +167,6 @@ namespace CircuitSimulatorPlus
         public void UpdateTitle()
         {
             Title = $"{title}{(saved ? "" : " " + Unsaved)} - {WindowTitle}";
-        }
-        public void Gridlinewidth()
-        {
-            grid.Gridlinewidth();
         }
         #endregion
 
@@ -411,17 +402,23 @@ namespace CircuitSimulatorPlus
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
-        {            
-            RevokeAction(Undo.Last());
-            Redo.Add(Undo.Last());
-            Undo.Remove(Undo.Last());
+        {
+            if (Undo.Count() > 0)
+            {
+                RevokeAction(Undo.Last());
+                Redo.Add(Undo.Last());
+                Undo.Remove(Undo.Last());
+            }
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction(Redo.Last());
-            Undo.Add(Redo.Last());
-            Redo.Remove(Redo.Last());
-                    }
+            if (Redo.Count() > 0)
+            {
+                PerformAction(Redo.Last());
+                Undo.Add(Redo.Last());
+                Redo.Remove(Redo.Last());
+            }
+        }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
 
