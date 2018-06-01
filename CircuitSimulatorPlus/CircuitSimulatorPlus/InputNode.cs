@@ -36,7 +36,8 @@ namespace CircuitSimulatorPlus
         {
             if (IsRisingEdge)
             {
-                State = BackConnectedTo.State && !State;
+                if (State == false)
+                    State = BackConnectedTo.State;
                 if (State)
                     tickedNodes.Enqueue(this);
                 foreach (ConnectionNode node in NextConnectedTo)
