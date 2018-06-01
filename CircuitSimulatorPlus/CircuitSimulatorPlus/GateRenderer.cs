@@ -28,8 +28,8 @@ namespace CircuitSimulatorPlus
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
-        List<Rectangle> outputHitboxes = new List<Rectangle>();
-        List<Rectangle> inputHitboxes = new List<Rectangle>();
+        List<Rectangle> outputHitboxes;
+        List<Rectangle> inputHitboxes;
 
         public EventHandler InputClicked;
         public EventHandler OutputClicked;
@@ -58,6 +58,7 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(rectangle);
 
             outputLines = new List<Line>();
+            outputHitboxes = new List<Rectangle>();
             for (int i = 0; i < gate.Output.Count; i++)
             {
                 var line = new Line();
@@ -75,6 +76,7 @@ namespace CircuitSimulatorPlus
             }
 
             inputLines = new List<Line>();
+            inputHitboxes = new List<Rectangle>();
             for (int i = 0; i < gate.Input.Count; i++)
             {
                 var line = new Line();
