@@ -217,9 +217,6 @@ namespace CircuitSimulatorPlus
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            //CreateGate(new Gate(Gate.GateType.Not), 1, 1).Position = lastCanvasClick;
-            //foreach (Gate gate in contextGate.Context)
-            //    gate.SnapToGrid();
             Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
             gate.Position = lastCanvasClick;
             gate.Output[0].Invert();
@@ -292,8 +289,6 @@ namespace CircuitSimulatorPlus
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
                 canvas.RenderTransform = new MatrixTransform(matrix);
-                //grid.position(moved.X, moved.Y);
-
             }
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -324,10 +319,6 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
-
-            //grid.scale = scale;
-            //grid.Gridlinewidth();
-
         }
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
