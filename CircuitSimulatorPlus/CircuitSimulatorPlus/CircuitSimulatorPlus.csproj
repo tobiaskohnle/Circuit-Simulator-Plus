@@ -91,7 +91,7 @@
     <Compile Include="Actions\PasteAction.cs" />
     <Compile Include="Actions\RemoveInputAction.cs" />
     <Compile Include="Actions\RenameGateAction.cs" />
-    <Compile Include="SimpleGateRenderer.cs" />
+    <Compile Include="GateRenderer.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StorageConverter.cs" />
     <Compile Include="StorageObject.cs" />

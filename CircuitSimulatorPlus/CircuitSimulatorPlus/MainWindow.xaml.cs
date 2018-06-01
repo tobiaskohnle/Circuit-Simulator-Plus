@@ -82,7 +82,7 @@ namespace CircuitSimulatorPlus
         public Gate CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             contextGate.Context.Add(gate);
-            gate.Renderer = new SimpleGateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
+            gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
             gate.Position = new Point(5, contextGate.Context.Count * 5);
 
             for (int i = 0; i < amtInputs; i++)
@@ -156,6 +156,9 @@ namespace CircuitSimulatorPlus
                 output.Clear();
             gate.Renderer.Unrender();
             contextGate.Context.Remove(gate);
+
+            DeleteGateAction DeleteGateAction = new DeleteGateAction(gate,gate.Type,gate.Position, contextGate.Context, "Gate deleted");
+            Undo.Add(DeleteGateAction);
         }
         #endregion
 
@@ -296,6 +299,8 @@ namespace CircuitSimulatorPlus
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
                 canvas.RenderTransform = new MatrixTransform(matrix);
+                //grid.position(moved.X, moved.Y);
+
             }
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -341,6 +346,8 @@ namespace CircuitSimulatorPlus
         {
             foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Unrender();
+            foreach (Cable cable in cables)
+                cable.Renderer.Unrender();
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
         {
@@ -352,7 +359,7 @@ namespace CircuitSimulatorPlus
                 contextGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 foreach (Gate gate in contextGate.Context)
                 {
-                    gate.Renderer = new SimpleGateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
+                    gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
                     gate.Renderer.Render();
                 }
             }
@@ -374,17 +381,17 @@ namespace CircuitSimulatorPlus
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             RevokeAction(Undo.Last());
             Redo.Add(Undo.Last());
             Undo.Remove(Undo.Last());
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction(Undo.Last());
+            PerformAction(Redo.Last());
             Undo.Add(Redo.Last());
             Redo.Remove(Redo.Last());
-        }
+                    }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
 

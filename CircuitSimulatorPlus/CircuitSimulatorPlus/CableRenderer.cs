@@ -45,6 +45,7 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(line);
                 lines.Add(line);
             }
+            OnGateOutputChanged(null, EventArgs.Empty);
         }
 
         public void Unrender()

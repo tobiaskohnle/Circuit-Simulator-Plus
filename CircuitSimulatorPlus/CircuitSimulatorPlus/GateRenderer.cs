@@ -14,33 +14,33 @@ namespace CircuitSimulatorPlus
     /// <summary>
     /// Documentation is elementary.
     /// </summary>
-    public class SimpleGateRenderer : IRenderer
+    public class GateRenderer : IRenderer
     {
         Canvas canvas;
         Gate gate;
         Rectangle rectangle;
         Label innerLabel;
         Label outerLabel;
-        List<Line> inputLines = new List<Line>();
-        List<Line> outputLines = new List<Line>();
+        List<Line> inputLines;
+        List<Line> outputLines;
         Ellipse[] inputNegationCircles;
         Ellipse[] outputNegationCircles;
         List<Line>[] connectionLines;
         Dictionary<Gate, Line[]> connectedGateToConnectionLines = new Dictionary<Gate, Line[]>();
 
-        List<Rectangle> outputHitboxes = new List<Rectangle>();
-        List<Rectangle> inputHitboxes = new List<Rectangle>();
+        List<Rectangle> outputHitboxes;
+        List<Rectangle> inputHitboxes;
 
         public EventHandler InputClicked;
         public EventHandler OutputClicked;
 
-        public SimpleGateRenderer(Canvas canvas, Gate gate)
+        public GateRenderer(Canvas canvas, Gate gate)
         {
             this.canvas = canvas;
             this.gate = gate;
         }
 
-        public SimpleGateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked) : this(canvas, gate)
+        public GateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked) : this(canvas, gate)
         {
             InputClicked += onInputClicked;
             OutputClicked += onOutputClicked;
@@ -57,6 +57,8 @@ namespace CircuitSimulatorPlus
             rectangle.Height = 4;
             canvas.Children.Add(rectangle);
 
+            outputLines = new List<Line>();
+            outputHitboxes = new List<Rectangle>();
             for (int i = 0; i < gate.Output.Count; i++)
             {
                 var line = new Line();
@@ -73,6 +75,8 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(hitbox);
             }
 
+            inputLines = new List<Line>();
+            inputHitboxes = new List<Rectangle>();
             for (int i = 0; i < gate.Input.Count; i++)
             {
                 var line = new Line();

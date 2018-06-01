@@ -61,5 +61,22 @@ namespace CircuitSimulatorPlus
             foreach (Line line in horizontalLines)
                 line.StrokeThickness = Linewidth;
         }
+        /*public void position(double movedX, double movedY)
+        {
+            foreach (Line line in verticalLines)
+            {
+                line.X1 = line.X1 + movedX;
+                line.X2 = line.X2 + movedX;
+                line.Y1 = line.Y1 + movedY;
+                line.Y1 = line.Y2 + movedY;
+            }
+            foreach (Line line in horizontalLines)
+            {
+                line.X1 = line.X1 + movedX;
+                line.X2 = line.X2 + movedX;
+                line.Y1 = line.Y1 + movedY;
+                line.Y1 = line.Y2 + movedY;
+            }
+        }*/
     }
 }
