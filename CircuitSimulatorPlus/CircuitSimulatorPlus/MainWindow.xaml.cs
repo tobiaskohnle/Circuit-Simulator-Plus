@@ -246,6 +246,8 @@ namespace CircuitSimulatorPlus
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
                 canvas.RenderTransform = new MatrixTransform(matrix);
+                //grid.position(moved.X, moved.Y);
+
             }
 
             if (e.LeftButton == MouseButtonState.Pressed)
