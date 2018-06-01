@@ -39,7 +39,18 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        public Point Position { get; set; }
+
+        Point position;
+
+        public Point Position
+        {
+            get { return position; }
+            set {
+                position = value;
+                hitbox.Center = value;
+                Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         /// A reference to the Gate which the ConnectionNode is connected to.
