@@ -291,7 +291,7 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            lastCanvasClick = e.GetPosition(canvas);
+            lastCanvasClick = lastCanvasPos = e.GetPosition(canvas);
 
             lastMousePos = e.GetPosition(this);
 
