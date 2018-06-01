@@ -13,9 +13,9 @@ namespace CircuitSimulatorPlus
     public class MoveGateAction : Action
     {
         Vector move;
-        List<Gate> movedGates;
+        List<IClickable> movedGates;
 
-        public MoveGateAction(List<Gate> movedGates, Vector move, string message) : base(message)
+        public MoveGateAction(List<IClickable> movedGates, Vector move, string message) : base(message)
         {
             this.move = move;
             this.movedGates = movedGates;

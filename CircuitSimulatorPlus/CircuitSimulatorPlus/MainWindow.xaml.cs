@@ -108,6 +108,9 @@ namespace CircuitSimulatorPlus
         List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
         List<IClickable> clickableObjects = new List<IClickable>();
+        List<Vector> MoveGateActionInfo = new List<Vector>();
+        Vector completeMove = new Vector(0, 0);
+        int n = 0;
         #endregion
 
         #region Gates
@@ -366,6 +369,7 @@ namespace CircuitSimulatorPlus
                 Matrix matrix = canvas.RenderTransform.Value;
                 matrix.Translate(moved.X, moved.Y);
                 canvas.RenderTransform = new MatrixTransform(matrix);
+                MoveGateActionInfo.Add(moved);
             }
 
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -386,6 +390,17 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in selected)
                 gate.SnapToGrid();
             ReleaseMouseCapture();
+            int max = MoveGateActionInfo.Count();
+            foreach (Vector moved in MoveGateActionInfo)
+            {
+                if (n <= max)
+                {
+                    completeMove += MoveGateActionInfo.ElementAt(n);
+                    n++;
+                }
+            }
+            MoveGateActionInfo.Clear();
+            MoveGateAction MoveGateAction = new MoveGateAction(selected, completeMove, "Gate moved");
         }
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
