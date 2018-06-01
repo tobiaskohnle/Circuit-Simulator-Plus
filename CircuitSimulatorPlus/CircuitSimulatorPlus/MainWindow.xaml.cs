@@ -381,17 +381,17 @@ namespace CircuitSimulatorPlus
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             RevokeAction(Undo.Last());
             Redo.Add(Undo.Last());
             Undo.Remove(Undo.Last());
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-            PerformAction(Undo.Last());
+            PerformAction(Redo.Last());
             Undo.Add(Redo.Last());
             Redo.Remove(Redo.Last());
-        }
+                    }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
 
