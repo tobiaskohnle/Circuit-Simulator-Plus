@@ -71,9 +71,19 @@ namespace CircuitSimulatorPlus
         List<Action> Undo = new List<Action>();
         List<Action> Redo = new List<Action>();
         Gate contextGate = new Gate();
+        List<IClickable> clickableObjects = new List<IClickable>();
         #endregion
 
         #region Gates
+        public void Add(Gate gate)
+        {
+            contextGate.Context.Add(gate);
+            clickableObjects.Add(gate);
+        }
+        public void Add(ConnectionNode connectionNode)
+        {
+            clickableObjects.Add(connectionNode);
+        }
         public Gate CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             contextGate.Context.Add(gate);
@@ -90,8 +100,11 @@ namespace CircuitSimulatorPlus
             var CreateGateAction = new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate");
             Undo.Add(CreateGateAction);
 
+            Add(gate);
+
             return gate;
         }
+
         public void Tick(ConnectionNode node)
         {
             tickedNodes.Enqueue(node);
@@ -110,6 +123,7 @@ namespace CircuitSimulatorPlus
         {
             TickQueue();
         }
+
         public void Select(Gate gate)
         {
             if (!gate.IsSelected)
@@ -129,20 +143,7 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in selected)
                 gate.SnapToGrid();
         }
-        public Gate GateAt(Point pos)
-        {
-            foreach (Gate gate in contextGate.Context)
-            {
-                if (gate.Position.X <= pos.X
-                    && gate.Position.Y <= pos.Y
-                    && gate.Position.Y + gate.Size.Height >= pos.Y
-                    && gate.Position.X + gate.Size.Width >= pos.X)
-                {
-                    return gate;
-                }
-            }
-            return null;
-        }
+
         public void Delete(Gate gate)
         {
             foreach (InputNode input in gate.Input)
@@ -154,6 +155,28 @@ namespace CircuitSimulatorPlus
 
             DeleteGateAction DeleteGateAction = new DeleteGateAction(gate,gate.Type,gate.Position, contextGate.Context, "Gate deleted");
             Undo.Add(DeleteGateAction);
+        }
+
+        public List<IClickable> FindObjectsAt(Point pos)
+        {
+            return clickableObjects.Where(obj => obj.Hitbox.IncludesPos(pos)).ToList();
+        }
+        public IClickable FindNearestObjectAt(Point pos)
+        {
+            IClickable nearest = null;
+            double best = Double.PositiveInfinity;
+
+            foreach (IClickable obj in FindObjectsAt(pos))
+            {
+                double dist = obj.Hitbox.DistanceTo(pos);
+                if (dist < best)
+                {
+                    nearest = obj;
+                    best = dist;
+                }
+            }
+
+            return nearest;
         }
         #endregion
 
@@ -231,15 +254,18 @@ namespace CircuitSimulatorPlus
         }
         void DEBUG_DeleteGate(object sender, EventArgs e)
         {
-            Gate clicked = GateAt(lastCanvasClick);
-            if (clicked != null)
-                Delete(clicked);
+            IClickable clickedObject = FindNearestObjectAt(lastCanvasClick);
+            if (clickedObject != null && clickedObject is Gate)
+            {
+                Delete(clickedObject as Gate);
+            }
         }
         void DEBUG_ToggleGate(object sender, EventArgs e)
         {
-            Gate clicked = GateAt(lastCanvasClick);
-            if (clicked != null)
+            IClickable clickedObject = FindNearestObjectAt(lastCanvasClick);
+            if (clickedObject != null && clickedObject is Gate)
             {
+                Gate clicked = clickedObject as Gate;
                 clicked.Input[0].State = !clicked.Input[0].State;
                 clicked.Output[0].State = !clicked.Output[0].State;
                 Tick(clicked.Output[0]);
@@ -259,9 +285,18 @@ namespace CircuitSimulatorPlus
 
             lastMousePos = lastMouseClick = e.GetPosition(this);
 
-            Gate clicked = GateAt(lastCanvasClick);
-            if (clicked != null)
+            IClickable clickedObject = FindNearestObjectAt(lastCanvasClick);
+
+            if (clickedObject is Gate)
+            {
+                Gate clicked = clickedObject as Gate;
                 Select(clicked);
+            }
+            else if (clickedObject is ConnectionNode)
+            {
+                ConnectionNode clicked = clickedObject as ConnectionNode;
+                clicked.Invert();
+            }
 
             showContextMenu = true;
             if (e.RightButton == MouseButtonState.Pressed)
