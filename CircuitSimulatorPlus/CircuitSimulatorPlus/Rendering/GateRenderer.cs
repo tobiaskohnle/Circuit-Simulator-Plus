@@ -357,9 +357,9 @@ namespace CircuitSimulatorPlus
         void OnSelectionChanged(object sender, EventArgs e)
         {
             if (gate.IsSelected)
-                rectangle.Fill = Brushes.LightBlue;
+                rectangle.Stroke = Brushes.Turquoise;
             else
-                rectangle.Fill = Brushes.White;
+                rectangle.Stroke = Brushes.Black;
         }
     }
 }
