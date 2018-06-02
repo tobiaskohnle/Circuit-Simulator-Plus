@@ -668,6 +668,17 @@ namespace CircuitSimulatorPlus
         }
         void ContextGate_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = "Circuit File (.json)|*.json";
+            if (dialog.ShowDialog() == true)
+            {
+                Gate gate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
+                gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
+                gate.Renderer = new GateRenderer(canvas, gate);
+                gate.Renderer.Render();
+                Add(gate);
+                Select(gate);
+            }
         }
         void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
