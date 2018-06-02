@@ -118,8 +118,8 @@ namespace CircuitSimulatorPlus
             {
                 if (value != isSelected)
                 {
-                    SelectionChanged?.Invoke(this, EventArgs.Empty);
                     isSelected = value;
+                    SelectionChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
