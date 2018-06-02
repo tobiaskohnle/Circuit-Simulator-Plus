@@ -73,6 +73,7 @@ namespace CircuitSimulatorPlus
             set {
                 position = value;
                 UpdateHitbox();
+                UpdateConnectionNodePos();
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -81,11 +82,15 @@ namespace CircuitSimulatorPlus
         public void UpdateConnectionNodePos()
         {
             for (int i = 0; i < Input.Count; i++)
-                Input[i].Position = new Point(Position.X, Position.Y + 
+            {
+                Input[i].Position = new Point(Position.X, Position.Y
                     + 4.0 * (1 + 2 * i) / (2 * Input.Count));
+            }
             for (int i = 0; i < Output.Count; i++)
-                Output[i].Position = new Point(Position.X + Size.Width, Position.Y + 
+            {
+                Output[i].Position = new Point(Position.X + Size.Width, Position.Y
                     + 4.0 * (1 + 2 * i) / (2 * Output.Count));
+            }
         }
 
         public void UpdateSize()

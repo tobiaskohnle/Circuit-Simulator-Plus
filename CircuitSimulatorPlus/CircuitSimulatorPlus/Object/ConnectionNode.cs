@@ -83,7 +83,16 @@ namespace CircuitSimulatorPlus
             set { hitbox = value as CircleHitbox; }
         }
 
-        public bool IsSelected { get; set; }
+        bool isSelected;
+
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set {
+                isSelected = value;
+                Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         public abstract void Clear();
         

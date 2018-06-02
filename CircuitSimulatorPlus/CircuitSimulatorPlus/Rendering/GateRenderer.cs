@@ -75,7 +75,7 @@ namespace CircuitSimulatorPlus
             if (gate.Name != null)
             {
                 outerLabel = new Label();
-                outerLabel.Width = 3;
+                outerLabel.Width = gate.Size.Width;
                 outerLabel.Height = 1;
                 outerLabel.Padding = new Thickness(0);
                 outerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -86,8 +86,8 @@ namespace CircuitSimulatorPlus
 
 
             innerLabel = new Label();
-            innerLabel.Width = 3;
-            innerLabel.Height = 4;
+            innerLabel.Width = gate.Size.Width;
+            innerLabel.Height = gate.Size.Height;
             innerLabel.Padding = new Thickness(0);
             innerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
             innerLabel.FontSize = 1;
@@ -304,6 +304,8 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < inputLines.Count; i++)
             {
                 inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Input[i].IsSelected)
+                    inputLines[i].Stroke = Brushes.Turquoise;
                 if (gate.Input[i].IsInverted)
                 {
                     if (inputNegationCircles[i] == null)
@@ -329,6 +331,8 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < outputLines.Count; i++)
             {
                 outputLines[i].Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
+                if (gate.Output[i].IsSelected)
+                    outputLines[i].Stroke = SystemColors.MenuHighlightBrush;
                 if (gate.Output[i].IsInverted)
                 {
                     if (outputNegationCircles[i] == null)
@@ -356,9 +360,15 @@ namespace CircuitSimulatorPlus
         void OnSelectionChanged(object sender, EventArgs e)
         {
             if (gate.IsSelected)
-                rectangle.Stroke = Brushes.Turquoise;
+            {
+                rectangle.Fill = new SolidColorBrush(Color.FromArgb(30, 16, 92, 255));
+                rectangle.Stroke = SystemColors.MenuHighlightBrush;
+            }
             else
+            {
+                rectangle.Fill = Brushes.Transparent;
                 rectangle.Stroke = Brushes.Black;
+            }
         }
     }
 }

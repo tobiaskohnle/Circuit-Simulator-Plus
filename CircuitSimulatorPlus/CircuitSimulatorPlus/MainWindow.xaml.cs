@@ -27,6 +27,9 @@ namespace CircuitSimulatorPlus
             RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
             canvas.SnapsToDevicePixels = true;
 
+            RenderOptions.SetEdgeMode(backgoundLayerCanvas, EdgeMode.Aliased);
+            backgoundLayerCanvas.SnapsToDevicePixels = true;
+
             UpdateTitle();
             ResetView();
 
@@ -50,7 +53,7 @@ namespace CircuitSimulatorPlus
         public const string DefaultTitle = "untitled";
         public const string FileFormat = "tici";
         public const string Unsaved = "\u2022";
-        public const double MinDistMouseMoved = 4;
+        public const double MinDistMouseMoved = 5;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
         public const double LineWidth = 0.1;
@@ -82,7 +85,7 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer = new DispatcherTimer();
 
         List<IClickable> clickableObjects = new List<IClickable>();
-        List<IClickable> selected = new List<IClickable>();
+        List<IClickable> selectedObjects = new List<IClickable>();
 
         Stack<Action> undoStack = new Stack<Action>();
         Stack<Action> redoStack = new Stack<Action>();
@@ -92,7 +95,7 @@ namespace CircuitSimulatorPlus
         IClickable lastClickedObject;
 
         Pen backgroundGridPen;
-        double currentScale = 1;
+        double currentScale;
         #endregion
 
         #region Gates
@@ -152,7 +155,7 @@ namespace CircuitSimulatorPlus
         {
             if (!obj.IsSelected)
             {
-                selected.Add(obj);
+                selectedObjects.Add(obj);
                 obj.IsSelected = true;
             }
         }
@@ -160,7 +163,7 @@ namespace CircuitSimulatorPlus
         {
             if (obj.IsSelected)
             {
-                selected.Remove(obj);
+                selectedObjects.Remove(obj);
                 obj.IsSelected = false;
             }
         }
@@ -196,9 +199,9 @@ namespace CircuitSimulatorPlus
         }
         public void DeselectAll()
         {
-            foreach (IClickable obj in selected)
+            foreach (IClickable obj in selectedObjects)
                 obj.IsSelected = false;
-            selected.Clear();
+            selectedObjects.Clear();
         }
 
         public void DeleteSelected()
@@ -220,8 +223,7 @@ namespace CircuitSimulatorPlus
             IClickable nearest = null;
             double best = Double.PositiveInfinity;
 
-            var objectsAtPos = clickableObjects.Where(obj => obj.Hitbox.IncludesPos(pos));
-            foreach (IClickable obj in objectsAtPos)
+            foreach (IClickable obj in clickableObjects.Where(obj => obj.Hitbox.IncludesPos(pos)))
             {
                 double dist = obj.Hitbox.DistanceTo(pos);
                 if (dist < best)
@@ -257,6 +259,7 @@ namespace CircuitSimulatorPlus
             Matrix matrix = Matrix.Identity;
             matrix.Scale(DefaultGridSize, DefaultGridSize);
             canvas.RenderTransform = new MatrixTransform(matrix);
+            currentScale = 1;
         }
         public void UpdateTitle()
         {
@@ -292,6 +295,7 @@ namespace CircuitSimulatorPlus
             saved = false;
             UpdateTitle();
             action.Redo();
+            undoStack.Push(action);
         }
         public bool SavePrompt()
         {
@@ -331,7 +335,7 @@ namespace CircuitSimulatorPlus
         public bool AnySelected
         {
             get {
-                return selected.Count > 0;
+                return selectedObjects.Count > 0;
             }
         }
         public bool ControlPressed
@@ -401,7 +405,7 @@ namespace CircuitSimulatorPlus
 
                 if (movingObjects)
                 {
-                    foreach (IClickable obj in selected)
+                    foreach (IClickable obj in selectedObjects)
                         if (obj is Gate)
                             (obj as Gate).Move(canvasMoved);
                 }
@@ -471,18 +475,33 @@ namespace CircuitSimulatorPlus
                 if (movingObjects)
                 {
                     Vector completeMove = lastCanvasPos - lastCanvasClick;
-                    foreach (IClickable obj in selected)
+                    foreach (IClickable obj in selectedObjects)
+                    {
                         if (obj is Gate)
                             (obj as Gate).Move(-completeMove);
+                    }
+
                     if (completeMove.LengthSquared > 0.25)
-                        PerformAction(new MoveObjectAction(selected,
+                    {
+                        PerformAction(new MoveObjectAction(selectedObjects,
                             new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
+                    }
                 }
             }
             else
             {
                 if (lastClickedObject == null)
+                {
                     DeselectAll();
+                }
+                else if (ControlPressed && e.LeftButton == MouseButtonState.Pressed)
+                {
+                    SwitchSelected(lastClickedObject);
+                }
+                else
+                {
+                    Select(lastClickedObject);
+                }
             }
 
             //if (drawingCable)
@@ -676,11 +695,17 @@ namespace CircuitSimulatorPlus
         }
         void InvertConnection_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (IClickable obj in selectedObjects)
+                if (obj is ConnectionNode)
+                {
+                    ConnectionNode connectionNode = obj as ConnectionNode;
+                    connectionNode.Invert();
+                    Tick(connectionNode);
+                }
         }
         void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-
+            SelectAll();
         }
         void ContextGate_Click(object sender, RoutedEventArgs e)
         {
