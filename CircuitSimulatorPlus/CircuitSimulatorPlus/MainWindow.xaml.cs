@@ -261,12 +261,13 @@ namespace CircuitSimulatorPlus
                 TileMode = TileMode.Tile,
                 Stretch = Stretch.Fill
             };
-
-            canvas.Background = brush;
+            backgoundLayerCanvas.Background = brush;
+            UpdateGrid();
         }
         public void UpdateGrid()
         {
             backgroundGridPen.Thickness = LineWidth / currentScale / 2;
+            backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
         }
         #endregion
 

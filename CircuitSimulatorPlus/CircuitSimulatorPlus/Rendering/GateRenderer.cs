@@ -90,7 +90,8 @@ namespace CircuitSimulatorPlus
             innerLabel.Height = 4;
             innerLabel.Padding = new Thickness(0);
             innerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
-            innerLabel.FontSize = 1;
+            innerLabel.VerticalContentAlignment = VerticalAlignment.Center;
+            innerLabel.FontSize = 2;
             switch (gate.Type)
             {
             case Gate.GateType.And:
