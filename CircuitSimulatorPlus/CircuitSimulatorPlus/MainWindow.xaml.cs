@@ -349,22 +349,16 @@ namespace CircuitSimulatorPlus
 
             mouseMoved = false;
 
-            makingSelection = true;
-
-            if (makingSelection)
-            {
-                Canvas.SetLeft(selectVisual, lastWindowClick.X);
-                Canvas.SetTop(selectVisual, lastWindowClick.Y);
-                selectVisual.Visibility = Visibility.Visible;
-            }
-
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 movingScreen = true;
             }
             else
             {
-
+                makingSelection = true;
+                Canvas.SetLeft(selectVisual, lastWindowClick.X);
+                Canvas.SetTop(selectVisual, lastWindowClick.Y);
+                selectVisual.Visibility = Visibility.Visible;
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -442,6 +436,8 @@ namespace CircuitSimulatorPlus
             }
 
             lastMousePos = currentWindowPos;
+
+            UpdateGrid();
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
