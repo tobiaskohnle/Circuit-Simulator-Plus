@@ -30,7 +30,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="canvas" Grid.Row="1">
+        <Canvas x:Name="canvas" Grid.Row="1" />
+        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2" >
+            <Rectangle x:Name="selectVisual" Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Fill="#3F0078D7"/>
         </Canvas>
         <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="File" Width="auto">

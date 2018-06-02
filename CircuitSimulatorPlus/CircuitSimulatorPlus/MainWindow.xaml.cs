@@ -91,6 +91,12 @@ namespace CircuitSimulatorPlus
         List<Cable> cables = new List<Cable>();
         Gate contextGate = new Gate();
         IClickable lastClickedObject;
+
+        //Rectangle selectVisual = new Rectangle {
+        //    Fill = new SolidColorBrush(Color.FromArgb(127, 63, 63, 255)),
+        //    Stroke = new SolidColorBrush(Color.FromArgb(127, 0, 0, 255)),
+        //    StrokeThickness = 1,
+        //};
         #endregion
 
         #region Gates
@@ -416,6 +422,11 @@ namespace CircuitSimulatorPlus
                     if (ControlPressed == false)
                     {
                         DeselectAll();
+
+                        Canvas.SetLeft(selectVisual, lastWindowClick.X);
+                        Canvas.SetTop(selectVisual, lastWindowClick.Y);
+                        selectVisual.Visibility = Visibility.Visible;
+                        makingSelection = true;
                     }
                 }
                 else if (e.RightButton == MouseButtonState.Pressed)
@@ -471,6 +482,24 @@ namespace CircuitSimulatorPlus
                 lastCanvasPos = e.GetPosition(canvas);
             }
 
+            if (makingSelection)
+            {
+                if (currentPos.X < lastWindowClick.X)
+                {
+                    Canvas.SetLeft(selectVisual, currentPos.X);
+                    selectVisual.Width = lastWindowClick.X - currentPos.X;
+                }
+                else
+                    selectVisual.Width = currentPos.X - lastWindowClick.X;
+                if (currentPos.Y < lastWindowClick.Y)
+                {
+                    Canvas.SetTop(selectVisual, currentPos.Y);
+                    selectVisual.Height = lastWindowClick.Y - currentPos.Y;
+                }
+                else
+                    selectVisual.Height = currentPos.Y - lastWindowClick.Y;
+            }
+
             lastWindowPosBeforeMouseMove = currentPos;
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
@@ -499,6 +528,9 @@ namespace CircuitSimulatorPlus
                 {
                     SwitchSelectionIn(selectedRect);
                 }
+                selectVisual.Width = 0;
+                selectVisual.Height = 0;
+                selectVisual.Visibility = Visibility.Hidden;
             }
 
             //if (drawingCable)
