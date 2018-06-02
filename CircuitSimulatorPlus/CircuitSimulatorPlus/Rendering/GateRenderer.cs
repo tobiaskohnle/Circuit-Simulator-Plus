@@ -306,7 +306,7 @@ namespace CircuitSimulatorPlus
         {
             for (int i = 0; i < inputLines.Count; i++)
             {
-                inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                inputLines[i].Stroke = (gate.Input[i].State != gate.Input[i].IsInverted) ? Brushes.Red : Brushes.Black;
                 if (gate.Input[i].IsSelected)
                     inputLines[i].Stroke = SystemColors.MenuHighlightBrush;
                 if (gate.Input[i].IsInverted)
@@ -319,7 +319,7 @@ namespace CircuitSimulatorPlus
                         inputNegationCircles[i].Height = 0.5 + 0.1;
                         canvas.Children.Add(inputNegationCircles[i]);
                     }
-                    inputNegationCircles[i].Stroke = !gate.Input[i].State ? Brushes.Red : Brushes.Black;
+                    inputNegationCircles[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
                 }
                 else if (inputNegationCircles[i] != null)
                 {
