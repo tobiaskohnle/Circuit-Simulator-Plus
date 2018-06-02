@@ -93,6 +93,9 @@ namespace CircuitSimulatorPlus
             innerLabel.FontSize = 1;
             switch (gate.Type)
             {
+            case Gate.GateType.Context:
+                innerLabel.Content = gate.Tag;
+                break;
             case Gate.GateType.And:
                 innerLabel.Content = '&';
                 break;
@@ -305,7 +308,7 @@ namespace CircuitSimulatorPlus
             {
                 inputLines[i].Stroke = gate.Input[i].State ? Brushes.Red : Brushes.Black;
                 if (gate.Input[i].IsSelected)
-                    inputLines[i].Stroke = Brushes.Turquoise;
+                    inputLines[i].Stroke = SystemColors.MenuHighlightBrush;
                 if (gate.Input[i].IsInverted)
                 {
                     if (inputNegationCircles[i] == null)
