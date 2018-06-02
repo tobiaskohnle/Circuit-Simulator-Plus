@@ -347,7 +347,7 @@ namespace CircuitSimulatorPlus
                         outputNegationCircles[i].Height = 0.5 + 0.1;
                         canvas.Children.Add(outputNegationCircles[i]);
                     }
-                    outputNegationCircles[i].Stroke = outputLines[i].Stroke;
+                    outputNegationCircles[i].Stroke = !gate.Output[i].State ? Brushes.Red : Brushes.Black;
                 }
                 else if (outputNegationCircles[i] != null)
                 {
