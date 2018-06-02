@@ -31,21 +31,21 @@ namespace CircuitSimulatorPlus
 
         public override bool IsIncludedIn(Rect rect)
         {
-            double distCenterX = Math.Abs(Center.X - rect.X - rect.Width / 2);
-            double distCenterY = Math.Abs(Center.Y - rect.Y - rect.Height / 2);
             double halfWidth = rect.Width / 2;
             double halfHeight = rect.Height / 2;
+            double distCenterX = Math.Abs(Center.X - rect.X - halfWidth);
+            double distCenterY = Math.Abs(Center.Y - rect.Y - halfHeight);
 
-            if (halfWidth + radius > distCenterX)
+            if (halfWidth + radius < distCenterX)
                 return false;
-            if (halfHeight + radius > distCenterY)
+            if (halfHeight + radius < distCenterY)
                 return false;
-            if (halfWidth <= distCenterX)
+            if (halfWidth >= distCenterX)
                 return true;
-            if (halfHeight <= distCenterY)
+            if (halfHeight >= distCenterY)
                 return true;
-            return (Center.X - halfWidth) * (Center.X - halfWidth)
-                + (Center.Y - halfHeight) * (Center.Y - halfHeight)
+            return (distCenterX - halfWidth) * (distCenterX - halfWidth)
+                + (distCenterY - halfHeight) * (distCenterY - halfHeight)
                 < radius * radius;
         }
     }
