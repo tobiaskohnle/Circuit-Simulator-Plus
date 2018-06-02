@@ -93,6 +93,9 @@ namespace CircuitSimulatorPlus
             innerLabel.FontSize = 1;
             switch (gate.Type)
             {
+            case Gate.GateType.Context:
+                innerLabel.Content = gate.Tag;
+                break;
             case Gate.GateType.And:
                 innerLabel.Content = '&';
                 break;
