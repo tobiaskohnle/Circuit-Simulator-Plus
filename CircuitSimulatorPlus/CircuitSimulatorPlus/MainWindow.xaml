@@ -24,6 +24,8 @@
             <MenuItem x:Name="contxtMenu_basicGate" Header="Add Basic Gate">
 
                 <MenuItem Header="Add And Gate" Click="CreateAndGate" />
+                <MenuItem Header="Add Or Gate" Click="CreateOrGate" />
+                <MenuItem Header="Add Not Gate" Click="CreateNotGate" />
 
             </MenuItem>
 

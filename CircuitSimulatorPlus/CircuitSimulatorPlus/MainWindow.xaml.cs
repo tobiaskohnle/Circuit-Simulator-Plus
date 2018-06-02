@@ -238,6 +238,17 @@ namespace CircuitSimulatorPlus
         {
             CreateGate(new Gate(Gate.GateType.And), 2, 1, lastCanvasClick);
         }
+        public void CreateOrGate(object sender, RoutedEventArgs e)
+        {
+            CreateGate(new Gate(Gate.GateType.Or), 2, 1, lastCanvasClick);
+        }
+        public void CreateNotGate(object sender, RoutedEventArgs e)
+        {
+            var newGate = new Gate(Gate.GateType.Identity);
+            CreateGate(newGate, 1, 1, lastCanvasClick);
+            newGate.Output[0].Invert();
+            Tick(newGate.Output[0]);
+        }
         #endregion
 
         #region Visuals
@@ -467,6 +478,11 @@ namespace CircuitSimulatorPlus
                         PerformAction(new MoveObjectAction(selected,
                             new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
                 }
+            }
+            else
+            {
+                if (lastClickedObject == null)
+                    DeselectAll();
             }
 
             //if (drawingCable)
