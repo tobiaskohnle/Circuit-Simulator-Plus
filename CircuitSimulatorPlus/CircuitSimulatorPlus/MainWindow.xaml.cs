@@ -109,7 +109,7 @@ namespace CircuitSimulatorPlus
         }
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs, Point at)
         {
-            //contextGate.Context.Add(gate);
+            contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
 
             for (int i = 0; i < amtInputs; i++)
@@ -120,7 +120,7 @@ namespace CircuitSimulatorPlus
             gate.Position = new Point(Math.Round(at.X), Math.Round(at.Y));
             gate.Renderer.Render();
 
-            PerformAction(new CreateGateAction(contextGate, gate));
+            //PerformAction(new CreateGateAction(contextGate, gate));
 
             Select(gate);
             Add(gate);
