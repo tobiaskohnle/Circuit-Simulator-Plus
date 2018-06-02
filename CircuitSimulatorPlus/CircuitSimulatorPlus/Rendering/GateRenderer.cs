@@ -233,7 +233,7 @@ namespace CircuitSimulatorPlus
                 if (inputNegationCircles[i] != null)
                 {
                     line.X1 = pos.X - 0.5;
-                    Canvas.SetLeft(inputNegationCircles[i], pos.X + 3);
+                    Canvas.SetLeft(inputNegationCircles[i], pos.X - (0.5 + 0.1));
                     Canvas.SetTop(inputNegationCircles[i], y - (0.5 + 0.1) / 2);
                 }
                 else
@@ -327,6 +327,7 @@ namespace CircuitSimulatorPlus
                     inputNegationCircles[i] = null;
                 }
             }
+            OnPositionChanged(sender, e);
         }
 
         void OnOutputChanged(object sender, EventArgs e)
@@ -358,6 +359,7 @@ namespace CircuitSimulatorPlus
                     line.Stroke = outputLines[i].Stroke;
                 }
             }
+            OnPositionChanged(sender, e);
         }
 
         void OnSelectionChanged(object sender, EventArgs e)
