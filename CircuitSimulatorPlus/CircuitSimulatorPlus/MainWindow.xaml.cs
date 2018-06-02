@@ -106,11 +106,11 @@ namespace CircuitSimulatorPlus
                 gate.Output.Add(new OutputNode(gate));
 
             gate.Position = new Point(Math.Round(at.X), Math.Round(at.Y));
-
             gate.Renderer.Render();
 
-            undoStack.Push(new CreateGateAction(contextGate, gate));
+            PerformAction(new CreateGateAction(contextGate, gate));
 
+            Select(gate);
             Add(gate);
         }
 
@@ -400,6 +400,7 @@ namespace CircuitSimulatorPlus
                 {
                     Select(lastClickedObject);
                 }
+                movingObjects = true;
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)

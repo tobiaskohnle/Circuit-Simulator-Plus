@@ -6,7 +6,7 @@ namespace CircuitSimulatorPlus
 {
     public class Gate : IClickable
     {
-        public const double DistanceFactor = 0.7;
+        public const double DistanceFactor = 0.2;
 
         public Gate(GateType type = GateType.Context)
         {

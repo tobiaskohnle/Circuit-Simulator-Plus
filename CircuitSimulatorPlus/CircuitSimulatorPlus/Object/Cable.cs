@@ -120,7 +120,7 @@ namespace CircuitSimulatorPlus
                 }
             }
             Point inputPos = Points.Last();
-            Point outputPos = new Point(outputGate.Position.X + 3 + 1, outputGate.Position.Y + (double)4 * (1 + 2 * outputIndex) / (2 * outputGate.Output.Count));
+            var outputPos = new Point(outputGate.Position.X + 3 + 1, outputGate.Position.Y + (double)4 * (1 + 2 * outputIndex) / (2 * outputGate.Output.Count));
             Points.Clear();
             lastSegmentHorizontal = true;
             AddPoint(outputPos, true);

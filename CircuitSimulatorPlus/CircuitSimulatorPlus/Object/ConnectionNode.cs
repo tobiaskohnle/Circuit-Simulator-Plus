@@ -7,17 +7,15 @@ namespace CircuitSimulatorPlus
     public abstract class ConnectionNode : IClickable
     {
         public const double HitboxRadius = 3.5;
-        public const double DistanceFactor = 0.3;
+        public const double DistanceFactor = 1;
 
         protected ConnectionNode(Gate owner)
         {
             Owner = owner;
-            IsEmpty = true;
-            NextConnectedTo = new List<ConnectionNode>();
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
-        public List<ConnectionNode> NextConnectedTo { get; set; }
+        public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
         public ConnectionNode BackConnectedTo { get; set; }
 
         bool state;
@@ -59,7 +57,7 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// True, if this ConnectionNode is NOT connected to another ConnectionNode.
         /// </summary>
-        public bool IsEmpty { get; set; }
+        public bool IsEmpty { get; set; } = true;
         /// <summary>
         /// True, if this ConnectionNode is inverted.
         /// </summary>
