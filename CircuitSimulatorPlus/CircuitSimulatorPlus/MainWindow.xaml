@@ -8,6 +8,7 @@
         KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel"
+        Closing="Window_Closing"
         ContextMenuOpening="Window_ContextMenuOpening">
     <Window.ContextMenu>
         <ContextMenu>
@@ -64,6 +65,7 @@
             <MenuItem Header="Debug" Width="auto">
                 <MenuItem Header="Reset Circuit" Click="Reset_Click"/>
                 <MenuItem Header="Reload Circuit" Click="Reload_Click"/>
+                <MenuItem Header="Single Ticks" Click="SingleTicks_Click"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
             </MenuItem>
         </Menu>
