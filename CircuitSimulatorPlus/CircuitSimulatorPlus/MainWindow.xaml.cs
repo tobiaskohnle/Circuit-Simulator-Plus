@@ -49,9 +49,9 @@ namespace CircuitSimulatorPlus
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
-        public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
+        public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
         public const string DefaultTitle = "untitled";
-        public const string FileFormat = "tici";
+        public const string FileExtention = ".tici";
         public const string Unsaved = "\u2022";
         public const double MinDistMouseMoved = 5;
         public const double DefaultGridSize = 20;
@@ -347,7 +347,7 @@ namespace CircuitSimulatorPlus
         public bool DataOnClipboard
         {
             get {
-                return Clipboard.ContainsData(FileFormat);
+                return Clipboard.ContainsData(FileExtention);
             }
         }
         #endregion
@@ -564,9 +564,10 @@ namespace CircuitSimulatorPlus
         {
             NewFile_Click(sender, e);
             var dialog = new OpenFileDialog();
-            dialog.Filter = "Circuit File (.json)|*.json";
+            dialog.Filter = FileFilter;
             if (dialog.ShowDialog() == true)
             {
+                currentFilePath = dialog.FileName;
                 contextGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 foreach (Gate gate in contextGate.Context)
                 {
@@ -607,18 +608,27 @@ namespace CircuitSimulatorPlus
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new SaveFileDialog();
-            dialog.FileName = "Circuit";
-            dialog.DefaultExt = ".json";
-            if (dialog.ShowDialog() == true)
-            {
-                string path = dialog.FileName;
-                Storage.Save(path, StorageConverter.ToStorageObject(contextGate));
-            }
+            if (currentFilePath != null && !saved)
+                Storage.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+            else
+                SaveFileAs_Click(sender, e);
+            saved = true;
+            UpdateTitle();
         }
         void SaveFileAs_Click(object sender, RoutedEventArgs e)
         {
-
+            var dialog = new SaveFileDialog();
+            dialog.FileName = fileName;
+            dialog.DefaultExt = FileExtention;
+            dialog.Filter = FileFilter;
+            if (dialog.ShowDialog() == true)
+            {
+                currentFilePath = dialog.FileName;
+                fileName = dialog.SafeFileName;
+                Storage.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                saved = true;
+                UpdateTitle();
+            }
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
@@ -710,7 +720,7 @@ namespace CircuitSimulatorPlus
         void ContextGate_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
-            dialog.Filter = "Circuit File (.json)|*.json";
+            dialog.Filter = FileFilter;
             if (dialog.ShowDialog() == true)
             {
                 Gate gate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
