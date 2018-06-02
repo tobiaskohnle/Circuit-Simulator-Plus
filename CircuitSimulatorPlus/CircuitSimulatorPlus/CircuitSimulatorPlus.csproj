@@ -75,29 +75,30 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Actions\Action.cs" />
-    <Compile Include="AddInputAction.cs" />
-    <Compile Include="Cable.cs" />
-    <Compile Include="CableRenderer.cs" />
+    <Compile Include="Actions\AddInputAction.cs" />
+    <Compile Include="Actions\ClearOutputNodeAction.cs" />
+    <Compile Include="Actions\ClearInputNodeAction.cs" />
+    <Compile Include="Object\Cable.cs" />
+    <Compile Include="Rendering\CableRenderer.cs" />
     <Compile Include="Actions\ChangeConnectionAction.cs" />
     <Compile Include="Actions\ChangeGateTypeAction.cs" />
     <Compile Include="Actions\CreateConnectionAction.cs" />
     <Compile Include="Actions\CreateGateAction.cs" />
     <Compile Include="Actions\CutAction.cs" />
     <Compile Include="Actions\DeleteGateAction.cs" />
-    <Compile Include="CircleHitbox.cs" />
-    <Compile Include="Hitbox.cs" />
-    <Compile Include="IClickable.cs" />
-    <Compile Include="IndexEventArgs.cs" />
-    <Compile Include="IRenderer.cs" />
+    <Compile Include="Hitbox\CircleHitbox.cs" />
+    <Compile Include="Hitbox\Hitbox.cs" />
+    <Compile Include="Hitbox\IClickable.cs" />
+    <Compile Include="Rendering\IndexEventArgs.cs" />
+    <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Actions\MoveGateAction.cs" />
     <Compile Include="Actions\PasteAction.cs" />
-    <Compile Include="Actions\RemoveInputAction.cs" />
     <Compile Include="Actions\RenameGateAction.cs" />
-    <Compile Include="GateRenderer.cs" />
-    <Compile Include="RectHitbox.cs" />
-    <Compile Include="Storage.cs" />
-    <Compile Include="StorageConverter.cs" />
-    <Compile Include="StorageObject.cs" />
+    <Compile Include="Rendering\GateRenderer.cs" />
+    <Compile Include="Hitbox\RectHitbox.cs" />
+    <Compile Include="Storage\Storage.cs" />
+    <Compile Include="Storage\StorageConverter.cs" />
+    <Compile Include="Storage\StorageObject.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,16 +107,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConnectionNode.cs" />
-    <Compile Include="Gate.cs" />
-    <Compile Include="InputNode.cs" />
+    <Compile Include="Object\ConnectionNode.cs" />
+    <Compile Include="Object\Gate.cs" />
+    <Compile Include="Object\InputNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OutputNode.cs" />
+    <Compile Include="Object\OutputNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

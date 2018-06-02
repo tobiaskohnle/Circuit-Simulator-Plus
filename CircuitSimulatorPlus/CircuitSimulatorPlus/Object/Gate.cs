@@ -130,13 +130,6 @@ namespace CircuitSimulatorPlus
         }
         /// <summary>
         /// </summary>
-        public void SnapToGrid()
-        {
-            Position = new Point(Math.Round(Position.X), Math.Round(Position.Y));
-            UpdateConnectionNodePos();
-        }
-        /// <summary>
-        /// </summary>
         public bool Eval()
         {
             switch (Type)

@@ -40,44 +40,9 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
-            drawgrid(ScaleFactor);
+            DrawGrid(ScaleFactor);
         }
-        double linewidth = LineWidth;
 
-        public void drawgrid(double scale)
-        {
-           
-            linewidth = linewidth / scale;
-            VisualBrush brush = new VisualBrush
-            {
-                Viewport = new Rect(0, 0, 1, 1),
-                ViewportUnits = BrushMappingMode.Absolute,
-                TileMode = TileMode.Tile,
-                Stretch = Stretch.Fill
-            };
-
-            Grid grid = new Grid { Width = 992, Height = 648 };
-            grid.Children.Add(new Rectangle
-            {
-                Width = 1,
-                Height = linewidth,
-                Fill = new SolidColorBrush(Colors.LightGray),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-            });
-
-            grid.Children.Add(new Rectangle
-            {
-                Height = 1,
-                Width = linewidth,
-                Fill = new SolidColorBrush(Colors.LightGray),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-            });
-
-            brush.Visual = grid;
-            canvas.Background = brush;
-        }
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileFormat;
@@ -91,9 +56,9 @@ namespace CircuitSimulatorPlus
 
         #region Properties
         Point lastMousePos;
+        Point lastMouseClick;
         Point lastCanvasPos;
         Point lastCanvasClick;
-        bool showContextMenu;
         bool drawingcable;
         bool dragging;
         bool saved = true;
@@ -103,11 +68,10 @@ namespace CircuitSimulatorPlus
         DispatcherTimer timer = new DispatcherTimer();
         List<Cable> cables = new List<Cable>();
         List<IClickable> selected = new List<IClickable>();
-        List<Action> Undo = new List<Action>();
-        List<Action> Redo = new List<Action>();
+        Stack<Action> undoStack = new Stack<Action>();
+        Stack<Action> redoStack = new Stack<Action>();
         Gate contextGate = new Gate();
         List<IClickable> clickableObjects = new List<IClickable>();
-        List<Vector> moveGateActionInfo = new List<Vector>();
         #endregion
 
         #region Gates
@@ -124,7 +88,7 @@ namespace CircuitSimulatorPlus
         {
             clickableObjects.Add(connectionNode);
         }
-        public Gate CreateGate(Gate gate, int amtInputs, int amtOutputs)
+        public void CreateGate(Gate gate, int amtInputs, int amtOutputs, Point at)
         {
             contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
@@ -134,13 +98,13 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < amtOutputs; i++)
                 gate.Output.Add(new OutputNode(gate));
 
+            gate.Position = new Point(Math.Round(at.X), Math.Round(at.Y));
+
             gate.Renderer.Render();
 
-            Undo.Add(new CreateGateAction(gate, gate.Type, gate.Position, contextGate.Context, "Create Gate"));
+            undoStack.Push(new CreateGateAction(contextGate, gate));
 
             Add(gate);
-
-            return gate;
         }
 
         public void Tick(ConnectionNode node)
@@ -187,12 +151,11 @@ namespace CircuitSimulatorPlus
                 obj.IsSelected = false;
             selected.Clear();
         }
-        public void SnapSelectedToGrid()
-        {
-            foreach (Gate gate in selected)
-                gate.SnapToGrid();
-        }
 
+        public void DeleteSelected()
+        {
+
+        }
         public void Delete(Gate gate)
         {
             foreach (InputNode input in gate.Input)
@@ -201,9 +164,6 @@ namespace CircuitSimulatorPlus
                 output.Clear();
             gate.Renderer.Unrender();
             contextGate.Context.Remove(gate);
-
-            DeleteGateAction DeleteGateAction = new DeleteGateAction(gate,gate.Type,gate.Position, contextGate.Context, "Gate deleted");
-            Undo.Add(DeleteGateAction);
         }
 
         public IClickable FindNearestObjectAt(Point pos)
@@ -237,6 +197,39 @@ namespace CircuitSimulatorPlus
         {
             Title = $"{title}{(saved ? "" : " " + Unsaved)} - {WindowTitle}";
         }
+        public void DrawGrid(double scale)
+        {
+            double linewidth = LineWidth / scale;
+            VisualBrush brush = new VisualBrush
+            {
+                Viewport = new Rect(0, 0, 1, 1),
+                ViewportUnits = BrushMappingMode.Absolute,
+                TileMode = TileMode.Tile,
+                Stretch = Stretch.Fill
+            };
+
+            Grid grid = new Grid { Width = 992, Height = 648 };
+            grid.Children.Add(new Rectangle
+            {
+                Width = 1,
+                Height = linewidth,
+                Fill = new SolidColorBrush(Colors.LightGray),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+            });
+
+            grid.Children.Add(new Rectangle
+            {
+                Height = 1,
+                Width = linewidth,
+                Fill = new SolidColorBrush(Colors.LightGray),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+            });
+
+            brush.Visual = grid;
+            canvas.Background = brush;
+        }
         #endregion
 
         #region Misc
@@ -246,57 +239,64 @@ namespace CircuitSimulatorPlus
             UpdateTitle();
             action.Redo();
         }
-        public void RevokeAction(Action action)
-        {
-            action.Undo();
-        }
+        #endregion
 
+        #region Util
+        public bool AllowUndo
+        {
+            get {
+                return undoStack.Count > 0;
+            }
+        }
+        public bool AllowRedo
+        {
+            get {
+                return redoStack.Count > 0;
+            }
+        }
+        public bool AnySelected
+        {
+            get {
+                return selected.Count > 0;
+            }
+        }
         #endregion
 
         #region Events
         void DEBUG_AddAndGate(object sender, EventArgs e)
         {
-            CreateGate(new Gate(Gate.GateType.And), 2, 1).Position = lastCanvasClick;
-            foreach (Gate gate in contextGate.Context)
-                gate.SnapToGrid();
+            CreateGate(new Gate(Gate.GateType.And), 2, 1, lastCanvasClick);
         }
         void DEBUG_AddNandGate(object sender, EventArgs e)
         {
-            var newGate = CreateGate(new Gate(Gate.GateType.And), 2, 1);
+            var newGate = new Gate(Gate.GateType.And);
+            CreateGate(newGate, 2, 1, lastCanvasClick);
             newGate.Position = lastCanvasClick;
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
-            foreach (Gate gate in contextGate.Context)
-                gate.SnapToGrid();
         }
         void DEBUG_AddOrGate(object sender, EventArgs e)
         {
-            CreateGate(new Gate(Gate.GateType.Or), 2, 1).Position = lastCanvasClick;
-            foreach (Gate gate in contextGate.Context)
-                gate.SnapToGrid();
+            CreateGate(new Gate(Gate.GateType.Or), 2, 1, lastCanvasClick);
         }
         void DEBUG_AddNorGate(object sender, EventArgs e)
         {
-            var newGate = CreateGate(new Gate(Gate.GateType.Or), 2, 1);
-            newGate.Position = lastCanvasClick;
+            var newGate = new Gate(Gate.GateType.Or);
+            CreateGate(newGate, 2, 1, lastCanvasClick);
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
-            foreach (Gate gate in contextGate.Context)
-                gate.SnapToGrid();
         }
         void DEBUG_AddNotGate(object sender, EventArgs e)
         {
-            Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
-            gate.Position = lastCanvasClick;
-            gate.Output[0].Invert();
-            gate.Output[0].Tick(tickedNodes);
-            gate.SnapToGrid();
+            var newGate = new Gate(Gate.GateType.Identity);
+            CreateGate(newGate, 1, 1, lastCanvasClick);
+            newGate.Output[0].Invert();
+            newGate.Output[0].Tick(tickedNodes);
         }
         void DEBUG_AddIdentityGate(object sender, EventArgs e)
         {
-            Gate gate = CreateGate(new Gate(Gate.GateType.Identity), 1, 1);
-            gate.Position = lastCanvasClick;
-            gate.SnapToGrid();
+            var newGate = new Gate(Gate.GateType.Identity);
+            CreateGate(newGate, 1, 1, lastCanvasClick);
         }
         void DEBUG_DeleteGate(object sender, EventArgs e)
         {
@@ -328,8 +328,7 @@ namespace CircuitSimulatorPlus
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             lastCanvasClick = lastCanvasPos = e.GetPosition(canvas);
-
-            lastMousePos = e.GetPosition(this);
+            lastMouseClick = lastMousePos = e.GetPosition(this);
 
             IClickable clickedObject = FindNearestObjectAt(lastCanvasClick);
 
@@ -344,11 +343,11 @@ namespace CircuitSimulatorPlus
                 clicked.Invert();
             }
 
-            showContextMenu = true;
+            CaptureMouse();
+
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 dragging = true;
-                CaptureMouse();
             }
             if (drawingcable)
             {
@@ -376,33 +375,26 @@ namespace CircuitSimulatorPlus
             {
                 foreach (Gate gate in selected)
                     gate.Move(canvasMoved);
-                moveGateActionInfo.Add(canvasMoved);
             }
 
             lastMousePos = currentPos;
             lastCanvasPos = e.GetPosition(canvas);
-
-            if (moved.Length > 0)
-                showContextMenu = false;
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            SnapSelectedToGrid();
+            lastMousePos = e.GetPosition(this);
             dragging = false;
             ReleaseMouseCapture();
-            if (selected.Count > 0)
+            if (AnySelected)
             {
-                Vector completeMove = new Vector(0, 0);
-                foreach (Vector moved in moveGateActionInfo)
-                {
-                    completeMove += moved;
-                }
-                moveGateActionInfo.Clear();
-                List<IClickable> selectedCopy = new List<IClickable>(selected);
-                MoveGateAction moveGateAction = new MoveGateAction(selectedCopy, completeMove, "Gate moved");
-                Undo.Add(moveGateAction);
+                Vector completeMove = lastCanvasPos - lastCanvasClick;
+                foreach (IClickable obj in clickableObjects)
+                    if (obj is Gate)
+                        (obj as Gate).Move(-completeMove);
+                if (completeMove.LengthSquared > 0.25)
+                    PerformAction(new MoveObjectAction(selected,
+                        new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
             }
-            UnselectAll();
         }
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -413,12 +405,12 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
-            drawgrid(scale);
+            DrawGrid(scale);
         }
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            e.Handled = !showContextMenu;
+            e.Handled = (lastMousePos - lastMouseClick).LengthSquared > 100;
         }
 
         void NewFile_Click(object sender, RoutedEventArgs e)
@@ -491,20 +483,20 @@ namespace CircuitSimulatorPlus
 
         void Undo_Click(object sender, RoutedEventArgs e)
         {
-            if (Undo.Count() > 0)
+            if (AllowUndo)
             {
-                RevokeAction(Undo.Last());
-                Redo.Add(Undo.Last());
-                Undo.Remove(Undo.Last());
+                Action lastAction = undoStack.Pop();
+                lastAction.Undo();
+                redoStack.Push(lastAction);
             }
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-            if (Redo.Count() > 0)
+            if (AllowRedo)
             {
-                PerformAction(Redo.Last());
-                Undo.Add(Redo.Last());
-                Redo.Remove(Redo.Last());
+                Action lastAction = redoStack.Pop();
+                lastAction.Redo();
+                undoStack.Push(lastAction);
             }
         }
         void Copy_Click(object sender, RoutedEventArgs e)
@@ -521,7 +513,11 @@ namespace CircuitSimulatorPlus
         }
         void Delete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (AnySelected)
+            {
+                //PerformAction(new DeleteGateAction(contextGate, selected));
+                DeleteSelected();
+            }
         }
 
         void DefaultView_Click(object sender, RoutedEventArgs e)

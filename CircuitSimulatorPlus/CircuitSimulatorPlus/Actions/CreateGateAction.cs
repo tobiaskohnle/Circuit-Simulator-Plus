@@ -9,28 +9,25 @@ namespace CircuitSimulatorPlus
 {
     public class CreateGateAction : Action
     {
-        List<Gate> createdGates;
         Gate gate;
-        Gate.GateType gateType;
-        Point position;
+        Gate contextGate;
 
-        public CreateGateAction(Gate gate, Gate.GateType gateType, Point position, List<Gate> createdGates, string message) : base(message)
+        public CreateGateAction(Gate contextGate, Gate gate) : base($"Created {gate.Type} Gate")
         {
             this.gate = gate;
-            this.gateType = gateType;
-            this.position = position;
-            this.createdGates = createdGates;
+            this.contextGate = contextGate;
         }
+
         public override void Redo()
         {
             gate.Renderer.Render();
-            createdGates.Add(gate);
+            contextGate.Context.Add(gate);
         }
 
         public override void Undo()
         {
             gate.Renderer.Unrender();
-            createdGates.Remove(gate);
+            contextGate.Context.Remove(gate);
         }
     }
 }

@@ -8,21 +8,22 @@ namespace CircuitSimulatorPlus
 {
     public class CreateConnectionAction : Action
     {
-        ConnectionNode firstNode, secondNode;
+        InputNode inputNode;
+        OutputNode outputNode;
 
-        public CreateConnectionAction(ConnectionNode firstNode, ConnectionNode secondNode, string message) : base(message)
+        public CreateConnectionAction(InputNode inputNode, OutputNode outputNode) : base("Created Connection")
         {
-            this.firstNode = firstNode;
-            this.secondNode = secondNode;
+            this.inputNode = inputNode;
+            this.outputNode = outputNode;
         }
         public override void Redo()
         {
-            firstNode.ConnectTo(secondNode);
+            outputNode.ConnectTo(inputNode);
         }
 
         public override void Undo()
         {
-            //waiting for implementation of disconnect-function
+            inputNode.Clear();
         }
     }
 }

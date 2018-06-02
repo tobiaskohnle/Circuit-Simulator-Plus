@@ -7,30 +7,29 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    /// <summary>
-    /// A Gate is moved to another position by the user
-    /// </summary>
-    public class MoveGateAction : Action
+    public class MoveObjectAction : Action
     {
         Vector move;
-        List<IClickable> movedGates;
+        List<IClickable> movedObjects;
 
-        public MoveGateAction(List<IClickable> movedGates, Vector move, string message) : base(message)
+        public MoveObjectAction(List<IClickable> movedObjects, Vector move) : base("Moved Gates")
         {
             this.move = move;
-            this.movedGates = movedGates;
+            this.movedObjects = movedObjects;
         }
 
         public override void Redo()
         {
-            foreach (Gate gate in movedGates)
-                gate.Move(move);
+            foreach (IClickable obj in movedObjects)
+                if (obj is Gate)
+                    (obj as Gate).Move(move);
         }
 
         public override void Undo()
         {
-            foreach (Gate gate in movedGates)
-                gate.Move(-move);
+            foreach (IClickable obj in movedObjects)
+                if (obj is Gate)
+                    (obj as Gate).Move(-move);
         }
     }
 }

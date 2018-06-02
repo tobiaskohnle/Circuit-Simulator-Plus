@@ -8,20 +8,25 @@ namespace CircuitSimulatorPlus
 {
     public class RenameGateAction : Action
     {
-        //waiting for implementaion of rename-function
-        public RenameGateAction(string message) : base(message)
-        {
+        Gate gate;
+        string oldName;
+        string newName;
 
+        public RenameGateAction(Gate gate, string name) : base($"Renamed Gate to {name}")
+        {
+            this.gate = gate;
+            newName = name;
+            oldName = gate.Name;
         }
 
         public override void Redo()
         {
-
+            gate.Name = oldName;
         }
 
         public override void Undo()
         {
-
+            gate.Name = newName;
         }
     }
 }

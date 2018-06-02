@@ -9,28 +9,27 @@ namespace CircuitSimulatorPlus
 {
     public class DeleteGateAction : Action
     {
-        List<Gate> createdGates;
-        Gate gate;
-        Gate.GateType gateType;
-        Point position;
+        List<Gate> deletedGates;
+        Gate contextGate;
 
-        public DeleteGateAction(Gate gate, Gate.GateType gateType, Point position, List<Gate> createdGates, string message) : base(message)
+        public DeleteGateAction(Gate contextGate, List<Gate> deletedGates) : base($"Deleted Gates")
         {
-            this.gate = gate;
-            this.gateType = gateType;
-            this.position = position;
-            this.createdGates = createdGates;
+            this.deletedGates = deletedGates;
+            this.contextGate = contextGate;
         }
+
         public override void Redo()
         {
-            gate.Renderer.Unrender();
-            createdGates.Remove(gate);
+            foreach (Gate gate in deletedGates)
+                gate.Renderer.Render();
+            contextGate.Context.AddRange(deletedGates);
         }
 
         public override void Undo()
         {
-            gate.Renderer.Render();
-            createdGates.Add(gate);
+            foreach (Gate gate in deletedGates)
+                gate.Renderer.Unrender();
+            contextGate.Context = contextGate.Context.Except(deletedGates).ToList();
         }
     }
 }
