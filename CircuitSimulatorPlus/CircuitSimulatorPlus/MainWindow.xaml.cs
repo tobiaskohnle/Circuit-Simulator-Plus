@@ -41,7 +41,7 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
-            DrawGrid(ScaleFactor);
+            DrawGrid();
         }
 
         #region Constants
@@ -88,14 +88,11 @@ namespace CircuitSimulatorPlus
         Stack<Action> redoStack = new Stack<Action>();
 
         List<Cable> cables = new List<Cable>();
-        Gate contextGate = new Gate();
+        Gate contextGate;
         IClickable lastClickedObject;
 
-        //Rectangle selectVisual = new Rectangle {
-        //    Fill = new SolidColorBrush(Color.FromArgb(127, 63, 63, 255)),
-        //    Stroke = new SolidColorBrush(Color.FromArgb(127, 0, 0, 255)),
-        //    StrokeThickness = 1,
-        //};
+        Pen backgroundGridPen;
+        double currentScale = 1;
         #endregion
 
         #region Gates
@@ -254,38 +251,27 @@ namespace CircuitSimulatorPlus
         {
             Title = $"{fileName}{(saved ? "" : " " + Unsaved)} - {WindowTitle}";
         }
-        public void DrawGrid(double scale)
+        public void DrawGrid()
         {
-            double linewidth = LineWidth / scale;
-            VisualBrush brush = new VisualBrush
+            double linewidth = LineWidth / currentScale;
+            backgroundGridPen = new Pen(Brushes.LightGray, linewidth / 2);
+            RectangleGeometry geometry = new RectangleGeometry(new Rect(0, 0, 1, 1));
+            GeometryDrawing drawing = new GeometryDrawing(Brushes.White, backgroundGridPen, geometry);
+            DrawingBrush brush = new DrawingBrush
             {
+                Drawing = drawing,
                 Viewport = new Rect(0, 0, 1, 1),
                 ViewportUnits = BrushMappingMode.Absolute,
                 TileMode = TileMode.Tile,
                 Stretch = Stretch.Fill
             };
-
-            Grid grid = new Grid { Width = 992, Height = 648 };
-            grid.Children.Add(new Rectangle
-            {
-                Width = 1,
-                Height = linewidth,
-                Fill = new SolidColorBrush(Colors.LightGray),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-            });
-
-            grid.Children.Add(new Rectangle
-            {
-                Height = 1,
-                Width = linewidth,
-                Fill = new SolidColorBrush(Colors.LightGray),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-            });
-
-            brush.Visual = grid;
-            canvas.Background = brush;
+            backgoundLayerCanvas.Background = brush;
+            UpdateGrid();
+        }
+        public void UpdateGrid()
+        {
+            backgroundGridPen.Thickness = LineWidth / currentScale / 2;
+            backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
         }
         #endregion
 
@@ -515,7 +501,8 @@ namespace CircuitSimulatorPlus
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, currentPos.X, currentPos.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
-            DrawGrid(scale);
+            currentScale *= scale;
+            UpdateGrid();
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
