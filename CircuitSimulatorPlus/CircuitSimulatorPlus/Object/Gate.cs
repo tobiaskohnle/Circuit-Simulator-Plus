@@ -55,6 +55,9 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public EventHandler PositionChanged { get; set; }
         /// <summary>
+        /// </summary>
+        public EventHandler SelectionChanged { get; set; }
+        /// <summary>
         /// Creates the Gate's visual representation on the Render() call.
         /// Render() should only be called once.
         /// </summary>
@@ -103,10 +106,23 @@ namespace CircuitSimulatorPlus
         /// True, if you can add or remove inputs of this gate.
         /// </summary>
         public bool IsMutable { get; set; }
+
+        bool isSelected;
         /// <summary>
         /// True, if the gate is currently selected.
         /// </summary>
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (value != isSelected)
+                {
+                    SelectionChanged?.Invoke(this, EventArgs.Empty);
+                    isSelected = value;
+                }
+            }
+        }
         /// <summary>
         /// Tag displayed inside of the gate. (e.g. ">=1" for OR)
         /// </summary>
