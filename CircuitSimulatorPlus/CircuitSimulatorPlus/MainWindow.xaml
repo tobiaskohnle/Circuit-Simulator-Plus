@@ -17,26 +17,26 @@
 
             <MenuItem x:Name="contxtMenu_contextGate" Header="Add Context Gate">
 
-                <MenuItem Header="Import From File" Click="ContextGate_Click"/>
+                <MenuItem Header="Import From File" Click="ContextGate_Click" />
 
             </MenuItem>
 
             <MenuItem x:Name="contxtMenu_basicGate" Header="Add Basic Gate">
 
-                <MenuItem Header="Add And Gate" Click="CreateAndGate"/>
+                <MenuItem Header="Add And Gate" Click="CreateAndGate" />
 
             </MenuItem>
 
-            <MenuItem x:Name="contxtMenu_changeType" Header="Change Type"/>
-            <MenuItem Header="Copy" Click="Copy_Click"/>
-            <MenuItem Header="Cut" Click="Cut_Click"/>
-            <MenuItem x:Name="contxtMenu_paste" Header="Paste" Click="Paste_Click"/>
-            <MenuItem x:Name="contxtMenu_delete" Header="Delete" Click="Delete_Click"/>
+            <MenuItem x:Name="contxtMenu_changeType" Header="Change Type" />
+            <MenuItem Header="Copy" Click="Copy_Click" />
+            <MenuItem Header="Cut" Click="Cut_Click" />
+            <MenuItem x:Name="contxtMenu_paste" Header="Paste" Click="Paste_Click" />
+            <MenuItem x:Name="contxtMenu_delete" Header="Delete" Click="Delete_Click" />
 
-            <MenuItem x:Name="contxtMenu_rename" Header="Rename" Click="Rename_Click"/>
-            <MenuItem x:Name="contxtMenu_invertConnection" Header="Invert Connection" Click="InvertConnection_Click"/>
-            <MenuItem x:Name="contxtMenu_emptyInput" Header="Add Empty Input" Click="EmptyInput_Click"/>
-            <MenuItem x:Name="contxtMenu_toggleButton" Header="Toggle Button" Click="ToggleButton_Click"/>
+            <MenuItem x:Name="contxtMenu_rename" Header="Rename" Click="Rename_Click" />
+            <MenuItem x:Name="contxtMenu_invertConnection" Header="Invert Connection" Click="InvertConnection_Click" />
+            <MenuItem x:Name="contxtMenu_emptyInput" Header="Add Empty Input" Click="EmptyInput_Click" />
+            <MenuItem x:Name="contxtMenu_toggleButton" Header="Toggle Button" Click="ToggleButton_Click" />
 
         </ContextMenu>
 
@@ -46,16 +46,18 @@
 
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
 
         </Grid.RowDefinitions>
 
-        <Canvas x:Name="canvas" Grid.Row="1"/>
+        <Canvas x:Name="backgoundLayerCanvas" Grid.Row="1" />
+
+        <Canvas x:Name="canvas" Grid.Row="1" />
 
         <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2">
 
-            <Rectangle x:Name="selectVisual" Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Fill="#3F0078D7"/>
+            <Rectangle x:Name="selectVisual" Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Fill="#3F0078D7" />
 
         </Canvas>
 
@@ -63,49 +65,49 @@
 
             <MenuItem Header="File" Width="auto">
 
-                <MenuItem Header="New Circuit" Click="NewFile_Click"/>
-                <MenuItem Header="Open Circuit" Click="OpenFile_Click"/>
-                <MenuItem Header="Open Recent"/>
-                <MenuItem Header="Save" Click="SaveFile_Click"/>
-                <MenuItem Header="Save As..." Click="SaveFileAs_Click"/>
+                <MenuItem Header="New Circuit" Click="NewFile_Click" />
+                <MenuItem Header="Open Circuit" Click="OpenFile_Click" />
+                <MenuItem Header="Open Recent" />
+                <MenuItem Header="Save" Click="SaveFile_Click" />
+                <MenuItem Header="Save As..." Click="SaveFileAs_Click" />
 
             </MenuItem>
 
             <MenuItem Header="Edit" Width="auto">
 
-                <MenuItem Header="Undo" Click="Undo_Click"/>
-                <MenuItem Header="Redo" Click="Redo_Click"/>
-                <MenuItem Header="Copy" Click="Copy_Click"/>
-                <MenuItem Header="Cut" Click="Cut_Click"/>
-                <MenuItem Header="Paste" Click="Paste_Click"/>
-                <MenuItem Header="Delete" Click="Delete_Click"/>
+                <MenuItem Header="Undo" Click="Undo_Click" />
+                <MenuItem Header="Redo" Click="Redo_Click" />
+                <MenuItem Header="Copy" Click="Copy_Click" />
+                <MenuItem Header="Cut" Click="Cut_Click" />
+                <MenuItem Header="Paste" Click="Paste_Click" />
+                <MenuItem Header="Delete" Click="Delete_Click" />
 
             </MenuItem>
 
             <MenuItem Header="View" Width="auto">
 
-                <MenuItem Header="Default View" Click="DefaultView_Click"/>
-                <MenuItem Header="Zoom In" Click="ZoomIn_Click"/>
-                <MenuItem Header="Zoom Out" Click="ZoomOut_Click"/>
+                <MenuItem Header="Default View" Click="DefaultView_Click" />
+                <MenuItem Header="Zoom In" Click="ZoomIn_Click" />
+                <MenuItem Header="Zoom Out" Click="ZoomOut_Click" />
 
             </MenuItem>
 
             <MenuItem Header="Tools" Width="auto">
 
-                <MenuItem Header="New Component" Click="NewGate_Click"/>
-                <MenuItem Header="Rename Gate" Click="Rename_Click"/>
-                <MenuItem Header="Resize Gate" Click="ResizeGate_Click"/>
-                <MenuItem Header="Empty Input" Click="EmptyInput_Click"/>
-                <MenuItem Header="Remove Extra Inputs" Click="TrimInputs_Click"/>
-                <MenuItem Header="Invert Connection" Click="InvertConnection_Click"/>
-                <MenuItem Header="Select All Gates" Click="SelectAll_Click"/>
+                <MenuItem Header="New Component" Click="NewGate_Click" />
+                <MenuItem Header="Rename Gate" Click="Rename_Click" />
+                <MenuItem Header="Resize Gate" Click="ResizeGate_Click" />
+                <MenuItem Header="Empty Input" Click="EmptyInput_Click" />
+                <MenuItem Header="Remove Extra Inputs" Click="TrimInputs_Click" />
+                <MenuItem Header="Invert Connection" Click="InvertConnection_Click" />
+                <MenuItem Header="Select All Gates" Click="SelectAll_Click" />
 
             </MenuItem>
 
             <MenuItem Header="Debug" Width="auto">
 
-                <MenuItem Header="Single Ticks" Click="SingleTicks_Click"/>
-                <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
+                <MenuItem Header="Single Ticks" Click="SingleTicks_Click" />
+                <MenuItem Header="Tick All Nodes" Click="TickAll_Click" />
 
             </MenuItem>
 
