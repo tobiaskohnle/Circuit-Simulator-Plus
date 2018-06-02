@@ -47,9 +47,10 @@ namespace CircuitSimulatorPlus
         {
             rectangle = new Rectangle();
             rectangle.Stroke = Brushes.Black;
+            rectangle.Margin = new Thickness(MainWindow.LineWidth / -2);
             rectangle.StrokeThickness = MainWindow.LineWidth;
-            rectangle.Width = gate.Size.Width;
-            rectangle.Height = gate.Size.Height;
+            rectangle.Width = gate.Size.Width + MainWindow.LineWidth;
+            rectangle.Height = gate.Size.Height + MainWindow.LineWidth;
             canvas.Children.Add(rectangle);
 
             outputLines = new List<Line>();

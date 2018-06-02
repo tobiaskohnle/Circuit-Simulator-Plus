@@ -6,7 +6,7 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode : IClickable
     {
-        public const double HitboxRadius = 2;
+        public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
 
         protected ConnectionNode(Gate owner)
