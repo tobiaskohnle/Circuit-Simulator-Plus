@@ -206,7 +206,14 @@ namespace CircuitSimulatorPlus
 
         public void DeleteSelected()
         {
-
+            foreach (IClickable obj in selectedObjects)
+            {
+                if (obj is Gate)
+                    Delete(obj as Gate);
+                else if (obj is ConnectionNode)
+                    (obj as ConnectionNode).Clear();
+            }
+            DeselectAll();
         }
         public void Delete(Gate gate)
         {
