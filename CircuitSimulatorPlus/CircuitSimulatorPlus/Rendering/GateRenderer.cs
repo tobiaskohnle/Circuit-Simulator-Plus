@@ -47,7 +47,6 @@ namespace CircuitSimulatorPlus
         {
             rectangle = new Rectangle();
             rectangle.Stroke = Brushes.Black;
-            // TODO: rectangle border is inset -> change to centered
             rectangle.StrokeThickness = MainWindow.LineWidth;
             rectangle.Width = gate.Size.Width;
             rectangle.Height = gate.Size.Height;
@@ -117,6 +116,8 @@ namespace CircuitSimulatorPlus
             gate.ConnectionChanged += OnOutputChanged;
             OnPositionChanged(this, EventArgs.Empty);
             gate.PositionChanged += OnPositionChanged;
+            OnSelectionChanged(this, EventArgs.Empty);
+            gate.SelectionChanged += OnSelectionChanged;
         }
 
         public void Unrender()
@@ -350,6 +351,14 @@ namespace CircuitSimulatorPlus
                     line.Stroke = outputLines[i].Stroke;
                 }
             }
+        }
+
+        void OnSelectionChanged(object sender, EventArgs e)
+        {
+            if (gate.IsSelected)
+                rectangle.Fill = Brushes.LightBlue;
+            else
+                rectangle.Fill = Brushes.White;
         }
     }
 }
