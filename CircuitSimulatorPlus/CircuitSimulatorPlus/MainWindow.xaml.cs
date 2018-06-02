@@ -351,11 +351,15 @@ namespace CircuitSimulatorPlus
 
             makingSelection = true;
 
-            if (e.RightButton == MouseButtonState.Pressed)
+            if (makingSelection)
             {
                 Canvas.SetLeft(selectVisual, lastWindowClick.X);
                 Canvas.SetTop(selectVisual, lastWindowClick.Y);
                 selectVisual.Visibility = Visibility.Visible;
+            }
+
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
                 movingScreen = true;
             }
             else
@@ -415,22 +419,22 @@ namespace CircuitSimulatorPlus
                             Deselect(obj);
                     }
 
-                    if (currentCanvasPos.X < lastCanvasClick.X)
+                    if (currentWindowPos.X < lastWindowClick.X)
                     {
-                        Canvas.SetLeft(selectVisual, currentCanvasPos.X);
-                        selectVisual.Width = lastCanvasClick.X - currentCanvasPos.X;
+                        Canvas.SetLeft(selectVisual, currentWindowPos.X);
+                        selectVisual.Width = lastWindowClick.X - currentWindowPos.X;
                     }
                     else
                     {
-                        selectVisual.Width = currentCanvasPos.X - lastCanvasClick.X;
+                        selectVisual.Width = currentWindowPos.X - lastWindowClick.X;
                     }
-                    if (currentCanvasPos.Y < lastCanvasClick.Y)
+                    if (currentWindowPos.Y < lastWindowClick.Y)
                     {
-                        Canvas.SetTop(selectVisual, currentCanvasPos.Y);
-                        selectVisual.Height = lastCanvasClick.Y - currentCanvasPos.Y;
+                        Canvas.SetTop(selectVisual, currentWindowPos.Y);
+                        selectVisual.Height = lastWindowClick.Y - currentWindowPos.Y;
                     }
                     else
-                        selectVisual.Height = currentCanvasPos.Y - lastCanvasClick.Y;
+                        selectVisual.Height = currentWindowPos.Y - lastWindowClick.Y;
                 }
 
                 lastWindowPos = currentWindowPos;
