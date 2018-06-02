@@ -126,6 +126,10 @@ namespace CircuitSimulatorPlus
             {
                 State = BackConnectedTo.State;
             }
+            else
+            {
+                State = false;
+            }
 
             if (IsInverted)
             {
