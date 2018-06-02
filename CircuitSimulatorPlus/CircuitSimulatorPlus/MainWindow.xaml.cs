@@ -589,11 +589,12 @@ namespace CircuitSimulatorPlus
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
         {
-            if (currentFilePath != null)
+            if (currentFilePath != null && !saved)
                 Storage.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
             else
                 SaveFileAs_Click(sender, e);
             saved = true;
+            UpdateTitle();
         }
         void SaveFileAs_Click(object sender, RoutedEventArgs e)
         {
@@ -605,10 +606,10 @@ namespace CircuitSimulatorPlus
             {
                 currentFilePath = dialog.FileName;
                 fileName = dialog.SafeFileName;
-                UpdateTitle();
                 Storage.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                saved = true;
+                UpdateTitle();
             }
-            saved = true;
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
