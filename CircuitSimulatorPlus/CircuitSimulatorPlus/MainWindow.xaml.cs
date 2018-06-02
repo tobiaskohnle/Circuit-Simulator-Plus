@@ -353,12 +353,17 @@ namespace CircuitSimulatorPlus
             {
                 movingScreen = true;
             }
-            else
+            else if (lastClickedObject == null)
             {
                 makingSelection = true;
                 Canvas.SetLeft(selectVisual, lastWindowClick.X);
                 Canvas.SetTop(selectVisual, lastWindowClick.Y);
                 selectVisual.Visibility = Visibility.Visible;
+            }
+            else if (ControlPressed == false)
+            {
+                Select(lastClickedObject);
+                movingObjects = true;
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -445,6 +450,13 @@ namespace CircuitSimulatorPlus
 
             if (mouseMoved)
             {
+                if (makingSelection)
+                {
+                    selectVisual.Width = 0;
+                    selectVisual.Height = 0;
+                    selectVisual.Visibility = Visibility.Collapsed;
+                }
+
                 if (movingObjects)
                 {
                     Vector completeMove = lastCanvasPos - lastCanvasClick;
@@ -455,23 +467,6 @@ namespace CircuitSimulatorPlus
                         PerformAction(new MoveObjectAction(selected,
                             new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
                 }
-            }
-
-            if (makingSelection)
-            {
-                var selectedRect = new Rect(lastCanvasClick, lastCanvasPos);
-                if (ControlPressed)
-                {
-                    SwitchSelected(lastClickedObject);
-                }
-                else if (lastClickedObject == null)
-                {
-                    DeselectAll();
-                }
-
-                selectVisual.Width = 0;
-                selectVisual.Height = 0;
-                selectVisual.Visibility = Visibility.Collapsed;
             }
 
             //if (drawingCable)
