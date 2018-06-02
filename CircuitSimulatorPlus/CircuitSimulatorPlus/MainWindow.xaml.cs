@@ -50,6 +50,7 @@ namespace CircuitSimulatorPlus
         public const string DefaultTitle = "untitled";
         public const string FileFormat = "tici";
         public const string Unsaved = "\u2022";
+        public const double MinDistMouseMoved = 4;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
         public const double LineWidth = 0.1;
@@ -59,26 +60,37 @@ namespace CircuitSimulatorPlus
         #region Properties
         Point lastWindowPos;
         Point lastWindowClick;
+
+        Point lastWindowPosBeforeMouseMove;
+        Point lastWindowClickBeforeMouseMove;
+
         Point lastCanvasPos;
         Point lastCanvasClick;
+
         bool makingSelection;
         bool movingObjects;
         bool movingScreen;
         bool drawingCable;
+        bool mouseMoved;
+
         bool saved = true;
         bool singleTicks;
+
         string fileName = DefaultTitle;
         string currentFilePath;
 
         Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
         DispatcherTimer timer = new DispatcherTimer();
-        List<Cable> cables = new List<Cable>();
+
+        List<IClickable> clickableObjects = new List<IClickable>();
         List<IClickable> selected = new List<IClickable>();
+
         Stack<Action> undoStack = new Stack<Action>();
         Stack<Action> redoStack = new Stack<Action>();
-        List<IClickable> clickableObjects = new List<IClickable>();
-        IClickable lastClickedObject;
+
+        List<Cable> cables = new List<Cable>();
         Gate contextGate = new Gate();
+        IClickable lastClickedObject;
         #endregion
 
         #region Gates
@@ -97,7 +109,7 @@ namespace CircuitSimulatorPlus
         }
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs, Point at)
         {
-            contextGate.Context.Add(gate);
+            //contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
 
             for (int i = 0; i < amtInputs; i++)
@@ -150,11 +162,30 @@ namespace CircuitSimulatorPlus
                 obj.IsSelected = false;
             }
         }
+        public void SwitchSelected(IClickable obj)
+        {
+            if (obj.IsSelected)
+            {
+                Deselect(obj);
+            }
+            else
+            {
+                Select(obj);
+            }
+        }
+        public IEnumerable<IClickable> GetObjectsIn(Rect rect)
+        {
+            return clickableObjects.Where(obj => obj.Hitbox.IsIncludedIn(rect));
+        }
         public void SelectAllIn(Rect rect)
         {
-            foreach (IClickable obj in clickableObjects)
-                if (obj.Hitbox.IsIncludedIn(rect))
-                    Select(obj);
+            foreach (IClickable obj in GetObjectsIn(rect))
+                Select(obj);
+        }
+        public void SwitchSelectionIn(Rect rect)
+        {
+            foreach (IClickable obj in GetObjectsIn(rect))
+                SwitchSelected(obj);
         }
         public void SelectAll()
         {
@@ -296,6 +327,12 @@ namespace CircuitSimulatorPlus
                 return selected.Count > 0;
             }
         }
+        public bool ControlPressed
+        {
+            get {
+                return (Keyboard.Modifiers & ModifierKeys.Control) > 0;
+            }
+        }
         #endregion
 
         #region Events
@@ -365,34 +402,30 @@ namespace CircuitSimulatorPlus
 
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            bool controlPressed = (Keyboard.Modifiers & ModifierKeys.Control) > 0;
-            bool leftButtonPressed = e.LeftButton == MouseButtonState.Pressed;
-            bool rightButtonPressed = e.RightButton == MouseButtonState.Pressed;
-
             CaptureMouse();
 
-            lastCanvasClick = lastCanvasPos = e.GetPosition(canvas);
-            lastWindowClick = lastWindowPos = e.GetPosition(this);
+            lastCanvasClick = e.GetPosition(canvas);
+            lastWindowClickBeforeMouseMove = lastWindowClick = e.GetPosition(this);
 
             lastClickedObject = FindNearestObjectAt(lastCanvasClick);
 
             if (lastClickedObject == null)
             {
-                if (leftButtonPressed)
+                if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (controlPressed == false)
+                    if (ControlPressed == false)
                     {
                         DeselectAll();
                     }
                 }
-                else if (rightButtonPressed)
+                else if (e.RightButton == MouseButtonState.Pressed)
                 {
                     movingScreen = true;
                 }
             }
             else
             {
-                if (controlPressed && lastClickedObject.IsSelected)
+                if (ControlPressed && lastClickedObject.IsSelected)
                 {
                     Deselect(lastClickedObject);
                 }
@@ -402,30 +435,43 @@ namespace CircuitSimulatorPlus
                 }
                 movingObjects = true;
             }
+
+            mouseMoved = false;
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
             Point currentPos = e.GetPosition(this);
 
-            Vector moved = currentPos - lastWindowPos;
+            Vector windowMoved = currentPos - lastWindowPos;
             Vector canvasMoved = e.GetPosition(canvas) - lastCanvasPos;
 
-            if (movingScreen)
+            if ((lastWindowPosBeforeMouseMove - lastWindowClickBeforeMouseMove)
+                .LengthSquared >= MinDistMouseMoved * MinDistMouseMoved)
             {
-                Matrix matrix = canvas.RenderTransform.Value;
-                matrix.Translate(moved.X, moved.Y);
-                canvas.RenderTransform = new MatrixTransform(matrix);
+                mouseMoved = true;
             }
 
-            if (movingObjects)
+            if (mouseMoved)
             {
-                foreach (IClickable obj in selected)
-                    if (obj is Gate)
-                        (obj as Gate).Move(canvasMoved);
+                if (movingScreen)
+                {
+                    Matrix matrix = canvas.RenderTransform.Value;
+                    matrix.Translate(windowMoved.X, windowMoved.Y);
+                    canvas.RenderTransform = new MatrixTransform(matrix);
+                }
+
+                if (movingObjects)
+                {
+                    foreach (IClickable obj in selected)
+                        if (obj is Gate)
+                            (obj as Gate).Move(canvasMoved);
+                }
+
+                lastWindowPos = currentPos;
+                lastCanvasPos = e.GetPosition(canvas);
             }
 
-            lastWindowPos = currentPos;
-            lastCanvasPos = e.GetPosition(canvas);
+            lastWindowPosBeforeMouseMove = currentPos;
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -444,7 +490,15 @@ namespace CircuitSimulatorPlus
 
             if (makingSelection)
             {
-                SelectAllIn(new Rect(lastCanvasClick, lastCanvasPos));
+                var selectedRect = new Rect(lastCanvasClick, lastCanvasPos);
+                if (ControlPressed)
+                {
+                    SelectAllIn(selectedRect);
+                }
+                else
+                {
+                    SwitchSelectionIn(selectedRect);
+                }
             }
 
             //if (drawingCable)
@@ -479,7 +533,7 @@ namespace CircuitSimulatorPlus
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            e.Handled = (lastWindowPos - lastWindowClick).LengthSquared > 100;
+            e.Handled = mouseMoved;
         }
         void Window_Closing(object sender, CancelEventArgs e)
         {
