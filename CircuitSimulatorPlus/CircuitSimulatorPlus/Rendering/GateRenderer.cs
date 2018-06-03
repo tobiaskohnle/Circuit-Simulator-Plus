@@ -248,16 +248,22 @@ namespace CircuitSimulatorPlus
 
         void OnConnectionCreated(object sender, EventArgs e)
         {
+            if (connectionLines != null)
+            {
+                foreach (List<Line> lines in connectionLines)
+                {
+                    foreach (Line line in lines)
+                    {
+                        if (line != null)
+                        {
+                            canvas.Children.Remove(line);
+                        }
+                    }
+                }
+            }
             connectionLines = new List<Line>[gate.Output.Count];
             for (int i = 0; i < gate.Output.Count; i++)
             {
-                if (connectionLines[i] != null)
-                {
-                    foreach (Line line in connectionLines[i])
-                    {
-                        canvas.Children.Remove(line);
-                    }
-                }
                 connectionLines[i] = new List<Line>();
                 foreach (InputNode nextNode in gate.Output[i].NextConnectedTo)
                 {
