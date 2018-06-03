@@ -8,79 +8,92 @@ namespace CircuitSimulatorPlus
 {
     static class StorageConverter
     {
-        static int nextId = 1;
-        static Dictionary<ConnectionNode, int> nodeToId = new Dictionary<ConnectionNode, int>();
-        static Dictionary<int, List<ConnectionNode>> idToNodes = new Dictionary<int, List<ConnectionNode>>();
-
         public static StorageObject ToStorageObject(Gate gate)
         {
             StorageObject store = new StorageObject();
             store.Name = gate.Name;
             store.Position = gate.Position;
-            store.Type = gate.Type.ToString();
-            
+            switch (gate.Type)
+            {
+                case Gate.GateType.Context:
+                    store.Type = "Context";
+                    break;
+                case Gate.GateType.And:
+                    store.Type = "And";
+                    break;
+                case Gate.GateType.Or:
+                    store.Type = "Or";
+                    break;
+                case Gate.GateType.Identity:
+                    store.Type = "Identity";
+                    break;
+                default:
+                    throw new Exception("unknown type");
+            }
+
             if (gate.HasContext)
             {
+                int nextId = 1;
+                var nodeToId = new Dictionary<ConnectionNode, int>();
                 store.Context = new List<StorageObject>();
-                foreach (Gate innerGate in gate.Context)
-                    store.Context.Add(ToStorageObject(innerGate));
-            }
-
-            store.OutputConnections = new int[gate.Output.Count];
-            for (int i = 0; i < gate.Output.Count; i++)
-            {
-                OutputNode outNode = gate.Output[i];
-                if (!nodeToId.ContainsKey(outNode))
+                store.InnerInputConnections = new int[gate.Input.Count];
+                for (int i = 0; i < gate.Input.Count; i++)
                 {
-                    if (outNode.IsEmpty)
-                        nodeToId[outNode] = 0;
-                    else
+                    InputNode contextInput = gate.Input[i];
+                    if (contextInput.NextConnectedTo.Count > 0)
                     {
-                        bool found = false;
-                        foreach (ConnectionNode nextNode in outNode.NextConnectedTo)
+                        nodeToId[contextInput] = nextId;
+                        foreach (ConnectionNode next in contextInput.NextConnectedTo)
+                            nodeToId[next] = nextId;
+                        nextId++;
+                        store.InnerInputConnections[i] = nextId;
+                    }
+                    else
+                        store.InnerInputConnections[i] = 0;
+                }
+                foreach (Gate innerGate in gate.Context)
+                {
+                    foreach (OutputNode output in innerGate.Output)
+                    {
+                        if (output.NextConnectedTo.Count > 0)
                         {
-                            if (nodeToId.ContainsKey(nextNode))
-                            {
-                                nodeToId[outNode] = nodeToId[nextNode];
-                                found = true;
-                                break;
-                            }
+                            nodeToId[output] = nextId;
+                            foreach (ConnectionNode next in output.NextConnectedTo)
+                                nodeToId[next] = nextId;
+                            nextId++;
                         }
-                        if (!found)
-                            nodeToId[outNode] = nextId++;
+                        else
+                            nodeToId[output] = 0;
                     }
                 }
-                store.OutputConnections[i] = nodeToId[outNode];
-
-                if (outNode.IsInverted)
+                store.InnerOutputConnections = new int[gate.Output.Count];
+                for (int i = 0; i < gate.Output.Count; i++)
                 {
-                    if (store.InvertedOutputs == null)
-                        store.InvertedOutputs = new List<int>();
-                    store.InvertedOutputs.Add(i);
-                }
-            }
-
-            store.InputConnections = new int[gate.Input.Count];
-            for (int i = 0; i < gate.Input.Count; i++)
-            {
-                InputNode inNode = gate.Input[i];
-                if (!nodeToId.ContainsKey(inNode))
-                {
-                    ConnectionNode backNode = inNode.BackConnectedTo;
-                    if (inNode.IsEmpty)
-                        nodeToId[inNode] = 0;
-                    else if (nodeToId.ContainsKey(backNode))
-                        nodeToId[inNode] = nodeToId[backNode];
+                    if (nodeToId.ContainsKey(gate.Output[i]))
+                        store.InnerOutputConnections[i] = nodeToId[gate.Output[i]];
                     else
-                        nodeToId[inNode] = nextId++;
+                        store.InnerOutputConnections[i] = 0;
                 }
-                store.InputConnections[i] = nodeToId[inNode];
-
-                if (inNode.IsInverted)
+                foreach (Gate innerGate in gate.Context)
                 {
-                    if (store.InvertedOutputs == null)
-                        store.InvertedOutputs = new List<int>();
-                    store.InvertedOutputs.Add(i);
+                    StorageObject innerStore = ToStorageObject(innerGate);
+                    innerStore.InputConnections = new int[innerGate.Input.Count];
+                    for (int i = 0; i < innerGate.Input.Count; i++)
+                    {
+                        if (nodeToId.ContainsKey(innerGate.Input[i]))
+                            innerStore.InputConnections[i] = nodeToId[innerGate.Input[i]];
+                        else
+                            innerStore.InputConnections[i] = 0;
+                    }
+                    innerStore.OutputConnections = new int[innerGate.Output.Count];
+                    for (int i = 0; i < innerGate.Output.Count; i++)
+                    {
+                        if (nodeToId.ContainsKey(innerGate.Output[i]))
+                            innerStore.OutputConnections[i] = nodeToId[innerGate.Output[i]];
+                        else
+                            throw new Exception("invalid connection");
+                    }
+                    store.Context.Add(innerStore);
                 }
             }
 
@@ -105,86 +118,78 @@ namespace CircuitSimulatorPlus
                     type = Gate.GateType.Identity;
                     break;
                 default:
-                    throw new Exception("Unknown Type");
+                    throw new Exception("unknown type");
             }
             Gate gate = new Gate(type);
             gate.Name = storageObject.Name;
             gate.Position = storageObject.Position;
-            if (type == Gate.GateType.Context)
-            {
-                foreach (StorageObject innerStore in storageObject.Context)
-                    gate.Context.Add(ToGate(innerStore));
-            }
+
+            if (storageObject.InputConnections == null)
+                storageObject.InputConnections = new int[0];
+
             foreach (int id in storageObject.InputConnections)
-            {
-                InputNode node = new InputNode(gate);
-                gate.Input.Add(node);
-                if (id != 0)
-                {
-                    if (idToNodes.ContainsKey(id))
-                    {
-                        foreach (ConnectionNode connected in idToNodes[id])
-                        {
-                            if (connected == node.BackConnectedTo)
-                                continue;
-                            bool isAlreadyConneced = false;
-                            foreach (ConnectionNode alreadyConnected in node.NextConnectedTo)
-                            {
-                                if (connected == alreadyConnected)
-                                {
-                                    isAlreadyConneced = true;
-                                    break;
-                                }
-                            }
-                            if (!isAlreadyConneced)
-                            {
-                                connected.ConnectTo(node);
-                            }
-                        }
-                    }
-                    else
-                        idToNodes[id] = new List<ConnectionNode>();
-                    idToNodes[id].Add(node);
-                }
-            }
+                gate.Input.Add(new InputNode(gate));
             if (storageObject.InvertedInputs != null)
                 foreach (int index in storageObject.InvertedInputs)
                     gate.Input[index].Invert();
+
+            if (storageObject.OutputConnections == null)
+                storageObject.OutputConnections = new int[0];
+
             foreach (int id in storageObject.OutputConnections)
-            {
-                OutputNode node = new OutputNode(gate);
-                gate.Output.Add(node);
-                if (id != 0)
-                {
-                    if (idToNodes.ContainsKey(id))
-                    {
-                        foreach (ConnectionNode connected in idToNodes[id])
-                        {
-                            if (connected == node.BackConnectedTo)
-                                continue;
-                            bool isAlreadyConneced = false;
-                            foreach (ConnectionNode alreadyConnected in node.NextConnectedTo)
-                            {
-                                if (connected == alreadyConnected)
-                                {
-                                    isAlreadyConneced = true;
-                                    break;
-                                }
-                            }
-                            if (!isAlreadyConneced)
-                            {
-                                node.ConnectTo(connected);
-                            }
-                        }
-                    }
-                    else
-                        idToNodes[id] = new List<ConnectionNode>();
-                    idToNodes[id].Add(node);
-                }
-            }
+                gate.Output.Add(new OutputNode(gate));
             if (storageObject.InvertedOutputs != null)
                 foreach (int index in storageObject.InvertedOutputs)
                     gate.Output[index].Invert();
+
+            if (type == Gate.GateType.Context)
+            {
+                var idToNode = new Dictionary<int, ConnectionNode>();
+                for (int i = 0; i < storageObject.InnerInputConnections.Count(); i++)
+                {
+                    int id = storageObject.InnerInputConnections[i];
+                    if (id != 0)
+                        idToNode[id] = gate.Input[i];
+                }
+                foreach (StorageObject innerStore in storageObject.Context)
+                {
+                    Gate innerGate = ToGate(innerStore);
+                    gate.Context.Add(innerGate);
+                    for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
+                    {
+                        int id = innerStore.OutputConnections[i];
+                        if (id != 0)
+                            idToNode[id] = innerGate.Output[i];
+                    }
+                }
+                for (int i = 0; i < storageObject.Context.Count; i++)
+                {
+                    StorageObject innerStore = storageObject.Context[i];
+                    Gate innerGate = gate.Context[i];
+                    for (int j = 0; j < innerStore.InputConnections.Count(); j++)
+                    {
+                        int id = innerStore.InputConnections[j];
+                        if (id != 0)
+                        {
+                            if (idToNode.ContainsKey(id))
+                                idToNode[id].ConnectTo(innerGate.Input[j]);
+                            else
+                                throw new Exception("invalid connection");
+                        }
+                    }
+                }
+                for (int i = 0; i < storageObject.InnerOutputConnections.Count(); i++)
+                {
+                    int id = storageObject.InnerOutputConnections[i];
+                    if (id != 0)
+                    {
+                        if (idToNode.ContainsKey(id))
+                            idToNode[id].ConnectTo(gate.Output[i]);
+                        else
+                            throw new Exception("invalid connection");
+                    }
+                }
+            }
 
             return gate;
         }

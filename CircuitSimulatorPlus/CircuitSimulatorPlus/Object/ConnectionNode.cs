@@ -109,7 +109,7 @@ namespace CircuitSimulatorPlus
             IsInverted = !IsInverted;
         }
 
-        public void ConnectTo(ConnectionNode connectionNode)
+        public virtual void ConnectTo(ConnectionNode connectionNode)
         {
             NextConnectedTo.Add(connectionNode);
             connectionNode.BackConnectedTo = this;

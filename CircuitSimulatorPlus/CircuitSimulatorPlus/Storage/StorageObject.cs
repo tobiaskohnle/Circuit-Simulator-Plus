@@ -13,8 +13,10 @@ namespace CircuitSimulatorPlus
         public Point Position;
         public string Type;
         public List<StorageObject> Context;
-        public int[] OutputConnections;
+        public int[] InnerInputConnections;
+        public int[] InnerOutputConnections;
         public int[] InputConnections;
+        public int[] OutputConnections;
         public List<int> InvertedInputs;
         public List<int> InvertedOutputs;
         public List<int> InitialActiveOutputs;

@@ -16,11 +16,11 @@ namespace CircuitSimulatorPlus
         public bool IsMasterSlave { get; set; }
         /// <summary>
         /// </summary>
-        /// <param name="inputNode"></param>
-        public void ConnectTo(InputNode inputNode)
+        /// <param name="connectionNode"></param>
+        public override void ConnectTo(ConnectionNode connectionNode)
         {
-            base.ConnectTo(inputNode);
-            IsEmpty = inputNode.IsEmpty = false;
+            base.ConnectTo(connectionNode);
+            IsEmpty = connectionNode.IsEmpty = false;
             Owner.ConnectionCreated?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
