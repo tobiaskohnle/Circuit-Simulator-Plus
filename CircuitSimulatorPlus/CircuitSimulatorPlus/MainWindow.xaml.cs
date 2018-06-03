@@ -526,10 +526,10 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    if (ControlPressed == false)
-                    {
-                        DeselectAll();
-                    }
+                    //if (ControlPressed == false)
+                    //{
+                    //    DeselectAll();
+                    //}
                     bool connectionCreated = false;
                     if (lastClickedObject is ConnectionNode)
                     {

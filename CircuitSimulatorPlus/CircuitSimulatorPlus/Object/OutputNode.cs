@@ -28,8 +28,6 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public override void Clear()
         {
-            if (IsEmpty)
-                return;
             foreach (InputNode input in NextConnectedTo.ToList())
                 input.Clear();
         }
