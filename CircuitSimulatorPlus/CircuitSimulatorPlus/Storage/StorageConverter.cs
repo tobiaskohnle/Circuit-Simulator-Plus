@@ -201,7 +201,11 @@ namespace CircuitSimulatorPlus
                         if (id != 0)
                         {
                             if (idToNode.ContainsKey(id))
-                                idToNode[id].ConnectTo(innerGate.Input[j]);
+                            {
+                                ConnectionNode outputNode = idToNode[id];
+                                outputNode.ConnectTo(innerGate.Input[j]);
+                                innerGate.Input[j].State = outputNode.State;
+                            }
                             else
                                 throw new Exception("invalid connection");
                         }
