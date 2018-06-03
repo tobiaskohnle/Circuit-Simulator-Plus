@@ -31,6 +31,32 @@ namespace CircuitSimulatorPlus
                     throw new Exception("unknown type");
             }
 
+            for (int i = 0; i < gate.Input.Count; i++)
+            {
+                if (gate.Input[i].IsInverted)
+                {
+                    if (store.InvertedInputs == null)
+                        store.InvertedInputs = new List<int>();
+                    store.InvertedInputs.Add(i);
+                }
+            }
+
+            for (int i = 0; i < gate.Output.Count; i++)
+            {
+                if (gate.Output[i].IsInverted)
+                {
+                    if (store.InvertedOutputs == null)
+                        store.InvertedOutputs = new List<int>();
+                    store.InvertedOutputs.Add(i);
+                }
+                if (gate.Output[i].State)
+                {
+                    if (store.InitialActiveOutputs == null)
+                        store.InitialActiveOutputs = new List<int>();
+                    store.InitialActiveOutputs.Add(i);
+                }
+            }
+
             if (gate.HasContext)
             {
                 int nextId = 1;
@@ -141,6 +167,9 @@ namespace CircuitSimulatorPlus
             if (storageObject.InvertedOutputs != null)
                 foreach (int index in storageObject.InvertedOutputs)
                     gate.Output[index].Invert();
+            if (storageObject.InitialActiveOutputs != null)
+                foreach (int index in storageObject.InitialActiveOutputs)
+                    gate.Output[index].State = true;
 
             if (type == Gate.GateType.Context)
             {

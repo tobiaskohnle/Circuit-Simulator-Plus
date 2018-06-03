@@ -123,6 +123,8 @@ namespace CircuitSimulatorPlus
             bool nextIsElementary = !Owner.HasContext && !isOutput;
             bool lastWasElementary = !Owner.HasContext && isOutput;
 
+            stateChanged = false;
+
             if (lastWasElementary)
             {
                 State = Owner.Eval();
