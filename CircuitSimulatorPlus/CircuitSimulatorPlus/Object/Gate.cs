@@ -18,6 +18,12 @@ namespace CircuitSimulatorPlus
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             UpdateSize();
             UpdateHitbox();
+            if (type == GateType.And)
+                Tag = "&";
+            else if (type == GateType.Or)
+                Tag = "\u22651";
+            else if (type == GateType.Identity)
+                Tag = "1";
         }
 
         public enum GateType

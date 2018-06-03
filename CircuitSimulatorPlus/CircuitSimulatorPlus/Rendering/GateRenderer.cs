@@ -37,7 +37,8 @@ namespace CircuitSimulatorPlus
             this.gate = gate;
         }
 
-        public GateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked) : this(canvas, gate)
+        public GateRenderer(Canvas canvas, Gate gate, EventHandler onInputClicked, EventHandler onOutputClicked)
+            : this(canvas, gate)
         {
             InputClicked += onInputClicked;
             OutputClicked += onOutputClicked;
@@ -85,28 +86,13 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(outerLabel);
             }
 
-
             innerLabel = new Label();
             innerLabel.Width = gate.Size.Width;
             innerLabel.Height = gate.Size.Height;
             innerLabel.Padding = new Thickness(0);
             innerLabel.HorizontalContentAlignment = HorizontalAlignment.Center;
             innerLabel.FontSize = 1;
-            switch (gate.Type)
-            {
-            case Gate.GateType.Context:
-                innerLabel.Content = gate.Tag;
-                break;
-            case Gate.GateType.And:
-                innerLabel.Content = '&';
-                break;
-            case Gate.GateType.Or:
-                innerLabel.Content = "\u22651";
-                break;
-            case Gate.GateType.Identity:
-                innerLabel.Content = '1';
-                break;
-            }
+            innerLabel.Content = gate.Tag;
             canvas.Children.Add(innerLabel);
 
             inputNegationCircles = new Ellipse[gate.Input.Count];
