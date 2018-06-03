@@ -193,15 +193,19 @@ namespace CircuitSimulatorPlus
                             if (obj is InputNode
                                 && lastClickedObject is OutputNode)
                             {
-                                (obj as InputNode).Clear();
-                                (lastClickedObject as OutputNode).ConnectTo(obj as InputNode);
+                                InputNode inputNode = (obj as InputNode);
+                                inputNode.Clear();
+                                (lastClickedObject as OutputNode).ConnectTo(inputNode);
+                                Tick(inputNode);
                                 connectionCreated = true;
                             }
                             else if (lastClickedObject is InputNode
                                 && obj is OutputNode)
                             {
-                                (lastClickedObject as InputNode).Clear();
-                                (obj as OutputNode).ConnectTo(lastClickedObject as InputNode);
+                                InputNode inputNode = (lastClickedObject as InputNode);
+                                inputNode.Clear();
+                                (obj as OutputNode).ConnectTo(inputNode);
+                                Tick(inputNode);
                                 connectionCreated = true;
                             }
                         }
