@@ -63,6 +63,11 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public IRenderer Renderer { get; set; }
 
+        public bool IsMovable
+        {
+            get { return true; }
+        }
+
         Point position;
         /// <summary>
         /// The position on the canvas of the gate.

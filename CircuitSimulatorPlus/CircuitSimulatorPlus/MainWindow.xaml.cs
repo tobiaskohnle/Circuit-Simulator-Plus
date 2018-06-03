@@ -40,7 +40,8 @@ namespace CircuitSimulatorPlus
                 contextGate = new Gate();
             foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Render();
-            List<Gate> createdGates = contextGate.Context;
+
+            UpdateClickableObjects();
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
@@ -52,7 +53,6 @@ namespace CircuitSimulatorPlus
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
         public const string DefaultTitle = "untitled";
         public const string FileExtention = ".tici";
-        public const string Unsaved = "\u2022";
         public const double MinDistMouseMoved = 5;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
@@ -72,7 +72,6 @@ namespace CircuitSimulatorPlus
         bool makingSelection;
         bool movingObjects;
         bool movingScreen;
-        bool drawingCable;
         bool mouseMoved;
 
         bool saved = true;
@@ -270,15 +269,15 @@ namespace CircuitSimulatorPlus
         }
         public void UpdateTitle()
         {
-            Title = $"{fileName}{(saved ? "" : " " + Unsaved)} - {WindowTitle}";
+            Title = $"{fileName}{(saved ? "" : " \u2022")} - {WindowTitle}";
         }
         public void DrawGrid()
         {
             double linewidth = LineWidth / currentScale;
             backgroundGridPen = new Pen(Brushes.LightGray, linewidth / 2);
-            RectangleGeometry geometry = new RectangleGeometry(new Rect(0, 0, 1, 1));
-            GeometryDrawing drawing = new GeometryDrawing(Brushes.White, backgroundGridPen, geometry);
-            DrawingBrush brush = new DrawingBrush
+            var geometry = new RectangleGeometry(new Rect(0, 0, 1, 1));
+            var drawing = new GeometryDrawing(Brushes.White, backgroundGridPen, geometry);
+            var brush = new DrawingBrush
             {
                 Drawing = drawing,
                 Viewport = new Rect(0, 0, 1, 1),
@@ -323,6 +322,18 @@ namespace CircuitSimulatorPlus
             //    }
             //}
             return true;
+        }
+        public void UpdateClickableObjects()
+        {
+            clickableObjects.Clear();
+            foreach (Gate gate in contextGate.Context)
+            {
+                clickableObjects.Add(gate);
+                foreach (InputNode input in gate.Input)
+                    clickableObjects.Add(input);
+                foreach (OutputNode output in gate.Output)
+                    clickableObjects.Add(output);
+            }
         }
         #endregion
 
@@ -378,14 +389,21 @@ namespace CircuitSimulatorPlus
             else if (lastClickedObject == null)
             {
                 makingSelection = true;
+            }
+            else if (lastClickedObject.IsMovable)
+            {
+                movingObjects = true;
+            }
+            else
+            {
+                makingSelection = true;
+            }
+
+            if (makingSelection)
+            {
                 Canvas.SetLeft(selectVisual, lastWindowClick.X);
                 Canvas.SetTop(selectVisual, lastWindowClick.Y);
                 selectVisual.Visibility = Visibility.Visible;
-            }
-            else if (ControlPressed == false)
-            {
-                Select(lastClickedObject);
-                movingObjects = true;
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
@@ -412,6 +430,10 @@ namespace CircuitSimulatorPlus
 
                 if (movingObjects)
                 {
+                    if (selectedObjects.Count == 0)
+                    {
+                        Select(lastClickedObject);
+                    }
                     foreach (IClickable obj in selectedObjects)
                         if (obj is Gate)
                             (obj as Gate).Move(canvasMoved);
@@ -455,7 +477,9 @@ namespace CircuitSimulatorPlus
                         selectVisual.Height = lastWindowClick.Y - currentWindowPos.Y;
                     }
                     else
+                    {
                         selectVisual.Height = currentWindowPos.Y - lastWindowClick.Y;
+                    }
                 }
 
                 lastWindowPos = currentWindowPos;
@@ -474,8 +498,7 @@ namespace CircuitSimulatorPlus
             {
                 if (makingSelection)
                 {
-                    selectVisual.Width = 0;
-                    selectVisual.Height = 0;
+                    selectVisual.Width = selectVisual.Height = 0;
                     selectVisual.Visibility = Visibility.Collapsed;
                 }
 
@@ -488,7 +511,7 @@ namespace CircuitSimulatorPlus
                             (obj as Gate).Move(-completeMove);
                     }
 
-                    if (completeMove.LengthSquared > 0.25)
+                    if (completeMove.LengthSquared > 0.5 * 0.5)
                     {
                         PerformAction(new MoveObjectAction(selectedObjects,
                             new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
@@ -501,13 +524,45 @@ namespace CircuitSimulatorPlus
                 {
                     DeselectAll();
                 }
-                else if (ControlPressed && e.LeftButton == MouseButtonState.Pressed)
-                {
-                    SwitchSelected(lastClickedObject);
-                }
                 else
                 {
-                    Select(lastClickedObject);
+                    if (ControlPressed == false)
+                    {
+                        DeselectAll();
+                    }
+                    bool connectionCreated = false;
+                    if (lastClickedObject is ConnectionNode)
+                    {
+                        foreach (IClickable obj in selectedObjects)
+                        {
+                            if (obj is InputNode
+                                && lastClickedObject is OutputNode
+                                && (obj as ConnectionNode).IsEmpty)
+                            {
+                                (lastClickedObject as OutputNode).ConnectTo(obj as InputNode);
+                                connectionCreated = true;
+                            }
+                            else if (lastClickedObject is InputNode
+                                && obj is OutputNode
+                                && (lastClickedObject as ConnectionNode).IsEmpty)
+                            {
+                                (obj as OutputNode).ConnectTo(lastClickedObject as InputNode);
+                                connectionCreated = true;
+                            }
+                        }
+                        if (connectionCreated)
+                        {
+                            if (ControlPressed)
+                                Deselect(lastClickedObject);
+                            else
+                                DeselectAll();
+                        }
+                    }
+
+                    if (connectionCreated == false)
+                    {
+                        SwitchSelected(lastClickedObject);
+                    }
                 }
             }
 
@@ -576,6 +631,7 @@ namespace CircuitSimulatorPlus
             {
                 currentFilePath = dialog.FileName;
                 contextGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
+                UpdateClickableObjects();
                 foreach (Gate gate in contextGate.Context)
                 {
                     gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
@@ -762,38 +818,38 @@ namespace CircuitSimulatorPlus
 
         void OnGateOutputClicked(object sender, EventArgs e)
         {
-            Gate gate = (Gate)sender;
-            int index = ((IndexEventArgs)e).Index;
+            //Gate gate = (Gate)sender;
+            //int index = ((IndexEventArgs)e).Index;
 
-            if (!drawingCable)
-            {
-                Point point = new Point();
-                point.X = gate.Position.X + 3 + 1;
-                point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Output.Count);
-                Cable cable = new Cable();
-                cables.Add(cable);
-                cable.Renderer = new CableRenderer(canvas, cable);
-                cable.Output = gate.Output[index];
-                drawingCable = true;
-            }
+            //if (!drawingCable)
+            //{
+            //    Point point = new Point();
+            //    point.X = gate.Position.X + 3 + 1;
+            //    point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Output.Count);
+            //    Cable cable = new Cable();
+            //    cables.Add(cable);
+            //    cable.Renderer = new CableRenderer(canvas, cable);
+            //    cable.Output = gate.Output[index];
+            //    drawingCable = true;
+            //}
         }
         void OnGateInputClicked(object sender, EventArgs e)
         {
-            Gate gate = (Gate)sender;
-            int index = ((IndexEventArgs)e).Index;
+            //Gate gate = (Gate)sender;
+            //int index = ((IndexEventArgs)e).Index;
 
-            if (drawingCable)
-            {
-                Point point = new Point();
-                point.X = gate.Position.X - 1;
-                point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Input.Count);
-                Cable lastcable = cables.Last();
-                lastcable.AddPoint(point, true);
-                lastcable.Input = gate.Input[index];
-                lastcable.Output.ConnectTo(lastcable.Input);
-                Tick(lastcable.Input);
-                drawingCable = false;
-            }
+            //if (drawingCable)
+            //{
+            //    Point point = new Point();
+            //    point.X = gate.Position.X - 1;
+            //    point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Input.Count);
+            //    Cable lastcable = cables.Last();
+            //    lastcable.AddPoint(point, true);
+            //    lastcable.Input = gate.Input[index];
+            //    lastcable.Output.ConnectTo(lastcable.Input);
+            //    Tick(lastcable.Input);
+            //    drawingCable = false;
+            //}
         }
         #endregion
     }

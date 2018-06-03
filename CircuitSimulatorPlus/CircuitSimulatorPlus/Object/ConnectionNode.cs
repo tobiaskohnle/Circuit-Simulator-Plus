@@ -94,6 +94,11 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public bool IsMovable
+        {
+            get { return false; }
+        }
+
         public abstract void Clear();
         
         /// <summary>

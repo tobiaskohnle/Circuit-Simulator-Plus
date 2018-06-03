@@ -10,5 +10,6 @@ namespace CircuitSimulatorPlus
     {
         Hitbox Hitbox { get; set; }
         bool IsSelected { get; set; }
+        bool IsMovable { get; }
     }
 }
