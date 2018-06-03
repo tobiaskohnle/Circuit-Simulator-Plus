@@ -79,6 +79,12 @@ namespace CircuitSimulatorPlus
 
                 if (movingObjects)
                 {
+
+                    if (!lastClickedObject.IsSelected)
+                    {
+                        DeselectAll();
+                        Select(lastClickedObject);
+                    }
                     if (selectedObjects.Count == 0)
                     {
                         Select(lastClickedObject);
@@ -185,16 +191,16 @@ namespace CircuitSimulatorPlus
                         foreach (IClickable obj in selectedObjects)
                         {
                             if (obj is InputNode
-                                && lastClickedObject is OutputNode
-                                && (obj as ConnectionNode).IsEmpty)
+                                && lastClickedObject is OutputNode)
                             {
+                                (obj as InputNode).Clear();
                                 (lastClickedObject as OutputNode).ConnectTo(obj as InputNode);
                                 connectionCreated = true;
                             }
                             else if (lastClickedObject is InputNode
-                                && obj is OutputNode
-                                && (lastClickedObject as ConnectionNode).IsEmpty)
+                                && obj is OutputNode)
                             {
+                                (lastClickedObject as InputNode).Clear();
                                 (obj as OutputNode).ConnectTo(lastClickedObject as InputNode);
                                 connectionCreated = true;
                             }
@@ -210,7 +216,13 @@ namespace CircuitSimulatorPlus
 
                     if (connectionCreated == false)
                     {
-                        SwitchSelected(lastClickedObject);
+                        bool islastClickedSelected = lastClickedObject.IsSelected;
+                        if (ControlPressed == false)
+                        {
+                            DeselectAll();
+                        }
+                        if (islastClickedSelected == false)
+                            Select(lastClickedObject);
                     }
                 }
             }
