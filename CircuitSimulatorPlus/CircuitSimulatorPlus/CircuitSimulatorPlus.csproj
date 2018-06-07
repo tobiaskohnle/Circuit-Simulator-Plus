@@ -98,6 +98,7 @@
     <Compile Include="Actions\RenameGateAction.cs" />
     <Compile Include="Rendering\GateRenderer.cs" />
     <Compile Include="Hitbox\RectHitbox.cs" />
+    <Compile Include="Rendering\OutputlightsRenderer.cs" />
     <Compile Include="Storage\Storage.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
     <Compile Include="Storage\StorageObject.cs" />
