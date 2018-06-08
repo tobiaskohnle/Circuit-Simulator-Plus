@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,37 +7,36 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace CircuitSimulatorPlus.Rendering
+namespace CircuitSimulatorPlus
 {
     class OutputlightsRenderer
     {
-        bool Output;
-        double Width, Height;
+        bool isOutput;
+        double width, height;
         Line line;
-        Rectangle Rect;
-        List<Line> connectionlines;
+        Rectangle rect;
+        List<Line> connectionLines;
 
-
-        public void Render(Canvas canvas, double X1, double X2, double Y1, double Y2)
+        public void Render(Canvas canvas, double x1, double x2, double y1, double y2)
         {
             line = new Line();
             line.StrokeThickness = MainWindow.LineWidth;
-            line.X1 = X1;
-            line.X2 = X1 - 5;
-            line.Y1 = (Y1 + Y2) / 2;
-            line.Y2 = Y1+(Y1 - Y2) / 2;
-            connectionlines.Add(line);
+            line.X1 = x1;
+            line.X2 = x1 - 5;
+            line.Y1 = (y1 + y2) / 2;
+            line.Y2 = y1 + (y1 - y2) / 2;
+            connectionLines.Add(line);
             canvas.Children.Add(line);
-            Rect = new Rectangle();
-            Rect.StrokeThickness = MainWindow.LineWidth;
-            Rect.Width = X2 - X1;
-            Rect.Height = Y2 - Y1;
-            canvas.Children.Add(Rect);
+            rect = new Rectangle();
+            rect.StrokeThickness = MainWindow.LineWidth;
+            rect.Width = x2 - x1;
+            rect.Height = y2 - y1;
+            canvas.Children.Add(rect);
         }
         public void OnInputChanged(object sender, EventArgs e)
         {
-            Brush brush = Output ? Brushes.Red : Brushes.Black;
-            foreach (Line line in connectionlines)
+            Brush brush = isOutput ? Brushes.Red : Brushes.Black;
+            foreach (Line line in connectionLines)
             {
                 line.Stroke = brush;
             }
