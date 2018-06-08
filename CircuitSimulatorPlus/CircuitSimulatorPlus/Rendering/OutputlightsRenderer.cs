@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    class OutputlightsRenderer
+    class OutputLightRenderer
     {
         bool isOutput;
         double width, height;
