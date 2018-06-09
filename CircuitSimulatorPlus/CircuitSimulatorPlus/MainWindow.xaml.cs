@@ -204,20 +204,26 @@ namespace CircuitSimulatorPlus
             foreach (IClickable obj in selectedObjects)
             {
                 if (obj is Gate)
-                    Delete(obj as Gate);
+                    Remove(obj as Gate);
                 else if (obj is ConnectionNode)
-                    (obj as ConnectionNode).Clear();
+                    Remove(obj as ConnectionNode);
             }
             DeselectAll();
         }
-        public void Delete(Gate gate)
+        public void Remove(Gate gate)
         {
             foreach (InputNode input in gate.Input)
-                input.Clear();
+                Remove(input);
             foreach (OutputNode output in gate.Output)
-                output.Clear();
+                Remove(output);
             gate.Renderer.Unrender();
+            clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
+        }
+        public void Remove(ConnectionNode connectionNode)
+        {
+            connectionNode.Clear();
+            clickableObjects.Remove(connectionNode);
         }
 
         public IClickable FindNearestObjectAt(Point pos)
@@ -760,13 +766,24 @@ namespace CircuitSimulatorPlus
 
                     if (connectionCreated == false)
                     {
-                        bool islastClickedSelected = lastClickedObject.IsSelected;
-                        if (ControlPressed == false)
+                        if (e.LeftButton == MouseButtonState.Pressed)
                         {
-                            DeselectAll();
+                            if (ControlPressed == false)
+                            {
+                                DeselectAll();
+                            }
+                            bool islastClickedSelected = lastClickedObject.IsSelected;
+                            if (islastClickedSelected == false)
+                                Select(lastClickedObject);
                         }
-                        if (islastClickedSelected == false)
+                        else
+                        {
+                            if (ControlPressed == false && lastClickedObject.IsSelected == false)
+                            {
+                                DeselectAll();
+                            }
                             Select(lastClickedObject);
+                        }
                     }
                 }
             }
