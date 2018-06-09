@@ -682,13 +682,10 @@ namespace CircuitSimulatorPlus
             }
             else if ((lastMousePos - lastWindowClick).LengthSquared >= MinDistMouseMoved * MinDistMouseMoved)
             {
-                if (makingSelection)
+                if (makingSelection && ControlPressed == false)
                 {
-                    if (ControlPressed == false)
-                    {
-                        DeselectAll();
-                        SelectAllIn(new Rect(lastCanvasClick, lastCanvasPos));
-                    }
+                    DeselectAll();
+                    SelectAllIn(new Rect(lastCanvasClick, lastCanvasPos));
                 }
                 mouseMoved = true;
             }
@@ -843,9 +840,7 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                if (e.Key == Key.Print)
-                    Print();
-                else if (e.Key == Key.T && singleTicks)
+                if (e.Key == Key.T && singleTicks)
                     TickQueue();
             }
         }
