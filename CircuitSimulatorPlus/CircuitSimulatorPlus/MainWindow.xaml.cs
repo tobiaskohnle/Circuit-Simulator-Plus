@@ -24,12 +24,6 @@ namespace CircuitSimulatorPlus
         {
             InitializeComponent();
 
-            RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
-            canvas.SnapsToDevicePixels = true;
-
-            RenderOptions.SetEdgeMode(backgoundLayerCanvas, EdgeMode.Aliased);
-            backgoundLayerCanvas.SnapsToDevicePixels = true;
-
             UpdateTitle();
             ResetView();
 
@@ -45,6 +39,7 @@ namespace CircuitSimulatorPlus
 
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
+
             DrawGrid();
         }
 
@@ -737,8 +732,7 @@ namespace CircuitSimulatorPlus
                     {
                         foreach (IClickable obj in selectedObjects)
                         {
-                            if (obj is InputNode
-                                && lastClickedObject is OutputNode)
+                            if (obj is InputNode && lastClickedObject is OutputNode)
                             {
                                 InputNode inputNode = (obj as InputNode);
                                 inputNode.Clear();
@@ -746,8 +740,7 @@ namespace CircuitSimulatorPlus
                                 Tick(inputNode);
                                 connectionCreated = true;
                             }
-                            else if (lastClickedObject is InputNode
-                                && obj is OutputNode)
+                            else if (lastClickedObject is InputNode && obj is OutputNode)
                             {
                                 InputNode inputNode = (lastClickedObject as InputNode);
                                 inputNode.Clear();
