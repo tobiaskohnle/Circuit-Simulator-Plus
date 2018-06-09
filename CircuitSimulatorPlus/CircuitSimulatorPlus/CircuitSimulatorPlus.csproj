@@ -79,7 +79,7 @@
     <Compile Include="Actions\ClearOutputNodeAction.cs" />
     <Compile Include="Actions\ClearInputNodeAction.cs" />
     <Compile Include="Commands.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="Misc\DropOutStack.cs" />
     <Compile Include="Object\Cable.cs" />
     <Compile Include="Rendering\CableRenderer.cs" />
     <Compile Include="Actions\ChangeConnectionAction.cs" />
