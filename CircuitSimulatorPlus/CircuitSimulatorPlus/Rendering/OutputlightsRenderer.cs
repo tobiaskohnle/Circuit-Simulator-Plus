@@ -9,15 +9,26 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    class OutputLightRenderer
+    class OutputLightRenderer : IRenderer
     {
         bool isOutput;
         double width, height;
+        Canvas canvas;
+        double x1, x2, y1, y2;
         Line line;
         Rectangle rect;
         List<Line> connectionLines;
 
-        public void Render(Canvas canvas, double x1, double x2, double y1, double y2)
+        public OutputLightRenderer(Canvas canvas, double x1, double x2, double y1, double y2)
+        {
+            this.canvas = canvas;
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
+        }
+
+        public void Render()
         {
             line = new Line();
             line.StrokeThickness = MainWindow.LineWidth;
@@ -33,6 +44,12 @@ namespace CircuitSimulatorPlus
             rect.Height = y2 - y1;
             canvas.Children.Add(rect);
         }
+
+        public void Unrender()
+        {
+            throw new NotImplementedException();
+        }
+
         public void OnInputChanged(object sender, EventArgs e)
         {
             Brush brush = isOutput ? Brushes.Red : Brushes.Black;
@@ -41,6 +58,5 @@ namespace CircuitSimulatorPlus
                 line.Stroke = brush;
             }
         }
-
     }
 }
