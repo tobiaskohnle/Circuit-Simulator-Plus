@@ -608,11 +608,6 @@ namespace CircuitSimulatorPlus
             Vector windowMoved = currentWindowPos - lastWindowPos;
             Vector canvasMoved = e.GetPosition(canvas) - lastCanvasPos;
 
-            if ((lastMousePos - lastWindowClick).LengthSquared >= MinDistMouseMoved * MinDistMouseMoved)
-            {
-                mouseMoved = true;
-            }
-
             if (mouseMoved)
             {
                 if (movingScreen)
@@ -624,7 +619,6 @@ namespace CircuitSimulatorPlus
 
                 if (movingObjects)
                 {
-
                     if (!lastClickedObject.IsSelected)
                     {
                         DeselectAll();
@@ -685,6 +679,18 @@ namespace CircuitSimulatorPlus
                 lastWindowPos = currentWindowPos;
                 lastCanvasPos = e.GetPosition(canvas);
             }
+            else if ((lastMousePos - lastWindowClick).LengthSquared >= MinDistMouseMoved * MinDistMouseMoved)
+            {
+                if (makingSelection)
+                {
+                    if (ControlPressed == false)
+                    {
+                        DeselectAll();
+                        SelectAllIn(new Rect(lastCanvasClick, lastCanvasPos));
+                    }
+                }
+                mouseMoved = true;
+            }
 
             lastMousePos = currentWindowPos;
 
@@ -726,10 +732,6 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    //if (ControlPressed == false)
-                    //{
-                    //    DeselectAll();
-                    //}
                     bool connectionCreated = false;
                     if (lastClickedObject is ConnectionNode)
                     {
