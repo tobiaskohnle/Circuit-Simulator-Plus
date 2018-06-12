@@ -28,7 +28,7 @@ namespace CircuitSimulatorPlus
                     store.Type = "Identity";
                     break;
                 default:
-                    throw new Exception("unknown type");
+                    throw new Exception("Unknown type");
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -121,7 +121,7 @@ namespace CircuitSimulatorPlus
                         if (nodeToId.ContainsKey(innerGate.Output[i]))
                             innerStore.OutputConnections[i] = nodeToId[innerGate.Output[i]];
                         else
-                            throw new Exception("invalid connection");
+                            throw new Exception("Invalid connection");
                     }
                     store.Context.Add(innerStore);
                 }
@@ -148,7 +148,7 @@ namespace CircuitSimulatorPlus
                     type = Gate.GateType.Identity;
                     break;
                 default:
-                    throw new Exception("unknown type");
+                    throw new Exception("Unknown type");
             }
             Gate gate = new Gate(type);
             gate.Name = storageObject.Name;
@@ -211,7 +211,7 @@ namespace CircuitSimulatorPlus
                                 innerGate.Input[j].State = outputNode.State;
                             }
                             else
-                                throw new Exception("invalid connection");
+                                throw new Exception("Invalid connection");
                         }
                     }
                 }
@@ -223,7 +223,7 @@ namespace CircuitSimulatorPlus
                         if (idToNode.ContainsKey(id))
                             idToNode[id].ConnectTo(gate.Output[i]);
                         else
-                            throw new Exception("invalid connection");
+                            throw new Exception("Invalid connection");
                     }
                 }
             }
