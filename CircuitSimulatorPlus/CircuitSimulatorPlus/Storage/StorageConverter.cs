@@ -75,7 +75,9 @@ namespace CircuitSimulatorPlus
                         store.InnerInputConnections[i] = nextId;
                     }
                     else
+                    {
                         store.InnerInputConnections[i] = 0;
+                    }
                 }
                 foreach (Gate innerGate in gate.Context)
                 {
@@ -89,7 +91,9 @@ namespace CircuitSimulatorPlus
                             nextId++;
                         }
                         else
+                        {
                             nodeToId[output] = 0;
+                        }
                     }
                 }
                 store.InnerOutputConnections = new int[gate.Output.Count];
