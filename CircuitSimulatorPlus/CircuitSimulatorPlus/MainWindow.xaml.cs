@@ -811,6 +811,7 @@ namespace CircuitSimulatorPlus
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
+
             if (ControlPressed)
             {
                 if (e.Key == Key.C)
