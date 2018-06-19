@@ -22,14 +22,14 @@ namespace CircuitSimulatorPlus
         {
             foreach (Gate gate in deletedGates)
                 gate.Renderer.Render();
-            contextGate.Context.AddRange(deletedGates);
+            //contextGate.Context.AddRange(deletedGates);
         }
 
         public override void Undo()
         {
             foreach (Gate gate in deletedGates)
                 gate.Renderer.Unrender();
-            contextGate.Context = contextGate.Context.Except(deletedGates).ToList();
+            //contextGate.Context = contextGate.Context.Except(deletedGates).ToList();
         }
     }
 }

@@ -13,23 +13,7 @@ namespace CircuitSimulatorPlus
             StorageObject store = new StorageObject();
             store.Name = gate.Name;
             store.Position = gate.Position;
-            switch (gate.Type)
-            {
-                case Gate.GateType.Context:
-                    store.Type = "Context";
-                    break;
-                case Gate.GateType.And:
-                    store.Type = "And";
-                    break;
-                case Gate.GateType.Or:
-                    store.Type = "Or";
-                    break;
-                case Gate.GateType.Identity:
-                    store.Type = "Identity";
-                    break;
-                default:
-                    throw new InvalidOperationException("Unknown type");
-            }
+            store.Type = gate.Type;
 
             for (int i = 0; i < gate.Input.Count; i++)
             {
@@ -57,8 +41,9 @@ namespace CircuitSimulatorPlus
                 }
             }
 
-            if (gate.HasContext)
+            if (gate.Type == "Context")
             {
+                var contextGate = gate as ContextGate;
                 int nextId = 1;
                 var nodeToId = new Dictionary<ConnectionNode, int>();
                 store.Context = new List<StorageObject>();
@@ -79,7 +64,7 @@ namespace CircuitSimulatorPlus
                         store.InnerInputConnections[i] = 0;
                     }
                 }
-                foreach (Gate innerGate in gate.Context)
+                foreach (Gate innerGate in contextGate.Context)
                 {
                     foreach (OutputNode output in innerGate.Output)
                     {
@@ -104,7 +89,7 @@ namespace CircuitSimulatorPlus
                     else
                         store.InnerOutputConnections[i] = 0;
                 }
-                foreach (Gate innerGate in gate.Context)
+                foreach (Gate innerGate in contextGate.Context)
                 {
                     StorageObject innerStore = ToStorageObject(innerGate);
                     innerStore.InputConnections = new int[innerGate.Input.Count];
@@ -132,25 +117,31 @@ namespace CircuitSimulatorPlus
 
         public static Gate ToGate(StorageObject storageObject)
         {
-            Gate.GateType type;
+            Gate gate;
             switch (storageObject.Type)
             {
                 case "Context":
-                    type = Gate.GateType.Context;
+                    gate = new ContextGate();
                     break;
                 case "And":
-                    type = Gate.GateType.And;
+                    gate = new AndGate();
                     break;
                 case "Or":
-                    type = Gate.GateType.Or;
+                    gate = new OrGate();
                     break;
-                case "Identity":
-                    type = Gate.GateType.Identity;
+                case "Nop":
+                    gate = new NopGate();
+                    break;
+                case "InputSwitch":
+                    gate = new InputSwitch();
+                    break;
+                case "OutputLight":
+                    gate = new OutputLight();
                     break;
                 default:
                     throw new InvalidOperationException("Unknown type");
             }
-            Gate gate = new Gate(type);
+
             gate.Name = storageObject.Name;
             gate.Position = storageObject.Position;
 
@@ -175,8 +166,9 @@ namespace CircuitSimulatorPlus
                 foreach (int index in storageObject.InitialActiveOutputs)
                     gate.Output[index].State = true;
 
-            if (type == Gate.GateType.Context)
+            if (storageObject.Type == "Context")
             {
+                ContextGate contextGate = gate as ContextGate;
                 var idToNode = new Dictionary<int, ConnectionNode>();
                 for (int i = 0; i < storageObject.InnerInputConnections.Count(); i++)
                 {
@@ -187,7 +179,7 @@ namespace CircuitSimulatorPlus
                 foreach (StorageObject innerStore in storageObject.Context)
                 {
                     Gate innerGate = ToGate(innerStore);
-                    gate.Context.Add(innerGate);
+                    contextGate.Context.Add(innerGate);
                     for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
                     {
                         int id = innerStore.OutputConnections[i];
@@ -198,7 +190,7 @@ namespace CircuitSimulatorPlus
                 for (int i = 0; i < storageObject.Context.Count; i++)
                 {
                     StorageObject innerStore = storageObject.Context[i];
-                    Gate innerGate = gate.Context[i];
+                    Gate innerGate = contextGate.Context[i];
                     for (int j = 0; j < innerStore.InputConnections.Count(); j++)
                     {
                         int id = innerStore.InputConnections[j];

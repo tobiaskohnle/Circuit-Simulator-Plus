@@ -29,9 +29,9 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                contextGate = StorageConverter.ToGate(Storage.Load(args[1]));
+                contextGate = (ContextGate)StorageConverter.ToGate(Storage.Load(args[1]));
             else
-                contextGate = new Gate();
+                contextGate = new ContextGate();
             foreach (Gate gate in contextGate.Context)
                 gate.Renderer.Render();
 
@@ -87,7 +87,7 @@ namespace CircuitSimulatorPlus
         DropOutStack<Action> redoStack = new DropOutStack<Action>(UndoBufferSize);
 
         List<Cable> cables = new List<Cable>();
-        Gate contextGate;
+        ContextGate contextGate;
         IClickable lastClickedObject;
 
         Pen backgroundGridPen;
@@ -107,6 +107,15 @@ namespace CircuitSimulatorPlus
         {
             clickableObjects.Add(connectionNode);
         }
+        public void Add(InputSwitch inputSwitch)
+        {
+
+        }
+        public void Add(OutputLight outputLight)
+        {
+
+        }
+
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             contextGate.Context.Add(gate);
@@ -244,17 +253,34 @@ namespace CircuitSimulatorPlus
             return nearest;
         }
 
+        public void CreateInputSwitch(object sender, RoutedEventArgs e)
+        {
+            var inputSwitch = new InputSwitch();
+            //inputSwitch.Renderer = new r
+
+            
+
+            inputSwitch.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
+
+            //PerformAction(new CreateGateAction(contextGate, gate));
+
+            //Select(gate);
+            //Add(gate);
+        }
+        public void CreateOutputLight(object sender, RoutedEventArgs e)
+        {
+        }
         public void CreateAndGate(object sender, RoutedEventArgs e)
         {
-            CreateGate(new Gate(Gate.GateType.And), 2, 1);
+            CreateGate(new AndGate(), 2, 1);
         }
         public void CreateOrGate(object sender, RoutedEventArgs e)
         {
-            CreateGate(new Gate(Gate.GateType.Or), 2, 1);
+            CreateGate(new OrGate(), 2, 1);
         }
         public void CreateNotGate(object sender, RoutedEventArgs e)
         {
-            var newGate = new Gate(Gate.GateType.Identity);
+            var newGate = new NopGate();
             CreateGate(newGate, 1, 1);
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
@@ -419,7 +445,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 currentFilePath = dialog.FileName;
-                contextGate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
+                contextGate = (ContextGate)StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 UpdateClickableObjects();
                 foreach (Gate gate in contextGate.Context)
                 {

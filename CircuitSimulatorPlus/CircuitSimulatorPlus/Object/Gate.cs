@@ -4,43 +4,21 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class Gate : IClickable
+    public abstract class Gate : IClickable
     {
         public const double DistanceFactor = 0.2;
 
-        public Gate(GateType type = GateType.Context)
+        public Gate()
         {
-            Type = type;
-            HasContext = type == GateType.Context;
-            Context = new List<Gate>();
             Input = new List<InputNode>();
             Output = new List<OutputNode>();
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             UpdateSize();
             UpdateHitbox();
-            if (type == GateType.And)
-                Tag = "&";
-            else if (type == GateType.Or)
-                Tag = "\u22651";
-            else if (type == GateType.Identity)
-                Tag = "1";
         }
 
-        public enum GateType
-        {
-            Context, And, Or, Identity
-        }
-        /// <summary>
-        /// </summary>
-        public GateType Type { get; private set; }
-        /// <summary>
-        /// The circuit inside of a gate.
-        /// </summary>
-        public List<Gate> Context { get; set; }
-        /// <summary>
-        /// False: elementary gate
-        /// </summary>
-        public bool HasContext { get; private set; }
+        public abstract string Type { get; }
+
         /// <summary>
         /// InputNodes of the gate.
         /// </summary>
@@ -152,6 +130,8 @@ namespace CircuitSimulatorPlus
             set { hitbox = value as RectHitbox; }
         }
 
+        public virtual bool HasContext { get { return false; } }
+
         /// <summary>
         /// Moves the gate.
         /// </summary>
@@ -162,26 +142,6 @@ namespace CircuitSimulatorPlus
         }
         /// <summary>
         /// </summary>
-        public bool Eval()
-        {
-            switch (Type)
-            {
-            case GateType.And:
-                foreach (InputNode input in Input)
-                    if (input.State == false)
-                        return false;
-                return true;
-            case GateType.Or:
-                foreach (InputNode input in Input)
-                    if (input.State)
-                        return true;
-                return false;
-            case GateType.Identity:
-                foreach (InputNode input in Input)
-                    return input.State;
-                return false;
-            }
-            throw new InvalidOperationException($"Can't Eval() gate of type {Type}.");
-        }
+        public abstract bool Eval();
     }
 }

@@ -80,7 +80,13 @@
     <Compile Include="Actions\ClearInputNodeAction.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Misc\DropOutStack.cs" />
+    <Compile Include="Object\AndGate.cs" />
     <Compile Include="Object\Cable.cs" />
+    <Compile Include="Object\ContextGate.cs" />
+    <Compile Include="Object\InputSwitch.cs" />
+    <Compile Include="Object\NopGate.cs" />
+    <Compile Include="Object\OrGate.cs" />
+    <Compile Include="Object\OutputLight.cs" />
     <Compile Include="Rendering\CableRenderer.cs" />
     <Compile Include="Actions\ChangeConnectionAction.cs" />
     <Compile Include="Actions\ChangeGateTypeAction.cs" />
