@@ -206,7 +206,7 @@ namespace CircuitSimulatorPlus
                 if (obj is Gate)
                     Remove(obj as Gate);
                 else if (obj is ConnectionNode)
-                    Remove(obj as ConnectionNode);
+                    (obj as ConnectionNode).Clear();
             }
             DeselectAll();
         }
