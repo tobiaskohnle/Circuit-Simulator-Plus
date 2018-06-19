@@ -269,6 +269,20 @@ namespace CircuitSimulatorPlus
             Tick(newGate.Output[0]);
         }
 
+        public void ToggleButtons()
+        {
+            foreach (IClickable obj in selectedObjects)
+            {
+                if (obj is InputSwitch)
+                {
+                    InputSwitch inputSwitch = obj as InputSwitch;
+                    inputSwitch.State = !inputSwitch.State;
+                    Tick(inputSwitch.Output[0]);
+                    inputSwitch.ConnectionChanged.Invoke(inputSwitch, EventArgs.Empty);
+                }
+            }
+        }
+
         public void Copy()
         {
             if (AnySelected)
@@ -610,6 +624,10 @@ namespace CircuitSimulatorPlus
                 selectVisual.Visibility = Visibility.Visible;
             }
         }
+        void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ToggleButtons();
+        }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
             Point currentWindowPos = e.GetPosition(this);
@@ -929,11 +947,7 @@ namespace CircuitSimulatorPlus
         }
         void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (IClickable obj in selectedObjects)
-            {
-                if (obj is InputSwitch)
-                    (obj as InputSwitch).ToggleState();
-            }
+            ToggleButtons();
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)

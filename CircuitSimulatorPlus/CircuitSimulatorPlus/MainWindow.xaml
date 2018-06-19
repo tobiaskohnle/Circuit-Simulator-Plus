@@ -7,6 +7,7 @@
         Height="700" Width="1000"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel"
+        MouseDoubleClick="Window_MouseDoubleClick"
         Closing="Window_Closing"
         ContextMenuOpening="Window_ContextMenuOpening">
 

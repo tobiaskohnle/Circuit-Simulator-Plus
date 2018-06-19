@@ -20,11 +20,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public void ToggleState()
-        {
-            State = !State;
-        }
-
         public override bool Eval()
         {
             return State;
