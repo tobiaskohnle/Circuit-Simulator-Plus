@@ -121,7 +121,7 @@ namespace CircuitSimulatorPlus
         protected void Tick(Queue<ConnectionNode> tickedNodes, bool isOutput)
         {
             bool nextIsElementary = !Owner.HasContext && !isOutput;
-            bool lastWasElementary = !Owner.HasContext && isOutput;
+            bool lastWasElementary = (!Owner.HasContext || Owner is InputSwitch) && isOutput;
 
             stateChanged = false;
 
@@ -129,7 +129,7 @@ namespace CircuitSimulatorPlus
             {
                 State = Owner.Eval();
             }
-            else if (/*!IsEmpty*/BackConnectedTo != null)
+            else if (BackConnectedTo != null)
             {
                 State = BackConnectedTo.State;
             }

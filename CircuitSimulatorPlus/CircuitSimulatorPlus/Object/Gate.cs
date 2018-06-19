@@ -66,7 +66,7 @@ namespace CircuitSimulatorPlus
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-        public Size Size { get; private set; }
+        public Size Size { get; protected set; }
 
         public void UpdateConnectionNodePos()
         {

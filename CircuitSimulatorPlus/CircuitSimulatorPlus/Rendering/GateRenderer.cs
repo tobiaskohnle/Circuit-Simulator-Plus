@@ -174,61 +174,65 @@ namespace CircuitSimulatorPlus
 
         void OnPositionChanged(object sender, EventArgs e)
         {
-            Point pos = gate.Position;
-            Canvas.SetLeft(rectangle, pos.X);
-            Canvas.SetTop(rectangle, pos.Y);
+            Canvas.SetLeft(rectangle, gate.Position.X);
+            Canvas.SetTop(rectangle, gate.Position.Y);
 
-            Canvas.SetLeft(innerLabel, pos.X);
-            Canvas.SetTop(innerLabel, pos.Y);
+            Canvas.SetLeft(innerLabel, gate.Position.X);
+            Canvas.SetTop(innerLabel, gate.Position.Y);
 
             if (outerLabel != null)
             {
-                Canvas.SetLeft(outerLabel, pos.X);
-                Canvas.SetBottom(outerLabel, pos.Y);
+                Canvas.SetLeft(outerLabel, gate.Position.X);
+                Canvas.SetBottom(outerLabel, gate.Position.Y);
             }
 
             for (int i = 0; i < gate.Output.Count; i++)
             {
+                OutputNode outputNode = gate.Output[i];
                 Line line = outputLines[i];
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
+                //double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
 
                 if (outputNegationCircles[i] != null)
                 {
-                    line.X1 = pos.X + 3 + 0.5;
-                    Canvas.SetLeft(outputNegationCircles[i], pos.X + 3);
-                    Canvas.SetTop(outputNegationCircles[i], y - (0.5 + 0.1) / 2);
+                    line.X1 = gate.Position.X + gate.Size.Width + 0.5;
+                    Canvas.SetLeft(outputNegationCircles[i], gate.Output[i].Position.X);
+                    Canvas.SetTop(outputNegationCircles[i], outputNode.Position.Y);
                 }
                 else
-                    line.X1 = pos.X + 3;
-                line.X2 = pos.X + 3 + 1;
+                {
+                    line.X1 = gate.Position.X + gate.Size.Width;
+                }
+                line.X2 = gate.Position.X + gate.Size.Width + 1;
 
-                line.Y1 = y;
-                line.Y2 = y;
+                line.Y1 = outputNode.Position.Y;
+                line.Y2 = outputNode.Position.Y;
 
                 for (int j = 0; j < connectionLines[i].Count; j++)
                 {
-                    connectionLines[i][j].X1 = pos.X + 3 + 1;
-                    connectionLines[i][j].Y1 = y;
+                    connectionLines[i][j].X1 = gate.Position.X + gate.Size.Width + 1;
+                    connectionLines[i][j].Y1 = outputNode.Position.Y;
                 }
             }
 
             for (int i = 0; i < gate.Input.Count; i++)
             {
+                InputNode inputNode = gate.Input[i];
                 Line line = inputLines[i];
-                double y = pos.Y + (double)4 * (1 + 2 * i) / (2 * gate.Input.Count);
 
                 if (inputNegationCircles[i] != null)
                 {
-                    line.X1 = pos.X - 0.5;
-                    Canvas.SetLeft(inputNegationCircles[i], pos.X - (0.5 + 0.1));
-                    Canvas.SetTop(inputNegationCircles[i], y - (0.5 + 0.1) / 2);
+                    line.X1 = inputNode.Position.X - 0.5;
+                    Canvas.SetLeft(inputNegationCircles[i], inputNode.Position.X - (0.5 + 0.1));
+                    Canvas.SetTop(inputNegationCircles[i], inputNode.Position.Y - (0.5 + 0.1) / 2);
                 }
                 else
-                    line.X1 = pos.X;
-                line.X2 = pos.X - 1;
+                {
+                    line.X1 = inputNode.Position.X;
+                }
+                line.X2 = inputNode.Position.X - 1;
 
-                line.Y1 = y;
-                line.Y2 = y;
+                line.Y1 = inputNode.Position.Y;
+                line.Y2 = inputNode.Position.Y;
             }
         }
 
@@ -268,7 +272,7 @@ namespace CircuitSimulatorPlus
                 foreach (InputNode nextNode in gate.Output[i].NextConnectedTo)
                 {
                     Line line = new Line();
-                    line.Stroke = outputLines[i].Stroke;
+                    line.Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
                     line.StrokeThickness = MainWindow.LineWidth / 2;
                     line.IsHitTestVisible = false;
                     connectionLines[i].Add(line);
@@ -349,7 +353,7 @@ namespace CircuitSimulatorPlus
                 }
                 foreach (Line line in connectionLines[i])
                 {
-                    line.Stroke = outputLines[i].Stroke;
+                    line.Stroke = gate.Output[i].State ? Brushes.Red : Brushes.Black;
                 }
             }
             OnPositionChanged(sender, e);

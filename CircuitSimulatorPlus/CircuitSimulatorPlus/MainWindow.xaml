@@ -56,13 +56,14 @@
 
             </MenuItem>
 
-            <MenuItem x:Name="contxtMenu_basicGate" Header="Add Basic Gate">
+            <MenuItem x:Name="contxtMenu_basicGate" Header="Add Component">
 
-                <MenuItem Header="Add Input Switch" Click="CreateInputSwitch"/>
-                <MenuItem Header="Add Output Light" Click="CreateOutputLight"/>
-                <MenuItem Header="Add And Gate" Click="CreateAndGate"/>
-                <MenuItem Header="Add Or Gate" Click="CreateOrGate"/>
-                <MenuItem Header="Add Not Gate" Click="CreateNotGate"/>
+                <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
+                <MenuItem Header="Output Light" Click="CreateOutputLight"/>
+                <Separator/>
+                <MenuItem Header="And Gate" Click="CreateAndGate"/>
+                <MenuItem Header="Or Gate" Click="CreateOrGate"/>
+                <MenuItem Header="Not Gate" Click="CreateNotGate"/>
 
             </MenuItem>
 

@@ -107,14 +107,6 @@ namespace CircuitSimulatorPlus
         {
             clickableObjects.Add(connectionNode);
         }
-        public void Add(InputSwitch inputSwitch)
-        {
-
-        }
-        public void Add(OutputLight outputLight)
-        {
-
-        }
 
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
@@ -255,20 +247,11 @@ namespace CircuitSimulatorPlus
 
         public void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            var inputSwitch = new InputSwitch();
-            //inputSwitch.Renderer = new r
-
-            
-
-            inputSwitch.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
-
-            //PerformAction(new CreateGateAction(contextGate, gate));
-
-            //Select(gate);
-            //Add(gate);
+            CreateGate(new InputSwitch(), 0, 1);
         }
         public void CreateOutputLight(object sender, RoutedEventArgs e)
         {
+            CreateGate(new OutputLight(), 1, 0);
         }
         public void CreateAndGate(object sender, RoutedEventArgs e)
         {
@@ -946,6 +929,11 @@ namespace CircuitSimulatorPlus
         }
         void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
+            foreach (IClickable obj in selectedObjects)
+            {
+                if (obj is InputSwitch)
+                    (obj as InputSwitch).ToggleState();
+            }
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)
