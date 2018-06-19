@@ -29,14 +29,14 @@ namespace CircuitSimulatorPlus
             "Save File As...", "SaveAs", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.S, ModifierKeys.Control|ModifierKeys.Shift)
+                new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
         public static RoutedUICommand Add { get; } = new RoutedUICommand(
             "Add Component", "Add", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.N, ModifierKeys.Control|ModifierKeys.Shift)
+                new KeyGesture(Key.N, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
         public static RoutedUICommand Copy { get; } = new RoutedUICommand(
@@ -72,7 +72,7 @@ namespace CircuitSimulatorPlus
             new InputGestureCollection
             {
                 new KeyGesture(Key.Y, ModifierKeys.Control),
-                new KeyGesture(Key.Z, ModifierKeys.Control|ModifierKeys.Shift)
+                new KeyGesture(Key.Z, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
         public static RoutedUICommand SelectAll { get; } = new RoutedUICommand(

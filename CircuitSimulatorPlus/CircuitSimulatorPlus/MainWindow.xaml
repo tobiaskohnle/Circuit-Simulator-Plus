@@ -5,11 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CircuitSimulatorPlus"
         Height="700" Width="1000"
-        KeyDown="Window_KeyDown"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel"
         Closing="Window_Closing"
         ContextMenuOpening="Window_ContextMenuOpening">
+
+    <Window.CommandBindings>
+
+        <CommandBinding Command="{x:Static local:Commands.Open}" Executed="Open_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Save}" Executed="Save_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.SaveAs}" Executed="SaveAs_Click"/>
+
+        <!--<CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>-->
+
+        <!--<CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>-->
+
+        <!--<CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>-->
+
+        <!--<CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/>-->
+
+        <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Cut}" Executed="Cut_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.ZoomIn}" Executed="ZoomIn_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.ZoomOut}" Executed="ZoomOut_Click"/>
+
+    </Window.CommandBindings>
 
     <Window.ContextMenu>
 
@@ -29,7 +64,7 @@
 
             </MenuItem>
 
-            <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="Copy_Click"/>
+            <MenuItem Command="{x:Static local:Commands.Copy}" InputGestureText="Ctrl+C"/>
             <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click"/>
             <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click"/>
             <MenuItem Header="Remove" InputGestureText="Del" Click="Delete_Click"/>
@@ -47,7 +82,7 @@
         <Grid.RowDefinitions>
 
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
 
@@ -81,7 +116,7 @@
 
                 <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="Undo_Click"/>
                 <MenuItem Header="Redo" InputGestureText="Ctrl+Shift+Z" Click="Redo_Click"/>
-                <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="Copy_Click"/>
+                <MenuItem Command="{x:Static local:Commands.Copy}" InputGestureText="Ctrl+C"/>
                 <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click"/>
                 <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click"/>
                 <MenuItem Header="Remove" InputGestureText="Del" Click="Delete_Click"/>
@@ -98,7 +133,7 @@
 
             <MenuItem Header="Tools" Width="auto">
 
-                <MenuItem Header="New Component" Click="NewGate_Click"/>
+                <MenuItem Header="New Component" Click="AddComp_Click"/>
                 <MenuItem Header="Rename Gate" Click="Rename_Click"/>
                 <MenuItem Header="Resize Gate" Click="ResizeGate_Click"/>
                 <MenuItem Header="Empty Input" Click="EmptyInput_Click"/>

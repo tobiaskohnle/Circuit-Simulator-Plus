@@ -809,43 +809,6 @@ namespace CircuitSimulatorPlus
             Zoom(e.Delta > 0, e.GetPosition(canvas));
         }
 
-        void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (ControlPressed)
-            {
-                if (e.Key == Key.C)
-                    Copy();
-                else if (e.Key == Key.V)
-                    Paste();
-                else if (e.Key == Key.X)
-                    Cut();
-                else if (e.Key == Key.Delete || e.Key == Key.Back)
-                    Delete();
-                else if (e.Key == Key.OemComma)
-                    EmptyInput();
-                else if (e.Key == Key.OemPeriod)
-                    InvertConnection();
-                else if (e.Key == Key.P)
-                    Print();
-                else if (e.Key == Key.R)
-                    Rename();
-                else if (e.Key == Key.Z && ShiftPressed)
-                    Redo();
-                else if (e.Key == Key.Z)
-                    Undo();
-                else if (e.Key == Key.OemPlus)
-                    ZoomIn();
-                else if (e.Key == Key.OemMinus)
-                    ZoomOut();
-            }
-            else
-            {
-                if (e.Key == Key.T && singleTicks)
-                    TickQueue();
-            }
-        }
-
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             e.Handled = mouseMoved;
@@ -914,7 +877,7 @@ namespace CircuitSimulatorPlus
             ZoomOut();
         }
 
-        void NewGate_Click(object sender, RoutedEventArgs e)
+        void AddComp_Click(object sender, RoutedEventArgs e)
         {
 
         }
