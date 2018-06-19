@@ -96,11 +96,6 @@
                     Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
                     Fill="#3F0078D7"
                     SnapsToDevicePixels="True"/>
-            <Rectangle x:Name="Rect" Fill="#FFF4F4F5" Height="647" Canvas.Left="917" Stroke="Black" Canvas.Top="22" Width="75"/>
-            <Image x:Name="img_2" Height="100" Canvas.Left="917" Canvas.Top="122" Width="75"/>
-            <Image x:Name="img_3" Height="100" Canvas.Left="917" Canvas.Top="222" Width="75"/>
-            <Image x:Name="img_1" Height="100" Canvas.Left="917" Canvas.Top="22" Width="75"/>
-            <Button x:Name="button_In" Content="&lt;" Canvas.Left="896" Canvas.Top="327" Width="21" Height="19" MouseDown="button_MouseDown"/>
 
         </Canvas>
 

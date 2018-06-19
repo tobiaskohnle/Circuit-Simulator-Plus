@@ -976,14 +976,5 @@ namespace CircuitSimulatorPlus
             //}
         }
         #endregion
-
-        private void button_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Rect.Visibility = Visibility.Hidden;
-            img_1.Visibility = Visibility.Hidden;
-            img_2.Visibility = Visibility.Hidden;
-            img_3.Visibility = Visibility.Hidden;
-            button_In.Visibility = Visibility.Hidden;
-        }
     }
 }
