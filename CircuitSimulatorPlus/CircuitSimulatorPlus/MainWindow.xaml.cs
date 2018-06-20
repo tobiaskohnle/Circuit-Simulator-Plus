@@ -967,6 +967,14 @@ namespace CircuitSimulatorPlus
                     Tick(outputNode);
             }
         }
+        void Rerender_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Gate gate in contextGate.Context)
+            {
+                gate.Renderer.Unrender();
+                gate.Renderer.Render();
+            }
+        }
 
         void OnGateOutputClicked(object sender, EventArgs e)
         {
