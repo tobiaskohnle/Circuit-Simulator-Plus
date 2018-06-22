@@ -2,7 +2,7 @@
 
 namespace CircuitSimulatorPlus
 {
-    class Commands
+    public class Commands
     {
         public static RoutedUICommand New { get; } = new RoutedUICommand(
             "New Circuit", "New", typeof(Commands),
