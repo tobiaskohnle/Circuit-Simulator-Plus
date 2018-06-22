@@ -52,6 +52,10 @@ namespace CircuitSimulatorPlus
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
         public const double LineWidth = 0.1;
+        public const double LineRadius = LineWidth / 2;
+        public const double InversionDotDiameter = 0.5;
+        public const double InversionDotRadius = InversionDotDiameter / 2;
+        public const double Unit = 1;
         public const int UndoBufferSize = 32;
         #endregion
 
