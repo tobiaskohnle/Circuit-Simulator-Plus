@@ -12,14 +12,18 @@ namespace CircuitSimulatorPlus
 
         public override string Type
         {
-            get {
+            get
+            {
                 return "Context";
             }
         }
 
         public new bool HasContext
         {
-            get { return true; }
+            get
+            {
+                return true;
+            }
         }
 
         public override bool Eval()

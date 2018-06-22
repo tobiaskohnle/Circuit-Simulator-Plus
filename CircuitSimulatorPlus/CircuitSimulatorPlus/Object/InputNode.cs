@@ -12,12 +12,18 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// True, if this InputNode reacts to rising edges.
         /// </summary>
-        public bool IsRisingEdge { get; set; }
+        public bool IsRisingEdge
+        {
+            get; set;
+        }
         /// <summary>
         /// True, if this InputNode is displayed in the center.
         /// of a gate, independent of other InputsNodes.
         /// </summary>
-        public bool IsCentered { get; set; }
+        public bool IsCentered
+        {
+            get; set;
+        }
         /// <summary>
         /// Clears this InputNode.
         /// </summary>

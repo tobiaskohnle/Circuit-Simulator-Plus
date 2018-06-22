@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         Gate createdGate;
         Gate contextGate;
 
-        public CreateGateAction(Gate contextGate, Gate createdGate) : base ("...")
+        public CreateGateAction(Gate contextGate, Gate createdGate) : base("...")
         {
             this.createdGate = createdGate;
             this.contextGate = contextGate;

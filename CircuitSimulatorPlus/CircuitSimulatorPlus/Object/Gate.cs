@@ -17,39 +17,66 @@ namespace CircuitSimulatorPlus
             UpdateHitbox();
         }
 
-        public abstract string Type { get; }
+        public abstract string Type
+        {
+            get;
+        }
 
         /// <summary>
         /// InputNodes of the gate.
         /// </summary>
-        public List<InputNode> Input { get; set; }
+        public List<InputNode> Input
+        {
+            get; set;
+        }
         /// <summary>
         /// OutputNodes of the gate.
         /// </summary>
-        public List<OutputNode> Output { get; set; }
+        public List<OutputNode> Output
+        {
+            get; set;
+        }
         /// <summary>
         /// Triggered when any of the connection signals changed.
         /// </summary>
-        public EventHandler ConnectionChanged { get; set; }
+        public EventHandler ConnectionChanged
+        {
+            get; set;
+        }
         /// <summary>
         /// </summary>
-        public EventHandler ConnectionCreated { get; set; }
+        public EventHandler ConnectionCreated
+        {
+            get; set;
+        }
         /// <summary>
         /// Triggered when the Gate's position is changed.
         /// </summary>
-        public EventHandler PositionChanged { get; set; }
+        public EventHandler PositionChanged
+        {
+            get; set;
+        }
         /// <summary>
         /// </summary>
-        public EventHandler SelectionChanged { get; set; }
+        public EventHandler SelectionChanged
+        {
+            get; set;
+        }
         /// <summary>
         /// Creates the Gate's visual representation on the Render() call.
         /// Render() should only be called once.
         /// </summary>
-        public IRenderer Renderer { get; set; }
+        public IRenderer Renderer
+        {
+            get; set;
+        }
 
         public bool IsMovable
         {
-            get { return true; }
+            get
+            {
+                return true;
+            }
         }
 
         Point position;
@@ -58,15 +85,22 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public Point Position
         {
-            get { return position; }
-            set {
+            get
+            {
+                return position;
+            }
+            set
+            {
                 position = value;
                 UpdateHitbox();
                 UpdateConnectionNodePos();
                 PositionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-        public Size Size { get; protected set; }
+        public Size Size
+        {
+            get; protected set;
+        }
 
         public void UpdateConnectionNodePos()
         {
@@ -95,11 +129,17 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// Name displayed on top of the gate.
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
         /// <summary>
         /// True, if you can add or remove inputs of this gate.
         /// </summary>
-        public bool IsMutable { get; set; }
+        public bool IsMutable
+        {
+            get; set;
+        }
 
         bool isSelected;
         /// <summary>
@@ -107,7 +147,10 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public bool IsSelected
         {
-            get { return isSelected; }
+            get
+            {
+                return isSelected;
+            }
             set
             {
                 if (value != isSelected)
@@ -120,17 +163,32 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// Tag displayed inside of the gate. (e.g. ">=1" for OR)
         /// </summary>
-        public string Tag { get; set; }
+        public string Tag
+        {
+            get; set;
+        }
 
         RectHitbox hitbox;
 
         public Hitbox Hitbox
         {
-            get { return hitbox; }
-            set { hitbox = value as RectHitbox; }
+            get
+            {
+                return hitbox;
+            }
+            set
+            {
+                hitbox = value as RectHitbox;
+            }
         }
 
-        public virtual bool HasContext { get { return false; } }
+        public virtual bool HasContext
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Moves the gate.

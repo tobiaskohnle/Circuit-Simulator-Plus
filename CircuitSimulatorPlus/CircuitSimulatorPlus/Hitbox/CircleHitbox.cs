@@ -9,7 +9,10 @@ namespace CircuitSimulatorPlus
 {
     public class CircleHitbox : Hitbox
     {
-        public Point Center { get; set; }
+        public Point Center
+        {
+            get; set;
+        }
         double radius;
 
         public CircleHitbox(object attachedObject, Point center, double radius, double distanceFactor)

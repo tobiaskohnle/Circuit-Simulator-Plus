@@ -120,26 +120,26 @@ namespace CircuitSimulatorPlus
             Gate gate;
             switch (storageObject.Type)
             {
-                case "Context":
-                    gate = new ContextGate();
-                    break;
-                case "And":
-                    gate = new AndGate();
-                    break;
-                case "Or":
-                    gate = new OrGate();
-                    break;
-                case "Nop":
-                    gate = new NopGate();
-                    break;
-                case "InputSwitch":
-                    gate = new InputSwitch();
-                    break;
-                case "OutputLight":
-                    gate = new OutputLight();
-                    break;
-                default:
-                    throw new InvalidOperationException("Unknown type");
+            case "Context":
+                gate = new ContextGate();
+                break;
+            case "And":
+                gate = new AndGate();
+                break;
+            case "Or":
+                gate = new OrGate();
+                break;
+            case "Nop":
+                gate = new NopGate();
+                break;
+            case "InputSwitch":
+                gate = new InputSwitch();
+                break;
+            case "OutputLight":
+                gate = new OutputLight();
+                break;
+            default:
+                throw new InvalidOperationException("Unknown type");
             }
 
             gate.Name = storageObject.Name;

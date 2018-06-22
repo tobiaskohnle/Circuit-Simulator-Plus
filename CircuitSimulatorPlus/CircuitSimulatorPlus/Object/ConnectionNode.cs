@@ -16,7 +16,10 @@ namespace CircuitSimulatorPlus
         }
 
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
-        public ConnectionNode BackConnectedTo { get; set; }
+        public ConnectionNode BackConnectedTo
+        {
+            get; set;
+        }
 
         bool state;
         bool inverted;
@@ -27,8 +30,12 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public bool State
         {
-            get { return state; }
-            set {
+            get
+            {
+                return state;
+            }
+            set
+            {
                 if (state != value)
                 {
                     stateChanged = !stateChanged;
@@ -42,8 +49,12 @@ namespace CircuitSimulatorPlus
 
         public Point Position
         {
-            get { return position; }
-            set {
+            get
+            {
+                return position;
+            }
+            set
+            {
                 position = value;
                 hitbox.Center = value;
                 Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
@@ -53,7 +64,10 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// A reference to the Gate which the ConnectionNode is connected to.
         /// </summary>
-        public Gate Owner { get; private set; }
+        public Gate Owner
+        {
+            get; private set;
+        }
         /// <summary>
         /// True, if this ConnectionNode is NOT connected to another ConnectionNode.
         /// </summary>
@@ -63,8 +77,12 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public bool IsInverted
         {
-            get { return inverted; }
-            set {
+            get
+            {
+                return inverted;
+            }
+            set
+            {
                 inverted = value;
                 Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -73,22 +91,35 @@ namespace CircuitSimulatorPlus
         /// Name displayed next to the ConnectionNode.
         /// (inside the Gate it is connected to)
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         CircleHitbox hitbox;
 
         public Hitbox Hitbox
         {
-            get { return hitbox; }
-            set { hitbox = value as CircleHitbox; }
+            get
+            {
+                return hitbox;
+            }
+            set
+            {
+                hitbox = value as CircleHitbox;
+            }
         }
 
         bool isSelected;
 
         public bool IsSelected
         {
-            get { return isSelected; }
-            set {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
                 isSelected = value;
                 Owner.ConnectionChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -96,11 +127,14 @@ namespace CircuitSimulatorPlus
 
         public bool IsMovable
         {
-            get { return false; }
+            get
+            {
+                return false;
+            }
         }
 
         public abstract void Clear();
-        
+
         /// <summary>
         /// Inverts the ConnectionNode.
         /// </summary>

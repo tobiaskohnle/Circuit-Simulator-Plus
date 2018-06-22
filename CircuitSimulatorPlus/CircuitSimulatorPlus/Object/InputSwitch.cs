@@ -11,11 +11,15 @@ namespace CircuitSimulatorPlus
             Size = new Size(2, 2);
         }
 
-        public bool State { get; set; }
+        public bool State
+        {
+            get; set;
+        }
 
         public override string Type
         {
-            get {
+            get
+            {
                 return "InputSwitch";
             }
         }

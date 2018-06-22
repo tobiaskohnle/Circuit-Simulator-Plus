@@ -13,7 +13,8 @@ namespace CircuitSimulatorPlus
 
         public override string Type
         {
-            get {
+            get
+            {
                 return "OutputLight";
             }
         }

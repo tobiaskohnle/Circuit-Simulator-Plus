@@ -13,7 +13,10 @@ namespace CircuitSimulatorPlus
 
         protected double distanceFactor;
 
-        public object AttachedObject { get; protected set; }
+        public object AttachedObject
+        {
+            get; protected set;
+        }
 
         public abstract bool IncludesPos(Point pos);
 

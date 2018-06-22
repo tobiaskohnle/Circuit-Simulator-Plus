@@ -48,7 +48,8 @@ namespace CircuitSimulatorPlus
 
         public int Count
         {
-            get {
+            get
+            {
                 return count;
             }
         }

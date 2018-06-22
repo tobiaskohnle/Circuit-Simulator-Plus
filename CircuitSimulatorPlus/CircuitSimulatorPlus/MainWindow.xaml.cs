@@ -534,59 +534,68 @@ namespace CircuitSimulatorPlus
         #region Util
         public bool AllowUndo
         {
-            get {
+            get
+            {
                 return undoStack.Count > 0;
             }
         }
         public bool AllowRedo
         {
-            get {
+            get
+            {
                 return redoStack.Count > 0;
             }
         }
 
         public bool AnySelected
         {
-            get {
+            get
+            {
                 return selectedObjects.Count > 0;
             }
         }
         public bool AnyGateSelected
         {
-            get {
+            get
+            {
                 return selectedObjects.Exists(obj => obj is Gate);
             }
         }
         public bool AnyConnectionSelected
         {
-            get {
+            get
+            {
                 return selectedObjects.Exists(obj => obj is ConnectionNode);
             }
         }
 
         public bool ControlPressed
         {
-            get {
+            get
+            {
                 return (Keyboard.Modifiers & ModifierKeys.Control) > 0;
             }
         }
         public bool ShiftPressed
         {
-            get {
+            get
+            {
                 return (Keyboard.Modifiers & ModifierKeys.Shift) > 0;
             }
         }
 
         public bool DataOnClipboard
         {
-            get {
+            get
+            {
                 return Clipboard.ContainsData(FileExtention);
             }
         }
 
         public Point CanvasCenter
         {
-            get {
+            get
+            {
                 return TranslatePoint(new Point(Width / 2, Height / 2), canvas);
             }
         }

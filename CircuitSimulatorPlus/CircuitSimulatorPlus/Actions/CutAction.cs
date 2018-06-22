@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
     public class CutAction : Action
     {
         //waiting for implementation of tag-function
-        public CutAction (string message) : base(message)
+        public CutAction(string message) : base(message)
         {
 
         }

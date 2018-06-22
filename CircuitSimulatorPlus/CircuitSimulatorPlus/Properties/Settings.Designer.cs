@@ -21,7 +21,8 @@ namespace CircuitSimulatorPlus.Properties
 
         public static Settings Default
         {
-            get {
+            get
+            {
                 return defaultInstance;
             }
         }

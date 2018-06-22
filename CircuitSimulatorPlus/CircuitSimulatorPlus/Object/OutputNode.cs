@@ -13,7 +13,10 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
         /// </summary>
-        public bool IsMasterSlave { get; set; }
+        public bool IsMasterSlave
+        {
+            get; set;
+        }
         /// <summary>
         /// </summary>
         /// <param name="connectionNode"></param>

@@ -24,7 +24,10 @@ namespace CircuitSimulatorPlus
 
         public OutputNode Output
         {
-            get { return output; }
+            get
+            {
+                return output;
+            }
 
             set
             {
@@ -41,7 +44,10 @@ namespace CircuitSimulatorPlus
 
         public InputNode Input
         {
-            get { return input; }
+            get
+            {
+                return input;
+            }
 
             set
             {
@@ -92,7 +98,7 @@ namespace CircuitSimulatorPlus
                             cornerPoint = new Point(point.X, lastPoint.Y);
                         else
                             cornerPoint = new Point(lastPoint.X, point.Y);
-                        Points.Add(cornerPoint); 
+                        Points.Add(cornerPoint);
                     }
                 }
                 lastSegmentHorizontal = point.Y == Points.Last().Y;
