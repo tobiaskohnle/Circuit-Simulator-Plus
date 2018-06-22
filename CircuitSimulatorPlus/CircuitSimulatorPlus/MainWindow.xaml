@@ -14,35 +14,21 @@
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:Commands.Open}" Executed="Open_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.Save}" Executed="Save_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.SaveAs}" Executed="SaveAs_Click"/>
-
         <!--<CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>-->
-
         <!--<CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>-->
-
         <!--<CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>-->
-
         <!--<CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/>-->
-
         <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>
-
-        <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
-
+        <!--<CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>-->
+        <CommandBinding Command="ApplicationCommands.Copy" Executed="Copy_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Cut}" Executed="Cut_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.ZoomIn}" Executed="ZoomIn_Click"/>
-
         <CommandBinding Command="{x:Static local:Commands.ZoomOut}" Executed="ZoomOut_Click"/>
 
     </Window.CommandBindings>
