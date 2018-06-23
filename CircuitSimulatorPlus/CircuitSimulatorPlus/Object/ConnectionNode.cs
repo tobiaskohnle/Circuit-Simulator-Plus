@@ -126,7 +126,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Owner.Renderer.OnLayoutChanged();
+                Renderer.OnLayoutChanged();
             }
         }
 

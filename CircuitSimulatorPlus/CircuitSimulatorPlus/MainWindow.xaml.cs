@@ -111,12 +111,14 @@ namespace CircuitSimulatorPlus
             {
                 var inputNode = new InputNode(gate);
                 gate.Input.Add(inputNode);
+                clickableObjects.Add(inputNode);
                 inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
             }
             for (int i = 0; i < amtOutputs; i++)
             {
                 var outputNode = new OutputNode(gate);
                 gate.Output.Add(outputNode);
+                clickableObjects.Add(outputNode);
                 outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
             }
 
