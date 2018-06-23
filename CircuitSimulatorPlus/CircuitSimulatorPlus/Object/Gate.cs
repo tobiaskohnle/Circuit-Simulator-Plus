@@ -37,32 +37,6 @@ namespace CircuitSimulatorPlus
             get; set;
         }
         /// <summary>
-        /// Triggered when any of the connection signals changed.
-        /// </summary>
-        public EventHandler ConnectionChanged
-        {
-            get; set;
-        }
-        /// <summary>
-        /// </summary>
-        public EventHandler ConnectionCreated
-        {
-            get; set;
-        }
-        /// <summary>
-        /// Triggered when the Gate's position is changed.
-        /// </summary>
-        public EventHandler PositionChanged
-        {
-            get; set;
-        }
-        /// <summary>
-        /// </summary>
-        public EventHandler SelectionChanged
-        {
-            get; set;
-        }
-        /// <summary>
         /// Creates the Gate's visual representation on the Render() call.
         /// Render() should only be called once.
         /// </summary>
@@ -94,7 +68,7 @@ namespace CircuitSimulatorPlus
                 position = value;
                 UpdateHitbox();
                 UpdateConnectionNodePos();
-                PositionChanged?.Invoke(this, EventArgs.Empty);
+                Renderer.OnLayoutChanged();
             }
         }
         public Size Size

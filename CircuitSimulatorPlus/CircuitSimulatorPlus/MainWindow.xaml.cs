@@ -96,36 +96,32 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Gates
-        public void Add(Gate gate)
-        {
-            contextGate.Context.Add(gate);
-            clickableObjects.Add(gate);
-            foreach (InputNode input in gate.Input)
-                Add(input);
-            foreach (OutputNode output in gate.Output)
-                Add(output);
-        }
-        public void Add(ConnectionNode connectionNode)
-        {
-            clickableObjects.Add(connectionNode);
-        }
-
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate);
+            gate.Renderer.OnConnectionsChanged();
 
             for (int i = 0; i < amtInputs; i++)
-                gate.Input.Add(new InputNode(gate));
+            {
+                var inputNode = new InputNode(gate);
+                gate.Input.Add(inputNode);
+                inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
+            }
             for (int i = 0; i < amtOutputs; i++)
-                gate.Output.Add(new OutputNode(gate));
+            {
+                var outputNode = new OutputNode(gate);
+                gate.Output.Add(outputNode);
+                outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
+            }
 
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
 
             //PerformAction(new CreateGateAction(contextGate, gate));
 
             Select(gate);
-            Add(gate);
+            clickableObjects.Add(gate);
+            contextGate.Context.Add(gate);
         }
 
         public void Tick(ConnectionNode node)
@@ -278,7 +274,7 @@ namespace CircuitSimulatorPlus
                     InputSwitch inputSwitch = obj as InputSwitch;
                     inputSwitch.State = !inputSwitch.State;
                     Tick(inputSwitch.Output[0]);
-                    inputSwitch.ConnectionChanged.Invoke(inputSwitch, EventArgs.Empty);
+                    inputSwitch.Renderer.OnLayoutChanged();
                 }
             }
         }
@@ -938,14 +934,18 @@ namespace CircuitSimulatorPlus
         }
         void ContextGate_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            dialog.Filter = FileFilter;
+            var dialog = new OpenFileDialog
+            {
+                Filter = FileFilter
+            };
+
             if (dialog.ShowDialog() == true)
             {
                 Gate gate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
                 gate.Renderer = new GateRenderer(canvas, gate);
-                Add(gate);
+                clickableObjects.Add(gate);
+                contextGate.Context.Add(gate);
                 Select(gate);
             }
         }
@@ -977,6 +977,8 @@ namespace CircuitSimulatorPlus
             {
                 gate.Renderer.Unrender();
                 gate.Renderer.Render();
+                gate.Renderer.OnConnectionsChanged();
+                gate.Renderer.OnLayoutChanged();
             }
         }
         #endregion

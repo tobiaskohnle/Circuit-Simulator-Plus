@@ -16,7 +16,10 @@ namespace CircuitSimulatorPlus
         Cable cable;
         List<Line> lines = new List<Line>();
 
-        public CableRenderer(Canvas canvas, Cable cable)
+        InputNode inputNode;
+        OutputNode outputNode;
+
+        public CableRenderer(Canvas canvas, Cable cable, InputNode inputNode, OutputNode outputNode)
         {
             this.canvas = canvas;
             this.cable = cable;
@@ -47,14 +50,50 @@ namespace CircuitSimulatorPlus
             foreach (Line line in lines)
                 canvas.Children.Remove(line);
         }
-
-        public void OnGateOutputChanged()
+/*
+        public void OnLayoutChanged()
         {
             Brush brush = cable.Output.State ? Brushes.Red : Brushes.Black;
             foreach (Line line in lines)
             {
                 line.Stroke = brush;
             }
+
+            Gate outputGate = outputNode.Owner;
+            int outputIndex = 0;
+            for (int i = 0; i < outputGate.Output.Count; i++)
+            {
+                if (outputGate.Output[i] == outputNode)
+                {
+                    outputIndex = i;
+                    break;
+                }
+            }
+            Point inputPos = Points.Last();
+            var outputPos = new Point(outputGate.Position.X + 3 + 1, outputGate.Position.Y + (double)4 * (1 + 2 * outputIndex) / (2 * outputGate.Output.Count));
+            Points.Clear();
+            lastSegmentHorizontal = true;
+            AddPoint(outputPos, true);
+            AddPoint(inputPos, true);
+
+
+            Gate inputGate = inputNode.Owner;
+            int inputIndex = 0;
+            for (int i = 0; i < inputGate.Input.Count; i++)
+            {
+                if (inputGate.Input[i] == inputNode)
+                {
+                    inputIndex = i;
+                    break;
+                }
+            }
+            Point outputPos = Points.First();
+            Point inputPos = new Point(inputGate.Position.X - 1, inputGate.Position.Y + (double)4 * (1 + 2 * inputIndex) / (2 * inputGate.Input.Count));
+            Points.Clear();
+            lastSegmentHorizontal = true;
+            AddPoint(outputPos, true);
+            AddPoint(inputPos, true);
         }
+*/
     }
 }

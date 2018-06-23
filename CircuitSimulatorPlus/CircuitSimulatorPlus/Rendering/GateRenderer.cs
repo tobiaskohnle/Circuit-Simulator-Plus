@@ -23,7 +23,7 @@ namespace CircuitSimulatorPlus
         Label tagLabel;
         Label nameLabel;
 
-        List<ConnectionNodeRenderer> connectionNodeRenderers;
+        List<ConnectionNodeRenderer> connectionNodeRenderers = new List<ConnectionNodeRenderer>();
 
         public GateRenderer(Canvas canvas, Gate gate)
         {

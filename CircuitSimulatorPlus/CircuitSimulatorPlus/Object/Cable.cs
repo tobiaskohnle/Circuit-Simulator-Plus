@@ -15,47 +15,16 @@ namespace CircuitSimulatorPlus
         public List<Point> Points = new List<Point>();
         public CableRenderer Renderer;
 
-        private OutputNode output;
-        private InputNode input;
-
-        public EventHandler StateChanged;
-
         bool lastSegmentHorizontal = true;
 
         public OutputNode Output
         {
-            get
-            {
-                return output;
-            }
-
-            set
-            {
-                if (output != null)
-                {
-                    output.Owner.ConnectionChanged -= OnOutputChanged;
-                    output.Owner.PositionChanged -= OnOutputGateMoved;
-                }
-                output = value;
-                output.Owner.ConnectionChanged += OnOutputChanged;
-                output.Owner.PositionChanged += OnOutputGateMoved;
-            }
+            get; set;
         }
 
         public InputNode Input
         {
-            get
-            {
-                return input;
-            }
-
-            set
-            {
-                if (input != null)
-                    input.Owner.PositionChanged -= OnInputGateMoved;
-                input = value;
-                input.Owner.PositionChanged += OnInputGateMoved;
-            }
+            get; set;
         }
 
         public void AddPoint(Point point, bool toConnection = false)
@@ -104,51 +73,6 @@ namespace CircuitSimulatorPlus
                 lastSegmentHorizontal = point.Y == Points.Last().Y;
             }
             Points.Add(point);
-        }
-
-        void OnOutputChanged(object sender, EventArgs e)
-        {
-            StateChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        void OnOutputGateMoved(object sender, EventArgs e)
-        {
-            Gate outputGate = Output.Owner;
-            int outputIndex = 0;
-            for (int i = 0; i < outputGate.Output.Count; i++)
-            {
-                if (outputGate.Output[i] == Output)
-                {
-                    outputIndex = i;
-                    break;
-                }
-            }
-            Point inputPos = Points.Last();
-            var outputPos = new Point(outputGate.Position.X + 3 + 1, outputGate.Position.Y + (double)4 * (1 + 2 * outputIndex) / (2 * outputGate.Output.Count));
-            Points.Clear();
-            lastSegmentHorizontal = true;
-            AddPoint(outputPos, true);
-            AddPoint(inputPos, true);
-        }
-
-        void OnInputGateMoved(object sender, EventArgs e)
-        {
-            Gate inputGate = Input.Owner;
-            int inputIndex = 0;
-            for (int i = 0; i < inputGate.Input.Count; i++)
-            {
-                if (inputGate.Input[i] == Input)
-                {
-                    inputIndex = i;
-                    break;
-                }
-            }
-            Point outputPos = Points.First();
-            Point inputPos = new Point(inputGate.Position.X - 1, inputGate.Position.Y + (double)4 * (1 + 2 * inputIndex) / (2 * inputGate.Input.Count));
-            Points.Clear();
-            lastSegmentHorizontal = true;
-            AddPoint(outputPos, true);
-            AddPoint(inputPos, true);
         }
     }
 }
