@@ -241,30 +241,6 @@ namespace CircuitSimulatorPlus
             return nearest;
         }
 
-        public void CreateInputSwitch(object sender, RoutedEventArgs e)
-        {
-            CreateGate(new InputSwitch(), 0, 1);
-        }
-        public void CreateOutputLight(object sender, RoutedEventArgs e)
-        {
-            CreateGate(new OutputLight(), 1, 0);
-        }
-        public void CreateAndGate(object sender, RoutedEventArgs e)
-        {
-            CreateGate(new AndGate(), 2, 1);
-        }
-        public void CreateOrGate(object sender, RoutedEventArgs e)
-        {
-            CreateGate(new OrGate(), 2, 1);
-        }
-        public void CreateNotGate(object sender, RoutedEventArgs e)
-        {
-            var newGate = new NopGate();
-            CreateGate(newGate, 1, 1);
-            newGate.Output[0].Invert();
-            Tick(newGate.Output[0]);
-        }
-
         public void ToggleButtons()
         {
             foreach (IClickable obj in selectedObjects)
@@ -844,6 +820,30 @@ namespace CircuitSimulatorPlus
         void Window_Closing(object sender, CancelEventArgs e)
         {
 
+        }
+
+        void CreateInputSwitch(object sender, RoutedEventArgs e)
+        {
+            CreateGate(new InputSwitch(), 0, 1);
+        }
+        void CreateOutputLight(object sender, RoutedEventArgs e)
+        {
+            CreateGate(new OutputLight(), 1, 0);
+        }
+        void CreateAndGate(object sender, RoutedEventArgs e)
+        {
+            CreateGate(new AndGate(), 2, 1);
+        }
+        void CreateOrGate(object sender, RoutedEventArgs e)
+        {
+            CreateGate(new OrGate(), 2, 1);
+        }
+        void CreateNotGate(object sender, RoutedEventArgs e)
+        {
+            var newGate = new NopGate();
+            CreateGate(newGate, 1, 1);
+            newGate.Output[0].Invert();
+            Tick(newGate.Output[0]);
         }
 
         void New_Click(object sender, RoutedEventArgs e)
