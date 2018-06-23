@@ -130,7 +130,7 @@ namespace CircuitSimulatorPlus
                 if (value != isSelected)
                 {
                     isSelected = value;
-                    SelectionChanged?.Invoke(this, EventArgs.Empty);
+                    Renderer.OnLayoutChanged();
                 }
             }
         }

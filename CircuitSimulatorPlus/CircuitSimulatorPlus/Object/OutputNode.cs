@@ -24,7 +24,7 @@ namespace CircuitSimulatorPlus
         {
             base.ConnectTo(connectionNode);
             IsEmpty = connectionNode.IsEmpty = false;
-            Owner.ConnectionCreated?.Invoke(this, EventArgs.Empty);
+            Owner.Renderer.OnLayoutChanged();
         }
         /// <summary>
         /// Clears this OutputNode.

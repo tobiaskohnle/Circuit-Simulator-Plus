@@ -464,7 +464,7 @@ namespace CircuitSimulatorPlus
                             Cable cable = new Cable();
                             cable.Output = node;
                             cable.Input = inNode;
-                            cable.Renderer = new CableRenderer(canvas, cable);
+                            //cable.Renderer = new CableRenderer(canvas, cable);
                             cable.AddPoint(p1, true);
                             cable.AddPoint(p2, true);
                             cables.Add(cable);

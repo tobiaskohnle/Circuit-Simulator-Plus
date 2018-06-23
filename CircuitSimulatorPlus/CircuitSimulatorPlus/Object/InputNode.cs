@@ -35,7 +35,7 @@ namespace CircuitSimulatorPlus
             BackConnectedTo.IsEmpty = BackConnectedTo.NextConnectedTo.Count == 0;
             BackConnectedTo = null;
             IsEmpty = true;
-            Owner.ConnectionCreated?.Invoke(this, EventArgs.Empty);
+            Owner.Renderer.OnLayoutChanged();
         }
 
         public override void Tick(Queue<ConnectionNode> tickedNodes)
