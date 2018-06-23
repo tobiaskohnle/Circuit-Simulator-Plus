@@ -18,10 +18,10 @@ namespace CircuitSimulatorPlus
             if (count < elements.Length)
                 count++;
 
+            elements[index] = item;
+
             if (++index >= elements.Length)
                 index = 0;
-
-            elements[index] = item;
         }
 
         public T Pop()
