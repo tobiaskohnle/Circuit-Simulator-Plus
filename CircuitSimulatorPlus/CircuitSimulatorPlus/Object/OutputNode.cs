@@ -37,7 +37,7 @@ namespace CircuitSimulatorPlus
 
         public override void Tick(Queue<ConnectionNode> tickedNodes)
         {
-            Tick(tickedNodes, true);
+            Tick(tickedNodes, false, !Owner.HasContext);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                Tick(tickedNodes, false);
+                Tick(tickedNodes, !Owner.HasContext, false);
             }
         }
     }

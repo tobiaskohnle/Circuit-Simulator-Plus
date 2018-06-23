@@ -157,11 +157,8 @@ namespace CircuitSimulatorPlus
 
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);
 
-        protected void Tick(Queue<ConnectionNode> tickedNodes, bool isOutput)
+        protected void Tick(Queue<ConnectionNode> tickedNodes, bool nextIsElementary, bool lastWasElementary)
         {
-            bool nextIsElementary = !Owner.HasContext && !isOutput;
-            bool lastWasElementary = (!Owner.HasContext || Owner is InputSwitch) && isOutput;
-
             stateChanged = false;
 
             if (lastWasElementary)
