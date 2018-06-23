@@ -39,6 +39,12 @@ namespace CircuitSimulatorPlus
             timer.Tick += TimerTick;
 
             DrawGrid();
+
+            var andGate = new AndGate();
+            CreateGate(andGate, 2, 2);
+            andGate.Input[1].Invert();
+            andGate.Output[1].Invert();
+            //Rerender_Click(null, new RoutedEventArgs());
         }
 
         #region Constants
@@ -100,7 +106,6 @@ namespace CircuitSimulatorPlus
         {
             contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate);
-            gate.Renderer.OnConnectionsChanged();
 
             for (int i = 0; i < amtInputs; i++)
             {
@@ -122,6 +127,9 @@ namespace CircuitSimulatorPlus
             Select(gate);
             clickableObjects.Add(gate);
             contextGate.Context.Add(gate);
+
+            gate.Renderer.OnConnectionsChanged();
+            gate.Renderer.OnLayoutChanged();
         }
 
         public void Tick(ConnectionNode node)
@@ -135,7 +143,10 @@ namespace CircuitSimulatorPlus
             List<ConnectionNode> copy = tickedNodes.ToList();
             tickedNodes.Clear();
             foreach (ConnectionNode ticked in copy)
+            {
                 ticked.Tick(tickedNodes);
+                ticked.Renderer.OnStateChanged();
+            }
             if (tickedNodes.Count == 0)
                 timer.Stop();
         }

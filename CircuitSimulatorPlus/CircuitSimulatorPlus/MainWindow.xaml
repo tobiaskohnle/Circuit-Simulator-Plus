@@ -76,11 +76,11 @@
 
         </Grid.RowDefinitions>
 
-        <Canvas x:Name="backgoundLayerCanvas" Grid.Row="1" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True"/>
+        <Canvas x:Name="backgoundLayerCanvas" Grid.Row="1" SnapsToDevicePixels="True"/>
 
-        <Canvas x:Name="canvas" Grid.Row="1" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True"/>
+        <Canvas x:Name="canvas" Grid.Row="1" SnapsToDevicePixels="True"/>
 
-        <Canvas x:Name="decorationLayerCanvas" RenderOptions.EdgeMode="Aliased" Grid.RowSpan="2">
+        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2">
 
             <Rectangle x:Name="selectVisual"
                     Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
