@@ -36,6 +36,7 @@ namespace CircuitSimulatorPlus
         {
             if (count > 0)
             {
+                count--;
                 return elements[index];
             }
             throw new InvalidOperationException("The stack is empty.");

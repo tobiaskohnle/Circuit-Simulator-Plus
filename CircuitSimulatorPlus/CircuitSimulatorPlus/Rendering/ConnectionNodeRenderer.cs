@@ -50,6 +50,7 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(invertionDot);
 
             OnLayoutChanged();
+            OnStateChanged();
         }
 
         public void Unrender()
@@ -60,8 +61,17 @@ namespace CircuitSimulatorPlus
 
         public void OnStateChanged()
         {
-            invertionDot.Stroke = connectionNode.State ? ActiveStateBrush : DefaultStateBrush;
-            connectionLine.Stroke = connectionNode.State == connectionNode.IsInverted ? ActiveStateBrush : DefaultStateBrush;
+            bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
+
+            if (connectionNode.IsSelected)
+            {
+                connectionLine.Stroke = SystemColors.MenuHighlightBrush;
+            }
+            else
+            {
+                connectionLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
+            }
+            invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
         }
 
         public void OnLayoutChanged()
@@ -103,16 +113,7 @@ namespace CircuitSimulatorPlus
 
             if (!isOutputNode && ((InputNode)connectionNode).IsRisingEdge)
             {
-            }
-
-            if (connectionNode.IsSelected)
-            {
-                connectionLine.Stroke = SystemColors.MenuHighlightBrush;
-                invertionDot.Stroke = SystemColors.MenuHighlightBrush;
-            }
-            else
-            {
-                OnStateChanged();
+                // TODO: rising rdge symbol
             }
 
             invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Visible : Visibility.Collapsed;

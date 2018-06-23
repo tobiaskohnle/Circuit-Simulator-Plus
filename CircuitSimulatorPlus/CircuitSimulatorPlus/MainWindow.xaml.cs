@@ -254,7 +254,7 @@ namespace CircuitSimulatorPlus
             return nearest;
         }
 
-        public void ToggleButtons()
+        public void ToggleObjects()
         {
             foreach (IClickable obj in selectedObjects)
             {
@@ -264,6 +264,12 @@ namespace CircuitSimulatorPlus
                     inputSwitch.State = !inputSwitch.State;
                     Tick(inputSwitch.Output[0]);
                     inputSwitch.Renderer.OnLayoutChanged();
+                }
+                if (obj is ConnectionNode)
+                {
+                    ConnectionNode connectionNode = obj as ConnectionNode;
+                    connectionNode.Invert();
+                    Tick(connectionNode);
                 }
             }
         }
@@ -616,7 +622,7 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ToggleButtons();
+            ToggleObjects();
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
@@ -734,8 +740,19 @@ namespace CircuitSimulatorPlus
 
                     if (completeMove.LengthSquared > 0.5 * 0.5 * Unit * Unit)
                     {
-                        //PerformAction(new MoveAction(selectedObjects,
-                        //    new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
+                        var moveObjects = new CompoundAction();
+                        foreach (IClickable obj in selectedObjects)
+                        {
+                            if (obj.IsMovable)
+                            {
+                                moveObjects.Actions.Add(new MoveAction(obj,
+                                    new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
+                            }
+                        }
+                        if (moveObjects.Actions.Count > 0)
+                        {
+                            PerformAction(moveObjects);
+                        }
                     }
                 }
             }
@@ -964,7 +981,7 @@ namespace CircuitSimulatorPlus
         }
         void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            ToggleButtons();
+            ToggleObjects();
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)
