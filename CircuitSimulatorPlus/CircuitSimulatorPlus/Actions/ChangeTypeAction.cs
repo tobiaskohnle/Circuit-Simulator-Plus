@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class ChangeGateTypeAction : Action
+    public class ChangeTypeAction : Action
     {
-        //Waiting for implementation of gateType-editor-function
-        public ChangeGateTypeAction(string message) : base(message)
+        public ChangeTypeAction(Gate gate, Gate newGate) : base($"Changed Type to {newGate.Type}")
         {
 
         }

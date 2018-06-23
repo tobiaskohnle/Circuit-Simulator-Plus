@@ -110,6 +110,11 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public ConnectionNodeRenderer Renderer
+        {
+            get; set;
+        }
+
         bool isSelected;
 
         public bool IsSelected

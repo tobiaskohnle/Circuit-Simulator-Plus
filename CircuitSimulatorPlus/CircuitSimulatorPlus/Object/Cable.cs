@@ -104,8 +104,6 @@ namespace CircuitSimulatorPlus
                 lastSegmentHorizontal = point.Y == Points.Last().Y;
             }
             Points.Add(point);
-            if (Renderer != null)
-                Renderer.Update();
         }
 
         void OnOutputChanged(object sender, EventArgs e)
@@ -131,7 +129,6 @@ namespace CircuitSimulatorPlus
             lastSegmentHorizontal = true;
             AddPoint(outputPos, true);
             AddPoint(inputPos, true);
-            Renderer.Update();
         }
 
         void OnInputGateMoved(object sender, EventArgs e)
@@ -152,7 +149,6 @@ namespace CircuitSimulatorPlus
             lastSegmentHorizontal = true;
             AddPoint(outputPos, true);
             AddPoint(inputPos, true);
-            Renderer.Update();
         }
     }
 }

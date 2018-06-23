@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class ChangeConnectionAction : Action
+    public class DeleteAction : Action
     {
-        //waiting for implementation of disconnect-function
-        public ChangeConnectionAction(string message) : base(message)
+        IClickable deletedObject;
+
+        public DeleteAction(IClickable deletedObject) : base("Deleted object")
         {
 
         }
+
         public override void Redo()
         {
 

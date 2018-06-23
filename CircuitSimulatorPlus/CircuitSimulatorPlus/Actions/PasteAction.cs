@@ -8,8 +8,7 @@ namespace CircuitSimulatorPlus
 {
     public class PasteAction : Action
     {
-        //waiting for implementation of tag-function
-        public PasteAction(string message) : base(message)
+        public PasteAction(Gate gate) : base($"Pasted {gate.Type}-Gate")
         {
 
         }

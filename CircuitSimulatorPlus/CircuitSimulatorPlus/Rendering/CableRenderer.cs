@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    public class CableRenderer : IRenderer
+    public class CableRenderer
     {
         Canvas canvas;
         Cable cable;
@@ -20,12 +20,7 @@ namespace CircuitSimulatorPlus
         {
             this.canvas = canvas;
             this.cable = cable;
-            cable.StateChanged += OnGateOutputChanged;
-        }
 
-        public void Update()
-        {
-            Unrender();
             Render();
         }
 
@@ -45,18 +40,15 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Add(line);
                 lines.Add(line);
             }
-            OnGateOutputChanged(null, EventArgs.Empty);
         }
 
         public void Unrender()
         {
             foreach (Line line in lines)
-            {
                 canvas.Children.Remove(line);
-            }
         }
 
-        void OnGateOutputChanged(object sender, EventArgs e)
+        public void OnGateOutputChanged()
         {
             Brush brush = cable.Output.State ? Brushes.Red : Brushes.Black;
             foreach (Line line in lines)

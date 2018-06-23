@@ -32,8 +32,6 @@ namespace CircuitSimulatorPlus
                 contextGate = (ContextGate)StorageConverter.ToGate(Storage.Load(args[1]));
             else
                 contextGate = new ContextGate();
-            foreach (Gate gate in contextGate.Context)
-                gate.Renderer.Render();
 
             UpdateClickableObjects();
 
@@ -48,13 +46,13 @@ namespace CircuitSimulatorPlus
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
         public const string DefaultTitle = "untitled";
         public const string FileExtention = ".tici";
-        public const double MinDistMouseMoved = 5;
+        public const double MinPxMouseMoved = 5;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
-        public const double LineWidth = 0.1;
-        public const double LineRadius = LineWidth / 2;
-        public const double InversionDotDiameter = 0.5;
-        public const double InversionDotRadius = InversionDotDiameter / 2;
+        public const double LineWidth = Unit / 10;
+        public const double LineRadius = Unit / 20;
+        public const double InversionDotDiameter = Unit / 2;
+        public const double InversionDotRadius = Unit / 4;
         public const double Unit = 1;
         public const int UndoBufferSize = 32;
         #endregion
@@ -115,7 +113,7 @@ namespace CircuitSimulatorPlus
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             contextGate.Context.Add(gate);
-            gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
+            gate.Renderer = new GateRenderer(canvas, gate);
 
             for (int i = 0; i < amtInputs; i++)
                 gate.Input.Add(new InputNode(gate));
@@ -123,7 +121,6 @@ namespace CircuitSimulatorPlus
                 gate.Output.Add(new OutputNode(gate));
 
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
-            gate.Renderer.Render();
 
             //PerformAction(new CreateGateAction(contextGate, gate));
 
@@ -221,7 +218,6 @@ namespace CircuitSimulatorPlus
                 Remove(input);
             foreach (OutputNode output in gate.Output)
                 Remove(output);
-            gate.Renderer.Unrender();
             clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
         }
@@ -433,10 +429,7 @@ namespace CircuitSimulatorPlus
         }
         public void New()
         {
-            foreach (Gate gate in contextGate.Context)
-                gate.Renderer.Unrender();
-            foreach (Cable cable in cables)
-                cable.Renderer.Unrender();
+            contextGate = null;
         }
         public void Open()
         {
@@ -450,8 +443,7 @@ namespace CircuitSimulatorPlus
                 UpdateClickableObjects();
                 foreach (Gate gate in contextGate.Context)
                 {
-                    gate.Renderer = new GateRenderer(canvas, gate, OnGateInputClicked, OnGateOutputClicked);
-                    gate.Renderer.Render();
+                    gate.Renderer = new GateRenderer(canvas, gate);
                     for (int i = 0; i < gate.Output.Count; i++)
                     {
                         OutputNode node = gate.Output[i];
@@ -720,7 +712,7 @@ namespace CircuitSimulatorPlus
                 lastWindowPos = currentWindowPos;
                 lastCanvasPos = e.GetPosition(canvas);
             }
-            else if ((lastMousePos - lastWindowClick).LengthSquared >= MinDistMouseMoved * MinDistMouseMoved)
+            else if ((lastMousePos - lastWindowClick).LengthSquared >= MinPxMouseMoved * MinPxMouseMoved)
             {
                 if (makingSelection && ControlPressed == false)
                 {
@@ -755,10 +747,10 @@ namespace CircuitSimulatorPlus
                             (obj as Gate).Move(-completeMove);
                     }
 
-                    if (completeMove.LengthSquared > 0.5 * 0.5)
+                    if (completeMove.LengthSquared > 0.5 * 0.5 * Unit * Unit)
                     {
-                        PerformAction(new MoveObjectAction(selectedObjects,
-                            new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
+                        //PerformAction(new MoveAction(selectedObjects,
+                        //    new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
                     }
                 }
             }
@@ -771,7 +763,7 @@ namespace CircuitSimulatorPlus
                 else
                 {
                     bool connectionCreated = false;
-                    if (lastClickedObject is ConnectionNode)
+                    if (lastClickedObject is ConnectionNode && ControlPressed == false)
                     {
                         foreach (IClickable obj in selectedObjects)
                         {
@@ -953,7 +945,6 @@ namespace CircuitSimulatorPlus
                 Gate gate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
                 gate.Renderer = new GateRenderer(canvas, gate);
-                gate.Renderer.Render();
                 Add(gate);
                 Select(gate);
             }
@@ -987,42 +978,6 @@ namespace CircuitSimulatorPlus
                 gate.Renderer.Unrender();
                 gate.Renderer.Render();
             }
-        }
-
-        void OnGateOutputClicked(object sender, EventArgs e)
-        {
-            //Gate gate = (Gate)sender;
-            //int index = ((IndexEventArgs)e).Index;
-
-            //if (!drawingCable)
-            //{
-            //    Point point = new Point();
-            //    point.X = gate.Position.X + 3 + 1;
-            //    point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Output.Count);
-            //    Cable cable = new Cable();
-            //    cables.Add(cable);
-            //    cable.Renderer = new CableRenderer(canvas, cable);
-            //    cable.Output = gate.Output[index];
-            //    drawingCable = true;
-            //}
-        }
-        void OnGateInputClicked(object sender, EventArgs e)
-        {
-            //Gate gate = (Gate)sender;
-            //int index = ((IndexEventArgs)e).Index;
-
-            //if (drawingCable)
-            //{
-            //    Point point = new Point();
-            //    point.X = gate.Position.X - 1;
-            //    point.Y = gate.Position.Y + (double)4 * (1 + 2 * index) / (2 * gate.Input.Count);
-            //    Cable lastcable = cables.Last();
-            //    lastcable.AddPoint(point, true);
-            //    lastcable.Input = gate.Input[index];
-            //    lastcable.Output.ConnectTo(lastcable.Input);
-            //    Tick(lastcable.Input);
-            //    drawingCable = false;
-            //}
         }
         #endregion
     }
