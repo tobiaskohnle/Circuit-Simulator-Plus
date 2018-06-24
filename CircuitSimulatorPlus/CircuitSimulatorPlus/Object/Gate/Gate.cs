@@ -147,11 +147,8 @@ namespace CircuitSimulatorPlus
             }
             set
             {
-                if (value != isSelected)
-                {
-                    isSelected = value;
-                    Renderer.OnSelectionChanged();
-                }
+                isSelected = value;
+                Renderer.OnSelectionChanged();
             }
         }
         /// <summary>

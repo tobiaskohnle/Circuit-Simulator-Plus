@@ -6,7 +6,41 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    class CableJoint
+    public class CableJoint : IClickable
     {
+        CircleHitbox hitbox;
+        bool isSelected;
+
+        public Hitbox Hitbox
+        {
+            get
+            {
+                return hitbox;
+            }
+            set
+            {
+                hitbox = value as CircleHitbox;
+            }
+        }
+
+        public bool IsMovable
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+            }
+        }
     }
 }
