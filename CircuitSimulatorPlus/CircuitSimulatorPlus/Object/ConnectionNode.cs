@@ -6,14 +6,22 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode : IClickable
     {
-        public const double HitboxRadius = 2.5;
-        public const double DistanceFactor = 1;
-
         protected ConnectionNode(Gate owner)
         {
             Owner = owner;
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
+
+        public const double HitboxRadius = 2.5;
+        public const double DistanceFactor = 1;
+
+        bool state;
+        bool inverted;
+        bool stateChanged;
+        bool isSelected;
+        Point position;
+        string name;
+        CircleHitbox hitbox;
 
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
         public ConnectionNode BackConnectedTo
@@ -21,9 +29,6 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
-        bool state;
-        bool inverted;
-        bool stateChanged;
         /// <summary>
         /// True, if this ConnectionNode is displayed as 'high' (1).
         /// False, if this ConnectionNode is displayed as 'low' (0).
@@ -40,12 +45,10 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
-                    Owner.Renderer.OnPositionChanged();
+                    Renderer.OnStateChanged();
                 }
             }
         }
-
-        Point position;
 
         public Point Position
         {
@@ -57,7 +60,7 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 hitbox.Center = value;
-                Owner.Renderer.OnPositionChanged();
+                Renderer.OnPositionChanged();
             }
         }
 
@@ -68,10 +71,12 @@ namespace CircuitSimulatorPlus
         {
             get; private set;
         }
+
         /// <summary>
         /// True, if this ConnectionNode is NOT connected to another ConnectionNode.
         /// </summary>
         public bool IsEmpty { get; set; } = true;
+
         /// <summary>
         /// True, if this ConnectionNode is inverted.
         /// </summary>
@@ -84,19 +89,26 @@ namespace CircuitSimulatorPlus
             set
             {
                 inverted = value;
-                Owner.Renderer.OnPositionChanged();
+                Renderer.OnInvertedChanged();
             }
         }
+
         /// <summary>
         /// Name displayed next to the ConnectionNode.
         /// (inside the Gate it is connected to)
         /// </summary>
         public string Name
         {
-            get; set;
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                Renderer.OnNameChanged();
+            }
         }
-
-        CircleHitbox hitbox;
 
         public Hitbox Hitbox
         {
@@ -115,8 +127,6 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
-        bool isSelected;
-
         public bool IsSelected
         {
             get
@@ -126,7 +136,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer.OnStateChanged();
+                Renderer.OnSelectionChanged();
             }
         }
 

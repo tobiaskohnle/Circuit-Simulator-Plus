@@ -6,8 +6,6 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Gate : IClickable
     {
-        public const double DistanceFactor = 0.2;
-
         public Gate()
         {
             Input = new List<InputNode>();
@@ -16,6 +14,12 @@ namespace CircuitSimulatorPlus
             UpdateSize();
             UpdateHitbox();
         }
+
+        public const double DistanceFactor = 0.2;
+
+        string name;
+        string tag;
+        Size size;
 
         public abstract string Type
         {
@@ -73,7 +77,15 @@ namespace CircuitSimulatorPlus
         }
         public Size Size
         {
-            get; protected set;
+            get
+            {
+                return size;
+            }
+            set
+            {
+                size = value;
+                Renderer.OnSizeChanged();
+            }
         }
 
         public void UpdateConnectionNodePos()
@@ -105,7 +117,15 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public string Name
         {
-            get; set;
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                Renderer.OnNameChanged();
+            }
         }
         /// <summary>
         /// True, if you can add or remove inputs of this gate.
@@ -130,7 +150,7 @@ namespace CircuitSimulatorPlus
                 if (value != isSelected)
                 {
                     isSelected = value;
-                    Renderer.OnPositionChanged();
+                    Renderer.OnSelectionChanged();
                 }
             }
         }
@@ -139,7 +159,15 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public string Tag
         {
-            get; set;
+            get
+            {
+                return tag;
+            }
+            set
+            {
+                tag = value;
+                Renderer.OnTagChanged();
+            }
         }
 
         RectHitbox hitbox;

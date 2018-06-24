@@ -95,6 +95,10 @@ namespace CircuitSimulatorPlus
             invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Visible : Visibility.Collapsed;
         }
 
+        public void OnNameChanged()
+        {
+        }
+
         public void OnPositionChanged()
         {
             connectionLine.Y1 = connectionLine.Y2 = connectionNode.Position.Y;

@@ -9,12 +9,22 @@ namespace CircuitSimulatorPlus
         {
         }
 
+        bool isRisingEdge;
+
         /// <summary>
         /// True, if this InputNode reacts to rising edges.
         /// </summary>
         public bool IsRisingEdge
         {
-            get; set;
+            get
+            {
+                return isRisingEdge;
+            }
+            set
+            {
+                isRisingEdge = value;
+                Renderer.OnRisingEdgeChanged();
+            }
         }
         /// <summary>
         /// True, if this InputNode is displayed in the center.

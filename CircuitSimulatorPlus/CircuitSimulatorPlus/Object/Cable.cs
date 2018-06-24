@@ -12,13 +12,16 @@ namespace CircuitSimulatorPlus
 {
     public class Cable
     {
-        public List<Point> Points = new List<Point>();
+        InputNode inputNode;
+        OutputNode outputNode;
+        List<Point> points;
+        RectHitbox hitbox;
+        bool isSelected;
+
         public CableRenderer Renderer
         {
             get; set;
         }
-
-        bool lastSegmentHorizontal = true;
 
         public OutputNode OutputNode
         {

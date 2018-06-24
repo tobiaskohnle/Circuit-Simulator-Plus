@@ -10,6 +10,8 @@ namespace CircuitSimulatorPlus
         {
         }
 
+        public bool isMasterSlave;
+
         public CableRenderer CableRenderer
         {
             get; set;
@@ -20,7 +22,15 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public bool IsMasterSlave
         {
-            get; set;
+            get
+            {
+                return isMasterSlave;
+            }
+            set
+            {
+                isMasterSlave = value;
+                Renderer.OnMasterSlaveChanged();
+            }
         }
         /// <summary>
         /// </summary>
