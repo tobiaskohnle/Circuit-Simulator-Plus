@@ -15,6 +15,7 @@ namespace CircuitSimulatorPlus
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
 
+        protected int index;
         bool state;
         bool inverted;
         bool stateChanged;
@@ -205,5 +206,7 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+
+        public abstract void UpdateHitbox();
     }
 }

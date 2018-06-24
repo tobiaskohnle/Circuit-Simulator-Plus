@@ -88,19 +88,19 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public void UpdateConnectionNodePos()
-        {
-            for (int i = 0; i < Input.Count; i++)
-            {
-                Input[i].Position = new Point(Position.X, Position.Y
-                    + Size.Height * (1 + 2 * i) / (2 * Input.Count));
-            }
-            for (int i = 0; i < Output.Count; i++)
-            {
-                Output[i].Position = new Point(Position.X + Size.Width, Position.Y
-                    + Size.Height * (1 + 2 * i) / (2 * Output.Count));
-            }
-        }
+        //public void UpdateConnectionNodePos()
+        //{
+        //    for (int i = 0; i < Input.Count; i++)
+        //    {
+        //        Input[i].Position = new Point(Position.X, Position.Y
+        //            + Size.Height * (1 + 2 * i) / (2 * Input.Count));
+        //    }
+        //    for (int i = 0; i < Output.Count; i++)
+        //    {
+        //        Output[i].Position = new Point(Position.X + Size.Width, Position.Y
+        //            + Size.Height * (1 + 2 * i) / (2 * Output.Count));
+        //    }
+        //}
 
         public void UpdateSize()
         {
@@ -108,7 +108,7 @@ namespace CircuitSimulatorPlus
             UpdateHitbox();
         }
 
-        void UpdateHitbox()
+        public void UpdateHitbox()
         {
             hitbox.Bounds = new Rect(Position, Size);
         }

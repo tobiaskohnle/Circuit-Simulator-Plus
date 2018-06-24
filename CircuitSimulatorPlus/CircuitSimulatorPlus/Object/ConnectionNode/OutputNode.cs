@@ -17,6 +17,10 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
+        public override void UpdateHitbox()
+        {
+        }
+
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
         /// </summary>

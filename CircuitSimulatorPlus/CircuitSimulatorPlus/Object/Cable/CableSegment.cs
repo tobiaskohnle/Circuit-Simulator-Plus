@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
@@ -41,6 +42,11 @@ namespace CircuitSimulatorPlus
             {
                 isSelected = value;
             }
+        }
+
+        public void UpdateHitbox()
+        {
+            throw new NotImplementedException();
         }
     }
 }

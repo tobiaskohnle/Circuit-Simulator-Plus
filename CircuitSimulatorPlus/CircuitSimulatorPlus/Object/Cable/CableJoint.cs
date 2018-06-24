@@ -42,5 +42,10 @@ namespace CircuitSimulatorPlus
                 isSelected = value;
             }
         }
+
+        public void UpdateHitbox()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
