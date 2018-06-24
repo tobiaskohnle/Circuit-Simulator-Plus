@@ -40,7 +40,7 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
-                    Owner.Renderer.OnLayoutChanged();
+                    Owner.Renderer.OnPositionChanged();
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 hitbox.Center = value;
-                Owner.Renderer.OnLayoutChanged();
+                Owner.Renderer.OnPositionChanged();
             }
         }
 
@@ -84,7 +84,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 inverted = value;
-                Owner.Renderer.OnLayoutChanged();
+                Owner.Renderer.OnPositionChanged();
             }
         }
         /// <summary>
@@ -152,7 +152,7 @@ namespace CircuitSimulatorPlus
         {
             NextConnectedTo.Add(connectionNode);
             connectionNode.BackConnectedTo = this;
-            Owner.Renderer.OnLayoutChanged();
+            Owner.Renderer.OnPositionChanged();
         }
 
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);

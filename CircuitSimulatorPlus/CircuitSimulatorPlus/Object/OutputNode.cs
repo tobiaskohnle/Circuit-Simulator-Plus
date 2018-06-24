@@ -29,7 +29,7 @@ namespace CircuitSimulatorPlus
         {
             base.ConnectTo(connectionNode);
             IsEmpty = connectionNode.IsEmpty = false;
-            Owner.Renderer.OnLayoutChanged();
+            Owner.Renderer.OnPositionChanged();
         }
         /// <summary>
         /// Clears this OutputNode.

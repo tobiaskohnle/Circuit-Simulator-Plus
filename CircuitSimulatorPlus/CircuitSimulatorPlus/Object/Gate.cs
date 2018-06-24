@@ -68,7 +68,7 @@ namespace CircuitSimulatorPlus
                 position = value;
                 UpdateHitbox();
                 UpdateConnectionNodePos();
-                Renderer.OnLayoutChanged();
+                Renderer.OnPositionChanged();
             }
         }
         public Size Size
@@ -130,7 +130,7 @@ namespace CircuitSimulatorPlus
                 if (value != isSelected)
                 {
                     isSelected = value;
-                    Renderer.OnLayoutChanged();
+                    Renderer.OnPositionChanged();
                 }
             }
         }

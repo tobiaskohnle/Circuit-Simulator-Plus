@@ -131,7 +131,7 @@ namespace CircuitSimulatorPlus
             contextGate.Context.Add(gate);
 
             gate.Renderer.OnConnectionsChanged();
-            gate.Renderer.OnLayoutChanged();
+            gate.Renderer.OnPositionChanged();
         }
 
         public void Tick(ConnectionNode node)
@@ -263,7 +263,7 @@ namespace CircuitSimulatorPlus
                     InputSwitch inputSwitch = obj as InputSwitch;
                     inputSwitch.State = !inputSwitch.State;
                     Tick(inputSwitch.Output[0]);
-                    inputSwitch.Renderer.OnLayoutChanged();
+                    inputSwitch.Renderer.OnPositionChanged();
                 }
                 if (obj is ConnectionNode)
                 {
@@ -1025,7 +1025,7 @@ namespace CircuitSimulatorPlus
                 gate.Renderer.Unrender();
                 gate.Renderer.Render();
                 gate.Renderer.OnConnectionsChanged();
-                gate.Renderer.OnLayoutChanged();
+                gate.Renderer.OnPositionChanged();
             }
         }
         #endregion

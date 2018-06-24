@@ -29,6 +29,12 @@ namespace CircuitSimulatorPlus
             this.gate = gate;
 
             Render();
+
+            OnSelectionChanged();
+            OnNameChanged();
+            OnTagChanged();
+            OnSizeChanged();
+            OnPositionChanged();
         }
 
         public void Render()
@@ -37,14 +43,10 @@ namespace CircuitSimulatorPlus
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = MainWindow.LineWidth,
-                Width = gate.Size.Width + MainWindow.LineWidth,
-                Height = gate.Size.Height + MainWindow.LineWidth
             };
 
             nameLabel = new Label
             {
-                Width = gate.Size.Width,
-                Height = MainWindow.Unit,
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 FontSize = MainWindow.Unit / 2
@@ -52,8 +54,6 @@ namespace CircuitSimulatorPlus
 
             tagLabel = new Label
             {
-                Width = gate.Size.Width,
-                Height = gate.Size.Height,
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 FontSize = MainWindow.Unit,
@@ -72,18 +72,8 @@ namespace CircuitSimulatorPlus
             canvas.Children.Remove(tagLabel);
         }
 
-        public void OnLayoutChanged()
+        public void OnSelectionChanged()
         {
-            Canvas.SetLeft(boundingBox, gate.Position.X - MainWindow.LineRadius);
-            Canvas.SetTop(boundingBox, gate.Position.Y - MainWindow.LineRadius);
-
-            Canvas.SetLeft(tagLabel, gate.Position.X);
-            Canvas.SetTop(tagLabel, gate.Position.Y);
-
-            Canvas.SetLeft(nameLabel, gate.Position.X);
-            Canvas.SetBottom(nameLabel, gate.Position.Y);
-            nameLabel.Content = gate.Name;
-
             if (gate.IsSelected)
             {
                 boundingBox.Fill = new SolidColorBrush(Color.FromArgb(30, 16, 92, 255));
@@ -94,6 +84,38 @@ namespace CircuitSimulatorPlus
                 boundingBox.Fill = Brushes.Transparent;
                 boundingBox.Stroke = Brushes.Black;
             }
+        }
+
+        public void OnNameChanged()
+        {
+            nameLabel.Content = gate.Name;
+        }
+
+        public void OnTagChanged()
+        {
+            tagLabel.Content = gate.Tag;
+        }
+
+        public void OnSizeChanged()
+        {
+            boundingBox.Width = gate.Size.Width + MainWindow.LineWidth;
+            boundingBox.Height = gate.Size.Height + MainWindow.LineWidth;
+            nameLabel.Width = gate.Size.Width;
+            nameLabel.Height = MainWindow.Unit;
+            tagLabel.Width = gate.Size.Width;
+            tagLabel.Height = gate.Size.Height;
+        }
+
+        public void OnPositionChanged()
+        {
+            Canvas.SetLeft(boundingBox, gate.Position.X - MainWindow.LineRadius);
+            Canvas.SetTop(boundingBox, gate.Position.Y - MainWindow.LineRadius);
+
+            Canvas.SetLeft(tagLabel, gate.Position.X);
+            Canvas.SetTop(tagLabel, gate.Position.Y);
+
+            Canvas.SetLeft(nameLabel, gate.Position.X);
+            Canvas.SetBottom(nameLabel, gate.Position.Y);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(connectionLine);
             canvas.Children.Add(invertionDot);
 
-            OnLayoutChanged();
+            OnPositionChanged();
             OnStateChanged();
         }
 
@@ -62,19 +62,40 @@ namespace CircuitSimulatorPlus
         public void OnStateChanged()
         {
             bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
-
-            if (connectionNode.IsSelected)
-            {
-                connectionLine.Stroke = SystemColors.MenuHighlightBrush;
-            }
-            else
+            if (!connectionNode.IsSelected)
             {
                 connectionLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
             }
             invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
         }
 
-        public void OnLayoutChanged()
+        public void OnSelectionChanged()
+        {
+            if (connectionNode.IsSelected)
+            {
+                connectionLine.Stroke = SystemColors.MenuHighlightBrush;
+            }
+            else
+            {
+                OnStateChanged();
+            }
+        }
+
+        public void OnRisingEdgeChanged()
+        {
+        }
+
+        public void OnMasterSlaveChanged()
+        {
+        }
+
+        public void OnInvertedChanged()
+        {
+            // TODO: remove invertionDot when not inverted
+            invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public void OnPositionChanged()
         {
             connectionLine.Y1 = connectionLine.Y2 = connectionNode.Position.Y;
 
@@ -89,14 +110,6 @@ namespace CircuitSimulatorPlus
                     connectionLine.X1 = connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineRadius;
                 }
                 Canvas.SetTop(invertionDot, connectionNode.Position.Y - MainWindow.InversionDotRadius - MainWindow.LineRadius);
-                if (isOutputNode)
-                {
-                    Canvas.SetLeft(invertionDot, connectionNode.Position.X);
-                }
-                else
-                {
-                    Canvas.SetLeft(invertionDot, connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineWidth);
-                }
             }
             else
             {
@@ -110,13 +123,6 @@ namespace CircuitSimulatorPlus
             {
                 connectionLine.X2 = connectionNode.Position.X - MainWindow.Unit;
             }
-
-            if (!isOutputNode && ((InputNode)connectionNode).IsRisingEdge)
-            {
-                // TODO: rising rdge symbol
-            }
-
-            invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
