@@ -10,6 +10,11 @@ namespace CircuitSimulatorPlus
         {
         }
 
+        public CableRenderer CableRenderer
+        {
+            get; set;
+        }
+
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
         /// </summary>

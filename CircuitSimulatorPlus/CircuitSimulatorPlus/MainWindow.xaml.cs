@@ -274,6 +274,38 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public bool CreateConnection(ConnectionNode a, ConnectionNode b)
+        {
+            InputNode inputNode = null;
+            OutputNode outputNode = null;
+
+            if (a is InputNode)
+                inputNode = (InputNode)a;
+            else if (a is OutputNode)
+                outputNode = (OutputNode)a;
+            if (b is InputNode)
+                inputNode = (InputNode)b;
+            else if (b is OutputNode)
+                outputNode = (OutputNode)b;
+
+            if (inputNode != null && outputNode != null)
+            {
+                if (!outputNode.NextConnectedTo.Contains(inputNode))
+                {
+                    inputNode.Clear();
+
+                    outputNode.ConnectTo(inputNode);
+
+                    outputNode.CableRenderer = new CableRenderer(
+                        canvas, new Cable(), new List<Point>(), inputNode, outputNode);
+
+                    Tick(outputNode);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void Copy()
         {
             if (AnySelected)
@@ -431,7 +463,7 @@ namespace CircuitSimulatorPlus
             {
                 currentFilePath = dialog.FileName;
                 contextGate = (ContextGate)StorageConverter.ToGate(Storage.Load(dialog.FileName));
-                UpdateClickableObjects();
+                /*UpdateClickableObjects();
                 foreach (Gate gate in contextGate.Context)
                 {
                     gate.Renderer = new GateRenderer(canvas, gate);
@@ -457,15 +489,15 @@ namespace CircuitSimulatorPlus
                             p2.X = inGate.Position.X - 1;
                             p2.Y = inGate.Position.Y + (double)4 * (1 + 2 * index) / (2 * inGate.Input.Count);
                             Cable cable = new Cable();
-                            cable.Output = node;
-                            cable.Input = inNode;
+                            cable.OutputNode = node;
+                            cable.InputNode = inNode;
                             //cable.Renderer = new CableRenderer(canvas, cable);
-                            cable.AddPoint(p1, true);
-                            cable.AddPoint(p2, true);
+                            addPoint(p1, true);
+                            addPoint(p2, true);
                             cables.Add(cable);
                         }
                     }
-                }
+                }*/
             }
         }
 
@@ -596,7 +628,7 @@ namespace CircuitSimulatorPlus
 
             mouseMoved = false;
 
-            if (e.RightButton == MouseButtonState.Pressed)
+            if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
                 movingScreen = true;
             }
@@ -769,22 +801,7 @@ namespace CircuitSimulatorPlus
                     {
                         foreach (IClickable obj in selectedObjects)
                         {
-                            if (obj is InputNode && lastClickedObject is OutputNode)
-                            {
-                                InputNode inputNode = (obj as InputNode);
-                                inputNode.Clear();
-                                (lastClickedObject as OutputNode).ConnectTo(inputNode);
-                                Tick(inputNode);
-                                connectionCreated = true;
-                            }
-                            else if (lastClickedObject is InputNode && obj is OutputNode)
-                            {
-                                InputNode inputNode = (lastClickedObject as InputNode);
-                                inputNode.Clear();
-                                (obj as OutputNode).ConnectTo(inputNode);
-                                Tick(inputNode);
-                                connectionCreated = true;
-                            }
+                            connectionCreated = CreateConnection(obj as ConnectionNode, lastClickedObject as ConnectionNode);
                         }
                         if (connectionCreated)
                         {

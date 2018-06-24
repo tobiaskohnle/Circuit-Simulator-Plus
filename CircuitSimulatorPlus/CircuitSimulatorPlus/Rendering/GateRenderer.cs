@@ -23,8 +23,6 @@ namespace CircuitSimulatorPlus
         Label tagLabel;
         Label nameLabel;
 
-        List<ConnectionNodeRenderer> connectionNodeRenderers = new List<ConnectionNodeRenderer>();
-
         public GateRenderer(Canvas canvas, Gate gate)
         {
             this.canvas = canvas;
@@ -72,11 +70,6 @@ namespace CircuitSimulatorPlus
             canvas.Children.Remove(boundingBox);
             canvas.Children.Remove(nameLabel);
             canvas.Children.Remove(tagLabel);
-
-            foreach (ConnectionNodeRenderer renderer in connectionNodeRenderers)
-            {
-                renderer.Unrender();
-            }
         }
 
         public void OnLayoutChanged()
@@ -101,22 +94,6 @@ namespace CircuitSimulatorPlus
                 boundingBox.Fill = Brushes.Transparent;
                 boundingBox.Stroke = Brushes.Black;
             }
-
-            foreach (ConnectionNodeRenderer renderer in connectionNodeRenderers)
-            {
-                renderer.OnLayoutChanged();
-            }
-        }
-
-        public void OnConnectionsChanged()
-        {
-            connectionNodeRenderers.Clear();
-
-            foreach (InputNode inputNode in gate.Input)
-                connectionNodeRenderers.Add(inputNode.Renderer);
-
-            foreach (OutputNode outputNode in gate.Output)
-                connectionNodeRenderers.Add(outputNode.Renderer);
         }
     }
 }

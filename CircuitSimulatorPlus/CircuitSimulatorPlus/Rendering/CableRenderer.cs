@@ -14,25 +14,30 @@ namespace CircuitSimulatorPlus
     {
         Canvas canvas;
         Cable cable;
+        List<Point> points;
         List<Line> lines = new List<Line>();
+        bool lastSegmentHorizontal;
 
         InputNode inputNode;
         OutputNode outputNode;
 
-        public CableRenderer(Canvas canvas, Cable cable, InputNode inputNode, OutputNode outputNode)
+        public CableRenderer(Canvas canvas, Cable cable, List<Point> points, InputNode inputNode, OutputNode outputNode)
         {
             this.canvas = canvas;
             this.cable = cable;
+            this.points = points;
+            points.Add(outputNode.Position);
+            points.Add(inputNode.Position);
 
             Render();
         }
 
         public void Render()
         {
-            for (int i = 1; i < cable.Points.Count; i++)
+            for (int i = 1; i < points.Count; i++)
             {
-                Point pos1 = cable.Points[i - 1];
-                Point pos2 = cable.Points[i];
+                Point pos1 = points[i - 1];
+                Point pos2 = points[i];
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
                 line.StrokeThickness = MainWindow.LineWidth;
@@ -50,10 +55,10 @@ namespace CircuitSimulatorPlus
             foreach (Line line in lines)
                 canvas.Children.Remove(line);
         }
-/*
+
         public void OnLayoutChanged()
         {
-            Brush brush = cable.Output.State ? Brushes.Red : Brushes.Black;
+            Brush brush = cable.OutputNode.State ? Brushes.Red : Brushes.Black;
             foreach (Line line in lines)
             {
                 line.Stroke = brush;
@@ -69,12 +74,12 @@ namespace CircuitSimulatorPlus
                     break;
                 }
             }
-            Point inputPos = Points.Last();
+            Point inputPos = points.Last();
             var outputPos = new Point(outputGate.Position.X + 3 + 1, outputGate.Position.Y + (double)4 * (1 + 2 * outputIndex) / (2 * outputGate.Output.Count));
-            Points.Clear();
+            points.Clear();
             lastSegmentHorizontal = true;
-            AddPoint(outputPos, true);
-            AddPoint(inputPos, true);
+            addPoint(outputPos, true);
+            addPoint(inputPos, true);
 
 
             Gate inputGate = inputNode.Owner;
@@ -87,13 +92,54 @@ namespace CircuitSimulatorPlus
                     break;
                 }
             }
-            Point outputPos = Points.First();
-            Point inputPos = new Point(inputGate.Position.X - 1, inputGate.Position.Y + (double)4 * (1 + 2 * inputIndex) / (2 * inputGate.Input.Count));
-            Points.Clear();
-            lastSegmentHorizontal = true;
-            AddPoint(outputPos, true);
-            AddPoint(inputPos, true);
         }
-*/
+
+        void addPoint(Point point, bool toConnection = false)
+        {
+            if (points.Count > 0)
+            {
+                Point lastPoint = points.Last();
+                if (point.X != lastPoint.X && point.Y != lastPoint.Y)
+                {
+                    bool horizontalWouldOverlap = false, verticalWouldOverlap = false;
+                    if (points.Count > 1)
+                    {
+                        Point lastLastPoint = points[points.Count - 2];
+                        if (lastSegmentHorizontal)
+                        {
+                            if (lastLastPoint.X < lastPoint.X)
+                                horizontalWouldOverlap = point.X < lastPoint.X;
+                            else
+                                horizontalWouldOverlap = point.X > lastPoint.X;
+                        }
+                        else
+                        {
+                            if (lastLastPoint.Y < lastPoint.Y)
+                                verticalWouldOverlap = point.Y < lastPoint.Y;
+                            else
+                                verticalWouldOverlap = point.Y > lastPoint.Y;
+                        }
+                    }
+
+                    if (toConnection && lastSegmentHorizontal && !horizontalWouldOverlap)
+                    {
+                        double midX = (lastPoint.X + point.X) / 2;
+                        points.Add(new Point(midX, lastPoint.Y));
+                        points.Add(new Point(midX, point.Y));
+                    }
+                    else
+                    {
+                        Point cornerPoint;
+                        if (verticalWouldOverlap || (lastSegmentHorizontal && !horizontalWouldOverlap))
+                            cornerPoint = new Point(point.X, lastPoint.Y);
+                        else
+                            cornerPoint = new Point(lastPoint.X, point.Y);
+                        points.Add(cornerPoint);
+                    }
+                }
+                lastSegmentHorizontal = point.Y == points.Last().Y;
+            }
+            points.Add(point);
+        }
     }
 }
