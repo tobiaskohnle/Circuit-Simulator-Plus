@@ -80,13 +80,15 @@
     <Compile Include="Actions\CompoundAction.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Misc\DropOutStack.cs" />
-    <Compile Include="Object\AndGate.cs" />
-    <Compile Include="Object\Cable.cs" />
-    <Compile Include="Object\ContextGate.cs" />
-    <Compile Include="Object\InputSwitch.cs" />
-    <Compile Include="Object\NopGate.cs" />
-    <Compile Include="Object\OrGate.cs" />
-    <Compile Include="Object\OutputLight.cs" />
+    <Compile Include="Object\Cable\CableJoint.cs" />
+    <Compile Include="Object\Cable\CableSegment.cs" />
+    <Compile Include="Object\Gate\AndGate.cs" />
+    <Compile Include="Object\Cable\Cable.cs" />
+    <Compile Include="Object\Gate\ContextGate.cs" />
+    <Compile Include="Object\Gate\InputSwitch.cs" />
+    <Compile Include="Object\Gate\NopGate.cs" />
+    <Compile Include="Object\Gate\OrGate.cs" />
+    <Compile Include="Object\Gate\OutputLight.cs" />
     <Compile Include="Rendering\CableRenderer.cs" />
     <Compile Include="Actions\ChangeTypeAction.cs" />
     <Compile Include="Actions\AddAction.cs" />
@@ -110,16 +112,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Object\ConnectionNode.cs" />
-    <Compile Include="Object\Gate.cs" />
-    <Compile Include="Object\InputNode.cs" />
+    <Compile Include="Object\ConnectionNode\ConnectionNode.cs" />
+    <Compile Include="Object\Gate\Gate.cs" />
+    <Compile Include="Object\ConnectionNode\InputNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Object\OutputNode.cs" />
+    <Compile Include="Object\ConnectionNode\OutputNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
