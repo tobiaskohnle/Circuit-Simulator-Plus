@@ -130,7 +130,6 @@ namespace CircuitSimulatorPlus
             clickableObjects.Add(gate);
             contextGate.Context.Add(gate);
 
-            gate.Renderer.OnConnectionsChanged();
             gate.Renderer.OnPositionChanged();
         }
 
@@ -1024,7 +1023,6 @@ namespace CircuitSimulatorPlus
             {
                 gate.Renderer.Unrender();
                 gate.Renderer.Render();
-                gate.Renderer.OnConnectionsChanged();
                 gate.Renderer.OnPositionChanged();
             }
         }
