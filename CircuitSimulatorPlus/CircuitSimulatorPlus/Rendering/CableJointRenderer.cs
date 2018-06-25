@@ -35,7 +35,7 @@ namespace CircuitSimulatorPlus
                 Width = MainWindow.CableJointSize
             };
 
-            canvas.Children.Remove(ellipse);
+            canvas.Children.Add(ellipse);
         }
 
         public void Unrender()
@@ -57,8 +57,8 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            Canvas.SetTop(ellipse, cableJoint.Position.X - MainWindow.CableJointSize / 2);
-            Canvas.SetLeft(ellipse, cableJoint.Position.Y - MainWindow.CableJointSize / 2);
+            Canvas.SetLeft(ellipse, cableJoint.Position.X - MainWindow.CableJointSize / 2);
+            Canvas.SetTop(ellipse, cableJoint.Position.Y - MainWindow.CableJointSize / 2);
         }
     }
 }

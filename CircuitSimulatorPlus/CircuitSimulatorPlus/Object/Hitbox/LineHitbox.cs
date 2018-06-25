@@ -9,19 +9,19 @@ namespace CircuitSimulatorPlus
 {
     public class LineHitbox : Hitbox
     {
-        Point a, b;
+        public Point A, B;
         double width;
 
         public LineHitbox(object attachedObject, Point a, Point b, double width, double distanceFactor) : base(attachedObject, distanceFactor)
         {
-            this.a = a;
-            this.b = b;
+            this.A = a;
+            this.B = b;
             this.width = width;
         }
 
         private Point M(Point d)
         {
-            return a + (a - b) * ((a - d).Length + (b - d).Length) / 2;
+            return A + ((A - B).Length + (A - d).Length - (B - d).Length) / 2 * (B - A) / (A - B).Length;
         }
 
         public override double DistanceTo(Point pos)

@@ -7,12 +7,22 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class CableSegment : IClickable
+    public class CableSegment : IClickable, IMovable
     {
+        public CableSegment()
+        {
+            hitbox = new LineHitbox(this, new Point(), new Point(), 2, 1);
+        }
+
         LineHitbox hitbox;
         Cable cable;
         CableJoint a, b;
         bool isSelected;
+
+        public CableSegmentRenderer Renderer
+        {
+            get; set;
+        }
 
         public Hitbox Hitbox
         {
@@ -26,14 +36,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public bool IsMovable
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         public bool IsSelected
         {
             get
@@ -43,12 +45,14 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
+                Renderer.OnSelectionChanged();
             }
         }
 
         public void UpdateHitbox()
         {
-            throw new NotImplementedException();
+            (Hitbox as LineHitbox).A = a.Position;
+            (Hitbox as LineHitbox).B = b.Position;
         }
 
         public void Move(Vector vector)

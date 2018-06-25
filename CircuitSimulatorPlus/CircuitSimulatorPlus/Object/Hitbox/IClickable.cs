@@ -16,10 +16,6 @@ namespace CircuitSimulatorPlus
         {
             get; set;
         }
-        bool IsMovable
-        {
-            get;
-        }
         void UpdateHitbox();
     }
 }

@@ -10,9 +10,9 @@ namespace CircuitSimulatorPlus
     public class MoveAction : Action
     {
         Vector move;
-        IClickable movedObject;
+        IMovable movedObject;
 
-        public MoveAction(IClickable movedObject, Vector move) : base("Moved object")
+        public MoveAction(IMovable movedObject, Vector move) : base("Moved object")
         {
             this.move = move;
             this.movedObject = movedObject;
@@ -20,14 +20,12 @@ namespace CircuitSimulatorPlus
 
         public override void Redo()
         {
-            if (movedObject is Gate)
-                (movedObject as Gate).Move(move);
+            movedObject.Move(move);
         }
 
         public override void Undo()
         {
-            if (movedObject is Gate)
-                (movedObject as Gate).Move(-move);
+            movedObject.Move(-move);
         }
     }
 }

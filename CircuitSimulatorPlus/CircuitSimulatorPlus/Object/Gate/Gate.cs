@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public abstract class Gate : IClickable
+    public abstract class Gate : IClickable, IMovable
     {
         public Gate()
         {
@@ -46,14 +46,6 @@ namespace CircuitSimulatorPlus
         public GateRenderer Renderer
         {
             get; set;
-        }
-
-        public bool IsMovable
-        {
-            get
-            {
-                return true;
-            }
         }
 
         Point position;
