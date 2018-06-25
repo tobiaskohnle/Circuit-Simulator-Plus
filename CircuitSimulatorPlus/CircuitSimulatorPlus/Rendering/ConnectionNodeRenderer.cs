@@ -31,6 +31,14 @@ namespace CircuitSimulatorPlus
             this.isOutputNode = isOutputNode;
 
             Render();
+
+            OnStateChanged();
+            OnSelectionChanged();
+            OnRisingEdgeChanged();
+            OnMasterSlaveChanged();
+            OnNameChanged();
+            OnInvertedChanged();
+            OnPositionChanged();
         }
 
         public void Render()
@@ -92,6 +100,7 @@ namespace CircuitSimulatorPlus
         public void OnInvertedChanged()
         {
             // TODO: remove invertionDot when not inverted
+            OnPositionChanged();
             invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -108,10 +117,12 @@ namespace CircuitSimulatorPlus
                 if (isOutputNode)
                 {
                     connectionLine.X1 = connectionNode.Position.X + MainWindow.InversionDotDiameter + MainWindow.LineRadius;
+                    Canvas.SetLeft(invertionDot, connectionNode.Position.X);
                 }
                 else
                 {
                     connectionLine.X1 = connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineRadius;
+                    Canvas.SetLeft(invertionDot, connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineWidth);
                 }
                 Canvas.SetTop(invertionDot, connectionNode.Position.Y - MainWindow.InversionDotRadius - MainWindow.LineRadius);
             }

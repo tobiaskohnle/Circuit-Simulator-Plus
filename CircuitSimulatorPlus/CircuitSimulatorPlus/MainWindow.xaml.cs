@@ -131,6 +131,8 @@ namespace CircuitSimulatorPlus
             clickableObjects.Add(gate);
             contextGate.Context.Add(gate);
 
+            gate.UpdateConnectionNodePos();
+
             gate.Renderer.OnPositionChanged();
         }
 
