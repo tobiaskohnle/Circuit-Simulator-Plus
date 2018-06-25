@@ -71,7 +71,6 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 UpdateHitbox();
-                UpdateConnectionNodePos();
                 Renderer.OnPositionChanged();
             }
         }
@@ -84,7 +83,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 size = value;
-                Renderer.OnSizeChanged();
+                //Renderer.OnSizeChanged();
             }
         }
 
@@ -163,7 +162,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 tag = value;
-                Renderer.OnTagChanged();
+                //Renderer.OnTagChanged();
             }
         }
 
@@ -192,10 +191,10 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// Moves the gate.
         /// </summary>
-        public void Move(Vector move)
+        public void Move(Vector vector)
         {
-            Position = new Point(Position.X + move.X, Position.Y + move.Y);
-            UpdateConnectionNodePos();
+            //Position = new Point(Position.X + vector.X, Position.Y + vector.Y);
+            Position += vector;
         }
         /// <summary>
         /// </summary>

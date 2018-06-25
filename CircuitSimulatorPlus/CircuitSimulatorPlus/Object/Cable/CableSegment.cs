@@ -9,7 +9,8 @@ namespace CircuitSimulatorPlus
 {
     public class CableSegment : IClickable
     {
-        RectHitbox hitbox;
+        LineHitbox hitbox;
+        CableJoint a, b;
         bool isSelected;
 
         public Hitbox Hitbox
@@ -20,7 +21,7 @@ namespace CircuitSimulatorPlus
             }
             set
             {
-                hitbox = value as RectHitbox;
+                hitbox = value as LineHitbox;
             }
         }
 
@@ -47,6 +48,12 @@ namespace CircuitSimulatorPlus
         public void UpdateHitbox()
         {
             throw new NotImplementedException();
+        }
+
+        public void Move(Vector vector)
+        {
+            a.Move(vector);
+            b.Move(vector);
         }
     }
 }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
     public class CableJoint : IClickable
     {
         CircleHitbox hitbox;
+        Point position;
         bool isSelected;
 
         public Hitbox Hitbox
@@ -43,9 +45,26 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public Point Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
+
         public void UpdateHitbox()
         {
             throw new NotImplementedException();
+        }
+
+        public void Move(Vector vector)
+        {
+            Position += vector;
         }
     }
 }
