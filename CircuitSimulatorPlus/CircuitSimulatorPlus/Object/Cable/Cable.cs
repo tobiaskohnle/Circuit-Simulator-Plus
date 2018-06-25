@@ -16,12 +16,6 @@ namespace CircuitSimulatorPlus
         OutputNode outputNode;
         List<Point> points;
         RectHitbox hitbox;
-        bool isSelected;
-
-        public CableRenderer Renderer
-        {
-            get; set;
-        }
 
         public OutputNode OutputNode
         {
@@ -29,6 +23,11 @@ namespace CircuitSimulatorPlus
         }
 
         public InputNode InputNode
+        {
+            get; set;
+        }
+
+        public bool State
         {
             get; set;
         }

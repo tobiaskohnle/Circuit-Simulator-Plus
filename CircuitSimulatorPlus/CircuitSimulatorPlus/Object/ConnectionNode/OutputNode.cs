@@ -12,11 +12,6 @@ namespace CircuitSimulatorPlus
 
         public bool isMasterSlave;
 
-        public CableRenderer CableRenderer
-        {
-            get; set;
-        }
-
         public override void UpdateHitbox()
         {
         }

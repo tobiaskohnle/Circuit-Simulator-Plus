@@ -59,6 +59,7 @@ namespace CircuitSimulatorPlus
         public const double LineRadius = Unit / 20;
         public const double InversionDotDiameter = Unit / 2;
         public const double InversionDotRadius = Unit / 4;
+        public const double CableJointSize = Unit / 6;
         public const double Unit = 1;
         public const int UndoBufferSize = 32;
         #endregion
@@ -295,8 +296,8 @@ namespace CircuitSimulatorPlus
 
                     outputNode.ConnectTo(inputNode);
 
-                    outputNode.CableRenderer = new CableRenderer(
-                        canvas, new Cable(), new List<Point>(), inputNode, outputNode);
+                    //outputNode.CableRenderer = new CableRenderer(
+                    //    canvas, new Cable(), new List<Point>(), inputNode, outputNode);
 
                     Tick(outputNode);
                     return true;

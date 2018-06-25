@@ -10,6 +10,7 @@ namespace CircuitSimulatorPlus
     public class CableJoint : IClickable
     {
         CircleHitbox hitbox;
+        Cable cable;
         Point position;
         bool isSelected;
 

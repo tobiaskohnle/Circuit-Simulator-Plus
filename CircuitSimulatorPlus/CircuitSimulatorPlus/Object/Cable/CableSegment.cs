@@ -10,6 +10,7 @@ namespace CircuitSimulatorPlus
     public class CableSegment : IClickable
     {
         LineHitbox hitbox;
+        Cable cable;
         CableJoint a, b;
         bool isSelected;
 
@@ -54,6 +55,34 @@ namespace CircuitSimulatorPlus
         {
             a.Move(vector);
             b.Move(vector);
+        }
+
+        public CableJoint A
+        {
+            get
+            {
+                return a;
+            }
+            set
+            {
+                a = value;
+            }
+        }
+        public CableJoint B
+        {
+            get
+            {
+                return b;
+            }
+            set
+            {
+                b = value;
+            }
+        }
+
+        public bool State
+        {
+            get; set;
         }
     }
 }
