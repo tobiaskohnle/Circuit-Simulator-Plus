@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
     {
         public CableJoint()
         {
-            hitbox = new CircleHitbox(this, new Point(), 2, 0.1);
+            hitbox = new CircleHitbox(this, new Point(), Cable.CableWidth, 0.02);
         }
 
         public CableSegment Before, After;
@@ -62,6 +62,8 @@ namespace CircuitSimulatorPlus
                 position = value;
                 Before?.Renderer.OnPositionChanged();
                 After?.Renderer.OnPositionChanged();
+                Before?.UpdateHitbox();
+                After?.UpdateHitbox();
                 Renderer.OnPositionChanged();
             }
         }

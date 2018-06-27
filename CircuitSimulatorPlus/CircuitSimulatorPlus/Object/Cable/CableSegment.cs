@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
     {
         public CableSegment()
         {
-            hitbox = new LineHitbox(this, new Point(), new Point(), 2, 1);
+            hitbox = new LineHitbox(this, new Point(), new Point(), Cable.CableWidth, 1);
         }
 
         LineHitbox hitbox;
