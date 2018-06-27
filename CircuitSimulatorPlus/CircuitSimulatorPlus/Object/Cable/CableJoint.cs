@@ -60,11 +60,11 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                Before?.Renderer.OnPositionChanged();
-                After?.Renderer.OnPositionChanged();
+                Before?.Renderer?.OnPositionChanged();
+                After?.Renderer?.OnPositionChanged();
                 Before?.UpdateHitbox();
                 After?.UpdateHitbox();
-                Renderer.OnPositionChanged();
+                Renderer?.OnPositionChanged();
             }
         }
 

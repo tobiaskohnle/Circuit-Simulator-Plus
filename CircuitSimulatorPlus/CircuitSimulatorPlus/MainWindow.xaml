@@ -58,6 +58,8 @@
             <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click"/>
             <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click"/>
             <MenuItem Header="Remove" InputGestureText="Del" Click="Delete_Click"/>
+            
+            <MenuItem Header="Split" InputGestureText="S" Click="Split_Click"/>
 
             <MenuItem Header="Rename" InputGestureText="Ctrl+R" Click="Rename_Click"/>
             <MenuItem Header="Invert Connection" InputGestureText="Ctrl+." Click="InvertConnection_Click"/>

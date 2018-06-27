@@ -32,8 +32,10 @@ namespace CircuitSimulatorPlus
             ellipse = new Ellipse
             {
                 Height = MainWindow.CableJointSize,
-                Width = MainWindow.CableJointSize
+                Width = MainWindow.CableJointSize,
             };
+
+            Panel.SetZIndex(ellipse, 1);
 
             canvas.Children.Add(ellipse);
         }

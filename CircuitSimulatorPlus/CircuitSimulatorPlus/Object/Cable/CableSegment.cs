@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
     {
         public CableSegment()
         {
-            hitbox = new LineHitbox(this, new Point(), new Point(), Cable.CableWidth, 1);
+            hitbox = new LineHitbox(this, new Point(), new Point(), Cable.CableWidth, 4);
         }
 
         LineHitbox hitbox;
@@ -45,7 +45,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer.OnSelectionChanged();
+                Renderer?.OnSelectionChanged();
             }
         }
 

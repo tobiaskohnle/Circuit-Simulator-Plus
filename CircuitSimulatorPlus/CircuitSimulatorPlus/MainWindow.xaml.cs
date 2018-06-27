@@ -259,9 +259,17 @@ namespace CircuitSimulatorPlus
             foreach (IClickable obj in selectedObjects)
             {
                 if (obj is Gate)
+                {
                     Remove(obj as Gate);
+                }
                 else if (obj is ConnectionNode)
+                {
                     (obj as ConnectionNode).Clear();
+                }
+                else if (obj is CableJoint)
+                {
+                    Remove(obj as CableJoint);
+                }
             }
             DeselectAll();
         }
@@ -273,6 +281,17 @@ namespace CircuitSimulatorPlus
                 Remove(output);
             clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
+        }
+        public void Remove(CableJoint cableJoint)
+        {
+            var cableSegment = cableJoint.Before;
+            cableSegment.B = cableJoint.After.B;
+            cableSegment.B.Before = cableSegment;
+            cableSegment.Renderer.OnPositionChanged();
+            cableJoint.After.Renderer.Unrender();
+            cableJoint.Renderer.Unrender();
+            clickableObjects.Remove(cableJoint.After);
+            clickableObjects.Remove(cableJoint);
         }
         public void Remove(ConnectionNode connectionNode)
         {
@@ -317,45 +336,41 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+        #endregion
 
-        public void Copy()
+        #region Cables
+        void SplitCables()
         {
-            if (AnySelected)
+            foreach (IClickable obj in selectedObjects.ToList())
             {
-
-            }
-        }
-        public void Cut()
-        {
-            Copy();
-            Delete();
-        }
-        public void Paste()
-        {
-            if (DataOnClipboard)
-            {
-
-            }
-        }
-
-        public void Rename()
-        {
-
-        }
-
-        public void EmptyInput()
-        {
-
-        }
-        public void InvertConnection()
-        {
-            foreach (IClickable obj in selectedObjects)
-                if (obj is ConnectionNode)
+                if (obj is CableSegment)
                 {
-                    ConnectionNode connectionNode = obj as ConnectionNode;
-                    connectionNode.Invert();
-                    Tick(connectionNode);
+                    var cableSegment = obj as CableSegment;
+                    var newSegment = new CableSegment();
+                    var centerJoint = new CableJoint();
+
+                    Point center = cableSegment.A.Position + (cableSegment.B.Position - cableSegment.A.Position) / 2;
+                    centerJoint.Position = center;
+
+                    newSegment.B = cableSegment.B;
+                    cableSegment.B = centerJoint;
+                    newSegment.A = cableSegment.B = centerJoint;
+
+                    newSegment.B.Before = newSegment;
+                    centerJoint.Before = cableSegment;
+                    centerJoint.After = newSegment;
+
+                    Select(newSegment);
+
+                    newSegment.Renderer = new CableSegmentRenderer(canvas, newSegment);
+                    centerJoint.Renderer = new CableJointRenderer(canvas, centerJoint);
+
+                    clickableObjects.Add(centerJoint);
+                    clickableObjects.Add(newSegment);
+
+                    centerJoint.Renderer.OnPositionChanged();
                 }
+            }
         }
         #endregion
 
@@ -556,6 +571,46 @@ namespace CircuitSimulatorPlus
                 UpdateTitle();
             }
         }
+
+        public void Copy()
+        {
+            if (AnySelected)
+            {
+
+            }
+        }
+        public void Cut()
+        {
+            Copy();
+            Delete();
+        }
+        public void Paste()
+        {
+            if (DataOnClipboard)
+            {
+
+            }
+        }
+
+        public void Rename()
+        {
+
+        }
+
+        public void EmptyInput()
+        {
+
+        }
+        public void InvertConnection()
+        {
+            foreach (IClickable obj in selectedObjects)
+                if (obj is ConnectionNode)
+                {
+                    ConnectionNode connectionNode = obj as ConnectionNode;
+                    connectionNode.Invert();
+                    Tick(connectionNode);
+                }
+        }
         #endregion
 
         #region Util
@@ -637,6 +692,7 @@ namespace CircuitSimulatorPlus
             lastWindowClick = e.GetPosition(this);
 
             mouseMoved = false;
+            lastClickedObject = FindNearestObjectAt(lastCanvasClick);
 
             if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
@@ -644,7 +700,6 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                lastClickedObject = FindNearestObjectAt(lastCanvasClick);
                 if (lastClickedObject == null)
                 {
                     makingSelection = true;
@@ -997,6 +1052,10 @@ namespace CircuitSimulatorPlus
         void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             ToggleObjects();
+        }
+        void Split_Click(object sender, RoutedEventArgs e)
+        {
+            SplitCables();
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)

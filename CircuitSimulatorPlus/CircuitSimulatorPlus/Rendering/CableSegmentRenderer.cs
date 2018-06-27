@@ -56,10 +56,10 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            line.X1 = cableSegment.A.Position.X;
-            line.Y1 = cableSegment.A.Position.Y;
-            line.X2 = cableSegment.B.Position.X;
-            line.Y2 = cableSegment.B.Position.Y;
+            line.X1 = cableSegment.A?.Position.X ?? 0;
+            line.Y1 = cableSegment.A?.Position.Y ?? 0;
+            line.X2 = cableSegment.B?.Position.X ?? 0;
+            line.Y2 = cableSegment.B?.Position.Y ?? 0;
         }
     }
 }
