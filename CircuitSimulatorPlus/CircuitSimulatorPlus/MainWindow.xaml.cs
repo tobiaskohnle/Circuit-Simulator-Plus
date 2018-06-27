@@ -350,6 +350,8 @@ namespace CircuitSimulatorPlus
                     var centerJoint = new CableJoint();
 
                     Point center = cableSegment.A.Position + (cableSegment.B.Position - cableSegment.A.Position) / 2;
+                    center.X = Math.Round(center.X);
+                    center.Y = Math.Round(center.Y);
                     centerJoint.Position = center;
 
                     newSegment.B = cableSegment.B;
