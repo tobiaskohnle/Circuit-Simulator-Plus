@@ -131,6 +131,7 @@
                 <MenuItem Header="Empty Input" Click="EmptyInput_Click"/>
                 <MenuItem Header="Remove Extra Inputs" Click="TrimInput_Click"/>
                 <MenuItem Header="Invert Connection" Click="InvertConnection_Click"/>
+                <MenuItem Header="Connect All Nodes" Click="ConnectAllNodes_Click"/>
                 <MenuItem Header="Select All" Click="SelectAll_Click"/>
 
             </MenuItem>

@@ -35,7 +35,7 @@ namespace CircuitSimulatorPlus
 
             UpdateClickableObjects();
 
-            timer.Interval = TimeSpan.FromMilliseconds(0);
+            //timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
 
             DrawGrid();
@@ -373,6 +373,12 @@ namespace CircuitSimulatorPlus
                     centerJoint.Renderer.OnPositionChanged();
                 }
             }
+        }
+        void ConnectAllNodes()
+        {
+            foreach (OutputNode outputNode in selectedObjects.Where(obj => obj is OutputNode))
+                foreach (InputNode inputNode in selectedObjects.Where(obj => obj is InputNode))
+                    inputNode.ConnectTo(outputNode);
         }
         #endregion
 
@@ -1058,6 +1064,10 @@ namespace CircuitSimulatorPlus
         void Split_Click(object sender, RoutedEventArgs e)
         {
             SplitCables();
+        }
+        void ConnectAllNodes_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectAllNodes();
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)
