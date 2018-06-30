@@ -101,6 +101,7 @@ namespace CircuitSimulatorPlus
         public const double InversionDotDiameter = Unit / 2;
         public const double InversionDotRadius = Unit / 4;
         public const double CableJointSize = Unit / 3;
+        public const double ConnectionNodeLineLength = Unit;
         public const double Unit = 1;
         public const int UndoBufferSize = 32;
         #endregion
@@ -390,6 +391,15 @@ namespace CircuitSimulatorPlus
 
             for (int i = 0; i < Math.Min(inputs.Count, outputs.Count); i++)
                 (outputs[i] as OutputNode).ConnectTo(inputs[i] as InputNode);
+        }
+        #endregion
+
+        #region Connection Nodes
+        public void Align(ConnectionNode.Align alignment)
+        {
+            foreach (IClickable obj in selectedObjects)
+                if (obj is ConnectionNode)
+                    (obj as ConnectionNode).Alignment = alignment;
         }
         #endregion
 
@@ -1086,6 +1096,22 @@ namespace CircuitSimulatorPlus
         void ConnectOppositeNodes_Click(object sender, RoutedEventArgs e)
         {
             ConnectOppositeNodes();
+        }
+        void Align_N_Click(object sender, RoutedEventArgs e)
+        {
+            Align(ConnectionNode.Align.N);
+        }
+        void Align_E_Click(object sender, RoutedEventArgs e)
+        {
+            Align(ConnectionNode.Align.E);
+        }
+        void Align_S_Click(object sender, RoutedEventArgs e)
+        {
+            Align(ConnectionNode.Align.S);
+        }
+        void Align_W_Click(object sender, RoutedEventArgs e)
+        {
+            Align(ConnectionNode.Align.W);
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)

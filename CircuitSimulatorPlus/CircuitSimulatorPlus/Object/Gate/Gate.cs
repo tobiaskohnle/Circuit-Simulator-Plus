@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace CircuitSimulatorPlus
@@ -16,6 +17,13 @@ namespace CircuitSimulatorPlus
 
         public const double DistanceFactor = 0.2;
 
+        public Dictionary<ConnectionNode.Align, int> AmtNodes = new Dictionary<ConnectionNode.Align, int>
+        {
+            { ConnectionNode.Align.N, 0 },
+            { ConnectionNode.Align.E, 0 },
+            { ConnectionNode.Align.S, 0 },
+            { ConnectionNode.Align.W, 0 },
+        };
         string name;
         string tag;
         Size size;
@@ -82,13 +90,11 @@ namespace CircuitSimulatorPlus
         {
             for (int i = 0; i < Input.Count; i++)
             {
-                Input[i].Position = new Point(Position.X, Position.Y
-                    + Size.Height * (1 + 2 * i) / (2 * Input.Count));
+                Input[i].UpdatePosition(i);
             }
             for (int i = 0; i < Output.Count; i++)
             {
-                Output[i].Position = new Point(Position.X + Size.Width, Position.Y
-                    + Size.Height * (1 + 2 * i) / (2 * Output.Count));
+                Output[i].UpdatePosition(i);
             }
         }
 

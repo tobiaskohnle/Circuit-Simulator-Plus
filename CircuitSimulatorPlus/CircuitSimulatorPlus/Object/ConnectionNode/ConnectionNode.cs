@@ -23,14 +23,14 @@ namespace CircuitSimulatorPlus
         Point position;
         string name;
         CircleHitbox hitbox;
-        Align alignment;
+        Align? alignment;
 
         public enum Align
         {
             N, W, S, E
         }
 
-        public Vector AlignmentVector;
+        public Vector AlignmentVector = new Vector();
 
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
         public ConnectionNode BackConnectedTo
@@ -63,25 +63,35 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return alignment;
+                return (Align)alignment;
             }
             set
             {
+                if (alignment != null)
+                    Owner.AmtNodes[(Align)alignment]--;
+                Owner.AmtNodes[value]++;
+
                 switch (alignment = value)
                 {
                 case Align.N:
-                    AlignmentVector = new Vector(0, -1);
+                    AlignmentVector.X = 0;
+                    AlignmentVector.Y = -1;
                     break;
                 case Align.E:
-                    AlignmentVector = new Vector(1, 0);
+                    AlignmentVector.X = 1;
+                    AlignmentVector.Y = 0;
                     break;
                 case Align.S:
-                    AlignmentVector = new Vector(0, 1);
+                    AlignmentVector.X = 0;
+                    AlignmentVector.Y = 1;
                     break;
                 case Align.W:
-                    AlignmentVector = new Vector(-1, 0);
+                    AlignmentVector.X = -1;
+                    AlignmentVector.Y = 0;
                     break;
                 }
+
+                Renderer?.OnPositionChanged();
             }
         }
 
@@ -97,6 +107,17 @@ namespace CircuitSimulatorPlus
                 hitbox.Center = value;
                 Renderer.OnPositionChanged();
             }
+        }
+
+        public void UpdatePosition(int index)
+        {
+            double sideLength = alignment == Align.N || alignment == Align.S ? Owner.Size.Width : Owner.Size.Height;
+            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.AmtNodes[Alignment]);
+
+            Position = new Point(
+                Owner.Position.X + AlignmentVector.X * sidePos,
+                Owner.Position.Y + AlignmentVector.Y * sidePos
+            );
         }
 
         /// <summary>

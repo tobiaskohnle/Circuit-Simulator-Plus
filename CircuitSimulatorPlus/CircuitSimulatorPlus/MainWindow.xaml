@@ -24,6 +24,7 @@
         <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
+        <!--<CommandBinding Command="{x:Static local:Commands.Align}" Executed="Align_Click"/>-->
         <CommandBinding Command="{x:Static local:Commands.Cut}" Executed="Cut_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
@@ -46,7 +47,9 @@
 
                 <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
                 <MenuItem Header="Output Light" Click="CreateOutputLight"/>
+
                 <Separator/>
+
                 <MenuItem Header="And Gate" Click="CreateAndGate"/>
                 <MenuItem Header="Or Gate" Click="CreateOrGate"/>
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
@@ -57,6 +60,15 @@
             <MenuItem Command="{x:Static local:Commands.Cut}"/>
             <MenuItem Command="{x:Static local:Commands.Paste}"/>
             <MenuItem Command="{x:Static local:Commands.Delete}"/>
+
+            <Separator/>
+
+            <MenuItem Header="Align Connection Node">
+                <MenuItem Header="N" Click="Align_N_Click"/>
+                <MenuItem Header="E" Click="Align_E_Click"/>
+                <MenuItem Header="S" Click="Align_S_Click"/>
+                <MenuItem Header="W" Click="Align_W_Click"/>
+            </MenuItem>
 
             <!--MenuItem Command="{x:Static local:Commands.Split}"/>
 

@@ -6,7 +6,7 @@ namespace CircuitSimulatorPlus
 {
     public class InputNode : ConnectionNode
     {
-        public InputNode(Gate owner) : base(Align.W, owner)
+        public InputNode(Gate owner) : base(Align.N, owner)
         {
         }
 

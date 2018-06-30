@@ -192,7 +192,13 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            connectionNodeLine.Y1 = connectionNodeLine.Y2 = connectionNode.Position.Y;
+            connectionNodeLine.X1 = connectionNode.Position.X;
+            connectionNodeLine.Y1 = connectionNode.Position.Y;
+
+            connectionNodeLine.X2 = connectionNode.Position.X
+                + connectionNode.AlignmentVector.X * MainWindow.ConnectionNodeLineLength;
+            connectionNodeLine.Y2 = connectionNode.Position.Y
+                + connectionNode.AlignmentVector.Y * MainWindow.ConnectionNodeLineLength;
 
             if (connectionNode.IsInverted)
             {
@@ -200,17 +206,14 @@ namespace CircuitSimulatorPlus
                     + connectionNode.AlignmentVector.X * (MainWindow.InversionDotDiameter + MainWindow.LineRadius);
                 if (connectionNode.IsInverted)
                 {
-                    Canvas.SetLeft(invertionDot, invertionDot.Width / 2
+                    Canvas.SetLeft(invertionDot, connectionNode.Position.X
+                        - invertionDot.Width / 2
                         + connectionNode.AlignmentVector.X * invertionDot.Width / 2);
-                    Canvas.SetTop(invertionDot, invertionDot.Height / 2
+                    Canvas.SetTop(invertionDot, connectionNode.Position.Y
+                        - invertionDot.Height / 2
                         + connectionNode.AlignmentVector.Y * invertionDot.Height / 2);
                 }
             }
-            else
-            {
-                connectionNodeLine.X1 = connectionNode.Position.X;
-            }
-            connectionNodeLine.X2 = connectionNode.Position.X + connectionNode.AlignmentVector.X * MainWindow.Unit;
         }
     }
 }
