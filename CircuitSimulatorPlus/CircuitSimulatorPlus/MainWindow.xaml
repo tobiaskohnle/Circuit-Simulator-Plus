@@ -130,7 +130,7 @@
 
             <MenuItem Header="View" Width="auto">
 
-                <MenuItem Header="Default View"/>
+                <MenuItem Header="Default View" Click="DefaultView_Click"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>
 

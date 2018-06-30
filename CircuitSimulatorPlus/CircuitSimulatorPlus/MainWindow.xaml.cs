@@ -24,6 +24,7 @@ namespace CircuitSimulatorPlus
         {
             InitializeComponent();
 
+            DrawGrid();
             UpdateTitle();
             ResetView();
 
@@ -36,8 +37,6 @@ namespace CircuitSimulatorPlus
             UpdateClickableObjects();
 
             timer.Tick += TimerTick;
-
-            DrawGrid();
         }
 
         #region Constants
@@ -362,6 +361,7 @@ namespace CircuitSimulatorPlus
             matrix.Scale(DefaultGridSize, DefaultGridSize);
             canvas.RenderTransform = new MatrixTransform(matrix);
             currentScale = 1;
+            UpdateGrid();
         }
         public void UpdateTitle()
         {
