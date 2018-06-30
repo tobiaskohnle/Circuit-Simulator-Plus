@@ -996,14 +996,17 @@ namespace CircuitSimulatorPlus
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("COPY");
             Copy();
         }
         void Cut_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("CUT");
             Cut();
         }
         void Paste_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("PASTE");
             Paste();
         }
         void Delete_Click(object sender, RoutedEventArgs e)

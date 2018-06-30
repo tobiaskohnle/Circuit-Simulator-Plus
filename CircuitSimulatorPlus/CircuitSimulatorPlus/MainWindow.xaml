@@ -16,15 +16,14 @@
         <CommandBinding Command="{x:Static local:Commands.Open}" Executed="Open_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Save}" Executed="Save_Click"/>
         <CommandBinding Command="{x:Static local:Commands.SaveAs}" Executed="SaveAs_Click"/>
-        <!--<CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>-->
-        <!--<CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>-->
-        <!--<CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>-->
-        <!--<CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/>-->
+        <!--CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/-->
         <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>
-        <!--<CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>-->
-        <CommandBinding Command="ApplicationCommands.Copy" Executed="Copy_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Cut}" Executed="Cut_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
@@ -39,7 +38,7 @@
 
             <MenuItem x:Name="contxtMenu_contextGate" Header="Add Context Gate">
 
-                <MenuItem Header="Import From File" Click="ContextGate_Click"/>
+                <MenuItem Header="Import From File"/>
 
             </MenuItem>
 
@@ -55,15 +54,15 @@
             </MenuItem>
 
             <MenuItem Command="{x:Static local:Commands.Copy}" InputGestureText="Ctrl+C"/>
-            <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click"/>
-            <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click"/>
-            <MenuItem Header="Remove" InputGestureText="Del" Click="Delete_Click"/>
-            
-            <MenuItem Header="Split" InputGestureText="S" Click="Split_Click"/>
+            <MenuItem Command="{x:Static local:Commands.Cut}" InputGestureText="Ctrl+X"/>
+            <MenuItem Command="{x:Static local:Commands.Paste}" InputGestureText="Ctrl+V"/>
+            <MenuItem Command="{x:Static local:Commands.Delete}" InputGestureText="Del"/>
 
-            <MenuItem Header="Rename" InputGestureText="Ctrl+R" Click="Rename_Click"/>
-            <MenuItem Header="Invert Connection" InputGestureText="Ctrl+." Click="InvertConnection_Click"/>
-            <MenuItem Header="Add Empty Input" InputGestureText="Ctrl+," Click="EmptyInput_Click"/>
+            <!--MenuItem Command="{x:Static local:Commands.Split}" InputGestureText="S"/>
+
+            <MenuItem Command="{x:Static local:Commands.Rename}" InputGestureText="Ctrl+R"/>
+            <MenuItem Command="{x:Static local:Commands.InvertConnection}" InputGestureText="Ctrl+."/>
+            <MenuItem Command="{x:Static local:Commands.EmptyInput}" InputGestureText="Ctrl+,"/-->
 
         </ContextMenu>
 
@@ -85,9 +84,9 @@
         <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2">
 
             <Rectangle x:Name="selectVisual"
-                    Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
-                    Fill="#3F0078D7"
-                    SnapsToDevicePixels="True"/>
+                       Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
+                       Fill="#3F0078D7"
+                       SnapsToDevicePixels="True"/>
 
         </Canvas>
 
@@ -95,53 +94,53 @@
 
             <MenuItem Header="File" Width="auto">
 
-                <MenuItem Header="New Circuit" InputGestureText="Ctrl+N" Click="New_Click"/>
-                <MenuItem Header="Open Circuit" InputGestureText="Ctrl+O" Click="Open_Click"/>
+                <MenuItem Header="New Circuit" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="Open Circuit" InputGestureText="Ctrl+O"/>
                 <MenuItem Header="Open Recent"/>
-                <MenuItem Header="Print" InputGestureText="Ctrl+P" Click="Print_Click"/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S" Click="Save_Click"/>
-                <MenuItem Header="Save As..." InputGestureText="Ctrl+Shift+S" Click="SaveAs_Click"/>
+                <MenuItem Header="Print" InputGestureText="Ctrl+P"/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Save As..." InputGestureText="Ctrl+Shift+S"/>
 
             </MenuItem>
 
             <MenuItem Header="Edit" Width="auto">
 
-                <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="Undo_Click"/>
-                <MenuItem Header="Redo" InputGestureText="Ctrl+Shift+Z" Click="Redo_Click"/>
-                <MenuItem Command="{x:Static local:Commands.Copy}" InputGestureText="Ctrl+C"/>
-                <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click"/>
-                <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click"/>
-                <MenuItem Header="Remove" InputGestureText="Del" Click="Delete_Click"/>
+                <MenuItem Header="Undo" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="Redo" InputGestureText="Ctrl+Shift+Z"/>
+                <MenuItem Command="{x:Static local:Commands.Copy}"/>
+                <MenuItem Header="Cut" InputGestureText="Ctrl+X"/>
+                <MenuItem Header="Paste" InputGestureText="Ctrl+V"/>
+                <MenuItem Header="Remove" InputGestureText="Del"/>
 
             </MenuItem>
 
             <MenuItem Header="View" Width="auto">
 
-                <MenuItem Header="Default View" Click="DefaultView_Click"/>
-                <MenuItem Header="Zoom In" InputGestureText="Ctrl++" Click="ZoomIn_Click"/>
-                <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-" Click="ZoomOut_Click"/>
+                <MenuItem Header="Default View"/>
+                <MenuItem Header="Zoom In" InputGestureText="Ctrl++"/>
+                <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-"/>
 
             </MenuItem>
 
             <MenuItem Header="Tools" Width="auto">
 
-                <MenuItem Header="New Component" Click="AddComp_Click"/>
-                <MenuItem Header="Rename Gate" Click="Rename_Click"/>
-                <MenuItem Header="Resize Gate" Click="ResizeGate_Click"/>
-                <MenuItem Header="Empty Input" Click="EmptyInput_Click"/>
-                <MenuItem Header="Remove Extra Inputs" Click="TrimInput_Click"/>
-                <MenuItem Header="Invert Connection" Click="InvertConnection_Click"/>
-                <MenuItem Header="Connect All Nodes" Click="ConnectAllNodes_Click"/>
-                <MenuItem Header="Connect Opposite Nodes" Click="ConnectOppositeNodes_Click"/>
-                <MenuItem Header="Select All" Click="SelectAll_Click"/>
+                <MenuItem Header="New Component"/>
+                <MenuItem Header="Rename Gate"/>
+                <MenuItem Header="Resize Gate"/>
+                <MenuItem Header="Empty Input"/>
+                <MenuItem Header="Remove Extra Inputs"/>
+                <MenuItem Header="Invert Connection"/>
+                <MenuItem Header="Connect All Nodes"/>
+                <MenuItem Header="Connect Opposite Nodes"/>
+                <MenuItem Header="Select All"/>
 
             </MenuItem>
 
             <MenuItem Header="Debug" Width="auto">
 
-                <MenuItem Header="Single Ticks" Click="SingleTicks_Click"/>
-                <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
-                <MenuItem Header="Rerender All" Click="Rerender_Click"/>
+                <MenuItem Header="Single Ticks"/>
+                <MenuItem Header="Tick All Nodes"/>
+                <MenuItem Header="Rerender All"/>
 
             </MenuItem>
 

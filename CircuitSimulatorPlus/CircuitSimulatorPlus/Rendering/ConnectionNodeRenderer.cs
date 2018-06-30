@@ -20,6 +20,9 @@ namespace CircuitSimulatorPlus
         Ellipse invertionDot;
         Line connectionNodeLine;
         List<Line> connectionLines;
+        Line upperRisingEdgeLine;
+        Line lowerRisingEdgeLine;
+        Label nameLabel;
 
         public readonly Brush ActiveStateBrush = Brushes.Red;
         public readonly Brush DefaultStateBrush = Brushes.Black;
@@ -67,6 +70,11 @@ namespace CircuitSimulatorPlus
                 canvas.Children.Remove(connectionLine);
             if (connectionNode.IsInverted)
                 canvas.Children.Remove(invertionDot);
+            if (isOutputNode == false && (connectionNode as InputNode).IsRisingEdge)
+            {
+                canvas.Children.Remove(upperRisingEdgeLine);
+                canvas.Children.Remove(lowerRisingEdgeLine);
+            }
         }
 
         public void OnConnectedNodesChanged()
@@ -83,7 +91,7 @@ namespace CircuitSimulatorPlus
                         X1 = connectionNode.Position.X,
                         Y1 = connectionNode.Position.Y,
                         X2 = node.Position.X,
-                        Y2 = node.Position.Y
+                        Y2 = node.Position.Y,
                     });
                 }
         }
@@ -96,7 +104,9 @@ namespace CircuitSimulatorPlus
                 connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
             }
             if (connectionNode.IsInverted)
+            {
                 invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
+            }
         }
 
         public void OnSelectionChanged()
@@ -113,6 +123,36 @@ namespace CircuitSimulatorPlus
 
         public void OnRisingEdgeChanged()
         {
+            if (isOutputNode == false)
+            {
+                if ((connectionNode as InputNode).IsRisingEdge)
+                {
+                    upperRisingEdgeLine = new Line
+                    {
+                        StrokeThickness = MainWindow.LineWidth,
+                        X1 = connectionNode.Position.X,
+                        Y1 = connectionNode.Position.Y - MainWindow.InversionDotRadius,
+                        X2 = connectionNode.Position.X + MainWindow.InversionDotDiameter,
+                        Y2 = connectionNode.Position.Y,
+                    };
+                    lowerRisingEdgeLine = new Line
+                    {
+                        StrokeThickness = MainWindow.LineWidth,
+                        X1 = connectionNode.Position.X,
+                        Y1 = connectionNode.Position.Y + MainWindow.InversionDotRadius,
+                        X2 = connectionNode.Position.X + MainWindow.InversionDotDiameter,
+                        Y2 = connectionNode.Position.Y,
+                    };
+
+                    canvas.Children.Add(upperRisingEdgeLine);
+                    canvas.Children.Add(lowerRisingEdgeLine);
+                }
+                else
+                {
+                    canvas.Children.Remove(upperRisingEdgeLine);
+                    canvas.Children.Remove(lowerRisingEdgeLine);
+                }
+            }
         }
 
         public void OnMasterSlaveChanged()
