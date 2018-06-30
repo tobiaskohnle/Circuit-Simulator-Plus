@@ -29,12 +29,6 @@ namespace CircuitSimulatorPlus
             this.gate = gate;
 
             Render();
-
-            OnSelectionChanged();
-            OnNameChanged();
-            OnTagChanged();
-            OnSizeChanged();
-            OnPositionChanged();
         }
 
         public void Render()
@@ -63,6 +57,12 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(boundingBox);
             canvas.Children.Add(nameLabel);
             canvas.Children.Add(tagLabel);
+
+            OnSelectionChanged();
+            OnNameChanged();
+            OnTagChanged();
+            OnSizeChanged();
+            OnPositionChanged();
         }
 
         public void Unrender()

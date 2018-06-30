@@ -18,7 +18,8 @@ namespace CircuitSimulatorPlus
         bool isOutputNode;
 
         Ellipse invertionDot;
-        Line connectionLine;
+        Line connectionNodeLine;
+        List<Line> connectionLines;
 
         public readonly Brush ActiveStateBrush = Brushes.Red;
         public readonly Brush DefaultStateBrush = Brushes.Black;
@@ -43,10 +44,11 @@ namespace CircuitSimulatorPlus
 
         public void Render()
         {
-            connectionLine = new Line
+            connectionNodeLine = new Line
             {
                 StrokeThickness = MainWindow.LineWidth
             };
+            connectionLines = new List<Line>();
             invertionDot = new Ellipse
             {
                 Width = MainWindow.InversionDotDiameter + MainWindow.LineWidth,
@@ -54,17 +56,41 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
 
-            canvas.Children.Add(connectionLine);
+            canvas.Children.Add(connectionNodeLine);
+            foreach (Line connectionLine in connectionLines)
+                canvas.Children.Add(connectionLine);
             canvas.Children.Add(invertionDot);
 
             OnPositionChanged();
             OnStateChanged();
+            OnConnectedNodesChanged();
         }
 
         public void Unrender()
         {
-            canvas.Children.Remove(connectionLine);
+            canvas.Children.Remove(connectionNodeLine);
+            foreach (Line connectionLine in connectionLines)
+                canvas.Children.Remove(connectionLine);
             canvas.Children.Remove(invertionDot);
+        }
+
+        public void OnConnectedNodesChanged()
+        {
+            connectionLines.Clear();
+
+            if (connectionNode is OutputNode)
+                foreach (ConnectionNode node in connectionNode.NextConnectedTo)
+                {
+                    connectionLines.Add(new Line
+                    {
+                        Stroke = Brushes.Black,
+                        StrokeThickness = MainWindow.LineWidth,
+                        X1 = connectionNode.Position.X,
+                        Y1 = connectionNode.Position.Y,
+                        X2 = node.Position.X,
+                        Y2 = node.Position.Y
+                    });
+                }
         }
 
         public void OnStateChanged()
@@ -72,7 +98,7 @@ namespace CircuitSimulatorPlus
             bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
             if (!connectionNode.IsSelected)
             {
-                connectionLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
+                connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
             }
             invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
         }
@@ -81,7 +107,7 @@ namespace CircuitSimulatorPlus
         {
             if (connectionNode.IsSelected)
             {
-                connectionLine.Stroke = SystemColors.MenuHighlightBrush;
+                connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
             }
             else
             {
@@ -110,33 +136,33 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            connectionLine.Y1 = connectionLine.Y2 = connectionNode.Position.Y;
+            connectionNodeLine.Y1 = connectionNodeLine.Y2 = connectionNode.Position.Y;
 
             if (connectionNode.IsInverted)
             {
                 if (isOutputNode)
                 {
-                    connectionLine.X1 = connectionNode.Position.X + MainWindow.InversionDotDiameter + MainWindow.LineRadius;
+                    connectionNodeLine.X1 = connectionNode.Position.X + MainWindow.InversionDotDiameter + MainWindow.LineRadius;
                     Canvas.SetLeft(invertionDot, connectionNode.Position.X);
                 }
                 else
                 {
-                    connectionLine.X1 = connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineRadius;
+                    connectionNodeLine.X1 = connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineRadius;
                     Canvas.SetLeft(invertionDot, connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineWidth);
                 }
                 Canvas.SetTop(invertionDot, connectionNode.Position.Y - MainWindow.InversionDotRadius - MainWindow.LineRadius);
             }
             else
             {
-                connectionLine.X1 = connectionNode.Position.X;
+                connectionNodeLine.X1 = connectionNode.Position.X;
             }
             if (isOutputNode)
             {
-                connectionLine.X2 = connectionNode.Position.X + MainWindow.Unit;
+                connectionNodeLine.X2 = connectionNode.Position.X + MainWindow.Unit;
             }
             else
             {
-                connectionLine.X2 = connectionNode.Position.X - MainWindow.Unit;
+                connectionNodeLine.X2 = connectionNode.Position.X - MainWindow.Unit;
             }
         }
     }

@@ -196,10 +196,6 @@ namespace CircuitSimulatorPlus
             if (tickedNodes.Count == 0)
                 timer.Stop();
         }
-        public void TimerTick(object sender, EventArgs e)
-        {
-            TickQueue();
-        }
 
         public void Select(IClickable obj)
         {
@@ -244,8 +240,15 @@ namespace CircuitSimulatorPlus
         }
         public void SelectAll()
         {
-            foreach (IClickable obj in clickableObjects)
-                Select(obj);
+            if (AnySelected)
+            {
+                DeselectAll();
+            }
+            else
+            {
+                foreach (IClickable obj in clickableObjects)
+                    Select(obj);
+            }
         }
         public void DeselectAll()
         {
@@ -378,7 +381,15 @@ namespace CircuitSimulatorPlus
         {
             foreach (OutputNode outputNode in selectedObjects.Where(obj => obj is OutputNode))
                 foreach (InputNode inputNode in selectedObjects.Where(obj => obj is InputNode))
-                    inputNode.ConnectTo(outputNode);
+                    outputNode.ConnectTo(inputNode);
+        }
+        void ConnectOppositeNodes()
+        {
+            var outputs = selectedObjects.Where(obj => obj is OutputNode).ToList();
+            var inputs = selectedObjects.Where(obj => obj is InputNode).ToList();
+
+            for (int i = 0; i < Math.Min(inputs.Count, outputs.Count); i++)
+                (outputs[i] as OutputNode).ConnectTo(inputs[i] as InputNode);
         }
         #endregion
 
@@ -1069,6 +1080,10 @@ namespace CircuitSimulatorPlus
         {
             ConnectAllNodes();
         }
+        void ConnectOppositeNodes_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectOppositeNodes();
+        }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)
         {
@@ -1093,8 +1108,23 @@ namespace CircuitSimulatorPlus
             {
                 gate.Renderer.Unrender();
                 gate.Renderer.Render();
-                gate.Renderer.OnPositionChanged();
+
+                foreach (InputNode inputNode in gate.Input)
+                {
+                    inputNode.Renderer.Unrender();
+                    inputNode.Renderer.Render();
+                }
+                foreach (OutputNode outputNode in gate.Output)
+                {
+                    outputNode.Renderer.Unrender();
+                    outputNode.Renderer.Render();
+                }
             }
+        }
+
+        public void TimerTick(object sender, EventArgs e)
+        {
+            TickQueue();
         }
         #endregion
     }
