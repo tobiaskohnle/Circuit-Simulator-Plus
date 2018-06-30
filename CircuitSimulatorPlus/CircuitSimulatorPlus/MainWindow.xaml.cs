@@ -35,57 +35,9 @@ namespace CircuitSimulatorPlus
 
             UpdateClickableObjects();
 
-            //timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.Tick += TimerTick;
 
             DrawGrid();
-
-            var cable = new Cable();
-            var segment0 = new CableSegment();
-            var segment1 = new CableSegment();
-            var segment2 = new CableSegment();
-            var joint0 = new CableJoint();
-            var joint1 = new CableJoint();
-            var joint2 = new CableJoint();
-            var joint3 = new CableJoint();
-
-            segment0.A = joint0;
-            segment1.A = segment0.B = joint1;
-            segment2.A = segment1.B = joint2;
-            segment2.B = joint3;
-
-            joint0.After = joint1.Before = segment0;
-            joint1.After = joint2.Before = segment1;
-            joint2.After = joint3.Before = segment2;
-
-            segment0.Renderer = new CableSegmentRenderer(canvas, segment0);
-            segment1.Renderer = new CableSegmentRenderer(canvas, segment1);
-            segment2.Renderer = new CableSegmentRenderer(canvas, segment2);
-            joint0.Renderer = new CableJointRenderer(canvas, joint0);
-            joint1.Renderer = new CableJointRenderer(canvas, joint1);
-            joint2.Renderer = new CableJointRenderer(canvas, joint2);
-            joint3.Renderer = new CableJointRenderer(canvas, joint3);
-
-            joint0.Move(new Vector(5, 5));
-            joint1.Move(new Vector(10, 5));
-            joint2.Move(new Vector(10, 10));
-            joint3.Move(new Vector(15, 10));
-
-            segment0.UpdateHitbox();
-            segment1.UpdateHitbox();
-            segment2.UpdateHitbox();
-
-            segment0.Renderer.OnPositionChanged();
-            segment1.Renderer.OnPositionChanged();
-            segment2.Renderer.OnPositionChanged();
-
-            clickableObjects.Add(segment0);
-            clickableObjects.Add(segment1);
-            clickableObjects.Add(segment2);
-            clickableObjects.Add(joint0);
-            clickableObjects.Add(joint1);
-            clickableObjects.Add(joint2);
-            clickableObjects.Add(joint3);
         }
 
         #region Constants
