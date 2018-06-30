@@ -53,16 +53,16 @@
 
             </MenuItem>
 
-            <MenuItem Command="{x:Static local:Commands.Copy}" InputGestureText="Ctrl+C"/>
-            <MenuItem Command="{x:Static local:Commands.Cut}" InputGestureText="Ctrl+X"/>
-            <MenuItem Command="{x:Static local:Commands.Paste}" InputGestureText="Ctrl+V"/>
-            <MenuItem Command="{x:Static local:Commands.Delete}" InputGestureText="Del"/>
+            <MenuItem Command="{x:Static local:Commands.Copy}"/>
+            <MenuItem Command="{x:Static local:Commands.Cut}"/>
+            <MenuItem Command="{x:Static local:Commands.Paste}"/>
+            <MenuItem Command="{x:Static local:Commands.Delete}"/>
 
-            <!--MenuItem Command="{x:Static local:Commands.Split}" InputGestureText="S"/>
+            <!--MenuItem Command="{x:Static local:Commands.Split}"/>
 
-            <MenuItem Command="{x:Static local:Commands.Rename}" InputGestureText="Ctrl+R"/>
-            <MenuItem Command="{x:Static local:Commands.InvertConnection}" InputGestureText="Ctrl+."/>
-            <MenuItem Command="{x:Static local:Commands.EmptyInput}" InputGestureText="Ctrl+,"/-->
+            <MenuItem Command="{x:Static local:Commands.Rename}"/>
+            <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
+            <MenuItem Command="{x:Static local:Commands.EmptyInput}"/-->
 
         </ContextMenu>
 
@@ -94,53 +94,57 @@
 
             <MenuItem Header="File" Width="auto">
 
-                <MenuItem Header="New Circuit" InputGestureText="Ctrl+N"/>
-                <MenuItem Header="Open Circuit" InputGestureText="Ctrl+O"/>
+                <MenuItem Command="{x:Static local:Commands.New}"/>
+                <MenuItem Command="{x:Static local:Commands.Open}"/>
                 <MenuItem Header="Open Recent"/>
-                <MenuItem Header="Print" InputGestureText="Ctrl+P"/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S"/>
-                <MenuItem Header="Save As..." InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem Header="Print"/>
+                <Separator/>
+                <MenuItem Command="{x:Static local:Commands.Save}"/>
+                <MenuItem Command="{x:Static local:Commands.SaveAs}"/>
 
             </MenuItem>
 
             <MenuItem Header="Edit" Width="auto">
 
-                <MenuItem Header="Undo" InputGestureText="Ctrl+Z"/>
-                <MenuItem Header="Redo" InputGestureText="Ctrl+Shift+Z"/>
+                <MenuItem Command="{x:Static local:Commands.Undo}"/>
+                <MenuItem Command="{x:Static local:Commands.Redo}"/>
+                <Separator/>
                 <MenuItem Command="{x:Static local:Commands.Copy}"/>
-                <MenuItem Header="Cut" InputGestureText="Ctrl+X"/>
-                <MenuItem Header="Paste" InputGestureText="Ctrl+V"/>
-                <MenuItem Header="Remove" InputGestureText="Del"/>
+                <MenuItem Command="{x:Static local:Commands.Cut}"/>
+                <MenuItem Command="{x:Static local:Commands.Paste}"/>
+                <MenuItem Command="{x:Static local:Commands.Delete}"/>
 
             </MenuItem>
 
             <MenuItem Header="View" Width="auto">
 
                 <MenuItem Header="Default View"/>
-                <MenuItem Header="Zoom In" InputGestureText="Ctrl++"/>
-                <MenuItem Header="Zoom Out" InputGestureText="Ctrl+-"/>
+                <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
+                <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>
 
             </MenuItem>
 
             <MenuItem Header="Tools" Width="auto">
 
-                <MenuItem Header="New Component"/>
-                <MenuItem Header="Rename Gate"/>
-                <MenuItem Header="Resize Gate"/>
-                <MenuItem Header="Empty Input"/>
-                <MenuItem Header="Remove Extra Inputs"/>
-                <MenuItem Header="Invert Connection"/>
-                <MenuItem Header="Connect All Nodes"/>
-                <MenuItem Header="Connect Opposite Nodes"/>
-                <MenuItem Header="Select All"/>
+                <MenuItem Command="{x:Static local:Commands.Add}"/>
+                <MenuItem Command="{x:Static local:Commands.Rename}"/>
+                <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
+                <Separator/>
+                <MenuItem Command="{x:Static local:Commands.AddInput}"/>
+                <MenuItem Command="{x:Static local:Commands.TrimInput}"/>
+                <Separator/>
+                <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
+                <MenuItem Command="{x:Static local:Commands.CreateCable}"/>
+                <Separator/>
+                <MenuItem Header="Next Tick"/>
 
             </MenuItem>
 
             <MenuItem Header="Debug" Width="auto">
 
-                <MenuItem Header="Single Ticks"/>
-                <MenuItem Header="Tick All Nodes"/>
-                <MenuItem Header="Rerender All"/>
+                <MenuItem Header="Single Ticks" Click="SingleTicks_Click"/>
+                <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
+                <MenuItem Header="Rerender All" Click="Rerender_Click"/>
 
             </MenuItem>
 
