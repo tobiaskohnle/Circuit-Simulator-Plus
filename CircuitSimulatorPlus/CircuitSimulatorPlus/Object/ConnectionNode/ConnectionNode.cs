@@ -38,10 +38,6 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
-        /// <summary>
-        /// True, if this ConnectionNode is displayed as 'high' (1).
-        /// False, if this ConnectionNode is displayed as 'low' (0).
-        /// </summary>
         public bool State
         {
             get
@@ -54,7 +50,7 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
-                    Renderer.OnStateChanged();
+                    Renderer?.OnStateChanged();
                 }
             }
         }
@@ -105,7 +101,7 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 hitbox.Center = value;
-                Renderer.OnPositionChanged();
+                Renderer?.OnPositionChanged();
             }
         }
 
@@ -120,22 +116,10 @@ namespace CircuitSimulatorPlus
             );
         }
 
-        /// <summary>
-        /// A reference to the Gate which the ConnectionNode is connected to.
-        /// </summary>
-        public Gate Owner
-        {
-            get; private set;
-        }
+        public Gate Owner;
 
-        /// <summary>
-        /// True, if this ConnectionNode is NOT connected to another ConnectionNode.
-        /// </summary>
-        public bool IsEmpty { get; set; } = true;
+        public bool IsEmpty = true;
 
-        /// <summary>
-        /// True, if this ConnectionNode is inverted.
-        /// </summary>
         public bool IsInverted
         {
             get
@@ -145,14 +129,10 @@ namespace CircuitSimulatorPlus
             set
             {
                 inverted = value;
-                Renderer.OnInvertedChanged();
+                Renderer?.OnInvertedChanged();
             }
         }
 
-        /// <summary>
-        /// Name displayed next to the ConnectionNode.
-        /// (inside the Gate it is connected to)
-        /// </summary>
         public string Name
         {
             get
@@ -162,10 +142,22 @@ namespace CircuitSimulatorPlus
             set
             {
                 name = value;
-                Renderer.OnNameChanged();
+                Renderer?.OnNameChanged();
             }
         }
 
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+                Renderer?.OnSelectionChanged();
+            }
+        }
         public Hitbox Hitbox
         {
             get
@@ -178,40 +170,11 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public ConnectionNodeRenderer Renderer
-        {
-            get; set;
-        }
+        public ConnectionNodeRenderer Renderer;
 
-        public bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                Renderer.OnSelectionChanged();
-            }
-        }
-
-        public abstract void Clear();
-
-        /// <summary>
-        /// Inverts the ConnectionNode.
-        /// </summary>
         public void Invert()
         {
             IsInverted = !IsInverted;
-        }
-
-        public virtual void ConnectTo(ConnectionNode connectionNode)
-        {
-            NextConnectedTo.Add(connectionNode);
-            connectionNode.BackConnectedTo = this;
-            Owner.Renderer.OnPositionChanged();
-            Renderer.OnConnectedNodesChanged();
         }
 
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);
@@ -255,6 +218,13 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public abstract void UpdateHitbox();
+        public virtual void ConnectTo(ConnectionNode connectionNode)
+        {
+            NextConnectedTo.Add(connectionNode);
+            connectionNode.BackConnectedTo = this;
+            Owner.Renderer?.OnPositionChanged();
+            Renderer?.OnConnectedNodesChanged();
+        }
+        public abstract void Clear();
     }
 }
