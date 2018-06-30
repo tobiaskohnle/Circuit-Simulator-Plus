@@ -11,9 +11,6 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    /// <summary>
-    /// Documentation is elementary.
-    /// </summary>
     public class GateRenderer
     {
         Canvas canvas;
@@ -36,7 +33,7 @@ namespace CircuitSimulatorPlus
             boundingBox = new Rectangle
             {
                 Stroke = Brushes.Black,
-                StrokeThickness = MainWindow.LineWidth,
+                StrokeThickness = MainWindow.LineWidth
             };
 
             nameLabel = new Label
@@ -50,8 +47,7 @@ namespace CircuitSimulatorPlus
             {
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
-                FontSize = MainWindow.Unit,
-                Content = gate.Tag
+                FontSize = MainWindow.Unit
             };
 
             canvas.Children.Add(boundingBox);

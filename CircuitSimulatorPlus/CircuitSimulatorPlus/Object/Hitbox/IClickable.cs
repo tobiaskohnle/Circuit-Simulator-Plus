@@ -16,6 +16,5 @@ namespace CircuitSimulatorPlus
         {
             get; set;
         }
-        void UpdateHitbox();
     }
 }

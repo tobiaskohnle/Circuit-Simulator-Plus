@@ -5,10 +5,7 @@ namespace CircuitSimulatorPlus
 {
     public class RectHitbox : Hitbox
     {
-        public Rect Bounds
-        {
-            get; set;
-        }
+        public Rect Bounds;
 
         public RectHitbox(object attachedObject, Rect bounds, double distanceFactor)
             : base(attachedObject, distanceFactor)

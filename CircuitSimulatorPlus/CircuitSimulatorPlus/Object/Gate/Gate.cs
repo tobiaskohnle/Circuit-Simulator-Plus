@@ -9,13 +9,18 @@ namespace CircuitSimulatorPlus
     {
         public Gate()
         {
-            Input = new List<InputNode>();
-            Output = new List<OutputNode>();
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
-            UpdateSize();
+            Size = new Size(3, 4);
         }
 
         public const double DistanceFactor = 0.2;
+
+        string name;
+        string tag;
+        bool isSelected;
+        Point position;
+        Size size;
+        RectHitbox hitbox;
 
         public Dictionary<ConnectionNode.Align, int> AmtNodes = new Dictionary<ConnectionNode.Align, int>
         {
@@ -24,42 +29,13 @@ namespace CircuitSimulatorPlus
             { ConnectionNode.Align.S, 0 },
             { ConnectionNode.Align.W, 0 },
         };
-        string name;
-        string tag;
-        Size size;
 
-        public abstract string Type
-        {
-            get;
-        }
+        public abstract string Type { get; }
 
-        /// <summary>
-        /// InputNodes of the gate.
-        /// </summary>
-        public List<InputNode> Input
-        {
-            get; set;
-        }
-        /// <summary>
-        /// OutputNodes of the gate.
-        /// </summary>
-        public List<OutputNode> Output
-        {
-            get; set;
-        }
-        /// <summary>
-        /// Creates the Gate's visual representation on the Render() call.
-        /// Render() should only be called once.
-        /// </summary>
-        public GateRenderer Renderer
-        {
-            get; set;
-        }
+        public List<InputNode> Input = new List<InputNode>();
+        public List<OutputNode> Output = new List<OutputNode>();
+        public GateRenderer Renderer;
 
-        Point position;
-        /// <summary>
-        /// The position on the canvas of the gate.
-        /// </summary>
         public Point Position
         {
             get
@@ -69,8 +45,8 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                UpdateHitbox();
-                Renderer.OnPositionChanged();
+                hitbox.Bounds.Location = value;
+                Renderer?.OnPositionChanged();
             }
         }
         public Size Size
@@ -82,8 +58,41 @@ namespace CircuitSimulatorPlus
             set
             {
                 size = value;
-                //Renderer.OnSizeChanged();
+                hitbox.Bounds.Size = value;
+                Renderer?.OnSizeChanged();
             }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                Renderer?.OnNameChanged();
+            }
+        }
+        public string Tag
+        {
+            get
+            {
+                return tag;
+            }
+            set
+            {
+                tag = value;
+                Renderer?.OnTagChanged();
+            }
+        }
+
+        public void Move(Vector vector)
+        {
+            //Position = new Point(Position.X + vector.X, Position.Y + vector.Y);
+            Position += vector;
+            UpdateConnectionNodePos();
         }
 
         public void UpdateConnectionNodePos()
@@ -98,43 +107,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public void UpdateSize()
-        {
-            Size = new Size(3, 4);
-            UpdateHitbox();
-        }
-
-        public void UpdateHitbox()
-        {
-            hitbox.Bounds = new Rect(Position, Size);
-        }
-        /// <summary>
-        /// Name displayed on top of the gate.
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                Renderer.OnNameChanged();
-            }
-        }
-        /// <summary>
-        /// True, if you can add or remove inputs of this gate.
-        /// </summary>
-        public bool IsMutable
-        {
-            get; set;
-        }
-
-        bool isSelected;
-        /// <summary>
-        /// True, if the gate is currently selected.
-        /// </summary>
         public bool IsSelected
         {
             get
@@ -144,27 +116,9 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer.OnSelectionChanged();
+                Renderer?.OnSelectionChanged();
             }
         }
-        /// <summary>
-        /// Tag displayed inside of the gate. (e.g. ">=1" for OR)
-        /// </summary>
-        public string Tag
-        {
-            get
-            {
-                return tag;
-            }
-            set
-            {
-                tag = value;
-                //Renderer.OnTagChanged();
-            }
-        }
-
-        RectHitbox hitbox;
-
         public Hitbox Hitbox
         {
             get
@@ -185,17 +139,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        /// <summary>
-        /// Moves the gate.
-        /// </summary>
-        public void Move(Vector vector)
-        {
-            //Position = new Point(Position.X + vector.X, Position.Y + vector.Y);
-            Position += vector;
-            UpdateConnectionNodePos();
-        }
-        /// <summary>
-        /// </summary>
         public abstract bool Eval();
     }
 }
