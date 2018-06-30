@@ -6,9 +6,10 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode : IClickable
     {
-        protected ConnectionNode(Gate owner)
+        protected ConnectionNode(Align alignment, Gate owner)
         {
             Owner = owner;
+            Alignment = alignment;
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
@@ -22,6 +23,14 @@ namespace CircuitSimulatorPlus
         Point position;
         string name;
         CircleHitbox hitbox;
+        Align alignment;
+
+        public enum Align
+        {
+            N, W, S, E
+        }
+
+        public Vector AlignmentVector;
 
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
         public ConnectionNode BackConnectedTo
@@ -46,6 +55,32 @@ namespace CircuitSimulatorPlus
                     stateChanged = !stateChanged;
                     state = value;
                     Renderer.OnStateChanged();
+                }
+            }
+        }
+
+        public Align Alignment
+        {
+            get
+            {
+                return alignment;
+            }
+            set
+            {
+                switch (alignment = value)
+                {
+                case Align.N:
+                    AlignmentVector = new Vector(0, -1);
+                    break;
+                case Align.E:
+                    AlignmentVector = new Vector(1, 0);
+                    break;
+                case Align.S:
+                    AlignmentVector = new Vector(0, 1);
+                    break;
+                case Align.W:
+                    AlignmentVector = new Vector(-1, 0);
+                    break;
                 }
             }
         }

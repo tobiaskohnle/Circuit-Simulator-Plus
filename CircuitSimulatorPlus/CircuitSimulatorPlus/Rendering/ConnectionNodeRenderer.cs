@@ -130,18 +130,26 @@ namespace CircuitSimulatorPlus
                     upperRisingEdgeLine = new Line
                     {
                         StrokeThickness = MainWindow.LineWidth,
-                        X1 = connectionNode.Position.X,
-                        Y1 = connectionNode.Position.Y - MainWindow.InversionDotRadius,
-                        X2 = connectionNode.Position.X + MainWindow.InversionDotDiameter,
-                        Y2 = connectionNode.Position.Y,
+                        X1 = connectionNode.Position.X
+                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotRadius,
+                        Y1 = connectionNode.Position.Y
+                            + connectionNode.AlignmentVector.X * MainWindow.InversionDotRadius,
+                        X2 = connectionNode.Position.X
+                            - connectionNode.AlignmentVector.X * MainWindow.InversionDotDiameter,
+                        Y2 = connectionNode.Position.Y
+                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter,
                     };
                     lowerRisingEdgeLine = new Line
                     {
                         StrokeThickness = MainWindow.LineWidth,
-                        X1 = connectionNode.Position.X,
-                        Y1 = connectionNode.Position.Y + MainWindow.InversionDotRadius,
-                        X2 = connectionNode.Position.X + MainWindow.InversionDotDiameter,
-                        Y2 = connectionNode.Position.Y,
+                        X1 = connectionNode.Position.X
+                            + connectionNode.AlignmentVector.Y * MainWindow.InversionDotRadius,
+                        Y1 = connectionNode.Position.Y
+                            - connectionNode.AlignmentVector.X * MainWindow.InversionDotRadius,
+                        X2 = connectionNode.Position.X
+                            - connectionNode.AlignmentVector.X * MainWindow.InversionDotDiameter,
+                        Y2 = connectionNode.Position.Y
+                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter,
                     };
 
                     canvas.Children.Add(upperRisingEdgeLine);
@@ -188,33 +196,21 @@ namespace CircuitSimulatorPlus
 
             if (connectionNode.IsInverted)
             {
-                if (isOutputNode)
-                {
-                    connectionNodeLine.X1 = connectionNode.Position.X + MainWindow.InversionDotDiameter + MainWindow.LineRadius;
-                    if (connectionNode.IsInverted)
-                        Canvas.SetLeft(invertionDot, connectionNode.Position.X);
-                }
-                else
-                {
-                    connectionNodeLine.X1 = connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineRadius;
-                    if (connectionNode.IsInverted)
-                        Canvas.SetLeft(invertionDot, connectionNode.Position.X - MainWindow.InversionDotDiameter - MainWindow.LineWidth);
-                }
+                connectionNodeLine.X1 = connectionNode.Position.X
+                    + connectionNode.AlignmentVector.X * (MainWindow.InversionDotDiameter + MainWindow.LineRadius);
                 if (connectionNode.IsInverted)
-                    Canvas.SetTop(invertionDot, connectionNode.Position.Y - MainWindow.InversionDotRadius - MainWindow.LineRadius);
+                {
+                    Canvas.SetLeft(invertionDot, invertionDot.Width / 2
+                        + connectionNode.AlignmentVector.X * invertionDot.Width / 2);
+                    Canvas.SetTop(invertionDot, invertionDot.Height / 2
+                        + connectionNode.AlignmentVector.Y * invertionDot.Height / 2);
+                }
             }
             else
             {
                 connectionNodeLine.X1 = connectionNode.Position.X;
             }
-            if (isOutputNode)
-            {
-                connectionNodeLine.X2 = connectionNode.Position.X + MainWindow.Unit;
-            }
-            else
-            {
-                connectionNodeLine.X2 = connectionNode.Position.X - MainWindow.Unit;
-            }
+            connectionNodeLine.X2 = connectionNode.Position.X + connectionNode.AlignmentVector.X * MainWindow.Unit;
         }
     }
 }
