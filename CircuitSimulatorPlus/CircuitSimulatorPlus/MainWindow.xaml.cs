@@ -370,8 +370,7 @@ namespace CircuitSimulatorPlus
 
         public void DrawGrid()
         {
-            double linewidth = LineWidth / currentScale;
-            backgroundGridPen = new Pen(Brushes.LightGray, linewidth / 2);
+            backgroundGridPen = new Pen(Brushes.LightGray, 0);
             var geometry = new RectangleGeometry(new Rect(0, 0, 1, 1));
             var drawing = new GeometryDrawing(Brushes.White, backgroundGridPen, geometry);
             var brush = new DrawingBrush
@@ -659,7 +658,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return TranslatePoint(new Point(Width / 2, Height / 2), canvas);
+                return TranslatePoint(new Point(ActualWidth / 2, ActualHeight / 2), canvas);
             }
         }
         #endregion
