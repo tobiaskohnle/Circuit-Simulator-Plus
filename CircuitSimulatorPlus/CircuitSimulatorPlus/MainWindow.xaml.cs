@@ -39,7 +39,7 @@ namespace CircuitSimulatorPlus
             timer.Tick += TimerTick;
 
             canvas.Children.Add(newCable);
-            Canvas.SetZIndex(newCable, 1);
+            Panel.SetZIndex(newCable, 1);
         }
 
         #region Constants
@@ -862,7 +862,7 @@ namespace CircuitSimulatorPlus
                 {
                     newCable.Visibility = Visibility.Collapsed;
                     var startNode = lastClickedObject as ConnectionNode;
-                    
+
                     IClickable clickedObject = FindNearestObjectAt(lastCanvasPos);
 
                     if (clickedObject is ConnectionNode)

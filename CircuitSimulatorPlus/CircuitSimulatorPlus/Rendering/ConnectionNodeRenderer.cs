@@ -91,7 +91,7 @@ namespace CircuitSimulatorPlus
                         X1 = connectionNode.Position.X,
                         Y1 = connectionNode.Position.Y,
                         X2 = node.Position.X,
-                        Y2 = node.Position.Y,
+                        Y2 = node.Position.Y
                     };
                     connectionLines.Add(newConnectionLine);
                     canvas.Children.Add(newConnectionLine);
@@ -144,7 +144,7 @@ namespace CircuitSimulatorPlus
                         X2 = connectionNode.Position.X
                             - connectionNode.AlignmentVector.X * MainWindow.InversionDotDiameter,
                         Y2 = connectionNode.Position.Y
-                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter,
+                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter
                     };
                     lowerRisingEdgeLine = new Line
                     {
@@ -156,7 +156,7 @@ namespace CircuitSimulatorPlus
                         X2 = connectionNode.Position.X
                             - connectionNode.AlignmentVector.X * MainWindow.InversionDotDiameter,
                         Y2 = connectionNode.Position.Y
-                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter,
+                            - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter
                     };
 
                     canvas.Children.Add(upperRisingEdgeLine);
