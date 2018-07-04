@@ -35,14 +35,6 @@ namespace CircuitSimulatorPlus
             this.isOutputNode = isOutputNode;
 
             Render();
-
-            OnStateChanged();
-            OnSelectionChanged();
-            OnRisingEdgeChanged();
-            OnMasterSlaveChanged();
-            OnNameChanged();
-            OnInvertedChanged();
-            OnPositionChanged();
         }
 
         public void Render()
@@ -52,15 +44,26 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
             connectionLines = new List<Line>();
+            invertionDot = new Ellipse
+            {
+                Width = MainWindow.InversionDotDiameter + MainWindow.LineWidth,
+                Height = MainWindow.InversionDotDiameter + MainWindow.LineWidth,
+                StrokeThickness = MainWindow.LineWidth
+            };
 
+            canvas.Children.Add(invertionDot);
             canvas.Children.Add(connectionNodeLine);
             foreach (Line connectionLine in connectionLines)
                 canvas.Children.Add(connectionLine);
 
-            OnPositionChanged();
-            OnInvertedChanged();
-            OnStateChanged();
             OnConnectedNodesChanged();
+            OnStateChanged();
+            OnSelectionChanged();
+            OnRisingEdgeChanged();
+            OnMasterSlaveChanged();
+            OnInvertedChanged();
+            OnNameChanged();
+            OnPositionChanged();
         }
 
         public void Unrender()
@@ -68,13 +71,9 @@ namespace CircuitSimulatorPlus
             canvas.Children.Remove(connectionNodeLine);
             foreach (Line connectionLine in connectionLines)
                 canvas.Children.Remove(connectionLine);
-            if (connectionNode.IsInverted)
-                canvas.Children.Remove(invertionDot);
-            if (isOutputNode == false && (connectionNode as InputNode).IsRisingEdge)
-            {
-                canvas.Children.Remove(upperRisingEdgeLine);
-                canvas.Children.Remove(lowerRisingEdgeLine);
-            }
+            canvas.Children.Remove(invertionDot);
+            canvas.Children.Remove(upperRisingEdgeLine);
+            canvas.Children.Remove(lowerRisingEdgeLine);
         }
 
         public void OnConnectedNodesChanged()
@@ -169,21 +168,7 @@ namespace CircuitSimulatorPlus
 
         public void OnInvertedChanged()
         {
-            if (connectionNode.IsInverted)
-            {
-                invertionDot = new Ellipse
-                {
-                    Width = MainWindow.InversionDotDiameter + MainWindow.LineWidth,
-                    Height = MainWindow.InversionDotDiameter + MainWindow.LineWidth,
-                    StrokeThickness = MainWindow.LineWidth
-                };
-                canvas.Children.Add(invertionDot);
-            }
-            else
-            {
-                canvas.Children.Remove(invertionDot);
-            }
-            OnPositionChanged();
+            invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Hidden : Visibility.Collapsed;
         }
 
         public void OnNameChanged()
@@ -204,15 +189,12 @@ namespace CircuitSimulatorPlus
             {
                 connectionNodeLine.X1 = connectionNode.Position.X
                     + connectionNode.AlignmentVector.X * (MainWindow.InversionDotDiameter + MainWindow.LineRadius);
-                if (connectionNode.IsInverted)
-                {
-                    Canvas.SetLeft(invertionDot, connectionNode.Position.X
-                        - invertionDot.Width / 2
-                        + connectionNode.AlignmentVector.X * invertionDot.Width / 2);
-                    Canvas.SetTop(invertionDot, connectionNode.Position.Y
-                        - invertionDot.Height / 2
-                        + connectionNode.AlignmentVector.Y * invertionDot.Height / 2);
-                }
+                Canvas.SetLeft(invertionDot, connectionNode.Position.X
+                    - invertionDot.Width / 2
+                    + connectionNode.AlignmentVector.X * invertionDot.Width / 2);
+                Canvas.SetTop(invertionDot, connectionNode.Position.Y
+                    - invertionDot.Height / 2
+                    + connectionNode.AlignmentVector.Y * invertionDot.Height / 2);
             }
         }
     }

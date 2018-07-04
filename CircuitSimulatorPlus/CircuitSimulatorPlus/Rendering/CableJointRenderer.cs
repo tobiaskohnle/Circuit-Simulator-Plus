@@ -22,9 +22,6 @@ namespace CircuitSimulatorPlus
             this.cableJoint = cableJoint;
 
             Render();
-
-            OnSelectionChanged();
-            OnPositionChanged();
         }
 
         public void Render()

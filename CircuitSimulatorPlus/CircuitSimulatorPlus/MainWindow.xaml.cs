@@ -44,16 +44,16 @@ namespace CircuitSimulatorPlus
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
         public const string DefaultTitle = "untitled";
         public const string FileExtention = ".tici";
+        public const double Unit = 1;
         public const double MinPxMouseMoved = 5;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
-        public const double LineWidth = Unit / 10;
         public const double LineRadius = Unit / 20;
-        public const double InversionDotDiameter = Unit / 2;
+        public const double LineWidth = Unit / 10;
         public const double InversionDotRadius = Unit / 4;
+        public const double InversionDotDiameter = Unit / 2;
         public const double CableJointSize = Unit / 3;
         public const double ConnectionNodeLineLength = Unit;
-        public const double Unit = 1;
         public const int UndoBufferSize = 32;
         #endregion
 
@@ -99,22 +99,22 @@ namespace CircuitSimulatorPlus
         #region Gates
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
-            contextGate.Context.Add(gate);
             gate.Renderer = new GateRenderer(canvas, gate);
+            contextGate.Context.Add(gate);
 
             for (int i = 0; i < amtInputs; i++)
             {
                 var inputNode = new InputNode(gate);
+                inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
                 gate.Input.Add(inputNode);
                 clickableObjects.Add(inputNode);
-                inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
             }
             for (int i = 0; i < amtOutputs; i++)
             {
                 var outputNode = new OutputNode(gate);
+                outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
                 gate.Output.Add(outputNode);
                 clickableObjects.Add(outputNode);
-                outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
             }
 
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
@@ -124,10 +124,6 @@ namespace CircuitSimulatorPlus
             Select(gate);
             clickableObjects.Add(gate);
             contextGate.Context.Add(gate);
-
-            gate.UpdateConnectionNodePos();
-
-            gate.Renderer.OnPositionChanged();
         }
 
         public void Tick(ConnectionNode node)

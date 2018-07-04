@@ -10,11 +10,7 @@ namespace CircuitSimulatorPlus
         {
         }
 
-        public bool isMasterSlave;
-
-        public override void UpdateHitbox()
-        {
-        }
+        bool isMasterSlave = true;
 
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
@@ -28,7 +24,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 isMasterSlave = value;
-                Renderer.OnMasterSlaveChanged();
+                Renderer?.OnMasterSlaveChanged();
             }
         }
         /// <summary>
@@ -38,7 +34,7 @@ namespace CircuitSimulatorPlus
         {
             base.ConnectTo(connectionNode);
             IsEmpty = connectionNode.IsEmpty = false;
-            Owner.Renderer.OnPositionChanged();
+            Owner.Renderer?.OnPositionChanged();
         }
         /// <summary>
         /// Clears this OutputNode.

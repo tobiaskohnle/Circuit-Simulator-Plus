@@ -111,8 +111,12 @@ namespace CircuitSimulatorPlus
             double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.AmtNodes[Alignment]);
 
             Position = new Point(
-                Owner.Position.X + AlignmentVector.X * sidePos,
-                Owner.Position.Y + AlignmentVector.Y * sidePos
+                Owner.Position.X + Owner.Size.Width / 2
+                    + AlignmentVector.X * Owner.Size.Width / 2
+                    - AlignmentVector.Y * (sidePos - Owner.Size.Width / 2),
+                Owner.Position.Y + Owner.Size.Height / 2
+                    + AlignmentVector.Y * Owner.Size.Height / 2
+                    + AlignmentVector.X * (sidePos - Owner.Size.Height / 2)
             );
         }
 

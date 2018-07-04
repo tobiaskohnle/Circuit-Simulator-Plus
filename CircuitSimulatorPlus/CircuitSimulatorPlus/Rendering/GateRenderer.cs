@@ -17,8 +17,8 @@ namespace CircuitSimulatorPlus
         Gate gate;
 
         Rectangle boundingBox;
-        Label tagLabel;
         Label nameLabel;
+        Label tagLabel;
 
         public GateRenderer(Canvas canvas, Gate gate)
         {
@@ -50,9 +50,9 @@ namespace CircuitSimulatorPlus
                 FontSize = MainWindow.Unit
             };
 
-            canvas.Children.Add(boundingBox);
             canvas.Children.Add(nameLabel);
             canvas.Children.Add(tagLabel);
+            canvas.Children.Add(boundingBox);
 
             OnSelectionChanged();
             OnNameChanged();
@@ -63,9 +63,9 @@ namespace CircuitSimulatorPlus
 
         public void Unrender()
         {
-            canvas.Children.Remove(boundingBox);
-            canvas.Children.Remove(nameLabel);
             canvas.Children.Remove(tagLabel);
+            canvas.Children.Remove(nameLabel);
+            canvas.Children.Remove(boundingBox);
         }
 
         public void OnSelectionChanged()
@@ -111,7 +111,7 @@ namespace CircuitSimulatorPlus
             Canvas.SetTop(tagLabel, gate.Position.Y);
 
             Canvas.SetLeft(nameLabel, gate.Position.X);
-            Canvas.SetBottom(nameLabel, gate.Position.Y);
+            Canvas.SetTop(nameLabel, gate.Position.Y - nameLabel.Height);
         }
     }
 }

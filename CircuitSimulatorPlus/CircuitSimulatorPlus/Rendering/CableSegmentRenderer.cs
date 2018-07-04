@@ -20,11 +20,8 @@ namespace CircuitSimulatorPlus
         {
             this.canvas = canvas;
             this.cableSegment = cableSegment;
-
+            
             Render();
-
-            OnSelectionChanged();
-            OnPositionChanged();
         }
 
         public void Render()

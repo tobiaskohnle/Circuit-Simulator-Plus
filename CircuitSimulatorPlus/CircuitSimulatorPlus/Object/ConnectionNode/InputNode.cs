@@ -28,12 +28,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public override void UpdateHitbox()
-        {
-            //Position = new Point(Owner.Position.Y, Owner.Position.Y + Owner.Size.Height
-            //    * (1 + 2 * index) / (2 * Owner.Input.Count));
-        }
-
         /// <summary>
         /// True, if this InputNode is displayed in the center.
         /// of a gate, independent of other InputsNodes.
