@@ -81,9 +81,10 @@ namespace CircuitSimulatorPlus
             connectionLines.Clear();
 
             if (connectionNode is OutputNode)
+            {
                 foreach (ConnectionNode node in connectionNode.NextConnectedTo)
                 {
-                    connectionLines.Add(new Line
+                    var newConnectionLine = new Line
                     {
                         Stroke = Brushes.Black,
                         StrokeThickness = MainWindow.LineWidth,
@@ -91,8 +92,15 @@ namespace CircuitSimulatorPlus
                         Y1 = connectionNode.Position.Y,
                         X2 = node.Position.X,
                         Y2 = node.Position.Y,
-                    });
+                    };
+                    connectionLines.Add(newConnectionLine);
+                    canvas.Children.Add(newConnectionLine);
                 }
+            }
+            else
+            {
+                connectionNode.BackConnectedTo?.Renderer?.OnConnectedNodesChanged();
+            }
         }
 
         public void OnStateChanged()

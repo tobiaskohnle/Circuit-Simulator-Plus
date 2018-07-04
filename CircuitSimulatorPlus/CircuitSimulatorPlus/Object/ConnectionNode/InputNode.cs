@@ -66,5 +66,11 @@ namespace CircuitSimulatorPlus
                 Tick(tickedNodes, !Owner.HasContext, false);
             }
         }
+
+        public override void ConnectTo(ConnectionNode connectionNode)
+        {
+            connectionNode.NextConnectedTo.Add(this);
+            BackConnectedTo = connectionNode;
+        }
     }
 }

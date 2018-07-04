@@ -15,7 +15,7 @@ namespace CircuitSimulatorPlus
 
         public const double DistanceFactor = 0.2;
 
-        string name = "a gate";
+        string name;
         string tag;
         bool isSelected;
         Point position;

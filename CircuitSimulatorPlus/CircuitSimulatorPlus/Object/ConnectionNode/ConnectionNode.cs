@@ -222,13 +222,8 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public virtual void ConnectTo(ConnectionNode connectionNode)
-        {
-            NextConnectedTo.Add(connectionNode);
-            connectionNode.BackConnectedTo = this;
-            Owner.Renderer?.OnPositionChanged();
-            Renderer?.OnConnectedNodesChanged();
-        }
+        public abstract void ConnectTo(ConnectionNode connectionNode);
+
         public abstract void Clear();
     }
 }

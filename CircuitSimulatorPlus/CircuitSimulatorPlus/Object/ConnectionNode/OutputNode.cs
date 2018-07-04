@@ -32,9 +32,14 @@ namespace CircuitSimulatorPlus
         /// <param name="connectionNode"></param>
         public override void ConnectTo(ConnectionNode connectionNode)
         {
-            base.ConnectTo(connectionNode);
+            NextConnectedTo.Add(connectionNode);
+            connectionNode.BackConnectedTo = this;
+            
+            // TODO: clear connectionNode if !connectionNode.IsEmpty
+
+            Renderer?.OnConnectedNodesChanged();
+
             IsEmpty = connectionNode.IsEmpty = false;
-            Owner.Renderer?.OnPositionChanged();
         }
         /// <summary>
         /// Clears this OutputNode.
