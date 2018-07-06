@@ -22,13 +22,7 @@ namespace CircuitSimulatorPlus
         Size size;
         RectHitbox hitbox;
 
-        public Dictionary<ConnectionNode.Align, int> AmtNodes = new Dictionary<ConnectionNode.Align, int>
-        {
-            { ConnectionNode.Align.N, 0 },
-            { ConnectionNode.Align.E, 0 },
-            { ConnectionNode.Align.S, 0 },
-            { ConnectionNode.Align.W, 0 },
-        };
+        public Dictionary<ConnectionNode.Align, List<ConnectionNode>> ConnectedNodes;
 
         public abstract string Type { get; }
 
@@ -90,21 +84,13 @@ namespace CircuitSimulatorPlus
 
         public void Move(Vector vector)
         {
-            //Position = new Point(Position.X + vector.X, Position.Y + vector.Y);
             Position += vector;
             UpdateConnectionNodePos();
         }
 
         public void UpdateConnectionNodePos()
         {
-            for (int i = 0; i < Input.Count; i++)
-            {
-                Input[i].UpdatePosition(i);
-            }
-            for (int i = 0; i < Output.Count; i++)
-            {
-                Output[i].UpdatePosition(i);
-            }
+            // TODO
         }
 
         public bool IsSelected
