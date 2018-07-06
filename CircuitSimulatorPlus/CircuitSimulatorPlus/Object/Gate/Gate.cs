@@ -88,7 +88,13 @@ namespace CircuitSimulatorPlus
 
         public void UpdateConnectionNodePos()
         {
-            // TODO
+            foreach (var connectedNodes in ConnectedNodes.Values)
+            {
+                for (int i = 0; i < connectedNodes.Count; i++)
+                {
+                    connectedNodes[i].UpdatePosition(i);
+                }
+            }
         }
 
         public bool IsSelected

@@ -64,8 +64,8 @@ namespace CircuitSimulatorPlus
             set
             {
                 if (alignment != null)
-                    Owner.AmtNodes[(Align)alignment]--;
-                Owner.AmtNodes[value]++;
+                    Owner.ConnectedNodes[(Align)alignment].Remove(this);
+                Owner.ConnectedNodes[value].Add(this);
 
                 switch (alignment = value)
                 {
@@ -108,7 +108,7 @@ namespace CircuitSimulatorPlus
         public void UpdatePosition(int index)
         {
             double sideLength = alignment == Align.N || alignment == Align.S ? Owner.Size.Width : Owner.Size.Height;
-            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.AmtNodes[Alignment]);
+            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.ConnectedNodes[Alignment].Count);
 
             Position = new Point(
                 Owner.Position.X + Owner.Size.Width / 2
