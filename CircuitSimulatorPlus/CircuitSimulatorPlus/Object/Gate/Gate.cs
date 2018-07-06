@@ -24,8 +24,6 @@ namespace CircuitSimulatorPlus
 
         public Dictionary<ConnectionNode.Align, List<ConnectionNode>> ConnectedNodes;
 
-        public abstract string Type { get; }
-
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
         public GateRenderer Renderer;

@@ -11,14 +11,6 @@ namespace CircuitSimulatorPlus
             Size = new Size(2, 2);
         }
 
-        public override string Type
-        {
-            get
-            {
-                return "OutputLight";
-            }
-        }
-
         public override bool Eval()
         {
             throw new InvalidOperationException();

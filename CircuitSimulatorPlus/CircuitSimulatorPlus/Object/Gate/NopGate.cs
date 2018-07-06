@@ -10,14 +10,6 @@ namespace CircuitSimulatorPlus
             Tag = "1";
         }
 
-        public override string Type
-        {
-            get
-            {
-                return "Nop";
-            }
-        }
-
         public override bool Eval()
         {
             foreach (InputNode input in Input)

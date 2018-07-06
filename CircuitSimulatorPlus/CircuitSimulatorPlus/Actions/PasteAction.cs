@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
 {
     public class PasteAction : Action
     {
-        public PasteAction(Gate gate) : base($"Pasted {gate.Type}-Gate")
+        public PasteAction(Gate gate) : base($"Pasted {gate.GetType()}")
         {
 
         }

@@ -10,14 +10,6 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public List<Gate> Context { get; set; } = new List<Gate>();
 
-        public override string Type
-        {
-            get
-            {
-                return "Context";
-            }
-        }
-
         public new bool HasContext
         {
             get

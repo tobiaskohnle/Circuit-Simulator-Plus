@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
 {
     public class ChangeTypeAction : Action
     {
-        public ChangeTypeAction(Gate gate, Gate newGate) : base($"Changed Type to {newGate.Type}")
+        public ChangeTypeAction(Gate gate, Gate newGate) : base($"Changed Type to {newGate.GetType()}")
         {
 
         }
