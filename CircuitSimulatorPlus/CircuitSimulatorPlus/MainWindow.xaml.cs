@@ -262,6 +262,34 @@ namespace CircuitSimulatorPlus
             clickableObjects.Remove(connectionNode);
         }
 
+        public void Flip()
+        {
+            foreach (IClickable obj in selectedObjects)
+            {
+                if (obj is Gate)
+                {
+                    var gate = obj as Gate;
+                    gate.Size = new Size(gate.Size.Height, gate.Size.Width);
+
+                    var u = gate.ConnectedNodes[ConnectionNode.Align.U].ToList();
+                    var l = gate.ConnectedNodes[ConnectionNode.Align.L].ToList();
+                    var d = gate.ConnectedNodes[ConnectionNode.Align.D].ToList();
+                    var r = gate.ConnectedNodes[ConnectionNode.Align.R].ToList();
+
+                    foreach (var node in u)
+                        node.Alignment = ConnectionNode.Align.L;
+                    foreach (var node in l)
+                        node.Alignment = ConnectionNode.Align.U;
+                    foreach (var node in d)
+                        node.Alignment = ConnectionNode.Align.R;
+                    foreach (var node in r)
+                        node.Alignment = ConnectionNode.Align.D;
+
+                    gate.UpdateConnectionNodePos();
+                }
+            }
+        }
+
         public IClickable FindNearestObjectAt(Point pos)
         {
             IClickable nearest = null;
@@ -1074,21 +1102,21 @@ namespace CircuitSimulatorPlus
         {
             ConnectOppositeNodes();
         }
-        void Align_N_Click(object sender, RoutedEventArgs e)
+        void Align_U_Click(object sender, RoutedEventArgs e)
         {
-            Align(ConnectionNode.Align.N);
+            Align(ConnectionNode.Align.U);
         }
-        void Align_E_Click(object sender, RoutedEventArgs e)
+        void Align_R_Click(object sender, RoutedEventArgs e)
         {
-            Align(ConnectionNode.Align.E);
+            Align(ConnectionNode.Align.R);
         }
-        void Align_S_Click(object sender, RoutedEventArgs e)
+        void Align_D_Click(object sender, RoutedEventArgs e)
         {
-            Align(ConnectionNode.Align.S);
+            Align(ConnectionNode.Align.D);
         }
-        void Align_W_Click(object sender, RoutedEventArgs e)
+        void Align_L_Click(object sender, RoutedEventArgs e)
         {
-            Align(ConnectionNode.Align.W);
+            Align(ConnectionNode.Align.L);
         }
 
         void SingleTicks_Click(object sender, RoutedEventArgs e)
@@ -1133,5 +1161,10 @@ namespace CircuitSimulatorPlus
             TickQueue();
         }
         #endregion
+
+        void Flip_Click(object sender, RoutedEventArgs e)
+        {
+            Flip();
+        }
     }
 }

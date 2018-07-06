@@ -60,14 +60,16 @@
             <MenuItem Command="{x:Static local:Commands.Cut}"/>
             <MenuItem Command="{x:Static local:Commands.Paste}"/>
             <MenuItem Command="{x:Static local:Commands.Delete}"/>
+            
+            <MenuItem Header="Flip Gate" Click="Flip_Click"/>
 
             <Separator/>
 
             <MenuItem Header="Align Connection Node">
-                <MenuItem Header="N" Click="Align_N_Click"/>
-                <MenuItem Header="E" Click="Align_E_Click"/>
-                <MenuItem Header="S" Click="Align_S_Click"/>
-                <MenuItem Header="W" Click="Align_W_Click"/>
+                <MenuItem Header="UP" Click="Align_U_Click"/>
+                <MenuItem Header="DOWN" Click="Align_D_Click"/>
+                <MenuItem Header="LEFT" Click="Align_L_Click"/>
+                <MenuItem Header="RIGHT" Click="Align_R_Click"/>
             </MenuItem>
 
             <!--MenuItem Command="{x:Static local:Commands.Split}"/>

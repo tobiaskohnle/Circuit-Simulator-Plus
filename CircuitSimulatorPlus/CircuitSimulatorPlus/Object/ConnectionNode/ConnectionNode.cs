@@ -27,7 +27,7 @@ namespace CircuitSimulatorPlus
 
         public enum Align
         {
-            N, W, S, E
+            U, D, L, R
         }
 
         public Vector AlignmentVector = new Vector();
@@ -69,25 +69,25 @@ namespace CircuitSimulatorPlus
 
                 switch (alignment = value)
                 {
-                case Align.N:
+                case Align.U:
                     AlignmentVector.X = 0;
                     AlignmentVector.Y = -1;
                     break;
-                case Align.E:
+                case Align.R:
                     AlignmentVector.X = 1;
                     AlignmentVector.Y = 0;
                     break;
-                case Align.S:
+                case Align.D:
                     AlignmentVector.X = 0;
                     AlignmentVector.Y = 1;
                     break;
-                case Align.W:
+                case Align.L:
                     AlignmentVector.X = -1;
                     AlignmentVector.Y = 0;
                     break;
                 }
 
-                Renderer?.OnPositionChanged();
+                Owner.UpdateConnectionNodePos();
             }
         }
 
@@ -100,14 +100,15 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                hitbox.Center = value;
+                if (hitbox != null)
+                    hitbox.Center = value;
                 Renderer?.OnPositionChanged();
             }
         }
 
         public void UpdatePosition(int index)
         {
-            double sideLength = alignment == Align.N || alignment == Align.S ? Owner.Size.Width : Owner.Size.Height;
+            double sideLength = alignment == Align.U || alignment == Align.D ? Owner.Size.Width : Owner.Size.Height;
             double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.ConnectedNodes[Alignment].Count);
 
             Position = new Point(
