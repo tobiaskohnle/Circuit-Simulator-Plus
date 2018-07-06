@@ -129,6 +129,8 @@ namespace CircuitSimulatorPlus
 
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
 
+            gate.UpdateConnectionNodePos();
+
             //PerformAction(new CreateGateAction(contextGate, gate));
 
             Select(gate);

@@ -11,6 +11,12 @@ namespace CircuitSimulatorPlus
         {
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
+
+            ConnectedNodes = new Dictionary<ConnectionNode.Align, List<ConnectionNode>>();
+            foreach (ConnectionNode.Align align in Enum.GetValues(typeof(ConnectionNode.Align)))
+            {
+                ConnectedNodes[align] = new List<ConnectionNode>();
+            }
         }
 
         public const double DistanceFactor = 0.2;
