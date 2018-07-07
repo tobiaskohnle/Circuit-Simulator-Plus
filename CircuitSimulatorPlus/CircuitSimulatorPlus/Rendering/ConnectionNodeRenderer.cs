@@ -34,11 +34,6 @@ namespace CircuitSimulatorPlus
             this.owner = owner;
             this.isOutputNode = isOutputNode;
 
-            Render();
-        }
-
-        public void Render()
-        {
             connectionNodeLine = new Line
             {
                 StrokeThickness = MainWindow.LineWidth
@@ -51,6 +46,11 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
 
+            Render();
+        }
+
+        public void Render()
+        {
             canvas.Children.Add(invertionDot);
             canvas.Children.Add(connectionNodeLine);
             foreach (Line connectionLine in connectionLines)

@@ -25,11 +25,6 @@ namespace CircuitSimulatorPlus
             this.canvas = canvas;
             this.gate = gate;
 
-            Render();
-        }
-
-        public void Render()
-        {
             boundingBox = new Rectangle
             {
                 Stroke = Brushes.Black,
@@ -50,6 +45,11 @@ namespace CircuitSimulatorPlus
                 FontSize = MainWindow.Unit
             };
 
+            Render();
+        }
+
+        public void Render()
+        {
             canvas.Children.Add(nameLabel);
             canvas.Children.Add(tagLabel);
             canvas.Children.Add(boundingBox);
