@@ -242,6 +242,7 @@ namespace CircuitSimulatorPlus
                 Remove(input);
             foreach (OutputNode output in gate.Output)
                 Remove(output);
+            gate.Renderer.Unrender();
             clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
         }
@@ -258,6 +259,7 @@ namespace CircuitSimulatorPlus
         }
         public void Remove(ConnectionNode connectionNode)
         {
+            connectionNode.Renderer.Unrender();
             connectionNode.Clear();
             clickableObjects.Remove(connectionNode);
         }
@@ -828,8 +830,12 @@ namespace CircuitSimulatorPlus
 
                 if (creatingCable)
                 {
-                    newCable.X1 = lastCanvasPos.X;
-                    newCable.Y1 = lastCanvasPos.Y;
+                    newCable.X2 = lastCanvasPos.X;
+                    newCable.Y2 = lastCanvasPos.Y;
+
+                    newCable.StrokeDashOffset = DefaultGridSize * -0.25 * Math.Sqrt(
+                        Math.Pow(newCable.X1 - newCable.X2, 2) + Math.Pow(newCable.Y1 - newCable.Y2, 2)
+                    );
                 }
 
                 lastWindowPos = currentWindowPos;
