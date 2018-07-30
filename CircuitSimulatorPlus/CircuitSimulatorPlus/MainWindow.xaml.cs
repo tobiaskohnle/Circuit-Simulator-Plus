@@ -878,19 +878,18 @@ namespace CircuitSimulatorPlus
 
                     if (completeMove.LengthSquared > 0.5 * 0.5 * Unit * Unit)
                     {
-                        var moveObjects = new CompoundAction();
-                        foreach (IClickable obj in selectedObjects)
-                        {
-                            if (obj is IMovable)
-                            {
-                                moveObjects.Actions.Add(new MoveAction(obj as IMovable,
-                                    new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
-                            }
-                        }
-                        if (moveObjects.Actions.Count > 0)
-                        {
-                            PerformAction(moveObjects);
-                        }
+                        //foreach (IClickable obj in selectedObjects)
+                        //{
+                        //    if (obj is IMovable)
+                        //    {
+                        //        moveObjects.Actions.Add(new MoveAction(obj as IMovable,
+                        //            new Vector(Math.Round(completeMove.X), Math.Round(completeMove.Y))));
+                        //    }
+                        //}
+                        //if (moveObjects.Actions.Count > 0)
+                        //{
+                        //    PerformAction(moveObjects);
+                        //}
                     }
                 }
 

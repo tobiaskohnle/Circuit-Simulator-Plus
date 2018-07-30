@@ -10,22 +10,28 @@ namespace CircuitSimulatorPlus
     public class MoveAction : Action
     {
         Vector move;
-        IMovable movedObject;
+        List<IMovable> movedObjects;
 
-        public MoveAction(IMovable movedObject, Vector move) : base("Moved object")
+        public MoveAction(List<IMovable> movedObjects, Vector move) : base("Moved object")
         {
             this.move = move;
-            this.movedObject = movedObject;
+            this.movedObjects = movedObjects;
         }
 
         public override void Redo()
         {
-            movedObject.Move(move);
+            foreach (IMovable obj in movedObjects)
+            {
+                obj.Move(move);
+            }
         }
 
         public override void Undo()
         {
-            movedObject.Move(-move);
+            foreach (IMovable obj in movedObjects)
+            {
+                obj.Move(-move);
+            }
         }
     }
 }
