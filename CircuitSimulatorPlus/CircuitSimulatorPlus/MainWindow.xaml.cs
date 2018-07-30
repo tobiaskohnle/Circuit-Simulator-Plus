@@ -890,7 +890,10 @@ namespace CircuitSimulatorPlus
 
                         if (movedObjects.Count > 0)
                         {
-                            PerformAction(new MoveAction(null, completeMove));
+                            completeMove.X = Math.Round(completeMove.X);
+                            completeMove.Y = Math.Round(completeMove.Y);
+
+                            PerformAction(new MoveAction(movedObjects, completeMove));
                         }
                     }
                 }
