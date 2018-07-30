@@ -46,6 +46,13 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.N, ModifierKeys.Control)
             }
         );
+        public static RoutedUICommand RemoveInput { get; } = new RoutedUICommand(
+            " Empty Input", "RemoveInput", typeof(Commands),
+            new InputGestureCollection
+            {
+               
+            }
+        );
         public static RoutedUICommand TrimInput { get; } = new RoutedUICommand(
             "Trim Empty Input", "TrimInput", typeof(Commands),
             new InputGestureCollection

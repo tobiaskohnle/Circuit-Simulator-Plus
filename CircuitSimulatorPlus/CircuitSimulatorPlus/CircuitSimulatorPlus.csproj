@@ -77,6 +77,7 @@
     <Compile Include="Actions\Action.cs" />
     <Compile Include="Actions\AddInputAction.cs" />
     <Compile Include="Actions\DeleteAction.cs" />
+    <Compile Include="Actions\CreateConnectionAction.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Misc\DropOutStack.cs" />
     <Compile Include="Object\Cable\CableJoint.cs" />
@@ -92,7 +93,7 @@
     <Compile Include="Object\Hitbox\LineHitbox.cs" />
     <Compile Include="Rendering\CableJointRenderer.cs" />
     <Compile Include="Actions\ChangeTypeAction.cs" />
-    <Compile Include="Actions\AddAction.cs" />
+    <Compile Include="Actions\CreatGateAction.cs" />
     <Compile Include="Object\Hitbox\CircleHitbox.cs" />
     <Compile Include="Object\Hitbox\Hitbox.cs" />
     <Compile Include="Object\Hitbox\IClickable.cs" />
