@@ -876,7 +876,7 @@ namespace CircuitSimulatorPlus
                             (obj as IMovable).Move(-completeMove);
                     }
 
-                    if (completeMove.LengthSquared > 0.5 * 0.5 * Unit * Unit)
+                    if (completeMove.X > 0.5 * Unit || completeMove.Y > 0.5 * Unit)
                     {
                         //foreach (IClickable obj in selectedObjects)
                         //{

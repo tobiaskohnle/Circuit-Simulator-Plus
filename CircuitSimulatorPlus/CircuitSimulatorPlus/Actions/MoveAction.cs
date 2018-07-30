@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         Vector move;
         List<IMovable> movedObjects;
 
-        public MoveAction(List<IMovable> movedObjects, Vector move) : base("Moved object")
+        public MoveAction(List<IMovable> movedObjects, Vector move) : base("Moved objects")
         {
             this.move = move;
             this.movedObjects = movedObjects;
