@@ -37,8 +37,6 @@ namespace CircuitSimulatorPlus
             
             // TODO: clear connectionNode if !connectionNode.IsEmpty
 
-            Renderer?.OnConnectedNodesChanged();
-
             IsEmpty = connectionNode.IsEmpty = false;
         }
         /// <summary>

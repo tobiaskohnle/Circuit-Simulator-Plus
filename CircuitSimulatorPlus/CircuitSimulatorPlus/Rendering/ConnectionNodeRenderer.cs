@@ -19,7 +19,6 @@ namespace CircuitSimulatorPlus
 
         Ellipse invertionDot;
         Line connectionNodeLine;
-        List<Line> connectionLines;
         Line upperRisingEdgeLine;
         Line lowerRisingEdgeLine;
         Label nameLabel;
@@ -38,7 +37,7 @@ namespace CircuitSimulatorPlus
             {
                 StrokeThickness = MainWindow.LineWidth
             };
-            connectionLines = new List<Line>();
+
             invertionDot = new Ellipse
             {
                 Width = MainWindow.InversionDotDiameter + MainWindow.LineWidth,
@@ -53,10 +52,7 @@ namespace CircuitSimulatorPlus
         {
             canvas.Children.Add(invertionDot);
             canvas.Children.Add(connectionNodeLine);
-            foreach (Line connectionLine in connectionLines)
-                canvas.Children.Add(connectionLine);
 
-            OnConnectedNodesChanged();
             OnStateChanged();
             OnSelectionChanged();
             OnRisingEdgeChanged();
@@ -69,38 +65,9 @@ namespace CircuitSimulatorPlus
         public void Unrender()
         {
             canvas.Children.Remove(connectionNodeLine);
-            foreach (Line connectionLine in connectionLines)
-                canvas.Children.Remove(connectionLine);
             canvas.Children.Remove(invertionDot);
             canvas.Children.Remove(upperRisingEdgeLine);
             canvas.Children.Remove(lowerRisingEdgeLine);
-        }
-
-        public void OnConnectedNodesChanged()
-        {
-            connectionLines.Clear();
-
-            if (connectionNode is OutputNode)
-            {
-                foreach (ConnectionNode node in connectionNode.NextConnectedTo)
-                {
-                    var newConnectionLine = new Line
-                    {
-                        Stroke = Brushes.Black,
-                        StrokeThickness = MainWindow.LineWidth,
-                        X1 = connectionNode.Position.X,
-                        Y1 = connectionNode.Position.Y,
-                        X2 = node.Position.X,
-                        Y2 = node.Position.Y
-                    };
-                    connectionLines.Add(newConnectionLine);
-                    canvas.Children.Add(newConnectionLine);
-                }
-            }
-            else
-            {
-                connectionNode.BackConnectedTo?.Renderer?.OnConnectedNodesChanged();
-            }
         }
 
         public void OnStateChanged()
