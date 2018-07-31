@@ -12,12 +12,7 @@ namespace CircuitSimulatorPlus
 {
     public class Cable
     {
-        public const double CableWidth = 1;
-
-        InputNode inputNode;
-        OutputNode outputNode;
-        List<Point> points;
-        RectHitbox hitbox;
+        Line cable;
 
         public OutputNode OutputNode
         {
