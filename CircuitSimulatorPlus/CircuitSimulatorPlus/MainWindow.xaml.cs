@@ -904,9 +904,24 @@ namespace CircuitSimulatorPlus
                         var endNode = clickedObject as ConnectionNode;
                         if (startNode is InputNode != endNode is InputNode && startNode != endNode)
                         {
+                            var cable = new Cable();
+
+                            if (startNode is InputNode)
+                            {
+                                var temp = startNode;
+                                startNode = endNode;
+                                endNode = temp;
+                            }
+
+                            cable.InputNode = endNode as InputNode;
+                            cable.OutputNode = startNode as OutputNode;
+
+                            cable.Renderer = new CableRenderer(canvas, cable);
+
+                            startNode.CableRenderer = cable.Renderer;
+
                             startNode.ConnectTo(endNode);
                             Tick(startNode);
-                            Tick(endNode);
                         }
                     }
                 }
