@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
 {
     public class Cable
     {
-        Line cable;
+        public CableRenderer Renderer;
 
         public OutputNode OutputNode
         {

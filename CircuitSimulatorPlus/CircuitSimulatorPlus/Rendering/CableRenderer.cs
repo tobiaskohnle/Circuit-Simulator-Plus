@@ -14,17 +14,15 @@ namespace CircuitSimulatorPlus
     public class CableRenderer
     {
         Canvas canvas;
-        ConnectionNode inputNode;
-        ConnectionNode outputNode;
+        Cable cable;
         Line cableLine;
 
-        public CableRenderer(Canvas canvas, ConnectionNode inputNode, ConnectionNode outputNode)
+        public CableRenderer(Canvas canvas, Cable cable)
         {
             this.canvas = canvas;
-            this.inputNode = inputNode;
-            this.outputNode = outputNode;
-            inputNode.CableRenderer = this;
-            outputNode.CableRenderer = this;
+            this.cable = cable;
+            cable.InputNode.CableRenderer = this;
+            cable.OutputNode.CableRenderer = this;
 
             cableLine = new Line
             {
@@ -49,10 +47,10 @@ namespace CircuitSimulatorPlus
 
         public void OnLayoutChanged()
         {
-            cableLine.X1 = inputNode.Position.X;
-            cableLine.Y1 = inputNode.Position.Y;
-            cableLine.X2 = outputNode.Position.X;
-            cableLine.Y2 = outputNode.Position.Y;
+            cableLine.X1 = cable.InputNode.Position.X;
+            cableLine.Y1 = cable.InputNode.Position.Y;
+            cableLine.X2 = cable.OutputNode.Position.X;
+            cableLine.Y2 = cable.OutputNode.Position.Y;
         }
     }
 }
