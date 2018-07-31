@@ -250,9 +250,6 @@ namespace CircuitSimulatorPlus
             var cableSegment = cableJoint.Before;
             cableSegment.B = cableJoint.After.B;
             cableSegment.B.Before = cableSegment;
-            cableSegment.Renderer.OnPositionChanged();
-            cableJoint.After.Renderer.Unrender();
-            cableJoint.Renderer.Unrender();
             clickableObjects.Remove(cableJoint.After);
             clickableObjects.Remove(cableJoint);
         }
@@ -356,13 +353,11 @@ namespace CircuitSimulatorPlus
 
                     Select(newSegment);
 
-                    newSegment.Renderer = new CableSegmentRenderer(canvas, newSegment);
-                    centerJoint.Renderer = new CableJointRenderer(canvas, centerJoint);
+                    //newSegment.Renderer = new CableSegmentRenderer(canvas, newSegment);
+                    //centerJoint.Renderer = new CableJointRenderer(canvas, centerJoint);
 
                     clickableObjects.Add(centerJoint);
                     clickableObjects.Add(newSegment);
-
-                    centerJoint.Renderer.OnPositionChanged();
                 }
             }
         }
@@ -1016,7 +1011,7 @@ namespace CircuitSimulatorPlus
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-            Undo();
+            Redo();
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -1170,10 +1165,5 @@ namespace CircuitSimulatorPlus
             TickQueue();
         }
         #endregion
-
-        void Flip_Click(object sender, RoutedEventArgs e)
-        {
-            Flip();
-        }
     }
 }

@@ -60,8 +60,6 @@
             <MenuItem Command="{x:Static local:Commands.Cut}"/>
             <MenuItem Command="{x:Static local:Commands.Paste}"/>
             <MenuItem Command="{x:Static local:Commands.Delete}"/>
-            
-            <MenuItem Header="Flip Gate" Click="Flip_Click"/>
 
             <Separator/>
 

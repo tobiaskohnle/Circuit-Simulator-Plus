@@ -103,6 +103,7 @@ namespace CircuitSimulatorPlus
                 if (hitbox != null)
                     hitbox.Center = value;
                 Renderer?.OnPositionChanged();
+                CableRenderer?.OnLayoutChanged();
             }
         }
 
@@ -176,6 +177,7 @@ namespace CircuitSimulatorPlus
         }
 
         public ConnectionNodeRenderer Renderer;
+        public CableRenderer CableRenderer;
 
         public void Invert()
         {
