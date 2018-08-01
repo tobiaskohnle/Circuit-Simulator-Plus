@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -40,7 +42,15 @@ namespace CircuitSimulatorPlus
 
             canvas.Children.Add(newCable);
             Panel.SetZIndex(newCable, 1);
+
+            Console_Click(null, null);
         }
+
+        [DllImport("Kernel32")]
+        public static extern void AllocConsole();
+
+        [DllImport("Kernel32")]
+        public static extern void FreeConsole();
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
@@ -76,6 +86,8 @@ namespace CircuitSimulatorPlus
 
         bool saved = true;
         bool singleTicks;
+
+        bool consoleActive;
 
         string fileName = DefaultTitle;
         string currentFilePath;
@@ -1172,6 +1184,17 @@ namespace CircuitSimulatorPlus
                     outputNode.Renderer.Unrender();
                     outputNode.Renderer.Render();
                 }
+            }
+        }
+        void Console_Click(object sender, RoutedEventArgs e)
+        {
+            if (consoleActive = !consoleActive)
+            {
+                AllocConsole();
+            }
+            else
+            {
+                FreeConsole();
             }
         }
 

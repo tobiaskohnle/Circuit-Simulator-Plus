@@ -157,6 +157,7 @@
                 <MenuItem Header="Single Ticks" Click="SingleTicks_Click"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
                 <MenuItem Header="Rerender All" Click="Rerender_Click"/>
+                <MenuItem Header="Show Console" Click="Console_Click"/>
 
             </MenuItem>
 
