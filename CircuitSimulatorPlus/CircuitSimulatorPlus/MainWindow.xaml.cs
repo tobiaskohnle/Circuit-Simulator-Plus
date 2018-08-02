@@ -43,7 +43,8 @@ namespace CircuitSimulatorPlus
             canvas.Children.Add(newCable);
             Panel.SetZIndex(newCable, 1);
 
-            Console_Click(null, null);
+            consoleActive = true;
+            AllocConsole();
         }
 
         [DllImport("Kernel32")]
@@ -899,6 +900,7 @@ namespace CircuitSimulatorPlus
                             completeMove.X = Math.Round(completeMove.X);
                             completeMove.Y = Math.Round(completeMove.Y);
 
+                            Console.WriteLine($"Moved objects ({completeMove})");
                             PerformAction(new MoveAction(movedObjects, completeMove));
                         }
                     }
@@ -931,7 +933,8 @@ namespace CircuitSimulatorPlus
                             cable.Renderer = new CableRenderer(canvas, cable);
 
                             startNode.CableRenderer = cable.Renderer;
-
+                            
+                            Console.WriteLine($"Created cable {startNode} -> {endNode}");
                             startNode.ConnectTo(endNode);
                             Tick(startNode);
                         }
