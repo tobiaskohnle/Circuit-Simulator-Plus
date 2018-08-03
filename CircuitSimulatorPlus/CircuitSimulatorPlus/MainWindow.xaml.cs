@@ -47,16 +47,15 @@ namespace CircuitSimulatorPlus
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
         public const string DefaultTitle = "untitled";
         public const string FileExtention = ".tici";
-        public const double Unit = 1;
         public const double MinPxMouseMoved = 5;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
-        public const double LineRadius = Unit / 20;
-        public const double LineWidth = Unit / 10;
-        public const double InversionDotRadius = Unit / 4;
-        public const double InversionDotDiameter = Unit / 2;
-        public const double CableJointSize = Unit / 3;
-        public const double ConnectionNodeLineLength = Unit;
+        public const double LineRadius = 1d / 20;
+        public const double LineWidth = 1d / 10;
+        public const double InversionDotRadius = 1d / 4;
+        public const double InversionDotDiameter = 1d / 2;
+        public const double CableJointSize = 1d / 3;
+        public const double ConnectionNodeLineLength = 1d;
         public const int UndoBufferSize = 32;
         #endregion
 
@@ -251,9 +250,6 @@ namespace CircuitSimulatorPlus
             var cableSegment = cableJoint.Before;
             cableSegment.B = cableJoint.After.B;
             cableSegment.B.Before = cableSegment;
-            cableSegment.Renderer.OnPositionChanged();
-            cableJoint.After.Renderer.Unrender();
-            cableJoint.Renderer.Unrender();
             clickableObjects.Remove(cableJoint.After);
             clickableObjects.Remove(cableJoint);
         }
@@ -357,13 +353,11 @@ namespace CircuitSimulatorPlus
 
                     Select(newSegment);
 
-                    newSegment.Renderer = new CableSegmentRenderer(canvas, newSegment);
-                    centerJoint.Renderer = new CableJointRenderer(canvas, centerJoint);
+                    //newSegment.Renderer = new CableSegmentRenderer(canvas, newSegment);
+                    //centerJoint.Renderer = new CableJointRenderer(canvas, centerJoint);
 
                     clickableObjects.Add(centerJoint);
                     clickableObjects.Add(newSegment);
-
-                    centerJoint.Renderer.OnPositionChanged();
                 }
             }
         }
@@ -876,7 +870,7 @@ namespace CircuitSimulatorPlus
                             (obj as IMovable).Move(-completeMove);
                     }
 
-                    if (completeMove.X > 0.5 * Unit || completeMove.Y > 0.5 * Unit)
+                    if (Math.Abs(completeMove.X) > 0.5 || Math.Abs(completeMove.Y) > 0.5)
                     {
                         var movedObjects = new List<IMovable>();
 
@@ -910,9 +904,24 @@ namespace CircuitSimulatorPlus
                         var endNode = clickedObject as ConnectionNode;
                         if (startNode is InputNode != endNode is InputNode && startNode != endNode)
                         {
+                            var cable = new Cable();
+
+                            if (startNode is InputNode)
+                            {
+                                var temp = startNode;
+                                startNode = endNode;
+                                endNode = temp;
+                            }
+
+                            cable.InputNode = endNode as InputNode;
+                            cable.OutputNode = startNode as OutputNode;
+
+                            cable.Renderer = new CableRenderer(canvas, cable);
+
+                            startNode.CableRenderer = cable.Renderer;
+
                             startNode.ConnectTo(endNode);
                             Tick(startNode);
-                            Tick(endNode);
                         }
                     }
                 }
@@ -1017,7 +1026,7 @@ namespace CircuitSimulatorPlus
         }
         void Redo_Click(object sender, RoutedEventArgs e)
         {
-            Undo();
+            Redo();
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -1171,10 +1180,5 @@ namespace CircuitSimulatorPlus
             TickQueue();
         }
         #endregion
-
-        void Flip_Click(object sender, RoutedEventArgs e)
-        {
-            Flip();
-        }
     }
 }

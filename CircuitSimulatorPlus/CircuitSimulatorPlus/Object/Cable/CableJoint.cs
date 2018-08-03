@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
     {
         public CableJoint()
         {
-            hitbox = new CircleHitbox(this, new Point(), Cable.CableWidth, 0.02);
+            hitbox = new CircleHitbox(this, new Point(), 1, 0.02);
         }
 
         public CableSegment Before, After;
@@ -20,11 +20,6 @@ namespace CircuitSimulatorPlus
         Cable cable;
         Point position;
         bool isSelected;
-
-        public CableJointRenderer Renderer
-        {
-            get; set;
-        }
 
         public Hitbox Hitbox
         {
@@ -47,7 +42,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer.OnSelectionChanged();
             }
         }
 
@@ -60,11 +54,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                Before?.Renderer?.OnPositionChanged();
-                After?.Renderer?.OnPositionChanged();
-                Before?.UpdateHitbox();
-                After?.UpdateHitbox();
-                Renderer?.OnPositionChanged();
             }
         }
 

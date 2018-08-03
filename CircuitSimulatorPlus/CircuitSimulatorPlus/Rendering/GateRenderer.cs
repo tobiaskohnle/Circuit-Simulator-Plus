@@ -35,14 +35,14 @@ namespace CircuitSimulatorPlus
             {
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
-                FontSize = MainWindow.Unit / 2
+                FontSize = 0.5
             };
 
             tagLabel = new Label
             {
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
-                FontSize = MainWindow.Unit
+                FontSize = 1
             };
 
             Render();
@@ -97,7 +97,7 @@ namespace CircuitSimulatorPlus
             boundingBox.Width = gate.Size.Width + MainWindow.LineWidth;
             boundingBox.Height = gate.Size.Height + MainWindow.LineWidth;
             nameLabel.Width = gate.Size.Width;
-            nameLabel.Height = MainWindow.Unit;
+            nameLabel.Height = 1;
             tagLabel.Width = gate.Size.Width;
             tagLabel.Height = gate.Size.Height;
         }

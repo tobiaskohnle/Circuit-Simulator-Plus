@@ -11,18 +11,13 @@ namespace CircuitSimulatorPlus
     {
         public CableSegment()
         {
-            hitbox = new LineHitbox(this, new Point(), new Point(), Cable.CableWidth, 4);
+            hitbox = new LineHitbox(this, new Point(), new Point(), 1, 4);
         }
 
         LineHitbox hitbox;
         Cable cable;
         CableJoint a, b;
         bool isSelected;
-
-        public CableSegmentRenderer Renderer
-        {
-            get; set;
-        }
 
         public Hitbox Hitbox
         {
@@ -45,7 +40,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer?.OnSelectionChanged();
             }
         }
 
