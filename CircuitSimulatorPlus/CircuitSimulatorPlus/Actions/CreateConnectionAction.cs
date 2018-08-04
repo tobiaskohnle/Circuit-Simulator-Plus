@@ -21,7 +21,7 @@ namespace CircuitSimulatorPlus
 
         public override void Undo()
         {
-
+            Cable.DeleteCable();
         }
     }
 }

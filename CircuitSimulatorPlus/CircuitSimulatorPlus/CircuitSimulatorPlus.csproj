@@ -78,6 +78,7 @@
     <Compile Include="Actions\AddInputAction.cs" />
     <Compile Include="Actions\DeleteAction.cs" />
     <Compile Include="Actions\CreateConnectionAction.cs" />
+    <Compile Include="Actions\InvertConnectionAction.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Misc\DropOutStack.cs" />
     <Compile Include="Object\Cable\CableJoint.cs" />
