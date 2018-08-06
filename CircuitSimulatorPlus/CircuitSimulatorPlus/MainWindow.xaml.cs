@@ -44,16 +44,7 @@ namespace CircuitSimulatorPlus
 
             canvas.Children.Add(newCable);
             Panel.SetZIndex(newCable, 1);
-
-            consoleActive = true;
-            AllocConsole();
         }
-
-        [DllImport("Kernel32")]
-        public static extern void AllocConsole();
-
-        [DllImport("Kernel32")]
-        public static extern void FreeConsole();
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
@@ -91,8 +82,6 @@ namespace CircuitSimulatorPlus
 
         bool saved = true;
         bool singleTicks;
-
-        bool consoleActive;
 
         string fileName = DefaultTitle;
         string currentFilePath;
@@ -1162,17 +1151,6 @@ namespace CircuitSimulatorPlus
                     Tick(inputNode);
                 foreach (OutputNode outputNode in gate.Output)
                     Tick(outputNode);
-            }
-        }
-        void Console_Click(object sender, RoutedEventArgs e)
-        {
-            if (consoleActive = !consoleActive)
-            {
-                AllocConsole();
-            }
-            else
-            {
-                FreeConsole();
             }
         }
 
