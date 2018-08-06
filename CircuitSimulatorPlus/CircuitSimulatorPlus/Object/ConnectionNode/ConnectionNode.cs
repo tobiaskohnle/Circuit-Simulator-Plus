@@ -16,28 +16,25 @@ namespace CircuitSimulatorPlus
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
 
-        bool state;
-        bool inverted;
-        bool stateChanged;
-        bool isSelected;
-        Point position;
-        string name;
-        CircleHitbox hitbox;
-        Align? alignment;
-
         public enum Align
         {
             U, D, L, R
         }
 
+        bool stateChanged;
+
+        public Gate Owner;
+        public bool IsEmpty;
+
         public Vector AlignmentVector = new Vector();
 
-        public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
         public ConnectionNode BackConnectedTo
         {
             get; set;
         }
+        public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
 
+        bool state;
         public bool State
         {
             get
@@ -50,11 +47,82 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
-                    Renderer?.OnStateChanged();
                 }
             }
         }
 
+        bool inverted;
+        public bool IsInverted
+        {
+            get
+            {
+                return inverted;
+            }
+            set
+            {
+                inverted = value;
+            }
+        }
+
+        bool isSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+                Renderer?.OnSelectionChanged();
+            }
+        }
+
+        Point position;
+        public Point Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+                if (hitbox != null)
+                    hitbox.Center = value;
+                Renderer?.OnPositionChanged();
+                CableRenderer?.OnLayoutChanged();
+            }
+        }
+
+        string name;
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                Renderer?.OnNameChanged();
+            }
+        }
+
+        CircleHitbox hitbox;
+        public Hitbox Hitbox
+        {
+            get
+            {
+                return hitbox;
+            }
+            set
+            {
+                hitbox = value as CircleHitbox;
+            }
+        }
+
+        Align? alignment;
         public Align Alignment
         {
             get
@@ -91,101 +159,10 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public Point Position
-        {
-            get
-            {
-                return position;
-            }
-            set
-            {
-                position = value;
-                if (hitbox != null)
-                    hitbox.Center = value;
-                Renderer?.OnPositionChanged();
-                CableRenderer?.OnLayoutChanged();
-            }
-        }
-
-        public void UpdatePosition(int index)
-        {
-            double sideLength = alignment == Align.U || alignment == Align.D ? Owner.Size.Width : Owner.Size.Height;
-            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.ConnectedNodes[Alignment].Count);
-
-            Position = new Point(
-                Owner.Position.X + Owner.Size.Width / 2
-                    + AlignmentVector.X * Owner.Size.Width / 2
-                    - AlignmentVector.Y * (sidePos - Owner.Size.Width / 2),
-                Owner.Position.Y + Owner.Size.Height / 2
-                    + AlignmentVector.Y * Owner.Size.Height / 2
-                    + AlignmentVector.X * (sidePos - Owner.Size.Height / 2)
-            );
-        }
-
-        public Gate Owner;
-
-        public bool IsEmpty = true;
-
-        public bool IsInverted
-        {
-            get
-            {
-                return inverted;
-            }
-            set
-            {
-                inverted = value;
-                Renderer?.OnInvertedChanged();
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                Renderer?.OnNameChanged();
-            }
-        }
-
-        public bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                Renderer?.OnSelectionChanged();
-            }
-        }
-        public Hitbox Hitbox
-        {
-            get
-            {
-                return hitbox;
-            }
-            set
-            {
-                hitbox = value as CircleHitbox;
-            }
-        }
-
-        public ConnectionNodeRenderer Renderer;
-        public CableRenderer CableRenderer;
-
         public void Invert()
         {
             IsInverted = !IsInverted;
         }
-
-        public abstract void Tick(Queue<ConnectionNode> tickedNodes);
-
         protected void Tick(Queue<ConnectionNode> tickedNodes, bool nextIsElementary, bool lastWasElementary)
         {
             stateChanged = false;
@@ -224,9 +201,23 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+        public void UpdatePosition(int index)
+        {
+            double sideLength = alignment == Align.U || alignment == Align.D ? Owner.Size.Width : Owner.Size.Height;
+            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.ConnectedNodes[Alignment].Count);
 
+            Position = new Point(
+                Owner.Position.X + Owner.Size.Width / 2
+                    + AlignmentVector.X * Owner.Size.Width / 2
+                    - AlignmentVector.Y * (sidePos - Owner.Size.Width / 2),
+                Owner.Position.Y + Owner.Size.Height / 2
+                    + AlignmentVector.Y * Owner.Size.Height / 2
+                    + AlignmentVector.X * (sidePos - Owner.Size.Height / 2)
+            );
+        }
+
+        public abstract void Tick(Queue<ConnectionNode> tickedNodes);
         public abstract void ConnectTo(ConnectionNode connectionNode);
-
         public abstract void Clear();
     }
 }
