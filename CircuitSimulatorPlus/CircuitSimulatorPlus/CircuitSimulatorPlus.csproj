@@ -84,8 +84,8 @@
     <Compile Include="Actions\DeleteInputAction.cs" />
     <Compile Include="Actions\InvertConnectionAction.cs" />
     <Compile Include="Actions\ToggleObjectsAction.cs" />
-    <Compile Include="Misc\Commands.cs" />
-    <Compile Include="Misc\DropOutStack.cs" />
+    <Compile Include="Miscellaneous\Commands.cs" />
+    <Compile Include="Miscellaneous\DropOutStack.cs" />
     <Compile Include="Objects\Cables\CableJoint.cs" />
     <Compile Include="Objects\Cables\CableSegment.cs" />
     <Compile Include="Objects\Gates\AndGate.cs" />
