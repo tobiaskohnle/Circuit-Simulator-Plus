@@ -8,10 +8,11 @@ namespace CircuitSimulatorPlus
     {
         public InputNode(Gate owner) : base(Align.L, owner)
         {
+            renderer = new ConnectionNodeRenderer(this, owner, false);
         }
 
+        public event System.Action OnRisingEdgeChanged;
         bool isRisingEdge;
-
         /// <summary>
         /// True, if this InputNode reacts to rising edges.
         /// </summary>
@@ -24,6 +25,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 isRisingEdge = value;
+                OnRisingEdgeChanged?.Invoke();
             }
         }
 

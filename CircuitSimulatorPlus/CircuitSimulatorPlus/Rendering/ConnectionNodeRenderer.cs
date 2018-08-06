@@ -12,7 +12,6 @@ namespace CircuitSimulatorPlus
 {
     public class ConnectionNodeRenderer
     {
-        Canvas canvas;
         ConnectionNode connectionNode;
         Gate owner;
         bool isOutputNode;
@@ -26,9 +25,8 @@ namespace CircuitSimulatorPlus
         public readonly Brush ActiveStateBrush = Brushes.Red;
         public readonly Brush DefaultStateBrush = Brushes.Black;
 
-        public ConnectionNodeRenderer(Canvas canvas, ConnectionNode connectionNode, Gate owner, bool isOutputNode)
+        public ConnectionNodeRenderer(ConnectionNode connectionNode, Gate owner, bool isOutputNode)
         {
-            this.canvas = canvas;
             this.connectionNode = connectionNode;
             this.owner = owner;
             this.isOutputNode = isOutputNode;
@@ -45,13 +43,22 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
 
+            connectionNode.OnSelectionChanged += OnSelectionChanged;
+            connectionNode.OnStateChanged += OnStateChanged;
+            if (connectionNode is InputNode)
+                (connectionNode as InputNode).OnRisingEdgeChanged += OnRisingEdgeChanged;
+            if (connectionNode is OutputNode)
+                (connectionNode as OutputNode).OnMasterSlaveChanged += OnMasterSlaveChanged;
+            connectionNode.OnNameChanged += OnNameChanged;
+            connectionNode.OnPositionChanged += OnPositionChanged;
+
             Render();
         }
 
         public void Render()
         {
-            canvas.Children.Add(invertionDot);
-            canvas.Children.Add(connectionNodeLine);
+            MainWindow.Canvas.Children.Add(invertionDot);
+            MainWindow.Canvas.Children.Add(connectionNodeLine);
 
             OnStateChanged();
             OnSelectionChanged();
@@ -64,10 +71,10 @@ namespace CircuitSimulatorPlus
 
         public void Unrender()
         {
-            canvas.Children.Remove(connectionNodeLine);
-            canvas.Children.Remove(invertionDot);
-            canvas.Children.Remove(upperRisingEdgeLine);
-            canvas.Children.Remove(lowerRisingEdgeLine);
+            MainWindow.Canvas.Children.Remove(connectionNodeLine);
+            MainWindow.Canvas.Children.Remove(invertionDot);
+            MainWindow.Canvas.Children.Remove(upperRisingEdgeLine);
+            MainWindow.Canvas.Children.Remove(lowerRisingEdgeLine);
         }
 
         public void OnStateChanged()
@@ -126,13 +133,13 @@ namespace CircuitSimulatorPlus
                             - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter
                     };
 
-                    canvas.Children.Add(upperRisingEdgeLine);
-                    canvas.Children.Add(lowerRisingEdgeLine);
+                    MainWindow.Canvas.Children.Add(upperRisingEdgeLine);
+                    MainWindow.Canvas.Children.Add(lowerRisingEdgeLine);
                 }
                 else
                 {
-                    canvas.Children.Remove(upperRisingEdgeLine);
-                    canvas.Children.Remove(lowerRisingEdgeLine);
+                    MainWindow.Canvas.Children.Remove(upperRisingEdgeLine);
+                    MainWindow.Canvas.Children.Remove(lowerRisingEdgeLine);
                 }
             }
         }

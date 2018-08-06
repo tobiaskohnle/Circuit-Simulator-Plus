@@ -10,8 +10,11 @@ namespace CircuitSimulatorPlus
         {
             Owner = owner;
             Alignment = alignment;
+            IsEmpty = true;
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
+
+        protected ConnectionNodeRenderer renderer;
 
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
@@ -34,6 +37,7 @@ namespace CircuitSimulatorPlus
         }
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
 
+        public event System.Action OnStateChanged;
         bool state;
         public bool State
         {
@@ -48,9 +52,11 @@ namespace CircuitSimulatorPlus
                     stateChanged = !stateChanged;
                     state = value;
                 }
+                OnStateChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnInvertedChanged;
         bool inverted;
         public bool IsInverted
         {
@@ -61,9 +67,11 @@ namespace CircuitSimulatorPlus
             set
             {
                 inverted = value;
+                OnInvertedChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnSelectionChanged;
         bool isSelected;
         public bool IsSelected
         {
@@ -74,9 +82,11 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
+                OnSelectionChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnPositionChanged;
         Point position;
         public Point Position
         {
@@ -89,9 +99,11 @@ namespace CircuitSimulatorPlus
                 position = value;
                 if (hitbox != null)
                     hitbox.Center = value;
+                OnPositionChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnNameChanged;
         string name;
         public string Name
         {
@@ -102,6 +114,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 name = value;
+                OnNameChanged?.Invoke();
             }
         }
 
@@ -118,6 +131,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public event System.Action OnAlignmentChanged;
         Align? alignment;
         public Align Alignment
         {
@@ -152,6 +166,7 @@ namespace CircuitSimulatorPlus
                 }
 
                 Owner.UpdateConnectionNodePos();
+                OnAlignmentChanged?.Invoke();
             }
         }
 

@@ -8,10 +8,12 @@ namespace CircuitSimulatorPlus
     {
         public OutputNode(Gate owner) : base(Align.R, owner)
         {
+            renderer = new ConnectionNodeRenderer(this, owner, true);
         }
 
         bool isMasterSlave = true;
 
+        public event System.Action OnMasterSlaveChanged;
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
         /// </summary>
@@ -24,6 +26,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 isMasterSlave = value;
+                OnMasterSlaveChanged?.Invoke();
             }
         }
         /// <summary>

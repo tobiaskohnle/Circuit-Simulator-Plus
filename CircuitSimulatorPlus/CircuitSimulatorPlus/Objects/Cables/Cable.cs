@@ -13,6 +13,15 @@ namespace CircuitSimulatorPlus
 {
     public class Cable
     {
+        public Cable(InputNode inputNode, OutputNode outputNode)
+        {
+            InputNode = inputNode;
+            OutputNode = outputNode;
+            renderer = new CableRenderer(this);
+        }
+
+        CableRenderer renderer;
+
         public OutputNode OutputNode
         {
             get; set;
@@ -27,9 +36,11 @@ namespace CircuitSimulatorPlus
         {
             get; set;
         }
+
         public void CreateCable()
         {
         }
+
         public void DeleteCable()
         {
         }

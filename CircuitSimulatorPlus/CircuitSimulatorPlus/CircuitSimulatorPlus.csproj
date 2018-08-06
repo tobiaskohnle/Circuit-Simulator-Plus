@@ -102,6 +102,7 @@
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
     <Compile Include="Objects\Hitboxes\Hitbox.cs" />
     <Compile Include="Objects\Hitboxes\IClickable.cs" />
+    <Compile Include="Rendering\CableRenderer.cs" />
     <Compile Include="Rendering\ConnectionNodeRenderer.cs" />
     <Compile Include="Actions\MoveAction.cs" />
     <Compile Include="Actions\PasteAction.cs" />

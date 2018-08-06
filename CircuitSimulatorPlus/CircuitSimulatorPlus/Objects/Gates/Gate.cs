@@ -9,6 +9,8 @@ namespace CircuitSimulatorPlus
     {
         public Gate()
         {
+            renderer = new GateRenderer(this);
+
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
 
@@ -21,11 +23,14 @@ namespace CircuitSimulatorPlus
 
         public const double DistanceFactor = 0.2;
 
+        protected GateRenderer renderer;
+
         public Dictionary<ConnectionNode.Align, List<ConnectionNode>> ConnectedNodes;
 
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
 
+        public event System.Action OnNameChanged;
         string name;
         public string Name
         {
@@ -36,9 +41,11 @@ namespace CircuitSimulatorPlus
             set
             {
                 name = value;
+                OnNameChanged?.Invoke();
             }
         }
 
+        public event System.Action OnTagChanged;
         string tag;
         public string Tag
         {
@@ -49,9 +56,11 @@ namespace CircuitSimulatorPlus
             set
             {
                 tag = value;
+                OnTagChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnSelectionChanged;
         bool isSelected;
         public bool IsSelected
         {
@@ -62,9 +71,11 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
+                OnSelectionChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnPositionChanged;
         Point position;
         public Point Position
         {
@@ -76,9 +87,11 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 hitbox.Bounds.Location = value;
+                OnPositionChanged?.Invoke();
             }
         }
-
+        
+        public event System.Action OnSizeChanged;
         Size size;
         public Size Size
         {
@@ -90,6 +103,7 @@ namespace CircuitSimulatorPlus
             {
                 size = value;
                 hitbox.Bounds.Size = value;
+                OnSizeChanged?.Invoke();
             }
         }
 
