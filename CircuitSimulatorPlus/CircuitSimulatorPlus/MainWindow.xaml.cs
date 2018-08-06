@@ -515,8 +515,9 @@ namespace CircuitSimulatorPlus
             {
                 currentFilePath = dialog.FileName;
                 contextGate = (ContextGate)StorageConverter.ToGate(Storage.Load(dialog.FileName));
-                /*UpdateClickableObjects();
-                foreach (Gate gate in contextGate.Context)
+                UpdateClickableObjects();
+                Rerender_Click(null, null);
+                /*foreach (Gate gate in contextGate.Context)
                 {
                     gate.Renderer = new GateRenderer(canvas, gate);
                     for (int i = 0; i < gate.Output.Count; i++)
@@ -544,8 +545,6 @@ namespace CircuitSimulatorPlus
                             cable.OutputNode = node;
                             cable.InputNode = inNode;
                             //cable.Renderer = new CableRenderer(canvas, cable);
-                            addPoint(p1, true);
-                            addPoint(p2, true);
                             cables.Add(cable);
                         }
                     }
@@ -1156,7 +1155,7 @@ namespace CircuitSimulatorPlus
         void SingleTicks_Click(object sender, RoutedEventArgs e)
         {
             singleTicks = !singleTicks;
-            MessageBox.Show($"Single Ticks {(singleTicks ? "Enabled (Advance by pressing 'T')" : "Disabled")}");
+            Console.WriteLine($"Single Ticks {(singleTicks ? "Enabled" : "Disabled")}");
             if (singleTicks == false && tickedNodes.Count > 0)
                 timer.Start();
         }

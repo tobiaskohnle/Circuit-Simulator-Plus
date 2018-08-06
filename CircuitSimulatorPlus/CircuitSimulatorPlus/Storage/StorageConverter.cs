@@ -166,7 +166,7 @@ namespace CircuitSimulatorPlus
                 foreach (int index in storageObject.InitialActiveOutputs)
                     gate.Output[index].State = true;
 
-            if (storageObject.Type == "Context")
+            if (storageObject.Type == "ContextGate")
             {
                 ContextGate contextGate = gate as ContextGate;
                 var idToNode = new Dictionary<int, ConnectionNode>();
