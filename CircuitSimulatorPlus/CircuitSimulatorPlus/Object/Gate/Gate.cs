@@ -21,19 +21,54 @@ namespace CircuitSimulatorPlus
 
         public const double DistanceFactor = 0.2;
 
-        string name;
-        string tag;
-        bool isSelected;
-        Point position;
-        Size size;
-        RectHitbox hitbox;
-
         public Dictionary<ConnectionNode.Align, List<ConnectionNode>> ConnectedNodes;
 
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
-        public GateRenderer Renderer;
 
+        string name;
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+                Renderer?.OnNameChanged();
+            }
+        }
+
+        string tag;
+        public string Tag
+        {
+            get
+            {
+                return tag;
+            }
+            set
+            {
+                tag = value;
+                Renderer?.OnTagChanged();
+            }
+        }
+
+        bool isSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+                Renderer?.OnSelectionChanged();
+            }
+        }
+
+        Point position;
         public Point Position
         {
             get
@@ -47,6 +82,8 @@ namespace CircuitSimulatorPlus
                 Renderer?.OnPositionChanged();
             }
         }
+
+        Size size;
         public Size Size
         {
             get
@@ -61,60 +98,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                Renderer?.OnNameChanged();
-            }
-        }
-        public string Tag
-        {
-            get
-            {
-                return tag;
-            }
-            set
-            {
-                tag = value;
-                Renderer?.OnTagChanged();
-            }
-        }
-
-        public void Move(Vector vector)
-        {
-            Position += vector;
-            UpdateConnectionNodePos();
-        }
-
-        public void UpdateConnectionNodePos()
-        {
-            foreach (var connectedNodes in ConnectedNodes.Values)
-            {
-                for (int i = 0; i < connectedNodes.Count; i++)
-                {
-                    connectedNodes[i].UpdatePosition(i);
-                }
-            }
-        }
-
-        public bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                Renderer?.OnSelectionChanged();
-            }
-        }
+        RectHitbox hitbox;
         public Hitbox Hitbox
         {
             get
@@ -124,6 +108,22 @@ namespace CircuitSimulatorPlus
             set
             {
                 hitbox = value as RectHitbox;
+            }
+        }
+
+        public void Move(Vector vector)
+        {
+            Position += vector;
+            UpdateConnectionNodePos();
+        }
+        public void UpdateConnectionNodePos()
+        {
+            foreach (var connectedNodes in ConnectedNodes.Values)
+            {
+                for (int i = 0; i < connectedNodes.Count; i++)
+                {
+                    connectedNodes[i].UpdatePosition(i);
+                }
             }
         }
 
