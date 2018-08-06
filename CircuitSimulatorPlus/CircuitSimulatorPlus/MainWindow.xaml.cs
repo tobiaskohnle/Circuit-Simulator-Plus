@@ -32,7 +32,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(args[1]));
+                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtility.Load(args[1]));
             else
                 contextGate = new ContextGate();
 
@@ -513,7 +513,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 currentFilePath = dialog.FileName;
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(dialog.FileName));
+                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtility.Load(dialog.FileName));
                 UpdateClickableObjects();
                 /*foreach (Gate gate in contextGate.Context)
                 {
@@ -572,7 +572,7 @@ namespace CircuitSimulatorPlus
         public void Save()
         {
             if (currentFilePath != null && !saved)
-                StorageUtil.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
             else
                 SaveAs();
             saved = true;
@@ -588,7 +588,7 @@ namespace CircuitSimulatorPlus
             {
                 currentFilePath = dialog.FileName;
                 fileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
-                StorageUtil.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
                 saved = true;
                 UpdateTitle();
             }
@@ -1109,7 +1109,7 @@ namespace CircuitSimulatorPlus
 
             if (dialog.ShowDialog() == true)
             {
-                Gate gate = StorageConverter.ToGate(StorageUtil.Load(dialog.FileName));
+                Gate gate = StorageConverter.ToGate(StorageUtility.Load(dialog.FileName));
                 gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
                 //gate.Renderer = new GateRenderer(canvas, gate);
                 clickableObjects.Add(gate);
