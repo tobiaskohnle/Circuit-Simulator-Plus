@@ -74,7 +74,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer?.OnSelectionChanged();
             }
         }
 
@@ -90,8 +89,6 @@ namespace CircuitSimulatorPlus
                 position = value;
                 if (hitbox != null)
                     hitbox.Center = value;
-                Renderer?.OnPositionChanged();
-                CableRenderer?.OnLayoutChanged();
             }
         }
 
@@ -105,7 +102,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 name = value;
-                Renderer?.OnNameChanged();
             }
         }
 

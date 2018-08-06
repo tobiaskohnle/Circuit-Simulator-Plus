@@ -127,14 +127,14 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < amtInputs; i++)
             {
                 var inputNode = new InputNode(gate);
-                inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
+                //inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
                 gate.Input.Add(inputNode);
                 clickableObjects.Add(inputNode);
             }
             for (int i = 0; i < amtOutputs; i++)
             {
                 var outputNode = new OutputNode(gate);
-                outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
+                //outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
                 gate.Output.Add(outputNode);
                 clickableObjects.Add(outputNode);
             }
@@ -163,7 +163,7 @@ namespace CircuitSimulatorPlus
             foreach (ConnectionNode ticked in copy)
             {
                 ticked.Tick(tickedNodes);
-                ticked.Renderer.OnStateChanged();
+                //ticked.Renderer.OnStateChanged();
             }
             if (tickedNodes.Count == 0)
                 timer.Stop();
@@ -268,7 +268,7 @@ namespace CircuitSimulatorPlus
         }
         public void Remove(ConnectionNode connectionNode)
         {
-            connectionNode.Renderer.Unrender();
+            //connectionNode.Renderer.Unrender();
             connectionNode.Clear();
             clickableObjects.Remove(connectionNode);
         }
@@ -516,7 +516,6 @@ namespace CircuitSimulatorPlus
                 currentFilePath = dialog.FileName;
                 contextGate = (ContextGate)StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 UpdateClickableObjects();
-                Rerender_Click(null, null);
                 /*foreach (Gate gate in contextGate.Context)
                 {
                     gate.Renderer = new GateRenderer(canvas, gate);
@@ -931,7 +930,7 @@ namespace CircuitSimulatorPlus
 
                             cable.Renderer = new CableRenderer(canvas, cable);
 
-                            startNode.CableRenderer = cable.Renderer;
+                            //startNode.CableRenderer = cable.Renderer;
 
                             Console.WriteLine($"Created cable");
                             startNode.ConnectTo(endNode);
@@ -1167,25 +1166,6 @@ namespace CircuitSimulatorPlus
                     Tick(inputNode);
                 foreach (OutputNode outputNode in gate.Output)
                     Tick(outputNode);
-            }
-        }
-        void Rerender_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (Gate gate in contextGate.Context)
-            {
-                gate.Renderer.Unrender();
-                gate.Renderer.Render();
-
-                foreach (InputNode inputNode in gate.Input)
-                {
-                    inputNode.Renderer.Unrender();
-                    inputNode.Renderer.Render();
-                }
-                foreach (OutputNode outputNode in gate.Output)
-                {
-                    outputNode.Renderer.Unrender();
-                    outputNode.Renderer.Render();
-                }
             }
         }
         void Console_Click(object sender, RoutedEventArgs e)

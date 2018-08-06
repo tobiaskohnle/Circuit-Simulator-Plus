@@ -24,7 +24,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 isRisingEdge = value;
-                Renderer.OnRisingEdgeChanged();
             }
         }
 
@@ -51,7 +50,7 @@ namespace CircuitSimulatorPlus
             BackConnectedTo = null;
             IsEmpty = true;
 
-            CableRenderer.Unrender();
+            //CableRenderer.Unrender();
         }
 
         public override void Tick(Queue<ConnectionNode> tickedNodes)

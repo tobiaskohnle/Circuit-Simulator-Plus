@@ -24,7 +24,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 isMasterSlave = value;
-                Renderer?.OnMasterSlaveChanged();
             }
         }
         /// <summary>
