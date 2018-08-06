@@ -86,28 +86,28 @@
     <Compile Include="Actions\ToggleObjectsAction.cs" />
     <Compile Include="Misc\Commands.cs" />
     <Compile Include="Misc\DropOutStack.cs" />
-    <Compile Include="Object\Cable\CableJoint.cs" />
-    <Compile Include="Object\Cable\CableSegment.cs" />
-    <Compile Include="Object\Gate\AndGate.cs" />
-    <Compile Include="Object\Cable\Cable.cs" />
-    <Compile Include="Object\Gate\ContextGate.cs" />
-    <Compile Include="Object\Gate\InputSwitch.cs" />
-    <Compile Include="Object\Gate\NopGate.cs" />
-    <Compile Include="Object\Gate\OrGate.cs" />
-    <Compile Include="Object\Gate\OutputLight.cs" />
-    <Compile Include="Object\Hitbox\IMovable.cs" />
-    <Compile Include="Object\Hitbox\LineHitbox.cs" />
+    <Compile Include="Objects\Cables\CableJoint.cs" />
+    <Compile Include="Objects\Cables\CableSegment.cs" />
+    <Compile Include="Objects\Gates\AndGate.cs" />
+    <Compile Include="Objects\Cables\Cable.cs" />
+    <Compile Include="Objects\Gates\ContextGate.cs" />
+    <Compile Include="Objects\Gates\InputSwitch.cs" />
+    <Compile Include="Objects\Gates\NopGate.cs" />
+    <Compile Include="Objects\Gates\OrGate.cs" />
+    <Compile Include="Objects\Gates\OutputLight.cs" />
+    <Compile Include="Objects\Hitboxes\IMovable.cs" />
+    <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
     <Compile Include="Actions\ChangeTypeAction.cs" />
     <Compile Include="Actions\CreatGateAction.cs" />
-    <Compile Include="Object\Hitbox\CircleHitbox.cs" />
-    <Compile Include="Object\Hitbox\Hitbox.cs" />
-    <Compile Include="Object\Hitbox\IClickable.cs" />
+    <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
+    <Compile Include="Objects\Hitboxes\Hitbox.cs" />
+    <Compile Include="Objects\Hitboxes\IClickable.cs" />
     <Compile Include="Rendering\ConnectionNodeRenderer.cs" />
     <Compile Include="Actions\MoveAction.cs" />
     <Compile Include="Actions\PasteAction.cs" />
     <Compile Include="Actions\RenameAction.cs" />
     <Compile Include="Rendering\GateRenderer.cs" />
-    <Compile Include="Object\Hitbox\RectHitbox.cs" />
+    <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
     <Compile Include="Storage\Storage.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
     <Compile Include="Storage\StorageObject.cs" />
@@ -119,16 +119,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Object\ConnectionNode\ConnectionNode.cs" />
-    <Compile Include="Object\Gate\Gate.cs" />
-    <Compile Include="Object\ConnectionNode\InputNode.cs" />
+    <Compile Include="Objects\ConnectionNodes\ConnectionNode.cs" />
+    <Compile Include="Objects\Gates\Gate.cs" />
+    <Compile Include="Objects\ConnectionNodes\InputNode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Object\ConnectionNode\OutputNode.cs" />
+    <Compile Include="Objects\ConnectionNodes\OutputNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
