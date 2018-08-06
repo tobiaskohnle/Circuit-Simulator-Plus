@@ -36,7 +36,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 name = value;
-                Renderer?.OnNameChanged();
             }
         }
 
@@ -50,7 +49,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 tag = value;
-                Renderer?.OnTagChanged();
             }
         }
 
@@ -64,7 +62,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 isSelected = value;
-                Renderer?.OnSelectionChanged();
             }
         }
 
@@ -79,7 +76,6 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 hitbox.Bounds.Location = value;
-                Renderer?.OnPositionChanged();
             }
         }
 
@@ -94,7 +90,6 @@ namespace CircuitSimulatorPlus
             {
                 size = value;
                 hitbox.Bounds.Size = value;
-                Renderer?.OnSizeChanged();
             }
         }
 

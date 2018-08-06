@@ -121,7 +121,6 @@ namespace CircuitSimulatorPlus
         #region Gates
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
-            gate.Renderer = new GateRenderer(canvas, gate);
             contextGate.Context.Add(gate);
 
             for (int i = 0; i < amtInputs; i++)
@@ -254,7 +253,7 @@ namespace CircuitSimulatorPlus
                 Remove(input);
             foreach (OutputNode output in gate.Output)
                 Remove(output);
-            gate.Renderer.Unrender();
+            //gate.Renderer.Unrender();
             clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
         }
@@ -328,7 +327,7 @@ namespace CircuitSimulatorPlus
                     InputSwitch inputSwitch = obj as InputSwitch;
                     inputSwitch.State = !inputSwitch.State;
                     Tick(inputSwitch.Output[0]);
-                    inputSwitch.Renderer.OnPositionChanged();
+                    //inputSwitch.Renderer.OnPositionChanged();
                 }
                 if (obj is ConnectionNode)
                 {
@@ -928,7 +927,7 @@ namespace CircuitSimulatorPlus
                             cable.InputNode = endNode as InputNode;
                             cable.OutputNode = startNode as OutputNode;
 
-                            cable.Renderer = new CableRenderer(canvas, cable);
+                            //cable.Renderer = new CableRenderer(canvas, cable);
 
                             //startNode.CableRenderer = cable.Renderer;
 
@@ -1112,7 +1111,7 @@ namespace CircuitSimulatorPlus
             {
                 Gate gate = StorageConverter.ToGate(Storage.Load(dialog.FileName));
                 gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
-                gate.Renderer = new GateRenderer(canvas, gate);
+                //gate.Renderer = new GateRenderer(canvas, gate);
                 clickableObjects.Add(gate);
                 contextGate.Context.Add(gate);
                 Select(gate);

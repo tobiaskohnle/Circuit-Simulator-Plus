@@ -13,8 +13,6 @@ namespace CircuitSimulatorPlus
 {
     public class Cable
     {
-        public CableRenderer Renderer;
-
         public OutputNode OutputNode
         {
             get; set;
