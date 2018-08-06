@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
             StorageObject store = new StorageObject();
             store.Name = gate.Name;
             store.Position = gate.Position;
-            store.Type = gate.GetType().ToString();
+            store.Type = gate.GetType().Name;
 
             for (int i = 0; i < gate.Input.Count; i++)
             {
@@ -120,16 +120,16 @@ namespace CircuitSimulatorPlus
             Gate gate;
             switch (storageObject.Type)
             {
-            case "Context":
+            case "ContextGate":
                 gate = new ContextGate();
                 break;
-            case "And":
+            case "AndGate":
                 gate = new AndGate();
                 break;
-            case "Or":
+            case "OrGate":
                 gate = new OrGate();
                 break;
-            case "Nop":
+            case "NopGate":
                 gate = new NopGate();
                 break;
             case "InputSwitch":

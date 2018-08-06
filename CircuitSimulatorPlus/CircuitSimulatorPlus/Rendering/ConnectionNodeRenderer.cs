@@ -143,7 +143,8 @@ namespace CircuitSimulatorPlus
 
         public void OnInvertedChanged()
         {
-            invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Hidden : Visibility.Collapsed;
+            invertionDot.Visibility = connectionNode.IsInverted ? Visibility.Visible : Visibility.Collapsed;
+            OnPositionChanged();
         }
 
         public void OnNameChanged()

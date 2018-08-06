@@ -934,9 +934,9 @@ namespace CircuitSimulatorPlus
 
                             startNode.CableRenderer = cable.Renderer;
 
-                            Console.WriteLine($"Created cable {startNode} -> {endNode}");
+                            Console.WriteLine($"Created cable");
                             startNode.ConnectTo(endNode);
-                            Tick(startNode);
+                            Tick(endNode);
                         }
                     }
                 }

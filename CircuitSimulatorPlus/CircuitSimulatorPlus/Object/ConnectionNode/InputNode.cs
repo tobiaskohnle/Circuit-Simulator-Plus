@@ -51,7 +51,7 @@ namespace CircuitSimulatorPlus
             BackConnectedTo = null;
             IsEmpty = true;
 
-            Owner.Renderer.OnPositionChanged();
+            CableRenderer.Unrender();
         }
 
         public override void Tick(Queue<ConnectionNode> tickedNodes)
