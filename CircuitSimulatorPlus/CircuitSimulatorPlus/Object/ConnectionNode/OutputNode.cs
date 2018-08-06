@@ -34,7 +34,7 @@ namespace CircuitSimulatorPlus
         {
             NextConnectedTo.Add(connectionNode);
             connectionNode.BackConnectedTo = this;
-            
+
             // TODO: clear connectionNode if !connectionNode.IsEmpty
 
             IsEmpty = connectionNode.IsEmpty = false;
