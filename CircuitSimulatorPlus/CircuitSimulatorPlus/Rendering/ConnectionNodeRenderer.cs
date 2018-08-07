@@ -49,6 +49,7 @@ namespace CircuitSimulatorPlus
                 (connectionNode as InputNode).OnRisingEdgeChanged += OnRisingEdgeChanged;
             if (connectionNode is OutputNode)
                 (connectionNode as OutputNode).OnMasterSlaveChanged += OnMasterSlaveChanged;
+            connectionNode.OnInvertedChanged += OnInvertedChanged;
             connectionNode.OnNameChanged += OnNameChanged;
             connectionNode.OnPositionChanged += OnPositionChanged;
 
