@@ -607,6 +607,64 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public void MoveObjects()
+        {
+            Vector completeMove = lastCanvasPos - lastCanvasClick;
+            foreach (IClickable obj in selectedObjects)
+            {
+                if (obj is IMovable)
+                    (obj as IMovable).Move(-completeMove);
+            }
+
+            var movedObjects = new List<IMovable>();
+
+            foreach (IClickable obj in selectedObjects)
+            {
+                if (obj is IMovable)
+                {
+                    movedObjects.Add(obj as IMovable);
+                }
+            }
+
+            if (movedObjects.Count > 0)
+            {
+                completeMove.X = Math.Round(completeMove.X);
+                completeMove.Y = Math.Round(completeMove.Y);
+
+                if (completeMove.X != 0 || completeMove.Y != 0)
+                {
+                    PerformAction(new MoveAction(movedObjects, completeMove));
+                }
+            }
+        }
+        public void CreateCable()
+        {
+            newCable.Visibility = Visibility.Collapsed;
+            var startNode = lastClickedObject as ConnectionNode;
+
+            IClickable clickedObject = FindNearestObjectAt(lastCanvasPos);
+
+            if (clickedObject is ConnectionNode)
+            {
+                var endNode = clickedObject as ConnectionNode;
+                if (startNode is InputNode != endNode is InputNode && startNode != endNode)
+                {
+                    if (startNode is InputNode)
+                    {
+                        var temp = startNode;
+                        startNode = endNode;
+                        endNode = temp;
+                    }
+
+                    var cable = new Cable(endNode as InputNode, startNode as OutputNode);
+
+                    Console.WriteLine($"Created cable");
+                    startNode.ConnectTo(endNode);
+                    Tick(endNode);
+                }
+            }
+        }
+
         public void Rename()
         {
 
@@ -866,62 +924,12 @@ namespace CircuitSimulatorPlus
 
                 if (movingObjects)
                 {
-                    Vector completeMove = lastCanvasPos - lastCanvasClick;
-                    foreach (IClickable obj in selectedObjects)
-                    {
-                        if (obj is IMovable)
-                            (obj as IMovable).Move(-completeMove);
-                    }
-
-                    if (Math.Abs(completeMove.X) > 0.5 || Math.Abs(completeMove.Y) > 0.5)
-                    {
-                        var movedObjects = new List<IMovable>();
-
-                        foreach (IClickable obj in selectedObjects)
-                        {
-                            if (obj is IMovable)
-                            {
-                                movedObjects.Add(obj as IMovable);
-                            }
-                        }
-
-                        if (movedObjects.Count > 0)
-                        {
-                            completeMove.X = Math.Round(completeMove.X);
-                            completeMove.Y = Math.Round(completeMove.Y);
-
-                            Console.WriteLine($"Moved objects ({completeMove})");
-                            PerformAction(new MoveAction(movedObjects, completeMove));
-                        }
-                    }
+                    MoveObjects();
                 }
 
                 if (creatingCable)
                 {
-                    newCable.Visibility = Visibility.Collapsed;
-                    var startNode = lastClickedObject as ConnectionNode;
-
-                    IClickable clickedObject = FindNearestObjectAt(lastCanvasPos);
-
-                    if (clickedObject is ConnectionNode)
-                    {
-                        var endNode = clickedObject as ConnectionNode;
-                        if (startNode is InputNode != endNode is InputNode && startNode != endNode)
-                        {
-                            if (startNode is InputNode)
-                            {
-                                var temp = startNode;
-                                startNode = endNode;
-                                endNode = temp;
-                            }
-
-                            var cable = new Cable(endNode as InputNode, startNode as OutputNode);
-
-                            Console.WriteLine($"Created cable");
-                            startNode.ConnectTo(endNode);
-                            Tick(endNode);
-                        }
-                    }
+                    CreateCable();
                 }
             }
             else
@@ -940,7 +948,9 @@ namespace CircuitSimulatorPlus
                         }
                         bool islastClickedSelected = lastClickedObject.IsSelected;
                         if (islastClickedSelected == false)
+                        {
                             Select(lastClickedObject);
+                        }
                     }
                     else
                     {
