@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
     {
         public Gate()
         {
-            renderer = new GateRenderer(this);
+            Renderer = new GateRenderer(this);
 
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
@@ -23,7 +23,7 @@ namespace CircuitSimulatorPlus
 
         public const double DistanceFactor = 0.2;
 
-        protected GateRenderer renderer;
+        public GateRenderer Renderer;
 
         public Dictionary<ConnectionNode.Align, List<ConnectionNode>> ConnectedNodes;
 

@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
     {
         public OutputNode(Gate owner) : base(Align.R, owner)
         {
-            renderer = new ConnectionNodeRenderer(this, owner, true);
+            Renderer = new ConnectionNodeRenderer(this, owner, true);
         }
 
         bool isMasterSlave = true;

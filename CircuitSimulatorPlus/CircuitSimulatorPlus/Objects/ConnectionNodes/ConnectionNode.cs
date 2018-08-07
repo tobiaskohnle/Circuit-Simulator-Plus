@@ -14,7 +14,7 @@ namespace CircuitSimulatorPlus
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
-        protected ConnectionNodeRenderer renderer;
+        public ConnectionNodeRenderer Renderer;
 
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;

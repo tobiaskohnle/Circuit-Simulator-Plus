@@ -17,10 +17,10 @@ namespace CircuitSimulatorPlus
         {
             InputNode = inputNode;
             OutputNode = outputNode;
-            renderer = new CableRenderer(this);
+            Renderer = new CableRenderer(this);
         }
 
-        CableRenderer renderer;
+        public CableRenderer Renderer;
 
         public OutputNode OutputNode
         {
@@ -28,11 +28,6 @@ namespace CircuitSimulatorPlus
         }
 
         public InputNode InputNode
-        {
-            get; set;
-        }
-
-        public bool State
         {
             get; set;
         }
