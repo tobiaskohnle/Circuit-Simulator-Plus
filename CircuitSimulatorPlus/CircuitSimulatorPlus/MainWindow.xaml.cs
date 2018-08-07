@@ -114,8 +114,6 @@ namespace CircuitSimulatorPlus
         #region Gates
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
-            contextGate.Context.Add(gate);
-
             for (int i = 0; i < amtInputs; i++)
             {
                 var inputNode = new InputNode(gate);

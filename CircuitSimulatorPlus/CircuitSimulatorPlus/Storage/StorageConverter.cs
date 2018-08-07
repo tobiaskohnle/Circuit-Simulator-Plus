@@ -10,7 +10,7 @@ namespace CircuitSimulatorPlus
     {
         public static StorageObject ToStorageObject(Gate gate)
         {
-            StorageObject store = new StorageObject();
+            var store = new StorageObject();
             store.Name = gate.Name;
             store.Position = gate.Position;
             store.Type = gate.GetType().Name;
@@ -41,7 +41,7 @@ namespace CircuitSimulatorPlus
                 }
             }
 
-            if (gate.GetType() == typeof(ContextGate))
+            if (gate is ContextGate)
             {
                 var contextGate = gate as ContextGate;
                 int nextId = 1;
