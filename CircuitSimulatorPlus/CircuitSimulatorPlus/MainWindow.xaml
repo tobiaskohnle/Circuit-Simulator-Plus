@@ -93,12 +93,11 @@
 
         <Canvas x:Name="canvas" Grid.Row="1" SnapsToDevicePixels="True"/>
 
-        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2">
+        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2" SnapsToDevicePixels="True">
 
             <Rectangle x:Name="selectVisual"
                        Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}"
-                       Fill="#3F0078D7"
-                       SnapsToDevicePixels="True"/>
+                       Fill="#3F0078D7"/>
 
         </Canvas>
 
