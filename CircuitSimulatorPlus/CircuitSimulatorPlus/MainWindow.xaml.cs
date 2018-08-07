@@ -565,7 +565,7 @@ namespace CircuitSimulatorPlus
 
         public void Save()
         {
-            if (currentFilePath != null && !saved)
+            if (currentFilePath != null)
                 StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
             else
                 SaveAs();
