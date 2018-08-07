@@ -8,6 +8,7 @@
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel"
         MouseDoubleClick="Window_MouseDoubleClick"
+        KeyDown="Window_KeyDown"
         Closing="Window_Closing"
         ContextMenuOpening="Window_ContextMenuOpening">
 
@@ -16,10 +17,10 @@
         <CommandBinding Command="{x:Static local:Commands.Open}" Executed="Open_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Save}" Executed="Save_Click"/>
         <CommandBinding Command="{x:Static local:Commands.SaveAs}" Executed="SaveAs_Click"/>
-        <!--CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>
+        <!--<CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>-->
         <CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/-->
+        <!--<CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>-->
+        <!--<CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/>-->
         <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>

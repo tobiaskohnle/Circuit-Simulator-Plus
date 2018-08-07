@@ -150,9 +150,10 @@ namespace CircuitSimulatorPlus
         }
         public void TickQueue()
         {
-            List<ConnectionNode> copy = tickedNodes.ToList();
+            Console.WriteLine("Tick");
+            List<ConnectionNode> tickedNodesCopy = tickedNodes.ToList();
             tickedNodes.Clear();
-            foreach (ConnectionNode ticked in copy)
+            foreach (ConnectionNode ticked in tickedNodesCopy)
             {
                 ticked.Tick(tickedNodes);
                 //ticked.Renderer.OnStateChanged();
@@ -969,6 +970,14 @@ namespace CircuitSimulatorPlus
             creatingCable = false;
         }
 
+        void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Space || e.Key == Key.T)
+            {
+                TickQueue();
+            }
+        }
+
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Zoom(e.Delta > 0, e.GetPosition(canvas));
@@ -1079,7 +1088,11 @@ namespace CircuitSimulatorPlus
         }
         void ResizeGate_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine("ResizeGate...");
+        }
+        void Rename_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            Console.WriteLine("Rename...");
         }
         void EmptyInput_Click(object sender, RoutedEventArgs e)
         {
