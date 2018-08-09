@@ -18,7 +18,10 @@ namespace CircuitSimulatorPlus
             get; protected set;
         }
 
-        public abstract Rect RectBounds();
+        public abstract Rect RectBounds
+        {
+            get;
+        }
 
         public abstract bool IncludesPos(Point pos);
 

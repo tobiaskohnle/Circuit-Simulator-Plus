@@ -13,6 +13,15 @@ namespace CircuitSimulatorPlus
         {
             get; set;
         }
+
+        public override Rect RectBounds
+        {
+            get
+            {
+                return new Rect(Center.X - radius, Center.Y - radius, 2 * radius, 2 * radius);
+            }
+        }
+
         double radius;
 
         public CircleHitbox(object attachedObject, Point center, double radius, double distanceFactor)
@@ -50,11 +59,6 @@ namespace CircuitSimulatorPlus
             return (distCenterX - halfWidth) * (distCenterX - halfWidth)
                 + (distCenterY - halfHeight) * (distCenterY - halfHeight)
                 < radius * radius;
-        }
-
-        public override Rect RectBounds()
-        {
-            return new Rect(Center.X - radius, Center.Y - radius, 2 * radius, 2 * radius);
         }
     }
 }

@@ -12,6 +12,14 @@ namespace CircuitSimulatorPlus
         public Point A, B;
         double width;
 
+        public override Rect RectBounds
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public LineHitbox(object attachedObject, Point a, Point b, double width, double distanceFactor) : base(attachedObject, distanceFactor)
         {
             this.A = a;
@@ -37,11 +45,6 @@ namespace CircuitSimulatorPlus
         public override bool IsIncludedIn(Rect rect)
         {
             return false;
-        }
-
-        public override Rect RectBounds()
-        {
-            throw new NotImplementedException();
         }
     }
 }

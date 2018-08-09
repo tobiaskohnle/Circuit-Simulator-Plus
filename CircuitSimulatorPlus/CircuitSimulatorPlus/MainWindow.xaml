@@ -51,7 +51,7 @@
     </Window.ContextMenu>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
@@ -95,13 +95,14 @@
                 <MenuItem Header="Github Link" Click="GithubLink_Click"/>
             </MenuItem>
             <MenuItem Header="Debug" Width="auto">
+                <MenuItem Header="Reload" Click="Reload_Click"/>
                 <MenuItem Header="Single Ticks" IsCheckable="true" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
             </MenuItem>
         </Menu>
         <Canvas x:Name="backgoundLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True"/>
         <Canvas x:Name="canvas" Grid.Row="2" SnapsToDevicePixels="True"/>
-        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2" SnapsToDevicePixels="True">
+        <Canvas x:Name="decorationLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True">
             <Rectangle x:Name="selectVisual" Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Fill="#3F0078D7"/>
         </Canvas>
     </Grid>

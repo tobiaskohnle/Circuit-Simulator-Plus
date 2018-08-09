@@ -13,6 +13,14 @@ namespace CircuitSimulatorPlus
             Bounds = bounds;
         }
 
+        public override Rect RectBounds
+        {
+            get
+            {
+                return Bounds;
+            }
+        }
+
         public override double DistanceTo(Point pos)
         {
             var center = new Point(
@@ -35,11 +43,6 @@ namespace CircuitSimulatorPlus
                 && Bounds.X <= rect.X + rect.Width
                 && Bounds.Y >= rect.Y - Bounds.Height
                 && Bounds.Y <= rect.Y + rect.Height;
-        }
-
-        public override Rect RectBounds()
-        {
-            return Bounds;
         }
     }
 }

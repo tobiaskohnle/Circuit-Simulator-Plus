@@ -518,7 +518,7 @@ namespace CircuitSimulatorPlus
 
                 foreach (IClickable obj in objects)
                 {
-                    Rect rect = obj.Hitbox.RectBounds();
+                    Rect rect = obj.Hitbox.RectBounds;
                     if (minX > rect.Left)
                         minX = rect.Left;
                     if (minY > rect.Top)
@@ -530,15 +530,23 @@ namespace CircuitSimulatorPlus
                 }
 
                 var bounds = new Rect(minX, minY, maxX - minX, maxY - minY);
-                var center = new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
+                double centerX = minX / 2 + maxX / 2;
+                double centerY = minY / 2 + maxY / 2;
+
+                var screenSize = new Rect(
+                    TranslatePoint(new Point(0, 0), canvas),
+                    TranslatePoint(new Point(canvas.ActualWidth, canvas.ActualHeight), canvas)
+                );
+
+                double scale = Math.Min(screenSize.Width / bounds.Width, screenSize.Height / bounds.Height);
 
                 Matrix matrix = canvas.RenderTransform.Value;
 
-                matrix.TranslatePrepend(CanvasCenter.X - center.X, CanvasCenter.Y - center.Y);
-                //matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
+                matrix.ScaleAtPrepend(scale, scale, CanvasCenter.X, CanvasCenter.Y);
+                matrix.TranslatePrepend(CanvasCenter.X - centerX, CanvasCenter.Y - centerY);
                 canvas.RenderTransform = new MatrixTransform(matrix);
 
-                //currentScale *= scale;
+                currentScale *= scale;
                 UpdateGrid();
             }
         }
@@ -716,7 +724,9 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return TranslatePoint(new Point(ActualWidth / 2, ActualHeight / 2), canvas);
+                Matrix matrix = canvas.RenderTransform.Value;
+                matrix.Invert();
+                return matrix.Transform(new Point(canvas.ActualWidth / 2, canvas.ActualHeight / 2));
             }
         }
         #endregion
@@ -1138,7 +1148,6 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
