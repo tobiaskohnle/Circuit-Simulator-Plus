@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    static class StorageUtility
+    static class StorageUtil
     {
         /// <summary>
         /// Loads a Context from a JSON file.

@@ -34,7 +34,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtility.Load(args[1]));
+                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(args[1]));
             else
                 contextGate = new ContextGate();
 
@@ -408,7 +408,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 currentFilePath = dialog.FileName;
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtility.Load(dialog.FileName));
+                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(dialog.FileName));
                 UpdateClickableObjects();
                 /*foreach (Gate gate in contextGate.Context)
                 {
@@ -488,7 +488,7 @@ namespace CircuitSimulatorPlus
         public void Save()
         {
             if (currentFilePath != null)
-                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                StorageUtil.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
             else
                 SaveAs();
             saved = true;
@@ -504,7 +504,7 @@ namespace CircuitSimulatorPlus
             {
                 currentFilePath = dialog.FileName;
                 fileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
-                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                StorageUtil.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
                 saved = true;
                 UpdateTitle();
             }
