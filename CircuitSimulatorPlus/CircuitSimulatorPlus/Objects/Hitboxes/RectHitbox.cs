@@ -36,5 +36,10 @@ namespace CircuitSimulatorPlus
                 && Bounds.Y >= rect.Y - Bounds.Height
                 && Bounds.Y <= rect.Y + rect.Height;
         }
+
+        public override Rect RectBounds()
+        {
+            return Bounds;
+        }
     }
 }

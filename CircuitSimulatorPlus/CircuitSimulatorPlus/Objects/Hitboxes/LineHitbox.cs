@@ -38,5 +38,10 @@ namespace CircuitSimulatorPlus
         {
             return false;
         }
+
+        public override Rect RectBounds()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

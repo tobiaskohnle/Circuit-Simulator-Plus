@@ -203,26 +203,14 @@ namespace CircuitSimulatorPlus
         }
         public void SelectAll()
         {
-            if (AnySelected)
-            {
-                DeselectAll();
-            }
-            else
-            {
-                foreach (IClickable obj in clickableObjects)
-                    Select(obj);
-            }
+            foreach (IClickable obj in clickableObjects)
+                Select(obj);
         }
         public void DeselectAll()
         {
             foreach (IClickable obj in selectedObjects)
                 obj.IsSelected = false;
             selectedObjects.Clear();
-        }
-
-        public void Rename()
-        {
-
         }
 
         public void Delete()
@@ -392,57 +380,9 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region IO
-        public void Print()
-        {
-
-        }
         public void New()
         {
             contextGate = null;
-        }
-        public void Open()
-        {
-            New();
-            var dialog = new OpenFileDialog();
-            dialog.Filter = FileFilter;
-            if (dialog.ShowDialog() == true)
-            {
-                currentFilePath = dialog.FileName;
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(dialog.FileName));
-                UpdateClickableObjects();
-                /*foreach (Gate gate in contextGate.Context)
-                {
-                    gate.Renderer = new GateRenderer(canvas, gate);
-                    for (int i = 0; i < gate.Output.Count; i++)
-                    {
-                        OutputNode node = gate.Output[i];
-                        Point p1 = new Point();
-                        p1.X = gate.Position.X + 3 + 1;
-                        p1.Y = gate.Position.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
-                        foreach (InputNode inNode in node.NextConnectedTo)
-                        {
-                            Gate inGate = inNode.Owner;
-                            int index = 0;
-                            for (int j = 0; j < inGate.Input.Count; j++)
-                            {
-                                if (inGate.Input[j] == inNode)
-                                {
-                                    index = j;
-                                    break;
-                                }
-                            }
-                            Point p2 = new Point();
-                            p2.X = inGate.Position.X - 1;
-                            p2.Y = inGate.Position.Y + (double)4 * (1 + 2 * index) / (2 * inGate.Input.Count);
-                            Cable cable = new Cable();
-                            cable.OutputNode = node;
-                            cable.InputNode = inNode;
-                            //cable.Renderer = new CableRenderer(canvas, cable);
-                            cables.Add(cable);
-                        }
-                    }
-                }*/
-            }
         }
 
         public bool SavePrompt()
@@ -567,24 +507,46 @@ namespace CircuitSimulatorPlus
             backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
         }
 
+        public void ZoomIntoView(List<IClickable> objects)
+        {
+            if (objects.Count > 0)
+            {
+                double minX = Double.PositiveInfinity;
+                double minY = Double.PositiveInfinity;
+                double maxX = -Double.PositiveInfinity;
+                double maxY = -Double.PositiveInfinity;
+
+                foreach (IClickable obj in objects)
+                {
+                    Rect rect = obj.Hitbox.RectBounds();
+                    if (minX > rect.Left)
+                        minX = rect.Left;
+                    if (minY > rect.Top)
+                        minY = rect.Top;
+                    if (maxX < rect.Bottom)
+                        maxX = rect.Bottom;
+                    if (maxY < rect.Right)
+                        maxY = rect.Right;
+                }
+
+                var bounds = new Rect(minX, minY, maxX - minX, maxY - minY);
+                var center = new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
+
+                Zoom(false, center);
+            }
+        }
         public void Zoom(bool zoomIn, Point at)
         {
-            double scale = zoomIn ? 1 / ScaleFactor : ScaleFactor;
-
+            Zoom(zoomIn ? 1 / ScaleFactor : ScaleFactor, at);
+        }
+        public void Zoom(double scale, Point at)
+        {
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
 
             currentScale *= scale;
             UpdateGrid();
-        }
-        public void ZoomIn()
-        {
-            Zoom(true, CanvasCenter);
-        }
-        public void ZoomOut()
-        {
-            Zoom(false, CanvasCenter);
         }
         #endregion
 
@@ -1026,11 +988,22 @@ namespace CircuitSimulatorPlus
         }
         void Open_Click(object sender, RoutedEventArgs e)
         {
-            Open();
+            New();
+            var dialog = new OpenFileDialog();
+            dialog.Filter = FileFilter;
+            if (dialog.ShowDialog() == true)
+            {
+                currentFilePath = dialog.FileName;
+                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(dialog.FileName));
+                UpdateClickableObjects();
+            }
         }
         void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            Open();
+            if (currentFilePath != null)
+            {
+                Process.Start(System.IO.Path.GetDirectoryName(currentFilePath));
+            }
         }
         void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -1042,7 +1015,7 @@ namespace CircuitSimulatorPlus
         }
         void Print_Click(object sender, RoutedEventArgs e)
         {
-            Print();
+            throw new NotImplementedException();
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
@@ -1074,24 +1047,31 @@ namespace CircuitSimulatorPlus
         }
         void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            SelectAll();
+            if (AnySelected)
+            {
+                DeselectAll();
+            }
+            else
+            {
+                SelectAll();
+            }
         }
 
         void MainToolbar_Checked(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
         void MainToolbar_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
         void ShowGrid_Checked(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
         void ShowGrid_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
         void ResetView_Click(object sender, RoutedEventArgs e)
         {
@@ -1099,15 +1079,14 @@ namespace CircuitSimulatorPlus
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
-            ZoomIn();
+            Zoom(true, CanvasCenter);
         }
         void ZoomOut_Click(object sender, RoutedEventArgs e)
         {
-            ZoomOut();
+            Zoom(false, CanvasCenter);
         }
         void ZoomSelection_Click(object sender, RoutedEventArgs e)
         {
-            ZoomOut();
         }
 
         void InvertConnection_Click(object sender, RoutedEventArgs e)

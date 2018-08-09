@@ -18,6 +18,8 @@ namespace CircuitSimulatorPlus
             get; protected set;
         }
 
+        public abstract Rect RectBounds();
+
         public abstract bool IncludesPos(Point pos);
 
         public abstract bool IsIncludedIn(Rect rect);

@@ -51,5 +51,10 @@ namespace CircuitSimulatorPlus
                 + (distCenterY - halfHeight) * (distCenterY - halfHeight)
                 < radius * radius;
         }
+
+        public override Rect RectBounds()
+        {
+            return new Rect(Center.X - radius, Center.Y - radius, 2 * radius, 2 * radius);
+        }
     }
 }
