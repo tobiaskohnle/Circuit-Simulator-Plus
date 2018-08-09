@@ -111,7 +111,7 @@ namespace CircuitSimulatorPlus
         Pen backgroundGridPen;
         #endregion
 
-        #region Gates
+        #region Object
         public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
         {
             for (int i = 0; i < amtInputs; i++)
@@ -218,6 +218,11 @@ namespace CircuitSimulatorPlus
             foreach (IClickable obj in selectedObjects)
                 obj.IsSelected = false;
             selectedObjects.Clear();
+        }
+
+        public void Rename()
+        {
+
         }
 
         public void Delete()
@@ -329,9 +334,7 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        #endregion
 
-        #region Cables
         void SplitCables()
         {
             foreach (IClickable obj in selectedObjects.ToList())
@@ -379,14 +382,152 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < Math.Min(inputs.Count, outputs.Count); i++)
                 (outputs[i] as OutputNode).ConnectTo(inputs[i] as InputNode);
         }
-        #endregion
 
-        #region Connection Nodes
         public void Align(ConnectionNode.Align alignment)
         {
             foreach (IClickable obj in selectedObjects)
                 if (obj is ConnectionNode)
                     (obj as ConnectionNode).Alignment = alignment;
+        }
+        #endregion
+
+        #region IO
+        public void Print()
+        {
+
+        }
+        public void New()
+        {
+            contextGate = null;
+        }
+        public void Open()
+        {
+            New();
+            var dialog = new OpenFileDialog();
+            dialog.Filter = FileFilter;
+            if (dialog.ShowDialog() == true)
+            {
+                currentFilePath = dialog.FileName;
+                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtility.Load(dialog.FileName));
+                UpdateClickableObjects();
+                /*foreach (Gate gate in contextGate.Context)
+                {
+                    gate.Renderer = new GateRenderer(canvas, gate);
+                    for (int i = 0; i < gate.Output.Count; i++)
+                    {
+                        OutputNode node = gate.Output[i];
+                        Point p1 = new Point();
+                        p1.X = gate.Position.X + 3 + 1;
+                        p1.Y = gate.Position.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
+                        foreach (InputNode inNode in node.NextConnectedTo)
+                        {
+                            Gate inGate = inNode.Owner;
+                            int index = 0;
+                            for (int j = 0; j < inGate.Input.Count; j++)
+                            {
+                                if (inGate.Input[j] == inNode)
+                                {
+                                    index = j;
+                                    break;
+                                }
+                            }
+                            Point p2 = new Point();
+                            p2.X = inGate.Position.X - 1;
+                            p2.Y = inGate.Position.Y + (double)4 * (1 + 2 * index) / (2 * inGate.Input.Count);
+                            Cable cable = new Cable();
+                            cable.OutputNode = node;
+                            cable.InputNode = inNode;
+                            //cable.Renderer = new CableRenderer(canvas, cable);
+                            cables.Add(cable);
+                        }
+                    }
+                }*/
+            }
+        }
+
+        public bool SavePrompt()
+        {
+            //if (!saved)
+            //{
+            //    switch (MessageBox.Show(
+            //        "Would you like to save your changes?",
+            //        "Save?",
+            //        MessageBoxButton.YesNoCancel
+            //    ))
+            //    {
+            //    case MessageBoxResult.Yes:
+            //        Save(); return saved;
+            //    case MessageBoxResult.No:
+            //        return true;
+            //    case MessageBoxResult.Cancel:
+            //        return false;
+            //    }
+            //}
+            return true;
+        }
+
+        public void Undo()
+        {
+            if (AllowUndo)
+            {
+                Action lastAction = undoStack.Pop();
+                lastAction.Undo();
+                redoStack.Push(lastAction);
+            }
+        }
+        public void Redo()
+        {
+            if (AllowRedo)
+            {
+                Action lastAction = redoStack.Pop();
+                lastAction.Redo();
+                undoStack.Push(lastAction);
+            }
+        }
+
+        public void Save()
+        {
+            if (currentFilePath != null)
+                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+            else
+                SaveAs();
+            saved = true;
+            UpdateTitle();
+        }
+        public void SaveAs()
+        {
+            var dialog = new SaveFileDialog();
+            dialog.FileName = fileName;
+            dialog.DefaultExt = FileExtention;
+            dialog.Filter = FileFilter;
+            if (dialog.ShowDialog() == true)
+            {
+                currentFilePath = dialog.FileName;
+                fileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
+                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
+                saved = true;
+                UpdateTitle();
+            }
+        }
+
+        public void Copy()
+        {
+            if (AnySelected)
+            {
+
+            }
+        }
+        public void Cut()
+        {
+            Copy();
+            Delete();
+        }
+        public void Paste()
+        {
+            if (DataOnClipboard)
+            {
+
+            }
         }
         #endregion
 
@@ -456,26 +597,6 @@ namespace CircuitSimulatorPlus
             undoStack.Push(action);
             redoStack.Clear();
         }
-        public bool SavePrompt()
-        {
-            //if (!saved)
-            //{
-            //    switch (MessageBox.Show(
-            //        "Would you like to save your changes?",
-            //        "Save?",
-            //        MessageBoxButton.YesNoCancel
-            //    ))
-            //    {
-            //    case MessageBoxResult.Yes:
-            //        Save(); return saved;
-            //    case MessageBoxResult.No:
-            //        return true;
-            //    case MessageBoxResult.Cancel:
-            //        return false;
-            //    }
-            //}
-            return true;
-        }
         public void UpdateClickableObjects()
         {
             clickableObjects.Clear();
@@ -486,123 +607,6 @@ namespace CircuitSimulatorPlus
                     clickableObjects.Add(input);
                 foreach (OutputNode output in gate.Output)
                     clickableObjects.Add(output);
-            }
-        }
-
-        public void Print()
-        {
-
-        }
-        public void New()
-        {
-            contextGate = null;
-        }
-        public void Open()
-        {
-            New();
-            var dialog = new OpenFileDialog();
-            dialog.Filter = FileFilter;
-            if (dialog.ShowDialog() == true)
-            {
-                currentFilePath = dialog.FileName;
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtility.Load(dialog.FileName));
-                UpdateClickableObjects();
-                /*foreach (Gate gate in contextGate.Context)
-                {
-                    gate.Renderer = new GateRenderer(canvas, gate);
-                    for (int i = 0; i < gate.Output.Count; i++)
-                    {
-                        OutputNode node = gate.Output[i];
-                        Point p1 = new Point();
-                        p1.X = gate.Position.X + 3 + 1;
-                        p1.Y = gate.Position.Y + (double)4 * (1 + 2 * i) / (2 * gate.Output.Count);
-                        foreach (InputNode inNode in node.NextConnectedTo)
-                        {
-                            Gate inGate = inNode.Owner;
-                            int index = 0;
-                            for (int j = 0; j < inGate.Input.Count; j++)
-                            {
-                                if (inGate.Input[j] == inNode)
-                                {
-                                    index = j;
-                                    break;
-                                }
-                            }
-                            Point p2 = new Point();
-                            p2.X = inGate.Position.X - 1;
-                            p2.Y = inGate.Position.Y + (double)4 * (1 + 2 * index) / (2 * inGate.Input.Count);
-                            Cable cable = new Cable();
-                            cable.OutputNode = node;
-                            cable.InputNode = inNode;
-                            //cable.Renderer = new CableRenderer(canvas, cable);
-                            cables.Add(cable);
-                        }
-                    }
-                }*/
-            }
-        }
-
-        public void Undo()
-        {
-            if (AllowUndo)
-            {
-                Action lastAction = undoStack.Pop();
-                lastAction.Undo();
-                redoStack.Push(lastAction);
-            }
-        }
-        public void Redo()
-        {
-            if (AllowRedo)
-            {
-                Action lastAction = redoStack.Pop();
-                lastAction.Redo();
-                undoStack.Push(lastAction);
-            }
-        }
-
-        public void Save()
-        {
-            if (currentFilePath != null)
-                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
-            else
-                SaveAs();
-            saved = true;
-            UpdateTitle();
-        }
-        public void SaveAs()
-        {
-            var dialog = new SaveFileDialog();
-            dialog.FileName = fileName;
-            dialog.DefaultExt = FileExtention;
-            dialog.Filter = FileFilter;
-            if (dialog.ShowDialog() == true)
-            {
-                currentFilePath = dialog.FileName;
-                fileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
-                StorageUtility.Save(currentFilePath, StorageConverter.ToStorageObject(contextGate));
-                saved = true;
-                UpdateTitle();
-            }
-        }
-
-        public void Copy()
-        {
-            if (AnySelected)
-            {
-
-            }
-        }
-        public void Cut()
-        {
-            Copy();
-            Delete();
-        }
-        public void Paste()
-        {
-            if (DataOnClipboard)
-            {
-
             }
         }
 
@@ -662,11 +666,6 @@ namespace CircuitSimulatorPlus
                     Tick(endNode);
                 }
             }
-        }
-
-        public void Rename()
-        {
-
         }
 
         public void EmptyInput()
@@ -755,7 +754,7 @@ namespace CircuitSimulatorPlus
         }
         #endregion
 
-        #region Events
+        #region Event Handlers
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             CaptureMouse();
@@ -990,6 +989,13 @@ namespace CircuitSimulatorPlus
 
         }
 
+        void TimerTick(object sender, EventArgs e)
+        {
+            TickQueue();
+        }
+        #endregion
+
+        #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
             CreateGate(new InputSwitch(), 0, 1);
@@ -1022,9 +1028,9 @@ namespace CircuitSimulatorPlus
         {
             Open();
         }
-        void Print_Click(object sender, RoutedEventArgs e)
+        void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            Print();
+            Open();
         }
         void Save_Click(object sender, RoutedEventArgs e)
         {
@@ -1033,6 +1039,10 @@ namespace CircuitSimulatorPlus
         void SaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveAs();
+        }
+        void Print_Click(object sender, RoutedEventArgs e)
+        {
+            Print();
         }
 
         void Undo_Click(object sender, RoutedEventArgs e)
@@ -1043,15 +1053,15 @@ namespace CircuitSimulatorPlus
         {
             Redo();
         }
-        void Copy_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("COPY");
-            Copy();
-        }
         void Cut_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("CUT");
             Cut();
+        }
+        void Copy_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("COPY");
+            Copy();
         }
         void Paste_Click(object sender, RoutedEventArgs e)
         {
@@ -1062,8 +1072,28 @@ namespace CircuitSimulatorPlus
         {
             Delete();
         }
+        void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            SelectAll();
+        }
 
-        void DefaultView_Click(object sender, RoutedEventArgs e)
+        void MainToolbar_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void MainToolbar_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void ShowGrid_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void ShowGrid_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void ResetView_Click(object sender, RoutedEventArgs e)
         {
             ResetView();
         }
@@ -1075,93 +1105,64 @@ namespace CircuitSimulatorPlus
         {
             ZoomOut();
         }
-
-        void AddComp_Click(object sender, RoutedEventArgs e)
+        void ZoomSelection_Click(object sender, RoutedEventArgs e)
         {
+            ZoomOut();
+        }
 
+        void InvertConnection_Click(object sender, RoutedEventArgs e)
+        {
+            InvertConnection();
         }
         void Rename_Click(object sender, RoutedEventArgs e)
         {
 
         }
-        void ResizeGate_Click(object sender, RoutedEventArgs e)
+        void Resize_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("ResizeGate...");
         }
-        void Rename_Click(object sender, ExecutedRoutedEventArgs e)
+        void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Rename...");
+            ToggleObjects();
         }
-        void EmptyInput_Click(object sender, RoutedEventArgs e)
+        void RemoveConnection_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void AddInput_Click(object sender, RoutedEventArgs e)
         {
 
         }
         void TrimInput_Click(object sender, RoutedEventArgs e)
         {
         }
-        void InvertConnection_Click(object sender, RoutedEventArgs e)
-        {
-            InvertConnection();
-        }
-        void SelectAll_Click(object sender, RoutedEventArgs e)
-        {
-            SelectAll();
-        }
-        void ContextGate_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new OpenFileDialog
-            {
-                Filter = FileFilter
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                Gate gate = StorageConverter.ToGate(StorageUtility.Load(dialog.FileName));
-                gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
-                //gate.Renderer = new GateRenderer(canvas, gate);
-                clickableObjects.Add(gate);
-                contextGate.Context.Add(gate);
-                Select(gate);
-            }
-        }
-        void ToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleObjects();
-        }
-        void Split_Click(object sender, RoutedEventArgs e)
-        {
-            SplitCables();
-        }
-        void ConnectAllNodes_Click(object sender, RoutedEventArgs e)
-        {
-            ConnectAllNodes();
-        }
-        void ConnectOppositeNodes_Click(object sender, RoutedEventArgs e)
-        {
-            ConnectOppositeNodes();
-        }
-        void Align_U_Click(object sender, RoutedEventArgs e)
+        void Align_Click(object sender, RoutedEventArgs e)
         {
             Align(ConnectionNode.Align.U);
         }
-        void Align_R_Click(object sender, RoutedEventArgs e)
-        {
-            Align(ConnectionNode.Align.R);
-        }
-        void Align_D_Click(object sender, RoutedEventArgs e)
-        {
-            Align(ConnectionNode.Align.D);
-        }
-        void Align_L_Click(object sender, RoutedEventArgs e)
-        {
-            Align(ConnectionNode.Align.L);
-        }
 
-        void SingleTicks_Click(object sender, RoutedEventArgs e)
+        void Version_Click(object sender, RoutedEventArgs e)
         {
-            singleTicks = !singleTicks;
-            Console.WriteLine($"Single Ticks {(singleTicks ? "Enabled" : "Disabled")}");
-            if (singleTicks == false && tickedNodes.Count > 0)
+
+        }
+        void GithubLink_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        void Reload_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        void SingleTicks_Checked(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Single Ticks Enabled");
+        }
+        void SingleTicks_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Single Ticks Disabled");
+            if (tickedNodes.Count > 0)
                 timer.Start();
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
@@ -1173,11 +1174,6 @@ namespace CircuitSimulatorPlus
                 foreach (OutputNode outputNode in gate.Output)
                     Tick(outputNode);
             }
-        }
-
-        public void TimerTick(object sender, EventArgs e)
-        {
-            TickQueue();
         }
         #endregion
     }

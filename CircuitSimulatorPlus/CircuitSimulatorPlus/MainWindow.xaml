@@ -10,23 +10,30 @@
         Closing="Window_Closing"
         ContextMenuOpening="Window_ContextMenuOpening">
     <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:Commands.New}" Executed="New_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Open}" Executed="Open_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.OpenFolder}" Executed="OpenFolder_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Save}" Executed="Save_Click"/>
         <CommandBinding Command="{x:Static local:Commands.SaveAs}" Executed="SaveAs_Click"/>
-        <!--<CommandBinding Command="{x:Static local:Commands.NewComp}" Executed="AddComp_Click"/>-->
-        <CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>
-        <!--<CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="EmptyInput_Click"/>-->
-        <!--<CommandBinding Command="{x:Static local:Commands.TrimInput}" Executed="TrimInput_Click"/>-->
-        <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Print}" Executed="Print_Click"/>
+
         <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
-        <!--<CommandBinding Command="{x:Static local:Commands.Align}" Executed="Align_Click"/>-->
         <CommandBinding Command="{x:Static local:Commands.Cut}" Executed="Cut_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.ResetView}" Executed="ResetView_Click"/>
         <CommandBinding Command="{x:Static local:Commands.ZoomIn}" Executed="ZoomIn_Click"/>
         <CommandBinding Command="{x:Static local:Commands.ZoomOut}" Executed="ZoomOut_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.ZoomSelection}" Executed="ZoomSelection_Click"/>
+
+        <CommandBinding Command="{x:Static local:Commands.InvertConnection}" Executed="InvertConnection_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Resize}" Executed="Resize_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="AddInput_Click"/>
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
@@ -36,26 +43,10 @@
             <MenuItem x:Name="contxtMenu_basicGate" Header="Add Component">
                 <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
                 <MenuItem Header="Output Light" Click="CreateOutputLight"/>
-                <Separator/>
                 <MenuItem Header="And Gate" Click="CreateAndGate"/>
                 <MenuItem Header="Or Gate" Click="CreateOrGate"/>
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
             </MenuItem>
-            <MenuItem Command="{x:Static local:Commands.Copy}"/>
-            <MenuItem Command="{x:Static local:Commands.Cut}"/>
-            <MenuItem Command="{x:Static local:Commands.Paste}"/>
-            <MenuItem Command="{x:Static local:Commands.Delete}"/>
-            <Separator/>
-            <MenuItem Header="Align Connection Node">
-                <MenuItem Header="UP" Click="Align_U_Click"/>
-                <MenuItem Header="DOWN" Click="Align_D_Click"/>
-                <MenuItem Header="LEFT" Click="Align_L_Click"/>
-                <MenuItem Header="RIGHT" Click="Align_R_Click"/>
-            </MenuItem>
-            <!--MenuItem Command="{x:Static local:Commands.Split}"/>
-            <MenuItem Command="{x:Static local:Commands.Rename}"/>
-            <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
-            <MenuItem Command="{x:Static local:Commands.EmptyInput}"/-->
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
@@ -68,40 +59,43 @@
                 <MenuItem Command="{x:Static local:Commands.New}"/>
                 <MenuItem Command="{x:Static local:Commands.Open}"/>
                 <MenuItem Header="Open Recent"/>
-                <MenuItem Header="Print"/>
-                <Separator/>
+                <MenuItem Command="{x:Static local:Commands.OpenFolder}"/>
                 <MenuItem Command="{x:Static local:Commands.Save}"/>
                 <MenuItem Command="{x:Static local:Commands.SaveAs}"/>
+                <MenuItem Command="{x:Static local:Commands.Print}"/>
             </MenuItem>
             <MenuItem Header="Edit" Width="auto">
                 <MenuItem Command="{x:Static local:Commands.Undo}"/>
                 <MenuItem Command="{x:Static local:Commands.Redo}"/>
-                <Separator/>
-                <MenuItem Command="{x:Static local:Commands.Copy}"/>
                 <MenuItem Command="{x:Static local:Commands.Cut}"/>
+                <MenuItem Command="{x:Static local:Commands.Copy}"/>
                 <MenuItem Command="{x:Static local:Commands.Paste}"/>
                 <MenuItem Command="{x:Static local:Commands.Delete}"/>
+                <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
             </MenuItem>
             <MenuItem Header="View" Width="auto">
-                <MenuItem Header="Default View" Click="DefaultView_Click"/>
+                <MenuItem Header="Main Toolbar" IsCheckable="True" Checked="MainToolbar_Checked" Unchecked="MainToolbar_Unchecked"/>
+                <MenuItem Header="Show Grid" IsCheckable="True" Checked="ShowGrid_Checked" Unchecked="ShowGrid_Unchecked"/>
+                <MenuItem Command="{x:Static local:Commands.ResetView}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>
+                <MenuItem Command="{x:Static local:Commands.ZoomSelection}"/>
             </MenuItem>
             <MenuItem Header="Tools" Width="auto">
-                <MenuItem Command="{x:Static local:Commands.Add}"/>
+                <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
                 <MenuItem Command="{x:Static local:Commands.Rename}"/>
-                <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
-                <Separator/>
+                <MenuItem Command="{x:Static local:Commands.Resize}"/>
+                <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
+                <MenuItem Command="{x:Static local:Commands.RemoveConnection}"/>
                 <MenuItem Command="{x:Static local:Commands.AddInput}"/>
                 <MenuItem Command="{x:Static local:Commands.TrimInput}"/>
-                <Separator/>
-                <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
-                <MenuItem Command="{x:Static local:Commands.CreateCable}"/>
-                <Separator/>
-                <MenuItem Header="Next Tick"/>
+            </MenuItem>
+            <MenuItem Header="About" Width="auto">
+                <MenuItem Header="Version" Click="Version_Click"/>
+                <MenuItem Header="Github Link" Click="GithubLink_Click"/>
             </MenuItem>
             <MenuItem Header="Debug" Width="auto">
-                <MenuItem Header="Single Ticks" Click="SingleTicks_Click"/>
+                <MenuItem Header="Single Ticks" IsCheckable="true" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
             </MenuItem>
         </Menu>
