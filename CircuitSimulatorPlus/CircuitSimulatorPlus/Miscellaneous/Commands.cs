@@ -97,11 +97,7 @@ namespace CircuitSimulatorPlus
 
         #region View
         public static RoutedUICommand ResetView { get; } = new RoutedUICommand(
-            "Reset View", "ResetView", typeof(Commands),
-            new InputGestureCollection
-            {
-                new KeyGesture(Key.OemPlus, ModifierKeys.Control)
-            }
+            "Reset View", "ResetView", typeof(Commands)
         );
         public static RoutedUICommand ZoomIn { get; } = new RoutedUICommand(
             "Zoom In", "ZoomIn", typeof(Commands),
