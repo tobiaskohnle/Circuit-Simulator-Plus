@@ -9,6 +9,7 @@ namespace CircuitSimulatorPlus
         public InputNode(Gate owner) : base(Align.L, owner)
         {
             Renderer = new ConnectionNodeRenderer(this, owner, false);
+            IsRendered = true;
         }
 
         public event System.Action OnRisingEdgeChanged;
@@ -51,8 +52,6 @@ namespace CircuitSimulatorPlus
             BackConnectedTo.IsEmpty = BackConnectedTo.NextConnectedTo.Count == 0;
             BackConnectedTo = null;
             IsEmpty = true;
-
-            //.Unrender();
         }
 
         public override void Tick(Queue<ConnectionNode> tickedNodes)

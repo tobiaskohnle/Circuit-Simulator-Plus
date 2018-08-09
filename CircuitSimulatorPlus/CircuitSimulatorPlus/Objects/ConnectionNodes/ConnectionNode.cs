@@ -37,6 +37,21 @@ namespace CircuitSimulatorPlus
         }
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
 
+        public event System.Action OnRenderedChanged;
+        protected bool isRendered;
+        public bool IsRendered
+        {
+            get
+            {
+                return isRendered;
+            }
+            set
+            {
+                isRendered = value;
+                OnRenderedChanged?.Invoke();
+            }
+        }
+
         public event System.Action OnStateChanged;
         bool state;
         public bool State

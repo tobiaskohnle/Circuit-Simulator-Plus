@@ -30,21 +30,22 @@ namespace CircuitSimulatorPlus
             cable.OutputNode.OnPositionChanged += OnPositionChanged;
             cable.InputNode.OnSelectionChanged += OnSelectionChanged;
             cable.OutputNode.OnSelectionChanged += OnSelectionChanged;
-
-            Render();
+            cable.OnRenderedChanged += OnRenderedChanged;
         }
 
-        public void Render()
+        public void OnRenderedChanged()
         {
-            MainWindow.Canvas.Children.Add(line);
+            if (cable.IsRendered)
+            {
+                MainWindow.Canvas.Children.Add(line);
 
-            OnSelectionChanged();
-            OnPositionChanged();
-        }
-
-        public void Unrender()
-        {
-            MainWindow.Canvas.Children.Remove(line);
+                OnSelectionChanged();
+                OnPositionChanged();
+            }
+            else
+            {
+                MainWindow.Canvas.Children.Remove(line);
+            }
         }
 
         public void OnSelectionChanged()

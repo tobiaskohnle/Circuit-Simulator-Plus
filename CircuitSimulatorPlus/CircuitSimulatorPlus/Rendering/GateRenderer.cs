@@ -48,28 +48,29 @@ namespace CircuitSimulatorPlus
             gate.OnTagChanged += OnTagChanged;
             gate.OnSizeChanged += OnSizeChanged;
             gate.OnPositionChanged += OnPositionChanged;
-
-            Render();
+            gate.OnRenderedChanged += OnRenderedChanged;
         }
 
-        public void Render()
+        public void OnRenderedChanged()
         {
-            MainWindow.Canvas.Children.Add(nameLabel);
-            MainWindow.Canvas.Children.Add(tagLabel);
-            MainWindow.Canvas.Children.Add(boundingBox);
+            if (gate.IsRendered)
+            {
+                MainWindow.Canvas.Children.Add(nameLabel);
+                MainWindow.Canvas.Children.Add(tagLabel);
+                MainWindow.Canvas.Children.Add(boundingBox);
 
-            OnSelectionChanged();
-            OnNameChanged();
-            OnTagChanged();
-            OnSizeChanged();
-            OnPositionChanged();
-        }
-
-        public void Unrender()
-        {
-            MainWindow.Canvas.Children.Remove(tagLabel);
-            MainWindow.Canvas.Children.Remove(nameLabel);
-            MainWindow.Canvas.Children.Remove(boundingBox);
+                OnSelectionChanged();
+                OnNameChanged();
+                OnTagChanged();
+                OnSizeChanged();
+                OnPositionChanged();
+            }
+            else
+            {
+                MainWindow.Canvas.Children.Remove(tagLabel);
+                MainWindow.Canvas.Children.Remove(nameLabel);
+                MainWindow.Canvas.Children.Remove(boundingBox);
+            }
         }
 
         public void OnSelectionChanged()

@@ -10,6 +10,10 @@ namespace CircuitSimulatorPlus
         public Gate()
         {
             Renderer = new GateRenderer(this);
+            if (GetType() != typeof(ContextGate))
+            {
+                IsRendered = true;
+            }
 
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
@@ -29,6 +33,21 @@ namespace CircuitSimulatorPlus
 
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
+
+        public event System.Action OnRenderedChanged;
+        protected bool isRendered;
+        public bool IsRendered
+        {
+            get
+            {
+                return isRendered;
+            }
+            set
+            {
+                isRendered = value;
+                OnRenderedChanged?.Invoke();
+            }
+        }
 
         public event System.Action OnNameChanged;
         string name;

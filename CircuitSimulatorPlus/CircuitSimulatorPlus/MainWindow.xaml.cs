@@ -238,7 +238,7 @@ namespace CircuitSimulatorPlus
                 Remove(input);
             foreach (OutputNode output in gate.Output)
                 Remove(output);
-            gate.Renderer.Unrender();
+            gate.IsRendered = false;
             clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
         }
@@ -252,7 +252,7 @@ namespace CircuitSimulatorPlus
         }
         public void Remove(ConnectionNode connectionNode)
         {
-            connectionNode.Renderer.Unrender();
+            connectionNode.IsRendered = false;
             connectionNode.Clear();
             clickableObjects.Remove(connectionNode);
         }

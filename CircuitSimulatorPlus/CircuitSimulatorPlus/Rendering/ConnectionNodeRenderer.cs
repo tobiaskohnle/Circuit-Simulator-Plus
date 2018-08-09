@@ -52,30 +52,31 @@ namespace CircuitSimulatorPlus
             connectionNode.OnInvertedChanged += OnInvertedChanged;
             connectionNode.OnNameChanged += OnNameChanged;
             connectionNode.OnPositionChanged += OnPositionChanged;
-
-            Render();
+            connectionNode.OnRenderedChanged += OnRenderedChanged;
         }
 
-        public void Render()
+        public void OnRenderedChanged()
         {
-            MainWindow.Canvas.Children.Add(invertionDot);
-            MainWindow.Canvas.Children.Add(connectionNodeLine);
+            if (connectionNode.IsRendered)
+            {
+                MainWindow.Canvas.Children.Add(invertionDot);
+                MainWindow.Canvas.Children.Add(connectionNodeLine);
 
-            OnStateChanged();
-            OnSelectionChanged();
-            OnRisingEdgeChanged();
-            OnMasterSlaveChanged();
-            OnInvertedChanged();
-            OnNameChanged();
-            OnPositionChanged();
-        }
-
-        public void Unrender()
-        {
-            MainWindow.Canvas.Children.Remove(connectionNodeLine);
-            MainWindow.Canvas.Children.Remove(invertionDot);
-            MainWindow.Canvas.Children.Remove(upperRisingEdgeLine);
-            MainWindow.Canvas.Children.Remove(lowerRisingEdgeLine);
+                OnStateChanged();
+                OnSelectionChanged();
+                OnRisingEdgeChanged();
+                OnMasterSlaveChanged();
+                OnInvertedChanged();
+                OnNameChanged();
+                OnPositionChanged();
+            }
+            else
+            {
+                MainWindow.Canvas.Children.Remove(connectionNodeLine);
+                MainWindow.Canvas.Children.Remove(invertionDot);
+                MainWindow.Canvas.Children.Remove(upperRisingEdgeLine);
+                MainWindow.Canvas.Children.Remove(lowerRisingEdgeLine);
+            }
         }
 
         public void OnStateChanged()
