@@ -523,24 +523,29 @@ namespace CircuitSimulatorPlus
                         minX = rect.Left;
                     if (minY > rect.Top)
                         minY = rect.Top;
-                    if (maxX < rect.Bottom)
-                        maxX = rect.Bottom;
-                    if (maxY < rect.Right)
-                        maxY = rect.Right;
+                    if (maxX < rect.Right)
+                        maxX = rect.Right;
+                    if (maxY < rect.Bottom)
+                        maxY = rect.Bottom;
                 }
 
                 var bounds = new Rect(minX, minY, maxX - minX, maxY - minY);
                 var center = new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
 
-                Zoom(false, center);
+                Matrix matrix = canvas.RenderTransform.Value;
+
+                matrix.TranslatePrepend(CanvasCenter.X - center.X, CanvasCenter.Y - center.Y);
+                //matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
+                canvas.RenderTransform = new MatrixTransform(matrix);
+
+                //currentScale *= scale;
+                UpdateGrid();
             }
         }
         public void Zoom(bool zoomIn, Point at)
         {
-            Zoom(zoomIn ? 1 / ScaleFactor : ScaleFactor, at);
-        }
-        public void Zoom(double scale, Point at)
-        {
+            double scale = zoomIn ? 1 / ScaleFactor : ScaleFactor;
+
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
@@ -1087,6 +1092,7 @@ namespace CircuitSimulatorPlus
         }
         void ZoomSelection_Click(object sender, RoutedEventArgs e)
         {
+            ZoomIntoView(selectedObjects);
         }
 
         void InvertConnection_Click(object sender, RoutedEventArgs e)
@@ -1129,7 +1135,7 @@ namespace CircuitSimulatorPlus
         {
 
         }
-        
+
         void Reload_Click(object sender, RoutedEventArgs e)
         {
 
