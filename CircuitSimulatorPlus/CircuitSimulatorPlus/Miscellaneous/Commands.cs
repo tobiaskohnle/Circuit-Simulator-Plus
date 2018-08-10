@@ -127,7 +127,7 @@ namespace CircuitSimulatorPlus
             "Invert Connection", "InvertConnection", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.OemPeriod, ModifierKeys.Control)
+                new KeyGesture(Key.I, ModifierKeys.Control)
             }
         );
         public static RoutedUICommand Rename { get; } = new RoutedUICommand(
@@ -154,7 +154,7 @@ namespace CircuitSimulatorPlus
             "Add Empty Input", "AddInput", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.B, ModifierKeys.Control)
+                new KeyGesture(Key.OemPlus, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
         public static RoutedUICommand TrimInput { get; } = new RoutedUICommand(
