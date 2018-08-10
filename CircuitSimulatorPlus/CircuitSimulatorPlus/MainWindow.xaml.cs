@@ -1148,6 +1148,7 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
+            contextGate = (ContextGate)StorageConverter.ToGate(StorageConverter.ToStorageObject(contextGate));
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
