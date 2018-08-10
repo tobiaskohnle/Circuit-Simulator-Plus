@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-   public class InvertConnectionAction : Action
+    public class InvertConnectionAction : Action
     {
         List<ConnectionNode> Selected;
         public InvertConnectionAction(List<ConnectionNode> List) : base("Invert Connection")
@@ -24,7 +24,7 @@ namespace CircuitSimulatorPlus
 
         public override void Undo()
         {
-            foreach(ConnectionNode item in Selected)
+            foreach (ConnectionNode item in Selected)
             {
                 item.IsInverted = false;
             }

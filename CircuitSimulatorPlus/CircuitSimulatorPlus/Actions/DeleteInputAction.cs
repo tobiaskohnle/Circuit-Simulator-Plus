@@ -10,17 +10,17 @@ namespace CircuitSimulatorPlus.Actions
     {
         public DeleteInputAction(List<ConnectionNode> List) : base("Delete Input")
         {
-           
+
         }
 
         public override void Redo()
         {
-            
+
         }
 
         public override void Undo()
         {
-            
+
         }
     }
 }

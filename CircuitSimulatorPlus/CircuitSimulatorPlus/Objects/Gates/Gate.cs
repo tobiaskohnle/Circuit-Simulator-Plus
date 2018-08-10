@@ -78,7 +78,7 @@ namespace CircuitSimulatorPlus
                 OnTagChanged?.Invoke();
             }
         }
-        
+
         public event System.Action OnSelectionChanged;
         bool isSelected;
         public bool IsSelected
@@ -93,7 +93,7 @@ namespace CircuitSimulatorPlus
                 OnSelectionChanged?.Invoke();
             }
         }
-        
+
         public event System.Action OnPositionChanged;
         Point position;
         public Point Position
@@ -109,7 +109,7 @@ namespace CircuitSimulatorPlus
                 OnPositionChanged?.Invoke();
             }
         }
-        
+
         public event System.Action OnSizeChanged;
         Size size;
         public Size Size

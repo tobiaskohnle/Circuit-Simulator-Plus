@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-   public class CreateConnectionAction : Action
+    public class CreateConnectionAction : Action
     {
         Cable Cable;
         public CreateConnectionAction(Cable cable) : base("Create Connection")
