@@ -93,6 +93,13 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.A, ModifierKeys.Control)
             }
         );
+        public static RoutedUICommand DeselectAll { get; } = new RoutedUICommand(
+            "Deselect All", "DeselectAll", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.D, ModifierKeys.Control)
+            }
+        );
         #endregion
 
         #region View

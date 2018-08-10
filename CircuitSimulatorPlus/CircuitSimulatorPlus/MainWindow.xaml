@@ -24,6 +24,7 @@
         <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
         <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.DeselectAll}" Executed="DeselectAll_Click"/>
 
         <CommandBinding Command="{x:Static local:Commands.ResetView}" Executed="ResetView_Click"/>
         <CommandBinding Command="{x:Static local:Commands.ZoomIn}" Executed="ZoomIn_Click"/>

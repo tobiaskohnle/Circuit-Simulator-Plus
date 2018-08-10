@@ -1064,14 +1064,11 @@ namespace CircuitSimulatorPlus
         }
         void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            if (AnySelected)
-            {
-                DeselectAll();
-            }
-            else
-            {
-                SelectAll();
-            }
+            SelectAll();
+        }
+        void DeselectAll_Click(object sender, RoutedEventArgs e)
+        {
+            DeselectAll();
         }
 
         void MainToolbar_Checked(object sender, RoutedEventArgs e)
