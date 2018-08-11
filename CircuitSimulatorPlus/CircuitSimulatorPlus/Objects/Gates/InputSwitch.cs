@@ -10,12 +10,14 @@ namespace CircuitSimulatorPlus
         {
             Size = new Size(2, 2);
         }
-
         public bool State
         {
             get; set;
         }
-
+        public void color()
+        {
+            
+        }
         public override bool Eval()
         {
             return State;
