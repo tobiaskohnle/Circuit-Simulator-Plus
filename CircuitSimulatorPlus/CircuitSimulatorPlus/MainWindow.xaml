@@ -24,6 +24,7 @@
         <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
         <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
         <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.DeselectAll}" Executed="DeselectAll_Click"/>
 
         <CommandBinding Command="{x:Static local:Commands.ResetView}" Executed="ResetView_Click"/>
         <CommandBinding Command="{x:Static local:Commands.ZoomIn}" Executed="ZoomIn_Click"/>
@@ -102,7 +103,7 @@
         </Menu>
         <Canvas x:Name="backgoundLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True"/>
         <Canvas x:Name="canvas" Grid.Row="2" SnapsToDevicePixels="True"/>
-        <Canvas x:Name="decorationLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True">
+        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2" SnapsToDevicePixels="True">
             <Rectangle x:Name="selectVisual" Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Fill="#3F0078D7"/>
         </Canvas>
     </Grid>

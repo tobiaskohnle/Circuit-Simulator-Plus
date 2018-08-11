@@ -93,6 +93,13 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.A, ModifierKeys.Control)
             }
         );
+        public static RoutedUICommand DeselectAll { get; } = new RoutedUICommand(
+            "Deselect All", "DeselectAll", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.D, ModifierKeys.Control)
+            }
+        );
         #endregion
 
         #region View
@@ -127,7 +134,7 @@ namespace CircuitSimulatorPlus
             "Invert Connection", "InvertConnection", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.OemPeriod, ModifierKeys.Control)
+                new KeyGesture(Key.I, ModifierKeys.Control)
             }
         );
         public static RoutedUICommand Rename { get; } = new RoutedUICommand(
@@ -154,7 +161,7 @@ namespace CircuitSimulatorPlus
             "Add Empty Input", "AddInput", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.B, ModifierKeys.Control)
+                new KeyGesture(Key.OemPlus, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
         public static RoutedUICommand TrimInput { get; } = new RoutedUICommand(

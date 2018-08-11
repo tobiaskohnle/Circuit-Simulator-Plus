@@ -382,27 +382,29 @@ namespace CircuitSimulatorPlus
         #region IO
         public void New()
         {
-            contextGate = null;
+            SavePrompt();
+            //contextGate = null;
         }
 
         public bool SavePrompt()
         {
-            //if (!saved)
-            //{
-            //    switch (MessageBox.Show(
-            //        "Would you like to save your changes?",
-            //        "Save?",
-            //        MessageBoxButton.YesNoCancel
-            //    ))
-            //    {
-            //    case MessageBoxResult.Yes:
-            //        Save(); return saved;
-            //    case MessageBoxResult.No:
-            //        return true;
-            //    case MessageBoxResult.Cancel:
-            //        return false;
-            //    }
-            //}
+            if (!saved)
+            {
+                switch (MessageBox.Show(
+                    "Would you like to save your changes?",
+                    "Save?",
+                    MessageBoxButton.YesNoCancel
+                ))
+                {
+                case MessageBoxResult.Yes:
+                    Save();
+                    return saved;
+                case MessageBoxResult.No:
+                    return true;
+                case MessageBoxResult.Cancel:
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -1062,14 +1064,11 @@ namespace CircuitSimulatorPlus
         }
         void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            if (AnySelected)
-            {
-                DeselectAll();
-            }
-            else
-            {
-                SelectAll();
-            }
+            SelectAll();
+        }
+        void DeselectAll_Click(object sender, RoutedEventArgs e)
+        {
+            DeselectAll();
         }
 
         void MainToolbar_Checked(object sender, RoutedEventArgs e)
