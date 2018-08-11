@@ -103,7 +103,7 @@
         </Menu>
         <Canvas x:Name="backgoundLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True"/>
         <Canvas x:Name="canvas" Grid.Row="2" SnapsToDevicePixels="True"/>
-        <Canvas x:Name="decorationLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True">
+        <Canvas x:Name="decorationLayerCanvas" Grid.RowSpan="2" SnapsToDevicePixels="True">
             <Rectangle x:Name="selectVisual" Stroke="{DynamicResource {x:Static SystemColors.MenuHighlightBrushKey}}" Fill="#3F0078D7"/>
         </Canvas>
     </Grid>
