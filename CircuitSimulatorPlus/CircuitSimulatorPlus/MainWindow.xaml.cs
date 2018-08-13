@@ -738,6 +738,21 @@ namespace CircuitSimulatorPlus
         #region Event Handlers
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (e.MiddleButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
+                {
+                    return;
+                }
+            }
+            else if (e.ChangedButton == MouseButton.Right || e.ChangedButton == MouseButton.Middle)
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    return;
+                }
+            }
+
             CaptureMouse();
 
             lastCanvasClick = e.GetPosition(canvas);
