@@ -309,7 +309,7 @@ namespace CircuitSimulatorPlus
             {
                 if (obj is InputSwitch)
                 {
-                    
+
                     InputSwitch inputSwitch = obj as InputSwitch;
                     inputSwitch.color();
                     inputSwitch.State = !inputSwitch.State;

@@ -16,7 +16,7 @@ namespace CircuitSimulatorPlus
         }
         public void color()
         {
-            
+
         }
         public override bool Eval()
         {
