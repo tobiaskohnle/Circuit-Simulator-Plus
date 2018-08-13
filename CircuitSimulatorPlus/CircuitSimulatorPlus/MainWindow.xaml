@@ -86,7 +86,7 @@
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomSelection}"/>
-            </MenuItem> 
+            </MenuItem>
             <MenuItem Header="Tools" Width="auto">
                 <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
                 <MenuItem Command="{x:Static local:Commands.Rename}"/>
