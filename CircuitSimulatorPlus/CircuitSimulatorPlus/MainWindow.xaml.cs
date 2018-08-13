@@ -790,7 +790,7 @@ namespace CircuitSimulatorPlus
             Point currentCanvasPos = e.GetPosition(canvas);
 
             Vector windowMoved = currentWindowPos - lastWindowPos;
-            Vector canvasMoved = e.GetPosition(canvas) - lastCanvasPos;
+            Vector canvasMoved = currentCanvasPos - lastCanvasPos;
 
             if (mouseMoved)
             {
