@@ -27,7 +27,6 @@ namespace CircuitSimulatorPlus
         bool stateChanged;
 
         public Gate Owner;
-        public bool IsEmpty;
 
         public Vector AlignmentVector = new Vector();
 
@@ -36,6 +35,21 @@ namespace CircuitSimulatorPlus
             get; set;
         }
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
+
+        public event System.Action OnEmptyChanged;
+        protected bool isEmpty;
+        public bool IsEmpty
+        {
+            get
+            {
+                return isEmpty;
+            }
+            set
+            {
+                isEmpty = value;
+                OnEmptyChanged?.Invoke();
+            }
+        }
 
         public event System.Action OnRenderedChanged;
         protected bool isRendered;
