@@ -32,6 +32,7 @@ namespace CircuitSimulatorPlus
             cable.OutputNode.OnSelectionChanged += OnSelectionChanged;
             cable.InputNode.OnEmptyChanged += OnEmptyChanged;
             cable.OutputNode.OnEmptyChanged += OnEmptyChanged;
+            cable.OutputNode.OnStateChanged += OnStateChanged;
             cable.OnRenderedChanged += OnRenderedChanged;
         }
 
@@ -63,13 +64,18 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                line.Stroke = Brushes.Black;
+                OnStateChanged();
             }
         }
 
         public void OnEmptyChanged()
         {
             cable.IsRendered = !cable.OutputNode.IsEmpty && !cable.InputNode.IsEmpty;
+        }
+
+        public void OnStateChanged()
+        {
+            line.Stroke = cable.OutputNode.State ? Brushes.Red : Brushes.Black;
         }
 
         public void OnPositionChanged()
