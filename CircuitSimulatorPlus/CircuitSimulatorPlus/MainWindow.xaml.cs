@@ -40,7 +40,7 @@ namespace CircuitSimulatorPlus
 
             UpdateClickableObjects();
 
-            timer.Tick += TimerTick;
+            timer.Tick += Timer_Tick;
 
             canvas.Children.Add(newCable);
             Panel.SetZIndex(newCable, 1);
@@ -968,7 +968,7 @@ namespace CircuitSimulatorPlus
 
         }
 
-        void TimerTick(object sender, EventArgs e)
+        void Timer_Tick(object sender, EventArgs e)
         {
             TickQueue();
         }
