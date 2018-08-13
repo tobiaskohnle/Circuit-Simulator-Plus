@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
             IsRendered = true;
         }
 
-        public event System.Action OnRisingEdgeChanged;
+        public event Action OnRisingEdgeChanged;
         bool isRisingEdge;
         /// <summary>
         /// True, if this InputNode reacts to rising edges.

@@ -28,7 +28,7 @@ namespace CircuitSimulatorPlus
 
         public CableRenderer Renderer;
 
-        public event System.Action OnRenderedChanged;
+        public event Action OnRenderedChanged;
         protected bool isRendered;
         public bool IsRendered
         {

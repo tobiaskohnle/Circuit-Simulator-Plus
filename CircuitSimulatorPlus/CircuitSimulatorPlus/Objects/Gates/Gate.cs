@@ -34,7 +34,7 @@ namespace CircuitSimulatorPlus
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
 
-        public event System.Action OnRenderedChanged;
+        public event Action OnRenderedChanged;
         protected bool isRendered;
         public bool IsRendered
         {
@@ -49,7 +49,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnNameChanged;
+        public event Action OnNameChanged;
         string name;
         public string Name
         {
@@ -64,7 +64,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnTagChanged;
+        public event Action OnTagChanged;
         string tag;
         public string Tag
         {
@@ -79,7 +79,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnSelectionChanged;
+        public event Action OnSelectionChanged;
         bool isSelected;
         public bool IsSelected
         {
@@ -94,7 +94,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnPositionChanged;
+        public event Action OnPositionChanged;
         Point position;
         public Point Position
         {
@@ -110,7 +110,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnSizeChanged;
+        public event Action OnSizeChanged;
         Size size;
         public Size Size
         {

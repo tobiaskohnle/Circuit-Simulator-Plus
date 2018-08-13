@@ -14,7 +14,7 @@ namespace CircuitSimulatorPlus
 
         bool isMasterSlave = true;
 
-        public event System.Action OnMasterSlaveChanged;
+        public event Action OnMasterSlaveChanged;
         /// <summary>
         /// True, if this OutputNode has a master-slave symbol next to it.
         /// </summary>

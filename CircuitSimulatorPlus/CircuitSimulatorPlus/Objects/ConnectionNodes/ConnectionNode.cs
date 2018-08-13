@@ -36,7 +36,7 @@ namespace CircuitSimulatorPlus
         }
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
 
-        public event System.Action OnEmptyChanged;
+        public event Action OnEmptyChanged;
         protected bool isEmpty;
         public bool IsEmpty
         {
@@ -51,7 +51,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnRenderedChanged;
+        public event Action OnRenderedChanged;
         protected bool isRendered;
         public bool IsRendered
         {
@@ -69,7 +69,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnStateChanged;
+        public event Action OnStateChanged;
         bool state;
         public bool State
         {
@@ -88,7 +88,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnInvertedChanged;
+        public event Action OnInvertedChanged;
         bool inverted;
         public bool IsInverted
         {
@@ -103,7 +103,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnSelectionChanged;
+        public event Action OnSelectionChanged;
         bool isSelected;
         public bool IsSelected
         {
@@ -118,7 +118,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnPositionChanged;
+        public event Action OnPositionChanged;
         Point position;
         public Point Position
         {
@@ -135,7 +135,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnNameChanged;
+        public event Action OnNameChanged;
         string name;
         public string Name
         {
@@ -163,7 +163,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event System.Action OnAlignmentChanged;
+        public event Action OnAlignmentChanged;
         Align? alignment;
         public Align Alignment
         {
