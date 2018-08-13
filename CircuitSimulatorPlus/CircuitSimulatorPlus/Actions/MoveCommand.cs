@@ -7,12 +7,12 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class MoveAction : Action
+    public class MoveCommand : Command
     {
         Vector move;
         List<IMovable> movedObjects;
 
-        public MoveAction(List<IMovable> movedObjects, Vector move) : base("Moved objects")
+        public MoveCommand(List<IMovable> movedObjects, Vector move) : base("Moved objects")
         {
             this.move = move;
             this.movedObjects = movedObjects;

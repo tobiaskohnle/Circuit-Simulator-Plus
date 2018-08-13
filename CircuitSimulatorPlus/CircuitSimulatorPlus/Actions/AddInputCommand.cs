@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CircuitSimulatorPlus.Actions
+namespace CircuitSimulatorPlus
 {
-    class ToggleObjectsAction : Action
+    public class AddInputCommand : Command
     {
-        public ToggleObjectsAction(List<ConnectionNode> List) : base("Toggle Objects")
+        public AddInputCommand(Gate gate) : base("Added input to gate")
         {
 
         }

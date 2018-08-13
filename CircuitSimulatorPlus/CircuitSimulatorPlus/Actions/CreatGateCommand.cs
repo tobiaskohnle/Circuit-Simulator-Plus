@@ -7,12 +7,12 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class CreateGateAction : Action
+    public class CreateGateCommand : Command
     {
         Gate createdGate;
         Gate contextGate;
 
-        public CreateGateAction(Gate contextGate, Gate createdGate) : base("...")
+        public CreateGateCommand(Gate contextGate, Gate createdGate) : base("...")
         {
             this.createdGate = createdGate;
             this.contextGate = contextGate;

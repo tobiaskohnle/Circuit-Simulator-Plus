@@ -79,13 +79,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Actions\Action.cs" />
-    <Compile Include="Actions\AddInputAction.cs" />
-    <Compile Include="Actions\DeleteAction.cs" />
-    <Compile Include="Actions\CreateConnectionAction.cs" />
-    <Compile Include="Actions\DeleteInputAction.cs" />
-    <Compile Include="Actions\InvertConnectionAction.cs" />
-    <Compile Include="Actions\ToggleObjectsAction.cs" />
+    <Compile Include="Actions\Command.cs" />
+    <Compile Include="Actions\AddInputCommand.cs" />
+    <Compile Include="Actions\DeleteCommand.cs" />
+    <Compile Include="Actions\CreateConnectionCommand.cs" />
+    <Compile Include="Actions\DeleteInputCommand.cs" />
+    <Compile Include="Actions\InvertConnectionCommand.cs" />
+    <Compile Include="Actions\ToggleObjectsCommand.cs" />
     <Compile Include="Miscellaneous\Commands.cs" />
     <Compile Include="Miscellaneous\DropOutStack.cs" />
     <Compile Include="Objects\Cables\CableJoint.cs" />
@@ -99,16 +99,16 @@
     <Compile Include="Objects\Gates\OutputLight.cs" />
     <Compile Include="Objects\Hitboxes\IMovable.cs" />
     <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
-    <Compile Include="Actions\ChangeTypeAction.cs" />
-    <Compile Include="Actions\CreatGateAction.cs" />
+    <Compile Include="Actions\ChangeTypeCommand.cs" />
+    <Compile Include="Actions\CreatGateCommand.cs" />
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
     <Compile Include="Objects\Hitboxes\Hitbox.cs" />
     <Compile Include="Objects\Hitboxes\IClickable.cs" />
     <Compile Include="Rendering\CableRenderer.cs" />
     <Compile Include="Rendering\ConnectionNodeRenderer.cs" />
-    <Compile Include="Actions\MoveAction.cs" />
-    <Compile Include="Actions\PasteAction.cs" />
-    <Compile Include="Actions\RenameAction.cs" />
+    <Compile Include="Actions\MoveCommand.cs" />
+    <Compile Include="Actions\PasteCommand.cs" />
+    <Compile Include="Actions\RenameCommand.cs" />
     <Compile Include="Rendering\GateRenderer.cs" />
     <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
     <Compile Include="Storage\StorageUtility.cs" />

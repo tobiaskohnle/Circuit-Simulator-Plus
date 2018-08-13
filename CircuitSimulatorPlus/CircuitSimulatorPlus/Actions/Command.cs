@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public abstract class Action
+    public abstract class Command
     {
         protected string message;
 
-        protected Action(string message)
+        protected Command(string message)
         {
             this.message = message;
         }

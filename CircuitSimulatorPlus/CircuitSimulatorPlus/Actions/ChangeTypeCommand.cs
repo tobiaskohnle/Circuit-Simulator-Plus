@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class ChangeTypeAction : Action
+    public class ChangeTypeCommand : Command
     {
-        public ChangeTypeAction(Gate gate, Gate newGate) : base($"Changed Type to {newGate.GetType()}")
+        public ChangeTypeCommand(Gate gate, Gate newGate) : base($"Changed Type to {newGate.GetType()}")
         {
 
         }

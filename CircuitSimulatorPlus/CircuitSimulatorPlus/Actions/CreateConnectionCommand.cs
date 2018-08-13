@@ -6,20 +6,22 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class PasteAction : Action
+    public class CreateConnectionCommand : Command
     {
-        public PasteAction(Gate gate) : base($"Pasted {gate.GetType()}")
+        Cable Cable;
+        public CreateConnectionCommand(Cable cable) : base("Create Connection")
         {
-
+            this.Cable = cable;
         }
+
         public override void Redo()
         {
-
+            Cable.CreateCable();
         }
 
         public override void Undo()
         {
-
+            Cable.DeleteCable();
         }
     }
 }

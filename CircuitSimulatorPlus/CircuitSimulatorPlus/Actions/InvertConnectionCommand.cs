@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class InvertConnectionAction : Action
+    public class InvertConnectionCommand : Command
     {
         List<ConnectionNode> Selected;
-        public InvertConnectionAction(List<ConnectionNode> List) : base("Invert Connection")
+        public InvertConnectionCommand(List<ConnectionNode> List) : base("Invert Connection")
         {
             this.Selected = List;
         }

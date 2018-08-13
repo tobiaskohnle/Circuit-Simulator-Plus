@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus.Actions
 {
-    class DeleteInputAction : Action
+    class ToggleObjectsCommand : Command
     {
-        public DeleteInputAction(List<ConnectionNode> List) : base("Delete Input")
+        public ToggleObjectsCommand(List<ConnectionNode> List) : base("Toggle Objects")
         {
 
         }

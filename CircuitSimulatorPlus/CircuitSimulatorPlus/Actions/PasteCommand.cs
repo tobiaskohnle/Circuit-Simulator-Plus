@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class DeleteAction : Action
+    public class PasteCommand : Command
     {
-        IClickable deletedObject;
-
-        public DeleteAction(IClickable deletedObject) : base("Deleted object")
+        public PasteCommand(Gate gate) : base($"Pasted {gate.GetType()}")
         {
 
         }
-
         public override void Redo()
         {
 

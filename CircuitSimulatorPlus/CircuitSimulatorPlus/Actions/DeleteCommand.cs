@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class CreateConnectionAction : Action
+    public class DeleteCommand : Command
     {
-        Cable Cable;
-        public CreateConnectionAction(Cable cable) : base("Create Connection")
+        IClickable deletedObject;
+
+        public DeleteCommand(IClickable deletedObject) : base("Deleted object")
         {
-            this.Cable = cable;
+
         }
 
         public override void Redo()
         {
-            Cable.CreateCable();
+
         }
 
         public override void Undo()
         {
-            Cable.DeleteCable();
+
         }
     }
 }

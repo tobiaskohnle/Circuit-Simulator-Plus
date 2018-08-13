@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class RenameGateAction : Action
+    public class RenameGateCommand : Command
     {
         Gate gate;
         string oldName;
         string newName;
 
-        public RenameGateAction(Gate gate, string name) : base($"Renamed Gate to {name}")
+        public RenameGateCommand(Gate gate, string name) : base($"Renamed Gate to {name}")
         {
             this.gate = gate;
             newName = name;

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CircuitSimulatorPlus
+namespace CircuitSimulatorPlus.Actions
 {
-    public class AddInputAction : Action
+    class DeleteInputCommand : Command
     {
-        public AddInputAction(Gate gate) : base("Added input to gate")
+        public DeleteInputCommand(List<ConnectionNode> List) : base("Delete Input")
         {
 
         }

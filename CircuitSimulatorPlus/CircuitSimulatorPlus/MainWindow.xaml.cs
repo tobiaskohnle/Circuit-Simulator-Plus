@@ -101,8 +101,8 @@ namespace CircuitSimulatorPlus
         List<IClickable> clickableObjects = new List<IClickable>();
         List<IClickable> selectedObjects = new List<IClickable>();
 
-        DropOutStack<Action> undoStack = new DropOutStack<Action>(UndoBufferSize);
-        DropOutStack<Action> redoStack = new DropOutStack<Action>(UndoBufferSize);
+        DropOutStack<Command> undoStack = new DropOutStack<Command>(UndoBufferSize);
+        DropOutStack<Command> redoStack = new DropOutStack<Command>(UndoBufferSize);
 
         List<Cable> cables = new List<Cable>();
         ContextGate contextGate;
@@ -414,7 +414,7 @@ namespace CircuitSimulatorPlus
         {
             if (AllowUndo)
             {
-                Action lastAction = undoStack.Pop();
+                Command lastAction = undoStack.Pop();
                 lastAction.Undo();
                 redoStack.Push(lastAction);
             }
@@ -423,7 +423,7 @@ namespace CircuitSimulatorPlus
         {
             if (AllowRedo)
             {
-                Action lastAction = redoStack.Pop();
+                Command lastAction = redoStack.Pop();
                 lastAction.Redo();
                 undoStack.Push(lastAction);
             }
@@ -568,7 +568,7 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Misc
-        public void PerformAction(Action action)
+        public void PerformAction(Command action)
         {
             saved = false;
             UpdateTitle();
@@ -615,7 +615,7 @@ namespace CircuitSimulatorPlus
 
                 if (completeMove.X != 0 || completeMove.Y != 0)
                 {
-                    PerformAction(new MoveAction(movedObjects, completeMove));
+                    PerformAction(new MoveCommand(movedObjects, completeMove));
                 }
             }
         }
