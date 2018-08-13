@@ -30,7 +30,14 @@ namespace CircuitSimulatorPlus
             cable.OutputNode.OnPositionChanged += OnPositionChanged;
             cable.InputNode.OnSelectionChanged += OnSelectionChanged;
             cable.OutputNode.OnSelectionChanged += OnSelectionChanged;
+            cable.InputNode.OnEmptyChanged += OnEmptyChanged;
+            cable.OutputNode.OnEmptyChanged += OnEmptyChanged;
             cable.OnRenderedChanged += OnRenderedChanged;
+        }
+
+        ~CableRenderer()
+        {
+            Console.WriteLine("CableRenderer dtor");
         }
 
         public void OnRenderedChanged()
@@ -58,6 +65,11 @@ namespace CircuitSimulatorPlus
             {
                 line.Stroke = Brushes.Black;
             }
+        }
+
+        public void OnEmptyChanged()
+        {
+            cable.IsRendered = !cable.OutputNode.IsEmpty && !cable.InputNode.IsEmpty;
         }
 
         public void OnPositionChanged()

@@ -61,8 +61,11 @@ namespace CircuitSimulatorPlus
             }
             set
             {
-                isRendered = value;
-                OnRenderedChanged?.Invoke();
+                if (isRendered != value)
+                {
+                    isRendered = value;
+                    OnRenderedChanged?.Invoke();
+                }
             }
         }
 
@@ -80,8 +83,8 @@ namespace CircuitSimulatorPlus
                 {
                     stateChanged = !stateChanged;
                     state = value;
+                    OnStateChanged?.Invoke();
                 }
-                OnStateChanged?.Invoke();
             }
         }
 

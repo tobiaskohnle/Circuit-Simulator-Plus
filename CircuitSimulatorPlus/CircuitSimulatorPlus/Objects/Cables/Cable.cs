@@ -21,6 +21,11 @@ namespace CircuitSimulatorPlus
             IsRendered = true;
         }
 
+        ~Cable()
+        {
+            Console.WriteLine("Cable dtor");
+        }
+
         public CableRenderer Renderer;
 
         public event System.Action OnRenderedChanged;
@@ -33,8 +38,11 @@ namespace CircuitSimulatorPlus
             }
             set
             {
-                isRendered = value;
-                OnRenderedChanged?.Invoke();
+                if (isRendered != value)
+                {
+                    isRendered = value;
+                    OnRenderedChanged?.Invoke();
+                }
             }
         }
 
