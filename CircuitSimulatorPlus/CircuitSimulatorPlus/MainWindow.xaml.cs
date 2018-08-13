@@ -309,7 +309,9 @@ namespace CircuitSimulatorPlus
             {
                 if (obj is InputSwitch)
                 {
+                    
                     InputSwitch inputSwitch = obj as InputSwitch;
+                    inputSwitch.color();
                     inputSwitch.State = !inputSwitch.State;
                     Tick(inputSwitch.Output[0]);
                     //inputSwitch.Renderer.OnPositionChanged();
