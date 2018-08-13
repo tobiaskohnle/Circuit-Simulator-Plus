@@ -48,6 +48,11 @@
                 <MenuItem Header="Or Gate" Click="CreateOrGate"/>
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
             </MenuItem>
+            <MenuItem Command="{x:Static local:Commands.Cut}"/>
+            <MenuItem Command="{x:Static local:Commands.Copy}"/>
+            <MenuItem Command="{x:Static local:Commands.Paste}"/>
+            <MenuItem Command="{x:Static local:Commands.Delete}"/>
+            <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
