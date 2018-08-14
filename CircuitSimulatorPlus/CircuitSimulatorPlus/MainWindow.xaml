@@ -47,6 +47,7 @@
                 <MenuItem Header="And Gate" Click="CreateAndGate"/>
                 <MenuItem Header="Or Gate" Click="CreateOrGate"/>
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
+                <MenuItem Header="Segment Display" Click="CreateSegmentDisplay"/>
             </MenuItem>
             <MenuItem Command="{x:Static local:Commands.Cut}"/>
             <MenuItem Command="{x:Static local:Commands.Copy}"/>

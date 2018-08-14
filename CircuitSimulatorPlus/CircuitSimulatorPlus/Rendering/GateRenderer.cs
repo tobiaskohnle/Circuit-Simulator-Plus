@@ -49,6 +49,11 @@ namespace CircuitSimulatorPlus
             gate.OnSizeChanged += OnSizeChanged;
             gate.OnPositionChanged += OnPositionChanged;
             gate.OnRenderedChanged += OnRenderedChanged;
+
+            if (gate.IsRendered)
+            {
+                OnRenderedChanged();
+            }
         }
 
         public void OnRenderedChanged()

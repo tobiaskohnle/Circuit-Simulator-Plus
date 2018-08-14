@@ -97,6 +97,7 @@
     <Compile Include="Objects\Gates\NopGate.cs" />
     <Compile Include="Objects\Gates\OrGate.cs" />
     <Compile Include="Objects\Gates\OutputLight.cs" />
+    <Compile Include="Objects\Gates\SegmentDisplay.cs" />
     <Compile Include="Objects\Hitboxes\IMovable.cs" />
     <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
     <Compile Include="Commands\ChangeTypeCommand.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Commands\RenameCommand.cs" />
     <Compile Include="Rendering\GateRenderer.cs" />
     <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
+    <Compile Include="Rendering\SegmentDisplayRenderer.cs" />
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
     <Compile Include="Storage\StorageObject.cs" />

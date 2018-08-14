@@ -44,8 +44,11 @@ namespace CircuitSimulatorPlus
             }
             set
             {
-                isRendered = value;
-                OnRenderedChanged?.Invoke();
+                if (isRendered != value)
+                {
+                    isRendered = value;
+                    OnRenderedChanged?.Invoke();
+                }
             }
         }
 

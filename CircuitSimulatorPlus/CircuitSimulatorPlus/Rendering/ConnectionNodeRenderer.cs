@@ -53,6 +53,11 @@ namespace CircuitSimulatorPlus
             connectionNode.OnNameChanged += OnNameChanged;
             connectionNode.OnPositionChanged += OnPositionChanged;
             connectionNode.OnRenderedChanged += OnRenderedChanged;
+
+            if (connectionNode.IsRendered)
+            {
+                OnRenderedChanged();
+            }
         }
 
         public void OnRenderedChanged()

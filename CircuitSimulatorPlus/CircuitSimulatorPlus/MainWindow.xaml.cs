@@ -1015,6 +1015,10 @@ namespace CircuitSimulatorPlus
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
         }
+        void CreateSegmentDisplay(object sender, RoutedEventArgs e)
+        {
+            CreateGate(new SegmentDisplay(), 7, 0);
+        }
 
         void New_Click(object sender, RoutedEventArgs e)
         {

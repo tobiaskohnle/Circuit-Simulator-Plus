@@ -34,6 +34,11 @@ namespace CircuitSimulatorPlus
             cable.OutputNode.OnEmptyChanged += OnEmptyChanged;
             cable.OutputNode.OnStateChanged += OnStateChanged;
             cable.OnRenderedChanged += OnRenderedChanged;
+
+            if (cable.IsRendered)
+            {
+                OnRenderedChanged();
+            }
         }
 
         ~CableRenderer()
