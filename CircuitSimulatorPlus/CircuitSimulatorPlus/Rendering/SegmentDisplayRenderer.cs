@@ -21,7 +21,7 @@ namespace CircuitSimulatorPlus
         const double segmentScale = 0.97;
 
         readonly SolidColorBrush activeBrush = new SolidColorBrush(Color.FromArgb(200, 255, 20, 20));
-        readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(100, 255, 200, 200));
+        readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(100, 170, 170, 170));
 
         Polygon top = new Polygon();
         Polygon topLeft = new Polygon();
@@ -101,13 +101,13 @@ namespace CircuitSimulatorPlus
 
         public void OnStateChanged()
         {
-            top.Stroke = gate.Input[0].State ? activeBrush : inactiveBrush;
-            topRight.Stroke = gate.Input[1].State ? activeBrush : inactiveBrush;
-            botRight.Stroke = gate.Input[2].State ? activeBrush : inactiveBrush;
-            bot.Stroke = gate.Input[3].State ? activeBrush : inactiveBrush;
-            botLeft.Stroke = gate.Input[4].State ? activeBrush : inactiveBrush;
-            topLeft.Stroke = gate.Input[5].State ? activeBrush : inactiveBrush;
-            center.Stroke = gate.Input[6].State ? activeBrush : inactiveBrush;
+            top.Fill = gate.Input[0].State ? activeBrush : inactiveBrush;
+            topRight.Fill = gate.Input[1].State ? activeBrush : inactiveBrush;
+            botRight.Fill = gate.Input[2].State ? activeBrush : inactiveBrush;
+            bot.Fill = gate.Input[3].State ? activeBrush : inactiveBrush;
+            botLeft.Fill = gate.Input[4].State ? activeBrush : inactiveBrush;
+            topLeft.Fill = gate.Input[5].State ? activeBrush : inactiveBrush;
+            center.Fill = gate.Input[6].State ? activeBrush : inactiveBrush;
         }
 
         public void OnLayoutChanged()
