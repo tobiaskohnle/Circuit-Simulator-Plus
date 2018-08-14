@@ -138,6 +138,9 @@ namespace CircuitSimulatorPlus
             case "OutputLight":
                 gate = new OutputLight();
                 break;
+            case "SegmentDisplay":
+                gate = new SegmentDisplay();
+                break;
             default:
                 throw new InvalidOperationException("Unknown type");
             }
