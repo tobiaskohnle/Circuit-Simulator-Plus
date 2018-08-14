@@ -27,6 +27,7 @@ namespace CircuitSimulatorPlus
             InitializeComponent();
 
             Canvas = canvas;
+            ClickableObjects = clickableObjects;
 
             DrawGrid();
             UpdateTitle();
@@ -65,6 +66,7 @@ namespace CircuitSimulatorPlus
 
         #region Properties
         public static Canvas Canvas;
+        public static List<IClickable> ClickableObjects;
 
         Point lastMousePos;
 
@@ -112,23 +114,8 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Object
-        public void CreateGate(Gate gate, int amtInputs, int amtOutputs)
+        public void CreateGate(Gate gate)
         {
-            for (int i = 0; i < amtInputs; i++)
-            {
-                var inputNode = new InputNode(gate);
-                //inputNode.Renderer = new ConnectionNodeRenderer(canvas, inputNode, gate, false);
-                gate.Input.Add(inputNode);
-                clickableObjects.Add(inputNode);
-            }
-            for (int i = 0; i < amtOutputs; i++)
-            {
-                var outputNode = new OutputNode(gate);
-                //outputNode.Renderer = new ConnectionNodeRenderer(canvas, outputNode, gate, true);
-                gate.Output.Add(outputNode);
-                clickableObjects.Add(outputNode);
-            }
-
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
 
             gate.UpdateConnectionNodePos();
@@ -994,30 +981,30 @@ namespace CircuitSimulatorPlus
         #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            CreateGate(new InputSwitch(), 0, 1);
+            CreateGate(new InputSwitch());
         }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
-            CreateGate(new OutputLight(), 1, 0);
+            CreateGate(new OutputLight());
         }
         void CreateAndGate(object sender, RoutedEventArgs e)
         {
-            CreateGate(new AndGate(), 2, 1);
+            CreateGate(new AndGate());
         }
         void CreateOrGate(object sender, RoutedEventArgs e)
         {
-            CreateGate(new OrGate(), 2, 1);
+            CreateGate(new OrGate());
         }
         void CreateNotGate(object sender, RoutedEventArgs e)
         {
             var newGate = new NopGate();
-            CreateGate(newGate, 1, 1);
+            CreateGate(newGate);
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
         }
         void CreateSegmentDisplay(object sender, RoutedEventArgs e)
         {
-            CreateGate(new SegmentDisplay(), 7, 0);
+            CreateGate(new SegmentDisplay());
         }
 
         void New_Click(object sender, RoutedEventArgs e)

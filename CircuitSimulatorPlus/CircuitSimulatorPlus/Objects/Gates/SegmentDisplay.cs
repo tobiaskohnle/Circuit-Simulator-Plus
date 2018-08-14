@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
 {
     public class SegmentDisplay : Gate
     {
-        public SegmentDisplay()
+        public SegmentDisplay() : base(7, 0)
         {
             SegmentRenderer = new SegmentDisplayRenderer(this);
 

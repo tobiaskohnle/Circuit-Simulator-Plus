@@ -5,6 +5,10 @@ namespace CircuitSimulatorPlus
 {
     public class ContextGate : Gate
     {
+        public ContextGate() : base(0, 0)
+        {
+        }
+
         /// <summary>
         /// The circuit inside of a gate.
         /// </summary>

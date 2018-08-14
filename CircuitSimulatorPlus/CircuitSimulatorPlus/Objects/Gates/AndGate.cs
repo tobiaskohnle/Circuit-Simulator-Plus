@@ -5,7 +5,7 @@ namespace CircuitSimulatorPlus
 {
     public class AndGate : Gate
     {
-        public AndGate()
+        public AndGate() : base(2, 1)
         {
             Tag = "&";
         }

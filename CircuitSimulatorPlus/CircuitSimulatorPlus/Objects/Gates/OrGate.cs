@@ -5,7 +5,7 @@ namespace CircuitSimulatorPlus
 {
     public class OrGate : Gate
     {
-        public OrGate()
+        public OrGate() : base(2, 1)
         {
             Tag = "\u22651";
         }

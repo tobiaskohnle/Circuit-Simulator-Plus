@@ -7,14 +7,8 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Gate : IClickable, IMovable
     {
-        public Gate()
+        public Gate(int amtInputs, int amtOutputs)
         {
-            Renderer = new GateRenderer(this);
-            if (GetType() != typeof(ContextGate))
-            {
-                IsRendered = true;
-            }
-
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
 
@@ -22,6 +16,25 @@ namespace CircuitSimulatorPlus
             foreach (ConnectionNode.Align align in Enum.GetValues(typeof(ConnectionNode.Align)))
             {
                 ConnectedNodes[align] = new List<ConnectionNode>();
+            }
+
+            for (int i = 0; i < amtInputs; i++)
+            {
+                var inputNode = new InputNode(this);
+                Input.Add(inputNode);
+                MainWindow.ClickableObjects.Add(inputNode);
+            }
+            for (int i = 0; i < amtOutputs; i++)
+            {
+                var outputNode = new OutputNode(this);
+                Output.Add(outputNode);
+                MainWindow.ClickableObjects.Add(outputNode);
+            }
+
+            Renderer = new GateRenderer(this);
+            if (GetType() != typeof(ContextGate))
+            {
+                IsRendered = true;
             }
         }
 

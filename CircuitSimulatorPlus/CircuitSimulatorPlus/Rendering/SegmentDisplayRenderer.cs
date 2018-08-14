@@ -21,7 +21,7 @@ namespace CircuitSimulatorPlus
         const double segmentScale = 0.97;
 
         readonly SolidColorBrush activeBrush = new SolidColorBrush(Color.FromArgb(200, 255, 20, 20));
-        readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(100, 100, 20, 20));
+        readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(100, 255, 200, 200));
 
         Polygon top = new Polygon();
         Polygon topLeft = new Polygon();

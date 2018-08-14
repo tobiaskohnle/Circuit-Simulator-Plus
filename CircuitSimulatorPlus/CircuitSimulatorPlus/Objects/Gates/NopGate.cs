@@ -5,7 +5,7 @@ namespace CircuitSimulatorPlus
 {
     public class NopGate : Gate
     {
-        public NopGate()
+        public NopGate() : base(1, 1)
         {
             Tag = "1";
         }
