@@ -21,11 +21,6 @@ namespace CircuitSimulatorPlus
             IsRendered = true;
         }
 
-        ~Cable()
-        {
-            Console.WriteLine("Cable dtor");
-        }
-
         public CableRenderer Renderer;
 
         public event Action OnRenderedChanged;

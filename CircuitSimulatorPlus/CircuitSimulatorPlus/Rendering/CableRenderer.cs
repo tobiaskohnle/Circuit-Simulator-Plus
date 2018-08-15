@@ -41,11 +41,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        ~CableRenderer()
-        {
-            Console.WriteLine("CableRenderer dtor");
-        }
-
         public void OnRenderedChanged()
         {
             if (cable.IsRendered)
