@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace CircuitSimulatorPlus
@@ -388,6 +390,23 @@ namespace CircuitSimulatorPlus
         {
             SavePrompt();
             //contextGate = null;
+        }
+
+        public void Open(string filePath)
+        {
+            currentFilePath = filePath;
+
+            if (Properties.Settings.Default.RecentFiles == null)
+            {
+                Properties.Settings.Default.RecentFiles = new StringCollection();
+            }
+            Properties.Settings.Default.RecentFiles.Remove(filePath);
+            Properties.Settings.Default.RecentFiles.Insert(0, filePath);
+
+            CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
+
+            contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(filePath));
+            UpdateClickableObjects();
         }
 
         public bool SavePrompt()
@@ -1033,10 +1052,12 @@ namespace CircuitSimulatorPlus
             dialog.Filter = FileFilter;
             if (dialog.ShowDialog() == true)
             {
-                currentFilePath = dialog.FileName;
-                contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(dialog.FileName));
-                UpdateClickableObjects();
+                Open(dialog.FileName);
             }
+        }
+        void RecentFiles_Click(object sender, RoutedEventArgs e)
+        {
+            Open((e.OriginalSource as MenuItem).Header.ToString());
         }
         void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
