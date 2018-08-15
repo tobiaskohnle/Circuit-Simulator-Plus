@@ -129,22 +129,37 @@ namespace CircuitSimulatorPlus
 
         public void Tick(ConnectionNode node)
         {
+            node.IsTicked = true;
             tickedNodes.Enqueue(node);
             if (singleTicks == false)
                 timer.Start();
         }
         public void TickQueue()
         {
-            Console.WriteLine("Tick");
+            if (tickedNodes.Count > 0)
+            {
+                Console.WriteLine($"Tick {tickedNodes.Count} Nodes");
+            }
+            else
+            {
+                Console.WriteLine($"No Nodes to Tick");
+                return;
+            }
+
             List<ConnectionNode> tickedNodesCopy = tickedNodes.ToList();
             tickedNodes.Clear();
             foreach (ConnectionNode ticked in tickedNodesCopy)
             {
+                ticked.IsTicked = false;
                 ticked.Tick(tickedNodes);
-                //ticked.Renderer.OnStateChanged();
             }
             if (tickedNodes.Count == 0)
                 timer.Stop();
+
+            Console.WriteLine($"{tickedNodes.Count} Nodes Enqueued");
+
+            foreach (var node in tickedNodes)
+                node.IsTicked = true;
         }
 
         public void Select(IClickable obj)
@@ -1160,10 +1175,12 @@ namespace CircuitSimulatorPlus
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Single Ticks Enabled");
+            singleTicks = true;
         }
         void SingleTicks_Unchecked(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Single Ticks Disabled");
+            singleTicks = false;
             if (tickedNodes.Count > 0)
                 timer.Start();
         }

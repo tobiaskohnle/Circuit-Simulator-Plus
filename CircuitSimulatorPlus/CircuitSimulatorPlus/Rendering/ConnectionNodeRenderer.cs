@@ -43,6 +43,7 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
 
+            connectionNode.OnTickedChanged += OnTickedChanged;
             connectionNode.OnSelectionChanged += OnSelectionChanged;
             connectionNode.OnStateChanged += OnStateChanged;
             if (connectionNode is InputNode)
@@ -67,6 +68,7 @@ namespace CircuitSimulatorPlus
                 MainWindow.Canvas.Children.Add(invertionDot);
                 MainWindow.Canvas.Children.Add(connectionNodeLine);
 
+                OnTickedChanged();
                 OnStateChanged();
                 OnSelectionChanged();
                 OnRisingEdgeChanged();
@@ -84,29 +86,51 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public void OnStateChanged()
+        void UpdateLineStroke()
         {
-            bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
-            if (!connectionNode.IsSelected)
+            //if (connectionNode.IsSelected)
+            //{
+            //    connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
+            //}
+            //else if (connectionNode.IsTicked)
+            //{
+            //    connectionNodeLine.Stroke = Brushes.Orange;
+            //}
+            if (connectionNode.IsTicked)
             {
-                connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
+                connectionNodeLine.Stroke = Brushes.Orange;
             }
-            if (connectionNode.IsInverted)
-            {
-                invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
-            }
-        }
-
-        public void OnSelectionChanged()
-        {
-            if (connectionNode.IsSelected)
+            else if (connectionNode.IsSelected)
             {
                 connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
             }
             else
             {
-                OnStateChanged();
+                bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
+                if (!connectionNode.IsSelected)
+                {
+                    connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
+                }
+                if (connectionNode.IsInverted)
+                {
+                    invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
+                }
             }
+        }
+
+        public void OnTickedChanged()
+        {
+            UpdateLineStroke();
+        }
+
+        public void OnStateChanged()
+        {
+            UpdateLineStroke();
+        }
+
+        public void OnSelectionChanged()
+        {
+            UpdateLineStroke();
         }
 
         public void OnRisingEdgeChanged()

@@ -36,6 +36,21 @@ namespace CircuitSimulatorPlus
         }
         public List<ConnectionNode> NextConnectedTo { get; set; } = new List<ConnectionNode>();
 
+        public event Action OnTickedChanged;
+        protected bool isTicked;
+        public bool IsTicked
+        {
+            get
+            {
+                return isTicked;
+            }
+            set
+            {
+                isTicked = value;
+                OnTickedChanged?.Invoke();
+            }
+        }
+
         public event Action OnEmptyChanged;
         protected bool isEmpty;
         public bool IsEmpty
