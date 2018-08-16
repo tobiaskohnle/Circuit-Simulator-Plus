@@ -589,7 +589,7 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Misc
-        public void PerformAction(Command action)
+        public void PerformCommand(Command action)
         {
             saved = false;
             UpdateTitle();
@@ -636,7 +636,7 @@ namespace CircuitSimulatorPlus
 
                 if (completeMove.X != 0 || completeMove.Y != 0)
                 {
-                    PerformAction(new MoveCommand(movedObjects, completeMove));
+                    PerformCommand(new MoveCommand(movedObjects, completeMove));
                 }
             }
         }
