@@ -116,7 +116,7 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Object
-        public void CreateGate(Gate gate)
+        public void Add(Gate gate)
         {
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
 
@@ -1023,35 +1023,35 @@ namespace CircuitSimulatorPlus
         #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            CreateGate(new InputSwitch());
+            Add(new InputSwitch());
         }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
-            CreateGate(new OutputLight());
+            Add(new OutputLight());
         }
         void CreateAndGate(object sender, RoutedEventArgs e)
         {
-            CreateGate(new AndGate());
+            Add(new AndGate());
         }
         void CreateOrGate(object sender, RoutedEventArgs e)
         {
-            CreateGate(new OrGate());
+            Add(new OrGate());
         }
         void CreateNotGate(object sender, RoutedEventArgs e)
         {
             var newGate = new NopGate();
-            CreateGate(newGate);
+            Add(newGate);
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
         }
         void CreateSegmentDisplay(object sender, RoutedEventArgs e)
         {
-            CreateGate(new SegmentDisplay());
+            Add(new SegmentDisplay());
         }
 
         void Import_Click(object sender, RoutedEventArgs e)
         {
-            CreateGate(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
+            Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
         }
 
         void New_Click(object sender, RoutedEventArgs e)
