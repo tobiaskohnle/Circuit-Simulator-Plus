@@ -392,6 +392,14 @@ namespace CircuitSimulatorPlus
             //contextGate = null;
         }
 
+        public string SelectFile()
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Filter = FileFilter;
+            dialog.ShowDialog();
+            return dialog.FileName;
+        }
+
         public void Open(string filePath)
         {
             currentFilePath = filePath;
@@ -1041,6 +1049,11 @@ namespace CircuitSimulatorPlus
             CreateGate(new SegmentDisplay());
         }
 
+        void Import_Click(object sender, RoutedEventArgs e)
+        {
+            CreateGate(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
+        }
+
         void New_Click(object sender, RoutedEventArgs e)
         {
             New();
@@ -1048,12 +1061,7 @@ namespace CircuitSimulatorPlus
         void Open_Click(object sender, RoutedEventArgs e)
         {
             New();
-            var dialog = new OpenFileDialog();
-            dialog.Filter = FileFilter;
-            if (dialog.ShowDialog() == true)
-            {
-                Open(dialog.FileName);
-            }
+            Open(SelectFile());
         }
         void RecentFiles_Click(object sender, RoutedEventArgs e)
         {

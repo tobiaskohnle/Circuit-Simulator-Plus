@@ -63,7 +63,7 @@
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem x:Name="contxtMenu_contextGate" Header="Add Context Gate">
-                <MenuItem Header="Import From File"/>
+                <MenuItem Header="Import From File" Click="Import_Click"/>
             </MenuItem>
             <MenuItem x:Name="contxtMenu_basicGate" Header="Add Component">
                 <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
