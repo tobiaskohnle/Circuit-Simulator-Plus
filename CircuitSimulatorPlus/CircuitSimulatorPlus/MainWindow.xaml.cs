@@ -1079,6 +1079,11 @@ namespace CircuitSimulatorPlus
             throw new NotImplementedException();
         }
 
+        void OpenFolder_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = currentFilePath != null;
+        }
+
         void Undo_Click(object sender, RoutedEventArgs e)
         {
             Undo();
@@ -1115,6 +1120,39 @@ namespace CircuitSimulatorPlus
             DeselectAll();
         }
 
+        void Undo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AllowUndo;
+        }
+        void Redo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AllowRedo;
+        }
+        void Cut_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+        void Copy_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+        void Paste_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = DataOnClipboard;
+        }
+        void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+        void SelectAll_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = clickableObjects.Count > 0;
+        }
+        void DeselectAll_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+
         void MainToolbar_Checked(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -1148,6 +1186,11 @@ namespace CircuitSimulatorPlus
             ZoomIntoView(selectedObjects);
         }
 
+        void ZoomSelection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+
         void InvertConnection_Click(object sender, RoutedEventArgs e)
         {
             InvertConnection();
@@ -1178,6 +1221,23 @@ namespace CircuitSimulatorPlus
         void Align_Click(object sender, RoutedEventArgs e)
         {
             Align(ConnectionNode.Align.U);
+        }
+
+        void InvertConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnyConnectionSelected;
+        }
+        void Rename_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+        void Resize_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnyGateSelected;
+        }
+        void AddInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnyGateSelected;
         }
 
         void Version_Click(object sender, RoutedEventArgs e)

@@ -12,31 +12,53 @@
         Closing="Window_Closing"
         ContextMenuOpening="Window_ContextMenuOpening">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:Commands.New}" Executed="New_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Open}" Executed="Open_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.OpenFolder}" Executed="OpenFolder_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Save}" Executed="Save_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.SaveAs}" Executed="SaveAs_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Print}" Executed="Print_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.New}"
+                        Executed="New_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Open}"
+                        Executed="Open_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.OpenFolder}"
+                        Executed="OpenFolder_Click" CanExecute="OpenFolder_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Save}"
+                        Executed="Save_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.SaveAs}"
+                        Executed="SaveAs_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Print}"
+                        Executed="Print_Click"/>
 
-        <CommandBinding Command="{x:Static local:Commands.Undo}" Executed="Undo_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Redo}" Executed="Redo_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Cut}" Executed="Cut_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Copy}" Executed="Copy_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Paste}" Executed="Paste_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Delete}" Executed="Delete_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.SelectAll}" Executed="SelectAll_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.DeselectAll}" Executed="DeselectAll_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.Undo}"
+                        Executed="Undo_Click" CanExecute="Undo_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Redo}"
+                        Executed="Redo_Click" CanExecute="Redo_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Cut}"
+                        Executed="Cut_Click" CanExecute="Cut_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Copy}"
+                        Executed="Copy_Click" CanExecute="Copy_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Paste}"
+                        Executed="Paste_Click" CanExecute="Paste_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Delete}"
+                        Executed="Delete_Click" CanExecute="Delete_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.SelectAll}"
+                        Executed="SelectAll_Click" CanExecute="SelectAll_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.DeselectAll}"
+                        Executed="DeselectAll_Click" CanExecute="DeselectAll_CanExecute"/>
 
-        <CommandBinding Command="{x:Static local:Commands.ResetView}" Executed="ResetView_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.ZoomIn}" Executed="ZoomIn_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.ZoomOut}" Executed="ZoomOut_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.ZoomSelection}" Executed="ZoomSelection_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.ResetView}"
+                        Executed="ResetView_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.ZoomIn}"
+                        Executed="ZoomIn_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.ZoomOut}"
+                        Executed="ZoomOut_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.ZoomSelection}"
+                        Executed="ZoomSelection_Click" CanExecute="ZoomSelection_CanExecute"/>
 
-        <CommandBinding Command="{x:Static local:Commands.InvertConnection}" Executed="InvertConnection_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Rename}" Executed="Rename_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.Resize}" Executed="Resize_Click"/>
-        <CommandBinding Command="{x:Static local:Commands.AddInput}" Executed="AddInput_Click"/>
+        <CommandBinding Command="{x:Static local:Commands.InvertConnection}"
+                        Executed="InvertConnection_Click" CanExecute="InvertConnection_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Rename}"
+                        Executed="Rename_Click" CanExecute="Rename_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Resize}"
+                        Executed="Resize_Click" CanExecute="Resize_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.AddInput}"
+                        Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
@@ -51,11 +73,6 @@
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
                 <MenuItem Header="Segment Display" Click="CreateSegmentDisplay"/>
             </MenuItem>
-            <MenuItem Command="{x:Static local:Commands.Cut}"/>
-            <MenuItem Command="{x:Static local:Commands.Copy}"/>
-            <MenuItem Command="{x:Static local:Commands.Paste}"/>
-            <MenuItem Command="{x:Static local:Commands.Delete}"/>
-            <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
