@@ -756,7 +756,7 @@ namespace CircuitSimulatorPlus
         }
         #endregion
 
-        #region Event Handlers
+        #region Window Event Handlers
         void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
