@@ -51,9 +51,9 @@ namespace CircuitSimulatorPlus
 
         #region Constants
         public const string WindowTitle = "Circuit Simulator Plus";
-        public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
+        public const string FileFilter = "Circuit Simulator Plus Circuit|*." + FileExtention;
         public const string DefaultTitle = "untitled";
-        public const string FileExtention = ".tici";
+        public const string FileExtention = "tici";
         public const double MinPxMouseMoved = 5;
         public const double DefaultGridSize = 20;
         public const double ScaleFactor = 0.9;
