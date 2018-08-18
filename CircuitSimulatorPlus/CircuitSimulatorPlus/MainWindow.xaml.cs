@@ -28,8 +28,7 @@ namespace CircuitSimulatorPlus
         {
             InitializeComponent();
 
-            Canvas = canvas;
-            ClickableObjects = clickableObjects;
+            Self = this;
 
             DrawGrid();
             UpdateTitle();
@@ -67,52 +66,51 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Properties
-        public static Canvas Canvas;
-        public static List<IClickable> ClickableObjects;
+        public static MainWindow Self;
 
-        Point lastMousePos;
+        public Point lastMousePos;
 
-        Point lastWindowPos;
-        Point lastWindowClick;
+        public Point lastWindowPos;
+        public Point lastWindowClick;
 
-        Point lastCanvasPos;
-        Point lastCanvasClick;
+        public Point lastCanvasPos;
+        public Point lastCanvasClick;
 
-        bool makingSelection;
-        bool movingObjects;
-        bool movingScreen;
-        bool mouseMoved;
-        bool creatingCable;
+        public bool makingSelection;
+        public bool movingObjects;
+        public bool movingScreen;
+        public bool mouseMoved;
+        public bool creatingCable;
 
-        bool saved = true;
-        bool singleTicks;
+        public bool saved = true;
+        public bool singleTicks;
 
-        string fileName = DefaultTitle;
-        string currentFilePath;
+        public string fileName = DefaultTitle;
+        public string currentFilePath;
 
-        double currentScale;
+        public double currentScale;
 
-        Line newCable = new Line
+        public Line newCable = new Line
         {
             Stroke = Brushes.DarkTurquoise,
             StrokeThickness = LineWidth,
             StrokeDashArray = new DoubleCollection { DefaultGridSize / 2, DefaultGridSize / 2 }
         };
 
-        Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
-        DispatcherTimer timer = new DispatcherTimer();
+        public Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
+        public DispatcherTimer timer = new DispatcherTimer();
 
-        List<IClickable> clickableObjects = new List<IClickable>();
-        List<IClickable> selectedObjects = new List<IClickable>();
+        public List<IClickable> clickableObjects = new List<IClickable>();
+        public List<IClickable> selectedObjects = new List<IClickable>();
 
-        DropOutStack<Command> undoStack = new DropOutStack<Command>(UndoBufferSize);
-        DropOutStack<Command> redoStack = new DropOutStack<Command>(UndoBufferSize);
+        public DropOutStack<Command> undoStack = new DropOutStack<Command>(UndoBufferSize);
+        public DropOutStack<Command> redoStack = new DropOutStack<Command>(UndoBufferSize);
 
-        List<Cable> cables = new List<Cable>();
-        ContextGate contextGate;
-        IClickable lastClickedObject;
+        public List<Cable> cables = new List<Cable>();
+        public ContextGate contextGate;
+        public IClickable lastClickedObject;
 
-        Pen backgroundGridPen;
+        public Pen backgroundGridPen;
         #endregion
 
         #region Object

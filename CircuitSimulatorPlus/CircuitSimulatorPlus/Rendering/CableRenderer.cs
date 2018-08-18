@@ -45,14 +45,14 @@ namespace CircuitSimulatorPlus
         {
             if (cable.IsRendered)
             {
-                MainWindow.Canvas.Children.Add(line);
+                MainWindow.Self.canvas.Children.Add(line);
 
                 OnSelectionChanged();
                 OnPositionChanged();
             }
             else
             {
-                MainWindow.Canvas.Children.Remove(line);
+                MainWindow.Self.canvas.Children.Remove(line);
             }
         }
 
