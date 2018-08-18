@@ -12,11 +12,13 @@ namespace CircuitSimulatorPlus
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
 
-            ConnectedNodes = new Dictionary<ConnectionNode.Align, List<ConnectionNode>>();
-            foreach (ConnectionNode.Align align in Enum.GetValues(typeof(ConnectionNode.Align)))
+            AmtConnectedNodes = new Dictionary<ConnectionNode.Align, int>
             {
-                ConnectedNodes[align] = new List<ConnectionNode>();
-            }
+                { ConnectionNode.Align.L, 0 },
+                { ConnectionNode.Align.U, 0 },
+                { ConnectionNode.Align.R, 0 },
+                { ConnectionNode.Align.D, 0 }
+            };
 
             for (int i = 0; i < amtInputs; i++)
             {
@@ -42,7 +44,7 @@ namespace CircuitSimulatorPlus
 
         public GateRenderer Renderer;
 
-        public Dictionary<ConnectionNode.Align, List<ConnectionNode>> ConnectedNodes;
+        public Dictionary<ConnectionNode.Align, int> AmtConnectedNodes;
 
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
@@ -122,7 +124,20 @@ namespace CircuitSimulatorPlus
             {
                 position = value;
                 hitbox.Bounds.Location = value;
+                UpdateConnectionNodePos();
                 OnPositionChanged?.Invoke();
+            }
+        }
+
+        public void UpdateConnectionNodePos()
+        {
+            for (int i = 0; i < Input.Count; i++)
+            {
+                Input[i].UpdatePosition(i);
+            }
+            for (int i = 0; i < Output.Count; i++)
+            {
+                Output[i].UpdatePosition(i);
             }
         }
 
@@ -158,17 +173,6 @@ namespace CircuitSimulatorPlus
         public void Move(Vector vector)
         {
             Position += vector;
-            UpdateConnectionNodePos();
-        }
-        public void UpdateConnectionNodePos()
-        {
-            foreach (var connectedNodes in ConnectedNodes.Values)
-            {
-                for (int i = 0; i < connectedNodes.Count; i++)
-                {
-                    connectedNodes[i].UpdatePosition(i);
-                }
-            }
         }
 
         public virtual bool HasContext

@@ -120,8 +120,6 @@ namespace CircuitSimulatorPlus
         {
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
 
-            gate.UpdateConnectionNodePos();
-
             //PerformAction(new CreateGateAction(contextGate, gate));
 
             Select(gate);
@@ -261,34 +259,6 @@ namespace CircuitSimulatorPlus
             clickableObjects.Remove(connectionNode);
         }
 
-        public void Flip()
-        {
-            foreach (IClickable obj in selectedObjects)
-            {
-                if (obj is Gate)
-                {
-                    var gate = obj as Gate;
-                    gate.Size = new Size(gate.Size.Height, gate.Size.Width);
-
-                    var u = gate.ConnectedNodes[ConnectionNode.Align.U].ToList();
-                    var l = gate.ConnectedNodes[ConnectionNode.Align.L].ToList();
-                    var d = gate.ConnectedNodes[ConnectionNode.Align.D].ToList();
-                    var r = gate.ConnectedNodes[ConnectionNode.Align.R].ToList();
-
-                    foreach (var node in u)
-                        node.Alignment = ConnectionNode.Align.L;
-                    foreach (var node in l)
-                        node.Alignment = ConnectionNode.Align.U;
-                    foreach (var node in d)
-                        node.Alignment = ConnectionNode.Align.R;
-                    foreach (var node in r)
-                        node.Alignment = ConnectionNode.Align.D;
-
-                    gate.UpdateConnectionNodePos();
-                }
-            }
-        }
-
         public IClickable FindNearestObjectAt(Point pos)
         {
             IClickable nearest = null;
@@ -377,7 +347,7 @@ namespace CircuitSimulatorPlus
                 (outputs[i] as OutputNode).ConnectTo(inputs[i] as InputNode);
         }
 
-        public void Align(ConnectionNode.Align alignment)
+        public void AlignConnectionNodes(ConnectionNode.Align alignment)
         {
             foreach (IClickable obj in selectedObjects)
                 if (obj is ConnectionNode)
@@ -1049,6 +1019,23 @@ namespace CircuitSimulatorPlus
             Add(new SegmentDisplay());
         }
 
+        void AlignD_Click(object sender, RoutedEventArgs e)
+        {
+            AlignConnectionNodes(ConnectionNode.Align.D);
+        }
+        void AlignR_Click(object sender, RoutedEventArgs e)
+        {
+            AlignConnectionNodes(ConnectionNode.Align.R);
+        }
+        void AlignU_Click(object sender, RoutedEventArgs e)
+        {
+            AlignConnectionNodes(ConnectionNode.Align.U);
+        }
+        void AlignL_Click(object sender, RoutedEventArgs e)
+        {
+            AlignConnectionNodes(ConnectionNode.Align.L);
+        }
+
         void Import_Click(object sender, RoutedEventArgs e)
         {
             Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
@@ -1228,7 +1215,7 @@ namespace CircuitSimulatorPlus
         }
         void Align_Click(object sender, RoutedEventArgs e)
         {
-            Align(ConnectionNode.Align.U);
+            AlignConnectionNodes(ConnectionNode.Align.U);
         }
 
         void InvertConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)

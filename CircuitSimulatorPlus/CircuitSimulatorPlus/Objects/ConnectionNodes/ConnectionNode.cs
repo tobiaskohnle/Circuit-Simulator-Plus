@@ -189,8 +189,8 @@ namespace CircuitSimulatorPlus
             set
             {
                 if (alignment != null)
-                    Owner.ConnectedNodes[(Align)alignment].Remove(this);
-                Owner.ConnectedNodes[value].Add(this);
+                    Owner.AmtConnectedNodes[(Align)alignment]--;
+                Owner.AmtConnectedNodes[value]++;
 
                 switch (alignment = value)
                 {
@@ -212,7 +212,6 @@ namespace CircuitSimulatorPlus
                     break;
                 }
 
-                Owner.UpdateConnectionNodePos();
                 OnAlignmentChanged?.Invoke();
             }
         }
@@ -262,7 +261,7 @@ namespace CircuitSimulatorPlus
         public void UpdatePosition(int index)
         {
             double sideLength = alignment == Align.U || alignment == Align.D ? Owner.Size.Width : Owner.Size.Height;
-            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.ConnectedNodes[Alignment].Count);
+            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.AmtConnectedNodes[Alignment]);
 
             Position = new Point(
                 Owner.Position.X + Owner.Size.Width / 2
