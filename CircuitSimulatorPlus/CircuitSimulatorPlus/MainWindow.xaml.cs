@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using CircuitSimulatorPlus.Controls;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
