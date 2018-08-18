@@ -358,6 +358,14 @@ namespace CircuitSimulatorPlus
         {
             SavePrompt();
             //contextGate = null;
+
+            foreach (IClickable obj in clickableObjects)
+            {
+                if (obj is Gate)
+                    (obj as Gate).IsRendered = false;
+                else if (obj is ConnectionNode)
+                    (obj as ConnectionNode).IsRendered = false;
+            }
         }
 
         public string SelectFile()
@@ -565,12 +573,12 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Misc
-        public void PerformCommand(Command action)
+        public void PerformCommand(Command command)
         {
             saved = false;
             UpdateTitle();
-            action.Redo();
-            undoStack.Push(action);
+            command.Redo();
+            undoStack.Push(command);
             redoStack.Clear();
         }
         public void UpdateClickableObjects()
@@ -1244,7 +1252,10 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            contextGate = (ContextGate)StorageConverter.ToGate(StorageConverter.ToStorageObject(contextGate));
+            var storageObject = StorageConverter.ToStorageObject(contextGate);
+            New();
+            contextGate = (ContextGate)StorageConverter.ToGate(storageObject);
+            UpdateClickableObjects();
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
