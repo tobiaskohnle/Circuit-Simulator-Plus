@@ -52,23 +52,6 @@ namespace CircuitSimulatorPlus
             Panel.SetZIndex(newCable, 1);
         }
 
-        #region Constants
-        public const string WindowTitle = "Circuit Simulator Plus";
-        public const string FileFilter = "Circuit Simulator Plus Circuit|*." + FileExtention;
-        public const string DefaultTitle = "untitled";
-        public const string FileExtention = "tici";
-        public const double MinPxMouseMoved = 5;
-        public const double DefaultGridSize = 20;
-        public const double ScaleFactor = 0.9;
-        public const double LineRadius = 1d / 20;
-        public const double LineWidth = 1d / 10;
-        public const double InversionDotRadius = 1d / 4;
-        public const double InversionDotDiameter = 1d / 2;
-        public const double CableJointSize = 1d / 3;
-        public const double ConnectionNodeLineLength = 1d;
-        public const int UndoBufferSize = 32;
-        #endregion
-
         #region Properties
         public static MainWindow Self;
 
@@ -91,7 +74,7 @@ namespace CircuitSimulatorPlus
         public bool saved = true;
         public bool singleTicks;
 
-        public string fileName = DefaultTitle;
+        public string fileName = Constants.DefaultTitle;
         public string currentFilePath;
 
         public double currentScale;
@@ -99,8 +82,8 @@ namespace CircuitSimulatorPlus
         public Line newCable = new Line
         {
             Stroke = Brushes.DarkTurquoise,
-            StrokeThickness = LineWidth,
-            StrokeDashArray = new DoubleCollection { DefaultGridSize / 2, DefaultGridSize / 2 }
+            StrokeThickness = Constants.LineWidth,
+            StrokeDashArray = new DoubleCollection { Constants.DefaultGridSize / 2, Constants.DefaultGridSize / 2 }
         };
 
         public Queue<ConnectionNode> tickedNodes = new Queue<ConnectionNode>();
@@ -109,8 +92,8 @@ namespace CircuitSimulatorPlus
         public List<IClickable> clickableObjects = new List<IClickable>();
         public List<IClickable> selectedObjects = new List<IClickable>();
 
-        public DropOutStack<Command> undoStack = new DropOutStack<Command>(UndoBufferSize);
-        public DropOutStack<Command> redoStack = new DropOutStack<Command>(UndoBufferSize);
+        public DropOutStack<Command> undoStack = new DropOutStack<Command>(Constants.UndoBufferSize);
+        public DropOutStack<Command> redoStack = new DropOutStack<Command>(Constants.UndoBufferSize);
 
         public List<Cable> cables = new List<Cable>();
         public ContextGate contextGate;
@@ -125,6 +108,8 @@ namespace CircuitSimulatorPlus
             gate.Position = new Point(Math.Round(lastCanvasClick.X), Math.Round(lastCanvasClick.Y));
 
             //PerformAction(new CreateGateAction(contextGate, gate));
+
+            gate.IsRendered = true;
 
             Select(gate);
             clickableObjects.Add(gate);
@@ -331,7 +316,7 @@ namespace CircuitSimulatorPlus
         public string SelectFile()
         {
             var dialog = new OpenFileDialog();
-            dialog.Filter = FileFilter;
+            dialog.Filter = Constants.FileFilter;
             dialog.ShowDialog();
             return dialog.FileName;
         }
@@ -407,8 +392,8 @@ namespace CircuitSimulatorPlus
         {
             var dialog = new SaveFileDialog();
             dialog.FileName = fileName;
-            dialog.DefaultExt = FileExtention;
-            dialog.Filter = FileFilter;
+            dialog.DefaultExt = Constants.FileExtention;
+            dialog.Filter = Constants.FileFilter;
             if (dialog.ShowDialog() == true)
             {
                 currentFilePath = dialog.FileName;
@@ -444,14 +429,14 @@ namespace CircuitSimulatorPlus
         public void ResetView()
         {
             Matrix matrix = Matrix.Identity;
-            matrix.Scale(DefaultGridSize, DefaultGridSize);
+            matrix.Scale(Constants.DefaultGridSize, Constants.DefaultGridSize);
             canvas.RenderTransform = new MatrixTransform(matrix);
             currentScale = 1;
             UpdateGrid();
         }
         public void UpdateTitle()
         {
-            Title = $"{fileName}{(saved ? "" : " \u2022")} - {WindowTitle}";
+            Title = $"{fileName}{(saved ? "" : " \u2022")} - {Constants.WindowTitle}";
         }
 
         public void DrawGrid()
@@ -472,7 +457,7 @@ namespace CircuitSimulatorPlus
         }
         public void UpdateGrid()
         {
-            backgroundGridPen.Thickness = LineWidth / currentScale / 2;
+            backgroundGridPen.Thickness = Constants.LineWidth / currentScale / 2;
             backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
         }
 
@@ -521,7 +506,7 @@ namespace CircuitSimulatorPlus
         }
         public void Zoom(bool zoomIn, Point at)
         {
-            double scale = zoomIn ? 1 / ScaleFactor : ScaleFactor;
+            double scale = zoomIn ? 1 / Constants.ScaleFactor : Constants.ScaleFactor;
 
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
@@ -685,7 +670,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return Clipboard.ContainsData(FileExtention);
+                return Clipboard.ContainsData(Constants.FileExtention);
             }
         }
 
@@ -847,7 +832,7 @@ namespace CircuitSimulatorPlus
                     newCable.X2 = lastCanvasPos.X;
                     newCable.Y2 = lastCanvasPos.Y;
 
-                    newCable.StrokeDashOffset = DefaultGridSize * -0.25 * Math.Sqrt(
+                    newCable.StrokeDashOffset = Constants.DefaultGridSize * -0.25 * Math.Sqrt(
                         Math.Pow(newCable.X1 - newCable.X2, 2) + Math.Pow(newCable.Y1 - newCable.Y2, 2)
                     );
                 }
@@ -855,7 +840,7 @@ namespace CircuitSimulatorPlus
                 lastWindowPos = currentWindowPos;
                 lastCanvasPos = e.GetPosition(canvas);
             }
-            else if ((lastMousePos - lastWindowClick).LengthSquared >= MinPxMouseMoved * MinPxMouseMoved)
+            else if ((lastMousePos - lastWindowClick).LengthSquared >= Constants.MinPxMouseMoved * Constants.MinPxMouseMoved)
             {
                 if (makingSelection && ControlPressed == false)
                 {

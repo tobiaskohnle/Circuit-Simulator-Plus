@@ -97,8 +97,8 @@ namespace CircuitSimulatorPlus.Controls
             set
             {
                 size = value;
-                boundingBox.Width = value.Width + MainWindow.LineWidth;
-                boundingBox.Height = value.Height + MainWindow.LineWidth;
+                boundingBox.Width = value.Width + Constants.LineWidth;
+                boundingBox.Height = value.Height + Constants.LineWidth;
                 nameLabel.Width = value.Width;
                 nameLabel.Height = 1;
                 tagLabel.Width = value.Width;
@@ -116,8 +116,8 @@ namespace CircuitSimulatorPlus.Controls
             set
             {
                 position = value;
-                Canvas.SetLeft(boundingBox, value.X - MainWindow.LineRadius);
-                Canvas.SetTop(boundingBox, value.Y - MainWindow.LineRadius);
+                Canvas.SetLeft(boundingBox, value.X - Constants.LineRadius);
+                Canvas.SetTop(boundingBox, value.Y - Constants.LineRadius);
 
                 Canvas.SetLeft(tagLabel, value.X);
                 Canvas.SetTop(tagLabel, value.Y);
