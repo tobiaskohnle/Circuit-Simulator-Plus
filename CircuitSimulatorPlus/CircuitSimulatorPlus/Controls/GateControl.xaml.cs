@@ -31,7 +31,10 @@ namespace CircuitSimulatorPlus.Controls
 
         Gate gate;
 
-        public new event MouseButtonEventHandler MouseDown;
+        public new void MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
         string name;
         public string Name

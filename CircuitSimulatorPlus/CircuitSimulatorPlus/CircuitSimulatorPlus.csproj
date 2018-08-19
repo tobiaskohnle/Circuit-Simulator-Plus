@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Miscellaneous\Commands.cs" />
     <Compile Include="Miscellaneous\DropOutStack.cs" />
+    <Compile Include="Miscellaneous\LogicWrapper.cs" />
     <Compile Include="Objects\Gates\AndGate.cs" />
     <Compile Include="Objects\Cables\Cable.cs" />
     <Compile Include="Objects\Gates\ContextGate.cs" />
