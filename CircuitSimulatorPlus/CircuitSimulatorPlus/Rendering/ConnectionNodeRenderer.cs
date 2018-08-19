@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    public class ConnectionNodeRenderer
+    public class ConnectionNodeRenderer : Renderer<ConnectionNode>
     {
         ConnectionNode connectionNode;
         Gate owner;
@@ -189,7 +189,7 @@ namespace CircuitSimulatorPlus
         {
         }
 
-        public void OnPositionChanged()
+        public void OnPositionChanged(ConnectionNode node)
         {
             connectionNodeLine.X1 = connectionNode.Position.X;
             connectionNodeLine.Y1 = connectionNode.Position.Y;

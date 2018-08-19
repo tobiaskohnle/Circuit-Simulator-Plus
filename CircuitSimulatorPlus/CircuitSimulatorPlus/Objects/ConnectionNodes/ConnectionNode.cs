@@ -133,7 +133,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event Action OnPositionChanged;
+        public event ConnectionNodeRenderer.ValueChanged OnPositionChanged;
         Point position;
         public Point Position
         {
@@ -146,7 +146,7 @@ namespace CircuitSimulatorPlus
                 position = value;
                 if (hitbox != null)
                     hitbox.Center = value;
-                OnPositionChanged?.Invoke();
+                OnPositionChanged?.Invoke(this);
             }
         }
 
