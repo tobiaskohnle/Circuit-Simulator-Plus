@@ -62,21 +62,8 @@ namespace CircuitSimulatorPlus
 
         public void OnLayoutChanged()
         {
-
-
-            Rect.RenderSize =gate.Size;
-
-            double cw = ir + hw;
-            double ch = hw + hw + iw;
-
-            Rect.RenderSize = new Rectangle{
-                (ir, hw, 0, 0),
-                TransformPoint(ir + x, 0, 0, 0),
-                TransformPoint(ir, -hw, 0, 0),
-                TransformPoint(-ir, -hw, 0, 0),
-                TransformPoint(-ir - x, 0, 0, 0),
-                TransformPoint(-ir, hw, 0, 0)
-            };
+            Rect.Width = gate.Size.Width;
+            Rect.Height = gate.Size.Height;
 
             
         }
