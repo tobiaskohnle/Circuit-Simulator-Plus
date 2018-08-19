@@ -506,7 +506,7 @@ namespace CircuitSimulatorPlus
         }
         public void Zoom(bool zoomIn, Point at)
         {
-            double scale = zoomIn ? 1 / Constants.ScaleFactor : Constants.ScaleFactor;
+            double scale = zoomIn ? Constants.ScaleFactor : 1 / Constants.ScaleFactor;
 
             Matrix matrix = canvas.RenderTransform.Value;
             matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
