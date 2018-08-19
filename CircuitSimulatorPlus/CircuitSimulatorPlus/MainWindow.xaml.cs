@@ -302,7 +302,9 @@ namespace CircuitSimulatorPlus
         public void New()
         {
             SavePrompt();
-            //contextGate = null;
+
+            contextGate = null;
+            clickableObjects.Clear();
 
             foreach (IClickable obj in clickableObjects)
             {
