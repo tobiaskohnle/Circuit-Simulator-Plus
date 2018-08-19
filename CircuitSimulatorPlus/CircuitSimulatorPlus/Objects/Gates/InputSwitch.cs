@@ -10,10 +10,22 @@ namespace CircuitSimulatorPlus
         {
             Size = new Size(2, 2);
         }
+
+        public event Action OnStateChanged;
+        bool state;
         public bool State
         {
-            get; set;
+            get
+            {
+                return state;
+            }
+            set
+            {
+                state = value;
+                OnStateChanged?.Invoke();
+            }
         }
+
         public override bool Eval()
         {
             return State;
