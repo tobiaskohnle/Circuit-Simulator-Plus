@@ -86,6 +86,7 @@
     <Compile Include="Commands\DeleteInputCommand.cs" />
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
+    <Compile Include="Rendering\InputSwitchRenderer.cs" />
     <Compile Include="Miscellaneous\Constants.cs" />
     <Compile Include="Controls\CableControl.xaml.cs">
       <DependentUpon>CableControl.xaml</DependentUpon>
