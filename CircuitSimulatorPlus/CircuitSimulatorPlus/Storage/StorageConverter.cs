@@ -151,6 +151,7 @@ namespace CircuitSimulatorPlus
             if (storageObject.InputConnections == null)
                 storageObject.InputConnections = new int[0];
 
+            gate.Input.Clear();
             foreach (int id in storageObject.InputConnections)
                 gate.Input.Add(new InputNode(gate));
             if (storageObject.InvertedInputs != null)
@@ -160,6 +161,7 @@ namespace CircuitSimulatorPlus
             if (storageObject.OutputConnections == null)
                 storageObject.OutputConnections = new int[0];
 
+            gate.Output.Clear();
             foreach (int id in storageObject.OutputConnections)
                 gate.Output.Add(new OutputNode(gate));
             if (storageObject.InvertedOutputs != null)
