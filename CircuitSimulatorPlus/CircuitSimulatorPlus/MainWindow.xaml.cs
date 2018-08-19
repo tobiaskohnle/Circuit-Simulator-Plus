@@ -308,9 +308,6 @@ namespace CircuitSimulatorPlus
         {
             SavePrompt();
 
-            contextGate = null;
-            clickableObjects.Clear();
-
             foreach (IClickable obj in clickableObjects)
             {
                 if (obj is Gate)
@@ -318,6 +315,10 @@ namespace CircuitSimulatorPlus
                 else if (obj is ConnectionNode)
                     (obj as ConnectionNode).IsRendered = false;
             }
+
+
+            contextGate = null;
+            clickableObjects.Clear();
         }
 
         public string SelectFile()
