@@ -1,8 +1,10 @@
-﻿<Window x:Class="CircuitSimulatorPlus.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:CircuitSimulatorPlus"
         xmlns:properties="clr-namespace:CircuitSimulatorPlus.Properties"
+
+        xmlns:Controls="clr-namespace:CircuitSimulatorPlus.Controls" x:Class="CircuitSimulatorPlus.MainWindow"
 
         Height="700" Width="1000"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
@@ -91,7 +93,7 @@
                 <MenuItem Command="{x:Static local:Commands.New}"/>
                 <MenuItem Command="{x:Static local:Commands.Open}"/>
                 <MenuItem Header="Open Recent"
-                          ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=RecentFiles}"
+                          ItemsSource="{Binding RecentFiles, Source={x:Static properties:Settings.Default}}"
                           Click="RecentFiles_Click"/>
                 <MenuItem Command="{x:Static local:Commands.OpenFolder}"/>
                 <MenuItem Command="{x:Static local:Commands.Save}"/>
