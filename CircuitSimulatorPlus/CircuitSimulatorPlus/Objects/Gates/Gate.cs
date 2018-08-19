@@ -153,6 +153,19 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public void RemoveInputNode(InputNode inputNode)
+        {
+            Input.Remove(inputNode);
+            AmtConnectedNodes[inputNode.Alignment]--;
+            inputNode.IsRendered = false;
+        }
+        public void RemoveOutputNode(OutputNode outputNode)
+        {
+            Output.Remove(outputNode);
+            AmtConnectedNodes[outputNode.Alignment]--;
+            outputNode.IsRendered = false;
+        }
+
         RectHitbox hitbox;
         public Hitbox Hitbox
         {
