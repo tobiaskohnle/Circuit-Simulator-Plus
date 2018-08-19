@@ -43,11 +43,6 @@ namespace CircuitSimulatorPlus
                 FontSize = 1
             };
 
-            gate.OnSelectionChanged += OnSelectionChanged;
-            gate.OnNameChanged += OnNameChanged;
-            gate.OnTagChanged += OnTagChanged;
-            gate.OnSizeChanged += OnSizeChanged;
-            gate.OnPositionChanged += OnPositionChanged;
             gate.OnRenderedChanged += OnRenderedChanged;
 
             if (gate.IsRendered)
@@ -64,6 +59,12 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Add(tagLabel);
                 MainWindow.Self.canvas.Children.Add(boundingBox);
 
+                gate.OnSelectionChanged += OnSelectionChanged;
+                gate.OnNameChanged += OnNameChanged;
+                gate.OnTagChanged += OnTagChanged;
+                gate.OnSizeChanged += OnSizeChanged;
+                gate.OnPositionChanged += OnPositionChanged;
+
                 OnSelectionChanged();
                 OnNameChanged();
                 OnTagChanged();
@@ -75,6 +76,13 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(tagLabel);
                 MainWindow.Self.canvas.Children.Remove(nameLabel);
                 MainWindow.Self.canvas.Children.Remove(boundingBox);
+
+                gate.OnSelectionChanged -= OnSelectionChanged;
+                gate.OnNameChanged -= OnNameChanged;
+                gate.OnTagChanged -= OnTagChanged;
+                gate.OnSizeChanged -= OnSizeChanged;
+                gate.OnPositionChanged -= OnPositionChanged;
+                gate.OnRenderedChanged -= OnRenderedChanged;
             }
         }
 

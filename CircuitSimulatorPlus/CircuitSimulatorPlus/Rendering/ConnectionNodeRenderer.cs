@@ -43,16 +43,6 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
 
-            connectionNode.OnTickedChanged += OnTickedChanged;
-            connectionNode.OnSelectionChanged += OnSelectionChanged;
-            connectionNode.OnStateChanged += OnStateChanged;
-            if (connectionNode is InputNode)
-                (connectionNode as InputNode).OnRisingEdgeChanged += OnRisingEdgeChanged;
-            if (connectionNode is OutputNode)
-                (connectionNode as OutputNode).OnMasterSlaveChanged += OnMasterSlaveChanged;
-            connectionNode.OnInvertedChanged += OnInvertedChanged;
-            connectionNode.OnNameChanged += OnNameChanged;
-            connectionNode.OnPositionChanged += OnPositionChanged;
             connectionNode.OnRenderedChanged += OnRenderedChanged;
 
             if (connectionNode.IsRendered)
@@ -67,6 +57,17 @@ namespace CircuitSimulatorPlus
             {
                 MainWindow.Self.canvas.Children.Add(invertionDot);
                 MainWindow.Self.canvas.Children.Add(connectionNodeLine);
+
+                connectionNode.OnTickedChanged += OnTickedChanged;
+                connectionNode.OnSelectionChanged += OnSelectionChanged;
+                connectionNode.OnStateChanged += OnStateChanged;
+                if (connectionNode is InputNode)
+                    (connectionNode as InputNode).OnRisingEdgeChanged += OnRisingEdgeChanged;
+                if (connectionNode is OutputNode)
+                    (connectionNode as OutputNode).OnMasterSlaveChanged += OnMasterSlaveChanged;
+                connectionNode.OnInvertedChanged += OnInvertedChanged;
+                connectionNode.OnNameChanged += OnNameChanged;
+                connectionNode.OnPositionChanged += OnPositionChanged;
 
                 OnTickedChanged();
                 OnStateChanged();
@@ -83,6 +84,17 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(invertionDot);
                 MainWindow.Self.canvas.Children.Remove(upperRisingEdgeLine);
                 MainWindow.Self.canvas.Children.Remove(lowerRisingEdgeLine);
+
+                connectionNode.OnTickedChanged -= OnTickedChanged;
+                connectionNode.OnSelectionChanged -= OnSelectionChanged;
+                connectionNode.OnStateChanged -= OnStateChanged;
+                if (connectionNode is InputNode)
+                    (connectionNode as InputNode).OnRisingEdgeChanged -= OnRisingEdgeChanged;
+                if (connectionNode is OutputNode)
+                    (connectionNode as OutputNode).OnMasterSlaveChanged -= OnMasterSlaveChanged;
+                connectionNode.OnInvertedChanged -= OnInvertedChanged;
+                connectionNode.OnNameChanged -= OnNameChanged;
+                connectionNode.OnPositionChanged -= OnPositionChanged;
             }
         }
 

@@ -26,13 +26,6 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = MainWindow.LineWidth
             };
 
-            cable.InputNode.OnPositionChanged += OnPositionChanged;
-            cable.OutputNode.OnPositionChanged += OnPositionChanged;
-            cable.InputNode.OnSelectionChanged += OnSelectionChanged;
-            cable.OutputNode.OnSelectionChanged += OnSelectionChanged;
-            cable.InputNode.OnEmptyChanged += OnEmptyChanged;
-            cable.OutputNode.OnEmptyChanged += OnEmptyChanged;
-            cable.OutputNode.OnStateChanged += OnStateChanged;
             cable.OnRenderedChanged += OnRenderedChanged;
 
             if (cable.IsRendered)
@@ -47,12 +40,28 @@ namespace CircuitSimulatorPlus
             {
                 MainWindow.Self.canvas.Children.Add(line);
 
+                cable.InputNode.OnPositionChanged += OnPositionChanged;
+                cable.OutputNode.OnPositionChanged += OnPositionChanged;
+                cable.InputNode.OnSelectionChanged += OnSelectionChanged;
+                cable.OutputNode.OnSelectionChanged += OnSelectionChanged;
+                cable.InputNode.OnEmptyChanged += OnEmptyChanged;
+                cable.OutputNode.OnEmptyChanged += OnEmptyChanged;
+                cable.OutputNode.OnStateChanged += OnStateChanged;
+
                 OnSelectionChanged();
                 OnPositionChanged();
             }
             else
             {
                 MainWindow.Self.canvas.Children.Remove(line);
+
+                cable.InputNode.OnPositionChanged -= OnPositionChanged;
+                cable.OutputNode.OnPositionChanged -= OnPositionChanged;
+                cable.InputNode.OnSelectionChanged -= OnSelectionChanged;
+                cable.OutputNode.OnSelectionChanged -= OnSelectionChanged;
+                cable.InputNode.OnEmptyChanged -= OnEmptyChanged;
+                cable.OutputNode.OnEmptyChanged -= OnEmptyChanged;
+                cable.OutputNode.OnStateChanged -= OnStateChanged;
             }
         }
 

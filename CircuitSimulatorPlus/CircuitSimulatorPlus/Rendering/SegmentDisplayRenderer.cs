@@ -36,16 +36,6 @@ namespace CircuitSimulatorPlus
             this.gate = gate;
 
             gate.OnRenderedChanged += OnRenderedChanged;
-            gate.OnSizeChanged += OnLayoutChanged;
-            gate.OnPositionChanged += OnLayoutChanged;
-
-            gate.Input[0].OnStateChanged += OnStateChanged;
-            gate.Input[1].OnStateChanged += OnStateChanged;
-            gate.Input[2].OnStateChanged += OnStateChanged;
-            gate.Input[3].OnStateChanged += OnStateChanged;
-            gate.Input[4].OnStateChanged += OnStateChanged;
-            gate.Input[5].OnStateChanged += OnStateChanged;
-            gate.Input[6].OnStateChanged += OnStateChanged;
 
             if (gate.IsRendered)
             {
@@ -65,6 +55,17 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Add(botRight);
                 MainWindow.Self.canvas.Children.Add(bot);
 
+                gate.OnSizeChanged += OnLayoutChanged;
+                gate.OnPositionChanged += OnLayoutChanged;
+
+                gate.Input[0].OnStateChanged += OnStateChanged;
+                gate.Input[1].OnStateChanged += OnStateChanged;
+                gate.Input[2].OnStateChanged += OnStateChanged;
+                gate.Input[3].OnStateChanged += OnStateChanged;
+                gate.Input[4].OnStateChanged += OnStateChanged;
+                gate.Input[5].OnStateChanged += OnStateChanged;
+                gate.Input[6].OnStateChanged += OnStateChanged;
+
                 OnStateChanged();
                 OnLayoutChanged();
             }
@@ -77,6 +78,17 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(botLeft);
                 MainWindow.Self.canvas.Children.Remove(botRight);
                 MainWindow.Self.canvas.Children.Remove(bot);
+
+                gate.OnSizeChanged -= OnLayoutChanged;
+                gate.OnPositionChanged -= OnLayoutChanged;
+
+                gate.Input[0].OnStateChanged -= OnStateChanged;
+                gate.Input[1].OnStateChanged -= OnStateChanged;
+                gate.Input[2].OnStateChanged -= OnStateChanged;
+                gate.Input[3].OnStateChanged -= OnStateChanged;
+                gate.Input[4].OnStateChanged -= OnStateChanged;
+                gate.Input[5].OnStateChanged -= OnStateChanged;
+                gate.Input[6].OnStateChanged -= OnStateChanged;
             }
         }
 
