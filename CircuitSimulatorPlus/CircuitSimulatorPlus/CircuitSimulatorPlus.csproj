@@ -86,6 +86,16 @@
     <Compile Include="Commands\DeleteInputCommand.cs" />
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
+    <Compile Include="Miscellaneous\Constants.cs" />
+    <Compile Include="Controls\CableControl.xaml.cs">
+      <DependentUpon>CableControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConnectionNodeControl.xaml.cs">
+      <DependentUpon>ConnectionNodeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GateControl.xaml.cs">
+      <DependentUpon>GateControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ScalePlane.xaml.cs">
       <DependentUpon>ScalePlane.xaml</DependentUpon>
     </Compile>
@@ -94,8 +104,6 @@
     </Compile>
     <Compile Include="Miscellaneous\Commands.cs" />
     <Compile Include="Miscellaneous\DropOutStack.cs" />
-    <Compile Include="Objects\Cables\CableJoint.cs" />
-    <Compile Include="Objects\Cables\CableSegment.cs" />
     <Compile Include="Objects\Gates\AndGate.cs" />
     <Compile Include="Objects\Cables\Cable.cs" />
     <Compile Include="Objects\Gates\ContextGate.cs" />
@@ -122,6 +130,18 @@
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
     <Compile Include="Storage\StorageObject.cs" />
+    <Page Include="Controls\CableControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ConnectionNodeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\GateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ScalePlane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

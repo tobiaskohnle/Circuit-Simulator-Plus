@@ -32,6 +32,7 @@ namespace CircuitSimulatorPlus
             Self = this;
 
             canvas.Children.Add(new WireControl());
+            canvas.Children.Add(new GateControl(new AndGate()));
 
             DrawGrid();
             UpdateTitle();
@@ -228,10 +229,6 @@ namespace CircuitSimulatorPlus
                 {
                     (obj as ConnectionNode).Clear();
                 }
-                else if (obj is CableJoint)
-                {
-                    Remove(obj as CableJoint);
-                }
             }
             DeselectAll();
         }
@@ -244,14 +241,6 @@ namespace CircuitSimulatorPlus
             gate.IsRendered = false;
             clickableObjects.Remove(gate);
             contextGate.Context.Remove(gate);
-        }
-        public void Remove(CableJoint cableJoint)
-        {
-            var cableSegment = cableJoint.Before;
-            cableSegment.B = cableJoint.After.B;
-            cableSegment.B.Before = cableSegment;
-            clickableObjects.Remove(cableJoint.After);
-            clickableObjects.Remove(cableJoint);
         }
         public void Remove(ConnectionNode connectionNode)
         {
@@ -296,40 +285,6 @@ namespace CircuitSimulatorPlus
                     ConnectionNode connectionNode = obj as ConnectionNode;
                     connectionNode.Invert();
                     Tick(connectionNode);
-                }
-            }
-        }
-
-        void SplitCables()
-        {
-            foreach (IClickable obj in selectedObjects.ToList())
-            {
-                if (obj is CableSegment)
-                {
-                    var cableSegment = obj as CableSegment;
-                    var newSegment = new CableSegment();
-                    var centerJoint = new CableJoint();
-
-                    Point center = cableSegment.A.Position + (cableSegment.B.Position - cableSegment.A.Position) / 2;
-                    center.X = Math.Round(center.X);
-                    center.Y = Math.Round(center.Y);
-                    centerJoint.Position = center;
-
-                    newSegment.B = cableSegment.B;
-                    cableSegment.B = centerJoint;
-                    newSegment.A = cableSegment.B = centerJoint;
-
-                    newSegment.B.Before = newSegment;
-                    centerJoint.Before = cableSegment;
-                    centerJoint.After = newSegment;
-
-                    Select(newSegment);
-
-                    //newSegment.Renderer = new CableSegmentRenderer(canvas, newSegment);
-                    //centerJoint.Renderer = new CableJointRenderer(canvas, centerJoint);
-
-                    clickableObjects.Add(centerJoint);
-                    clickableObjects.Add(newSegment);
                 }
             }
         }
