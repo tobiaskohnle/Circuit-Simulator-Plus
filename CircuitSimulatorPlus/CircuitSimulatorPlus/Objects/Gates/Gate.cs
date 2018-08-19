@@ -33,7 +33,7 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.clickableObjects.Add(outputNode);
             }
 
-            Renderer = new GateRenderer(this);
+            new GateRenderer(this);
             if (GetType() != typeof(ContextGate))
             {
                 IsRendered = true;
@@ -41,8 +41,6 @@ namespace CircuitSimulatorPlus
         }
 
         public const double DistanceFactor = 0.2;
-
-        public GateRenderer Renderer;
 
         public Dictionary<ConnectionNode.Align, int> AmtConnectedNodes;
 

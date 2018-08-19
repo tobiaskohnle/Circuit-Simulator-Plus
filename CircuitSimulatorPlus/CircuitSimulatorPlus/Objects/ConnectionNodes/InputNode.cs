@@ -8,7 +8,7 @@ namespace CircuitSimulatorPlus
     {
         public InputNode(Gate owner) : base(Align.L, owner)
         {
-            Renderer = new ConnectionNodeRenderer(this, owner, false);
+            new ConnectionNodeRenderer(this, owner, false);
             IsRendered = true;
         }
 

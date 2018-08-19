@@ -17,11 +17,9 @@ namespace CircuitSimulatorPlus
         {
             InputNode = inputNode;
             OutputNode = outputNode;
-            Renderer = new CableRenderer(this);
+            new CableRenderer(this);
             IsRendered = true;
         }
-
-        public CableRenderer Renderer;
 
         public event Action OnRenderedChanged;
         protected bool isRendered;
