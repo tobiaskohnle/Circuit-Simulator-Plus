@@ -11,7 +11,6 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    [Obsolete]
     public class GateRenderer
     {
         Gate gate;

@@ -10,7 +10,6 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    [Obsolete]
     public class ConnectionNodeRenderer
     {
         ConnectionNode connectionNode;

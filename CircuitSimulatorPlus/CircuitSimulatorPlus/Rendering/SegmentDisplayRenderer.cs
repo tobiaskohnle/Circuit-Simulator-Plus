@@ -9,7 +9,6 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
-    [Obsolete]
     public class SegmentDisplayRenderer
     {
         SegmentDisplay gate;
