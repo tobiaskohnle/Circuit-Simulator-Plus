@@ -14,8 +14,6 @@ namespace CircuitSimulatorPlus
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
-        public ConnectionNodeRenderer Renderer;
-
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
 
@@ -133,7 +131,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event ConnectionNodeRenderer.ValueChanged OnPositionChanged;
+        public event Action OnPositionChanged;
         Point position;
         public Point Position
         {
@@ -146,7 +144,7 @@ namespace CircuitSimulatorPlus
                 position = value;
                 if (hitbox != null)
                     hitbox.Center = value;
-                OnPositionChanged?.Invoke(this);
+                OnPositionChanged?.Invoke();
             }
         }
 

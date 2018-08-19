@@ -127,7 +127,6 @@
     <Compile Include="Commands\RenameCommand.cs" />
     <Compile Include="Rendering\GateRenderer.cs" />
     <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
-    <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\SegmentDisplayRenderer.cs" />
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
