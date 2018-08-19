@@ -32,6 +32,8 @@ namespace CircuitSimulatorPlus
             Canvas = canvas;
             ClickableObjects = clickableObjects;
 
+            canvas.Children.Add(new WireControl());
+
             DrawGrid();
             UpdateTitle();
             ResetView();

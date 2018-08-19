@@ -86,6 +86,9 @@
     <Compile Include="Commands\DeleteInputCommand.cs" />
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
+    <Compile Include="Controls\ScalePlane.xaml.cs">
+      <DependentUpon>ScalePlane.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WireControl.xaml.cs">
       <DependentUpon>WireControl.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
     <Compile Include="Storage\StorageObject.cs" />
+    <Page Include="Controls\ScalePlane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WireControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
