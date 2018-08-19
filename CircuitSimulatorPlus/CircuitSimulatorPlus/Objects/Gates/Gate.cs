@@ -24,13 +24,13 @@ namespace CircuitSimulatorPlus
             {
                 var inputNode = new InputNode(this);
                 Input.Add(inputNode);
-                MainWindow.ClickableObjects.Add(inputNode);
+                MainWindow.Self.clickableObjects.Add(inputNode);
             }
             for (int i = 0; i < amtOutputs; i++)
             {
                 var outputNode = new OutputNode(this);
                 Output.Add(outputNode);
-                MainWindow.ClickableObjects.Add(outputNode);
+                MainWindow.Self.clickableObjects.Add(outputNode);
             }
 
             Renderer = new GateRenderer(this);

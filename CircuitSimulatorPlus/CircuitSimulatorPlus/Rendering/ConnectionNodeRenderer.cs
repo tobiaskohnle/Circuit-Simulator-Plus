@@ -65,8 +65,8 @@ namespace CircuitSimulatorPlus
         {
             if (connectionNode.IsRendered)
             {
-                MainWindow.Canvas.Children.Add(invertionDot);
-                MainWindow.Canvas.Children.Add(connectionNodeLine);
+                MainWindow.Self.canvas.Children.Add(invertionDot);
+                MainWindow.Self.canvas.Children.Add(connectionNodeLine);
 
                 OnTickedChanged();
                 OnStateChanged();
@@ -79,10 +79,10 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                MainWindow.Canvas.Children.Remove(connectionNodeLine);
-                MainWindow.Canvas.Children.Remove(invertionDot);
-                MainWindow.Canvas.Children.Remove(upperRisingEdgeLine);
-                MainWindow.Canvas.Children.Remove(lowerRisingEdgeLine);
+                MainWindow.Self.canvas.Children.Remove(connectionNodeLine);
+                MainWindow.Self.canvas.Children.Remove(invertionDot);
+                MainWindow.Self.canvas.Children.Remove(upperRisingEdgeLine);
+                MainWindow.Self.canvas.Children.Remove(lowerRisingEdgeLine);
             }
         }
 
@@ -164,13 +164,13 @@ namespace CircuitSimulatorPlus
                             - connectionNode.AlignmentVector.Y * MainWindow.InversionDotDiameter
                     };
 
-                    MainWindow.Canvas.Children.Add(upperRisingEdgeLine);
-                    MainWindow.Canvas.Children.Add(lowerRisingEdgeLine);
+                    MainWindow.Self.canvas.Children.Add(upperRisingEdgeLine);
+                    MainWindow.Self.canvas.Children.Add(lowerRisingEdgeLine);
                 }
                 else
                 {
-                    MainWindow.Canvas.Children.Remove(upperRisingEdgeLine);
-                    MainWindow.Canvas.Children.Remove(lowerRisingEdgeLine);
+                    MainWindow.Self.canvas.Children.Remove(upperRisingEdgeLine);
+                    MainWindow.Self.canvas.Children.Remove(lowerRisingEdgeLine);
                 }
             }
         }

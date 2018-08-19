@@ -60,9 +60,9 @@ namespace CircuitSimulatorPlus
         {
             if (gate.IsRendered)
             {
-                MainWindow.Canvas.Children.Add(nameLabel);
-                MainWindow.Canvas.Children.Add(tagLabel);
-                MainWindow.Canvas.Children.Add(boundingBox);
+                MainWindow.Self.canvas.Children.Add(nameLabel);
+                MainWindow.Self.canvas.Children.Add(tagLabel);
+                MainWindow.Self.canvas.Children.Add(boundingBox);
 
                 OnSelectionChanged();
                 OnNameChanged();
@@ -72,9 +72,9 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                MainWindow.Canvas.Children.Remove(tagLabel);
-                MainWindow.Canvas.Children.Remove(nameLabel);
-                MainWindow.Canvas.Children.Remove(boundingBox);
+                MainWindow.Self.canvas.Children.Remove(tagLabel);
+                MainWindow.Self.canvas.Children.Remove(nameLabel);
+                MainWindow.Self.canvas.Children.Remove(boundingBox);
             }
         }
 

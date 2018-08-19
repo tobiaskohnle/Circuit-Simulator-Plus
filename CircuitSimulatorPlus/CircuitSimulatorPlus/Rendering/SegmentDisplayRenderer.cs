@@ -57,26 +57,26 @@ namespace CircuitSimulatorPlus
         {
             if (gate.IsRendered)
             {
-                MainWindow.Canvas.Children.Add(top);
-                MainWindow.Canvas.Children.Add(topLeft);
-                MainWindow.Canvas.Children.Add(topRight);
-                MainWindow.Canvas.Children.Add(center);
-                MainWindow.Canvas.Children.Add(botLeft);
-                MainWindow.Canvas.Children.Add(botRight);
-                MainWindow.Canvas.Children.Add(bot);
+                MainWindow.Self.canvas.Children.Add(top);
+                MainWindow.Self.canvas.Children.Add(topLeft);
+                MainWindow.Self.canvas.Children.Add(topRight);
+                MainWindow.Self.canvas.Children.Add(center);
+                MainWindow.Self.canvas.Children.Add(botLeft);
+                MainWindow.Self.canvas.Children.Add(botRight);
+                MainWindow.Self.canvas.Children.Add(bot);
 
                 OnStateChanged();
                 OnLayoutChanged();
             }
             else
             {
-                MainWindow.Canvas.Children.Remove(top);
-                MainWindow.Canvas.Children.Remove(topLeft);
-                MainWindow.Canvas.Children.Remove(topRight);
-                MainWindow.Canvas.Children.Remove(center);
-                MainWindow.Canvas.Children.Remove(botLeft);
-                MainWindow.Canvas.Children.Remove(botRight);
-                MainWindow.Canvas.Children.Remove(bot);
+                MainWindow.Self.canvas.Children.Remove(top);
+                MainWindow.Self.canvas.Children.Remove(topLeft);
+                MainWindow.Self.canvas.Children.Remove(topRight);
+                MainWindow.Self.canvas.Children.Remove(center);
+                MainWindow.Self.canvas.Children.Remove(botLeft);
+                MainWindow.Self.canvas.Children.Remove(botRight);
+                MainWindow.Self.canvas.Children.Remove(bot);
             }
         }
 
