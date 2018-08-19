@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus.Controls
 {
-    /// <summary>
-    /// Interaction logic for GateControl.xaml
-    /// </summary>
     public partial class GateControl : UserControl
     {
         public GateControl()
         {
             InitializeComponent();
         }
+        
+        Gate gate;
     }
 }

@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:global="clr-namespace:CircuitSimulatorPlus"
              xmlns:local="clr-namespace:CircuitSimulatorPlus.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             mc:Ignorable="d" >
+    <Canvas>
+        <Label x:Name="nameLabel" HorizontalContentAlignment="Center"/>
+        <Label x:Name="tagLabel" HorizontalContentAlignment="Center"/>
+        <Rectangle x:Name="boundingBox" Stroke="Black" StrokeThickness="{x:Static global:Constants.LineWidth}"/>
+    </Canvas>
 </UserControl>
