@@ -9,7 +9,6 @@ namespace CircuitSimulatorPlus
         public InputNode(Gate owner) : base(Align.L, owner)
         {
             new ConnectionNodeRenderer(this, owner, false);
-            IsRendered = true;
         }
 
         public event Action OnRisingEdgeChanged;
