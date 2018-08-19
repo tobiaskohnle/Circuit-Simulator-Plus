@@ -26,7 +26,7 @@ namespace CircuitSimulatorPlus
             boundingBox = new Rectangle
             {
                 Stroke = Brushes.Black,
-                StrokeThickness = MainWindow.LineWidth
+                StrokeThickness = Constants.LineWidth
             };
 
             nameLabel = new Label
@@ -112,8 +112,8 @@ namespace CircuitSimulatorPlus
 
         public void OnSizeChanged()
         {
-            boundingBox.Width = gate.Size.Width + MainWindow.LineWidth;
-            boundingBox.Height = gate.Size.Height + MainWindow.LineWidth;
+            boundingBox.Width = gate.Size.Width + Constants.LineWidth;
+            boundingBox.Height = gate.Size.Height + Constants.LineWidth;
             nameLabel.Width = gate.Size.Width;
             nameLabel.Height = 1;
             tagLabel.Width = gate.Size.Width;
@@ -122,8 +122,8 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            Canvas.SetLeft(boundingBox, gate.Position.X - MainWindow.LineRadius);
-            Canvas.SetTop(boundingBox, gate.Position.Y - MainWindow.LineRadius);
+            Canvas.SetLeft(boundingBox, gate.Position.X - Constants.LineRadius);
+            Canvas.SetTop(boundingBox, gate.Position.Y - Constants.LineRadius);
 
             Canvas.SetLeft(tagLabel, gate.Position.X);
             Canvas.SetTop(tagLabel, gate.Position.Y);
