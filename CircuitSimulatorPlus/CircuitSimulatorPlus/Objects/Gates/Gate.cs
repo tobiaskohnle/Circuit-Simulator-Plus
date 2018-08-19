@@ -35,11 +35,6 @@ namespace CircuitSimulatorPlus
 
             var gateRenderer = new GateRenderer(this);
 
-            if (GetType() != typeof(ContextGate))
-            {
-                IsRendered = true;
-            }
-
             MainWindow.gateRef = new WeakReference<GateRenderer>(gateRenderer);
         }
 

@@ -126,6 +126,8 @@ namespace CircuitSimulatorPlus
 
             //PerformAction(new CreateGateAction(contextGate, gate));
 
+            gate.IsRendered = true;
+
             Select(gate);
             clickableObjects.Add(gate);
             contextGate.Context.Add(gate);
