@@ -20,13 +20,12 @@ namespace CircuitSimulatorPlus.Controls
     /// </summary>
     public partial class ScalePlane : UserControl
     {
-        const double StartScale = 20;
-        const double LineThickness = 1;
+        const double LineThickness = 2;
 
         Pen backgroundGridPen;
         Brush backgroundGridBrush;
-        double currentScale = StartScale;
-        Matrix matrix = new ScaleTransform(StartScale, StartScale).Value;
+        double currentScale = Constants.DefaultGridSize;
+        Matrix matrix = new ScaleTransform(Constants.DefaultGridSize, Constants.DefaultGridSize).Value;
         Point lastMousePos;
         bool dragging;
 
@@ -100,7 +99,7 @@ namespace CircuitSimulatorPlus.Controls
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            double scale = e.Delta > 0 ? 1.1 : 1 / 1.1;
+            double scale = e.Delta > 0 ? Constants.ScaleFactor : 1 / Constants.ScaleFactor;
             Point pos = e.GetPosition(canvas);
             ScaleAt(scale, pos);
         }
