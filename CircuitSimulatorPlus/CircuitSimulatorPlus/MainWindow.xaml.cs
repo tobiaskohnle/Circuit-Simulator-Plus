@@ -43,6 +43,7 @@ namespace CircuitSimulatorPlus
                 contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(args[1]));
             else
                 contextGate = new ContextGate();
+            RenderContext();
 
             UpdateClickableObjects();
 
@@ -110,6 +111,10 @@ namespace CircuitSimulatorPlus
             //PerformAction(new CreateGateAction(contextGate, gate));
 
             gate.IsRendered = true;
+            foreach (ConnectionNode node in gate.Input)
+                node.IsRendered = true;
+            foreach (ConnectionNode node in gate.Output)
+                node.IsRendered = true;
 
             Select(gate);
             clickableObjects.Add(gate);
@@ -335,6 +340,7 @@ namespace CircuitSimulatorPlus
             CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
             contextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(filePath));
+            RenderContext();
             UpdateClickableObjects();
         }
 
@@ -611,6 +617,21 @@ namespace CircuitSimulatorPlus
                     Tick(connectionNode);
                 }
         }
+        public void RenderContext()
+        {
+            foreach (Gate gate in contextGate.Context)
+            {
+                gate.IsRendered = true;
+                foreach (ConnectionNode node in gate.Input)
+                {
+                    node.IsRendered = true;
+                }
+                foreach (ConnectionNode node in gate.Output)
+                {
+                    node.IsRendered = true;
+                }
+            }
+        }
         #endregion
 
         #region Util
@@ -683,6 +704,7 @@ namespace CircuitSimulatorPlus
                 return matrix.Transform(new Point(canvas.ActualWidth / 2, canvas.ActualHeight / 2));
             }
         }
+
         #endregion
 
         #region Window Event Handlers
@@ -1203,6 +1225,7 @@ namespace CircuitSimulatorPlus
             var storageObject = StorageConverter.ToStorageObject(contextGate);
             New();
             contextGate = (ContextGate)StorageConverter.ToGate(storageObject);
+            RenderContext();
             UpdateClickableObjects();
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
