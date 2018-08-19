@@ -33,11 +33,14 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.clickableObjects.Add(outputNode);
             }
 
-            new GateRenderer(this);
+            var gateRenderer = new GateRenderer(this);
+
             if (GetType() != typeof(ContextGate))
             {
                 IsRendered = true;
             }
+
+            MainWindow.gateRef = new WeakReference<GateRenderer>(gateRenderer);
         }
 
         public const double DistanceFactor = 0.2;

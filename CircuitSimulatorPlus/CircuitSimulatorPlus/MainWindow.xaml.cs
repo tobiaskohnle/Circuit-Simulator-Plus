@@ -31,8 +31,8 @@ namespace CircuitSimulatorPlus
 
             Self = this;
 
-            canvas.Children.Add(new WireControl());
-            canvas.Children.Add(new GateControl(new AndGate()));
+            // canvas.Children.Add(new WireControl());
+            // canvas.Children.Add(new GateControl(new AndGate()));
 
             DrawGrid();
             UpdateTitle();
@@ -71,6 +71,8 @@ namespace CircuitSimulatorPlus
 
         #region Properties
         public static MainWindow Self;
+
+        public static WeakReference<GateRenderer> gateRef;
 
         public Point lastMousePos;
 
@@ -1201,7 +1203,10 @@ namespace CircuitSimulatorPlus
 
         void Version_Click(object sender, RoutedEventArgs e)
         {
-
+            GateRenderer r;
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+            Console.WriteLine("TryGetTarget: " + gateRef.TryGetTarget(out r));
         }
         void GithubLink_Click(object sender, RoutedEventArgs e)
         {
