@@ -32,6 +32,7 @@ namespace CircuitSimulatorPlus
             Self = this;
 
             canvas.Children.Add(new WireControl());
+            canvas.Children.Add(new GateControl(new AndGate()));
 
             DrawGrid();
             UpdateTitle();
