@@ -316,7 +316,6 @@ namespace CircuitSimulatorPlus
                     (obj as ConnectionNode).IsRendered = false;
             }
 
-
             contextGate = null;
             clickableObjects.Clear();
         }
