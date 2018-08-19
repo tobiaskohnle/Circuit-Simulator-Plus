@@ -8,7 +8,9 @@ namespace CircuitSimulatorPlus
     {
         public InputSwitch() : base(0, 1)
         {
+            new InputSwitchRenderer(this);
             Size = new Size(2, 2);
+
         }
 
         public event Action OnStateChanged;

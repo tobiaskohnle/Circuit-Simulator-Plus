@@ -9,17 +9,16 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    class OutputLightRenderer
+    public class InputSwitchRenderer
     {
         InputSwitch gate;
-
 
         readonly SolidColorBrush activeBrush = new SolidColorBrush(Color.FromArgb(200, 255, 20, 20));
         readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(70, 170, 170, 170));
 
-        Rectangle Rect = new Rectangle();
+        Rectangle rect = new Rectangle();
 
-        public OutputLightRenderer(InputSwitch gate)
+        public InputSwitchRenderer(InputSwitch gate)
         {
             this.gate = gate;
 
@@ -35,37 +34,31 @@ namespace CircuitSimulatorPlus
         {
             if (gate.IsRendered)
             {
-                MainWindow.Self.canvas.Children.Add(Rect);
-
+                MainWindow.Self.canvas.Children.Add(rect);
                 gate.OnSizeChanged += OnLayoutChanged;
                 gate.OnPositionChanged += OnLayoutChanged;
-
-                gate.Input[0].OnStateChanged += OnStateChanged;
+                gate.OnStateChanged += OnStateChanged;
                 OnStateChanged();
                 OnLayoutChanged();
             }
             else
             {
-                MainWindow.Self.canvas.Children.Remove(Rect);
-
+                MainWindow.Self.canvas.Children.Remove(rect);
                 gate.OnSizeChanged -= OnLayoutChanged;
                 gate.OnPositionChanged -= OnLayoutChanged;
-
-                gate.Input[0].OnStateChanged -= OnStateChanged;
+                gate.OnStateChanged -= OnStateChanged;
             }
         }
 
         public void OnStateChanged()
         {
-            Rect.Fill = gate.Input[0].State ? activeBrush : inactiveBrush;
+            rect.Fill = gate.State ? activeBrush : inactiveBrush;
         }
 
         public void OnLayoutChanged()
         {
-            Rect.Width = gate.Size.Width;
-            Rect.Height = gate.Size.Height;
-
-            
+            rect.Width = gate.Size.Width;
+            rect.Height = gate.Size.Height;
         }
     }
 }
