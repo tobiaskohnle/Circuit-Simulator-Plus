@@ -108,6 +108,7 @@
                 <MenuItem Command="{x:Static local:Commands.Paste}"/>
                 <MenuItem Command="{x:Static local:Commands.Delete}"/>
                 <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
+                <MenuItem Command="{x:Static local:Commands.DeselectAll}"/>
             </MenuItem>
             <MenuItem Header="View" Width="auto">
                 <MenuItem Header="Main Toolbar" IsCheckable="True" Checked="MainToolbar_Checked" Unchecked="MainToolbar_Unchecked"/>
