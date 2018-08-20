@@ -1,5 +1,4 @@
-﻿using CircuitSimulatorPlus.Controls;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -31,9 +30,6 @@ namespace CircuitSimulatorPlus
 
             Self = this;
 
-            // canvas.Children.Add(new WireControl());
-            // canvas.Children.Add(new GateControl(new AndGate()));
-
             DrawGrid();
             UpdateTitle();
             ResetView();
@@ -49,8 +45,8 @@ namespace CircuitSimulatorPlus
 
             Timer.Tick += Timer_Tick;
 
-            canvas.Children.Add(newCable);
-            Panel.SetZIndex(newCable, 1);
+            canvas.Children.Add(NewCable);
+            Panel.SetZIndex(NewCable, 1);
         }
 
         #region Properties
@@ -78,7 +74,7 @@ namespace CircuitSimulatorPlus
 
         public double CurrentScale;
 
-        public Line newCable = new Line
+        public Line NewCable = new Line
         {
             Stroke = Brushes.DarkTurquoise,
             StrokeThickness = Constants.LineWidth,
@@ -576,7 +572,7 @@ namespace CircuitSimulatorPlus
         }
         public void CreateCable()
         {
-            newCable.Visibility = Visibility.Collapsed;
+            NewCable.Visibility = Visibility.Collapsed;
             var startNode = LastClickedObject as ConnectionNode;
 
             IClickable clickedObject = FindNearestObjectAt(LastCanvasPos);
@@ -748,9 +744,9 @@ namespace CircuitSimulatorPlus
                 }
                 else if (LastClickedObject is ConnectionNode)
                 {
-                    newCable.Visibility = Visibility.Visible;
-                    newCable.X1 = newCable.X2 = (LastClickedObject as ConnectionNode).Position.X;
-                    newCable.Y1 = newCable.Y2 = (LastClickedObject as ConnectionNode).Position.Y;
+                    NewCable.Visibility = Visibility.Visible;
+                    NewCable.X1 = NewCable.X2 = (LastClickedObject as ConnectionNode).Position.X;
+                    NewCable.Y1 = NewCable.Y2 = (LastClickedObject as ConnectionNode).Position.Y;
                     CreatingCable = true;
                 }
                 else
@@ -850,11 +846,11 @@ namespace CircuitSimulatorPlus
 
                 if (CreatingCable)
                 {
-                    newCable.X2 = LastCanvasPos.X;
-                    newCable.Y2 = LastCanvasPos.Y;
+                    NewCable.X2 = LastCanvasPos.X;
+                    NewCable.Y2 = LastCanvasPos.Y;
 
-                    newCable.StrokeDashOffset = Constants.DefaultGridSize * -0.25 * Math.Sqrt(
-                        Math.Pow(newCable.X1 - newCable.X2, 2) + Math.Pow(newCable.Y1 - newCable.Y2, 2)
+                    NewCable.StrokeDashOffset = Constants.DefaultGridSize * -0.25 * Math.Sqrt(
+                        Math.Pow(NewCable.X1 - NewCable.X2, 2) + Math.Pow(NewCable.Y1 - NewCable.Y2, 2)
                     );
                 }
 
