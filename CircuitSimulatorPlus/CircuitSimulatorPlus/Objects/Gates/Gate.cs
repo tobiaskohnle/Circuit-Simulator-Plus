@@ -24,18 +24,16 @@ namespace CircuitSimulatorPlus
             {
                 var inputNode = new InputNode(this);
                 Input.Add(inputNode);
-                MainWindow.Self.clickableObjects.Add(inputNode);
+                MainWindow.Self.ClickableObjects.Add(inputNode);
             }
             for (int i = 0; i < amtOutputs; i++)
             {
                 var outputNode = new OutputNode(this);
                 Output.Add(outputNode);
-                MainWindow.Self.clickableObjects.Add(outputNode);
+                MainWindow.Self.ClickableObjects.Add(outputNode);
             }
 
-            var gateRenderer = new GateRenderer(this);
-
-            MainWindow.gateRef = new WeakReference<GateRenderer>(gateRenderer);
+            new GateRenderer(this);
         }
 
         public const double DistanceFactor = 0.2;
