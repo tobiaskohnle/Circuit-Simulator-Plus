@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace CircuitSimulatorPlus
 {
@@ -59,6 +60,8 @@ namespace CircuitSimulatorPlus
         {
             rect.Width = gate.Size.Width;
             rect.Height = gate.Size.Height;
+            Canvas.SetLeft(rect,gate.Position.X);
+            Canvas.SetTop(rect, gate.Position.Y);
         }
     }
 }
