@@ -100,6 +100,13 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.D, ModifierKeys.Control)
             }
         );
+        public static RoutedUICommand Format { get; } = new RoutedUICommand(
+            "Format", "Format", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.F, ModifierKeys.Control)
+            }
+        );
         #endregion
 
         #region View

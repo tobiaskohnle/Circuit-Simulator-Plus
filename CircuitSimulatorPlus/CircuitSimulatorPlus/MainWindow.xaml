@@ -43,6 +43,8 @@
                         Executed="SelectAll_Click" CanExecute="SelectAll_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.DeselectAll}"
                         Executed="DeselectAll_Click" CanExecute="DeselectAll_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.Format}"
+                        Executed="Format_Click" CanExecute="Format_CanExecute"/>
 
         <CommandBinding Command="{x:Static local:Commands.ResetView}"
                         Executed="ResetView_Click"/>
@@ -109,6 +111,7 @@
                 <MenuItem Command="{x:Static local:Commands.Delete}"/>
                 <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
                 <MenuItem Command="{x:Static local:Commands.DeselectAll}"/>
+                <MenuItem Command="{x:Static local:Commands.Format}"/>
             </MenuItem>
             <MenuItem Header="View" Width="auto">
                 <MenuItem Header="Main Toolbar" IsCheckable="True" Checked="MainToolbar_Checked" Unchecked="MainToolbar_Unchecked"/>

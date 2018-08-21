@@ -1082,6 +1082,9 @@ namespace CircuitSimulatorPlus
         {
             DeselectAll();
         }
+        void Format_Click(object sender, RoutedEventArgs e)
+        {
+        }
 
         void Undo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -1112,6 +1115,10 @@ namespace CircuitSimulatorPlus
             e.CanExecute = ClickableObjects.Count > 0;
         }
         void DeselectAll_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected;
+        }
+        void Format_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected;
         }
