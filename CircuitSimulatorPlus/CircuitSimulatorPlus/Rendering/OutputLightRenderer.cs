@@ -17,6 +17,7 @@ namespace CircuitSimulatorPlus.Rendering
         readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(70, 170, 170, 170));
 
         Rectangle rect = new Rectangle();
+        TextBlock indexText = new TextBlock() { FontSize = 1 };
 
         public OutputLightRenderer(OutputLight gate)
         {
@@ -35,6 +36,7 @@ namespace CircuitSimulatorPlus.Rendering
             if (gate.IsRendered)
             {
                 MainWindow.Self.canvas.Children.Add(rect);
+                MainWindow.Self.canvas.Children.Add(indexText);
                 gate.OnSizeChanged += OnLayoutChanged;
                 gate.OnPositionChanged += OnLayoutChanged;
                 gate.Input[0].OnStateChanged += OnStateChanged;
@@ -44,6 +46,7 @@ namespace CircuitSimulatorPlus.Rendering
             else
             {
                 MainWindow.Self.canvas.Children.Remove(rect);
+                MainWindow.Self.canvas.Children.Remove(indexText);
                 gate.OnSizeChanged -= OnLayoutChanged;
                 gate.OnPositionChanged -= OnLayoutChanged;
                 gate.Input[0].OnStateChanged -= OnStateChanged;
@@ -61,6 +64,9 @@ namespace CircuitSimulatorPlus.Rendering
             rect.Height = gate.Size.Height;
             Canvas.SetLeft(rect, gate.Position.X);
             Canvas.SetTop(rect, gate.Position.Y);
+            Canvas.SetLeft(indexText, gate.Position.X);
+            Canvas.SetTop(indexText, gate.Position.Y);
+            indexText.Text = gate.Index.ToString();
         }
     }
 }

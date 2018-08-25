@@ -72,8 +72,28 @@ namespace CircuitSimulatorPlus
 
         public override void ConnectTo(ConnectionNode connectionNode)
         {
-            connectionNode.NextConnectedTo.Add(this);
-            BackConnectedTo = connectionNode;
+            ConnectionNode localNode = this;
+            ConnectionNode remoteNode = connectionNode;
+
+            if (connectionNode.Owner is InputSwitch)
+            {
+                InputSwitch inputSwitch = (InputSwitch)Owner;
+                ContextGate context = inputSwitch.Parent;
+                if (context == null)
+                    throw new Exception("InputSwitch has no parent");
+                remoteNode = context.Input[inputSwitch.Index];
+            }
+            if (Owner is OutputLight)
+            {
+                OutputLight outputLight = (OutputLight)connectionNode.Owner;
+                ContextGate context = outputLight.Parent;
+                if (context == null)
+                    throw new Exception("OutputLight has no parent");
+                localNode = context.Output[outputLight.Index];
+            }
+
+            remoteNode.NextConnectedTo.Add(localNode);
+            localNode.BackConnectedTo = connectionNode;
         }
     }
 }

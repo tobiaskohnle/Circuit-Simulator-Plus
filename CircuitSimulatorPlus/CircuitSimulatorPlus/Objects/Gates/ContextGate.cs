@@ -26,5 +26,21 @@ namespace CircuitSimulatorPlus
         {
             throw new InvalidOperationException();
         }
+
+        // TODO
+        public void ReconnectInnerInputs()
+        {
+            
+        }
+
+        // TODO
+        public void ReconnectInnerOutputs()
+        {
+            
+        }
+
+        // These are used for positional comparisons.
+        public List<InputSwitch> InputSwitches = new List<InputSwitch>();
+        public List<OutputLight> OutputLights = new List<OutputLight>();
     }
 }
