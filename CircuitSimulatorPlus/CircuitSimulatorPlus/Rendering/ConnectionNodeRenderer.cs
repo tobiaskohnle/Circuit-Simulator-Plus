@@ -108,6 +108,7 @@ namespace CircuitSimulatorPlus
             //{
             //    connectionNodeLine.Stroke = Brushes.Orange;
             //}
+            bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
             if (connectionNode.IsTicked)
             {
                 connectionNodeLine.Stroke = Brushes.Orange;
@@ -116,17 +117,13 @@ namespace CircuitSimulatorPlus
             {
                 connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
             }
-            else
+            else if (!connectionNode.IsSelected)
             {
-                bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
-                if (!connectionNode.IsSelected)
-                {
-                    connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
-                }
-                if (connectionNode.IsInverted)
-                {
-                    invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
-                }
+                connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
+            }
+            if (connectionNode.IsInverted)
+            {
+                invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
             }
         }
 
