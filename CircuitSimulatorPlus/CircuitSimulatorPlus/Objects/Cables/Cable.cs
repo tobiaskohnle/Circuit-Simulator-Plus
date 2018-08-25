@@ -39,6 +39,8 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public List<Point> Points;
+
         public OutputNode OutputNode
         {
             get; set;
