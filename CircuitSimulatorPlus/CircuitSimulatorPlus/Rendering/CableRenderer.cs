@@ -50,6 +50,7 @@ namespace CircuitSimulatorPlus
 
                 OnSelectionChanged();
                 OnPositionChanged();
+                OnStateChanged();
             }
             else
             {

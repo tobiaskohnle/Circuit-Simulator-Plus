@@ -589,11 +589,11 @@ namespace CircuitSimulatorPlus
                         endNode = temp;
                     }
 
-                    var cable = new Cable(endNode as InputNode, startNode as OutputNode);
-
                     Console.WriteLine($"Created cable");
                     startNode.ConnectTo(endNode);
                     Tick(endNode);
+
+                    var cable = new Cable(endNode as InputNode, startNode as OutputNode);
                 }
             }
         }
