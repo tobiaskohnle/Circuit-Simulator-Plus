@@ -227,14 +227,14 @@ namespace CircuitSimulatorPlus
             if (gate is InputSwitch)
             {
                 InputSwitch inputSwitch = ((InputSwitch)gate);
-                inputSwitch.Parent = null;
                 inputSwitch.Parent.Input.RemoveAt(inputSwitch.Index);
+                inputSwitch.Parent = null;
             }
             if (gate is OutputLight)
             {
                 OutputLight outputLight = ((OutputLight)gate);
-                outputLight.Parent = null;
                 outputLight.Parent.Output.RemoveAt(outputLight.Index);
+                outputLight.Parent = null;
             }
             gate.IsRendered = false;
             ClickableObjects.Remove(gate);
