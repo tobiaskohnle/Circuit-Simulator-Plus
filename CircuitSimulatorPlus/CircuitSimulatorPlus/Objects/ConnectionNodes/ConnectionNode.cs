@@ -218,7 +218,7 @@ namespace CircuitSimulatorPlus
         {
             IsInverted = !IsInverted;
         }
-        protected void Tick(Queue<ConnectionNode> tickedNodes, bool nextIsElementary, bool lastWasElementary)
+        protected void Tick(Queue<ConnectionNode> tickedNodes, bool lastWasElementary, bool nextIsElementary)
         {
             stateChanged = false;
 
