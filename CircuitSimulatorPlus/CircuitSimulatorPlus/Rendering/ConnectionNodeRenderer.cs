@@ -100,22 +100,18 @@ namespace CircuitSimulatorPlus
 
         void UpdateLineStroke()
         {
-            //if (connectionNode.IsSelected)
-            //{
-            //    connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
-            //}
-            //else if (connectionNode.IsTicked)
-            //{
-            //    connectionNodeLine.Stroke = Brushes.Orange;
-            //}
             bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
-            if (connectionNode.IsTicked)
-            {
-                connectionNodeLine.Stroke = Brushes.Orange;
-            }
-            else if (connectionNode.IsSelected)
+            if (connectionNode.IsSelected)
             {
                 connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
+            }
+            else if (connectionNode.IsEmpty)
+            {
+                connectionNodeLine.Stroke = Brushes.Cyan; // temp
+            }
+            else if (connectionNode.IsTicked)
+            {
+                connectionNodeLine.Stroke = Brushes.Orange;
             }
             else if (!connectionNode.IsSelected)
             {

@@ -34,30 +34,36 @@ namespace CircuitSimulatorPlus
         /// <param name="connectionNode"></param>
         public override void ConnectTo(ConnectionNode connectionNode)
         {
-            ConnectionNode localNode = this;
-            ConnectionNode remoteNode = connectionNode;
+            //ConnectionNode localNode = this;
+            //ConnectionNode remoteNode = connectionNode;
 
-            if (Owner is InputSwitch)
+            //if (Owner is InputSwitch)
+            //{
+            //    InputSwitch inputSwitch = (InputSwitch)Owner;
+            //    ContextGate context = inputSwitch.Parent;
+            //    if (context == null)
+            //        throw new Exception("InputSwitch has no parent");
+            //    localNode = context.Input[inputSwitch.Index];
+            //}
+            //if (connectionNode.Owner is OutputLight)
+            //{
+            //    OutputLight outputLight = (OutputLight)connectionNode.Owner;
+            //    ContextGate context = outputLight.Parent;
+            //    if (context == null)
+            //        throw new Exception("OutputLight has no parent");
+            //    remoteNode = context.Output[outputLight.Index];
+            //}
+
+            //localNode.NextConnectedTo.Add(remoteNode);
+            //remoteNode.BackConnectedTo = this;
+
+            if (!connectionNode.IsEmpty)
             {
-                InputSwitch inputSwitch = (InputSwitch)Owner;
-                ContextGate context = inputSwitch.Parent;
-                if (context == null)
-                    throw new Exception("InputSwitch has no parent");
-                localNode = context.Input[inputSwitch.Index];
-            }
-            if (connectionNode.Owner is OutputLight)
-            {
-                OutputLight outputLight = (OutputLight)connectionNode.Owner;
-                ContextGate context = outputLight.Parent;
-                if (context == null)
-                    throw new Exception("OutputLight has no parent");
-                remoteNode = context.Output[outputLight.Index];
+                connectionNode.Clear();
             }
 
-            localNode.NextConnectedTo.Add(remoteNode);
-            remoteNode.BackConnectedTo = this;
-
-            // TODO: clear connectionNode if !connectionNode.IsEmpty
+            NextConnectedTo.Add(connectionNode);
+            connectionNode.BackConnectedTo = this;
 
             IsEmpty = connectionNode.IsEmpty = false;
         }

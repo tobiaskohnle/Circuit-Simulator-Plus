@@ -1233,11 +1233,11 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            var storageObject = StorageConverter.ToStorageObject(ContextGate);
-            New();
-            ContextGate = (ContextGate)StorageConverter.ToGate(storageObject);
-            RenderContext();
-            UpdateClickableObjects();
+            //var storageObject = StorageConverter.ToStorageObject(ContextGate);
+            //New();
+            //ContextGate = (ContextGate)StorageConverter.ToGate(storageObject);
+            //RenderContext();
+            //UpdateClickableObjects();
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
