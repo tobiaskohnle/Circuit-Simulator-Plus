@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
     public class OutputNode : ConnectionNode
     {
-        public OutputNode(Gate owner) : base(Align.R, owner)
+        public OutputNode(Gate owner) : base(owner)
         {
+            AlignmentVector = new Vector(1, 0);
             new ConnectionNodeRenderer(this, owner, true);
         }
 
@@ -79,6 +81,14 @@ namespace CircuitSimulatorPlus
         public override void Tick(Queue<ConnectionNode> tickedNodes)
         {
             Tick(tickedNodes, !Owner.HasContext, false);
+        }
+
+        public override void UpdatePosition(int index)
+        {
+            Position = new Point(
+                Owner.Position.X + Owner.Size.Width,
+                Owner.Position.Y + Owner.Size.Height * (1 + 2 * index) / (2 * Owner.Output.Count)
+            );
         }
     }
 }

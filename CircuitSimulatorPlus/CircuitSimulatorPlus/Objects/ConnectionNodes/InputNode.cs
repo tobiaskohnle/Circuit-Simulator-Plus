@@ -6,8 +6,9 @@ namespace CircuitSimulatorPlus
 {
     public class InputNode : ConnectionNode
     {
-        public InputNode(Gate owner) : base(Align.L, owner)
+        public InputNode(Gate owner) : base(owner)
         {
+            AlignmentVector = new Vector(-1, 0);
             new ConnectionNodeRenderer(this, owner, false);
         }
 
@@ -99,6 +100,14 @@ namespace CircuitSimulatorPlus
             connectionNode.NextConnectedTo.Add(this);
 
             IsEmpty = connectionNode.IsEmpty = false;
+        }
+
+        public override void UpdatePosition(int index)
+        {
+            Position = new Point(
+                Owner.Position.X,
+                Owner.Position.Y + Owner.Size.Height * (1 + 2 * index) / (2 * Owner.Input.Count)
+            );
         }
     }
 }

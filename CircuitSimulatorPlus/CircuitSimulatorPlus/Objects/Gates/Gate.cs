@@ -12,14 +12,6 @@ namespace CircuitSimulatorPlus
             hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
             Size = new Size(3, 4);
 
-            AmtConnectedNodes = new Dictionary<ConnectionNode.Align, int>
-            {
-                { ConnectionNode.Align.L, 0 },
-                { ConnectionNode.Align.U, 0 },
-                { ConnectionNode.Align.R, 0 },
-                { ConnectionNode.Align.D, 0 }
-            };
-
             for (int i = 0; i < amtInputs; i++)
             {
                 var inputNode = new InputNode(this);
@@ -37,8 +29,6 @@ namespace CircuitSimulatorPlus
         }
 
         public const double DistanceFactor = 0.2;
-
-        public Dictionary<ConnectionNode.Align, int> AmtConnectedNodes;
 
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();
@@ -154,13 +144,11 @@ namespace CircuitSimulatorPlus
         public void RemoveInputNode(InputNode inputNode)
         {
             Input.Remove(inputNode);
-            AmtConnectedNodes[inputNode.Alignment]--;
             inputNode.IsRendered = false;
         }
         public void RemoveOutputNode(OutputNode outputNode)
         {
             Output.Remove(outputNode);
-            AmtConnectedNodes[outputNode.Alignment]--;
             outputNode.IsRendered = false;
         }
 

@@ -6,21 +6,15 @@ namespace CircuitSimulatorPlus
 {
     public abstract class ConnectionNode : IClickable
     {
-        protected ConnectionNode(Align alignment, Gate owner)
+        protected ConnectionNode(Gate owner)
         {
             Owner = owner;
-            Alignment = alignment;
             IsEmpty = true;
             hitbox = new CircleHitbox(this, Position, HitboxRadius, DistanceFactor);
         }
 
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
-
-        public enum Align
-        {
-            U, D, L, R
-        }
 
         bool stateChanged;
 
@@ -176,44 +170,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event Action OnAlignmentChanged;
-        Align? alignment;
-        public Align Alignment
-        {
-            get
-            {
-                return (Align)alignment;
-            }
-            set
-            {
-                if (alignment != null)
-                    Owner.AmtConnectedNodes[(Align)alignment]--;
-                Owner.AmtConnectedNodes[value]++;
-
-                switch (alignment = value)
-                {
-                case Align.U:
-                    AlignmentVector.X = 0;
-                    AlignmentVector.Y = -1;
-                    break;
-                case Align.R:
-                    AlignmentVector.X = 1;
-                    AlignmentVector.Y = 0;
-                    break;
-                case Align.D:
-                    AlignmentVector.X = 0;
-                    AlignmentVector.Y = 1;
-                    break;
-                case Align.L:
-                    AlignmentVector.X = -1;
-                    AlignmentVector.Y = 0;
-                    break;
-                }
-
-                OnAlignmentChanged?.Invoke();
-            }
-        }
-
         public void Invert()
         {
             IsInverted = !IsInverted;
@@ -256,20 +212,8 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        public void UpdatePosition(int index)
-        {
-            double sideLength = alignment == Align.U || alignment == Align.D ? Owner.Size.Width : Owner.Size.Height;
-            double sidePos = sideLength * (1 + 2 * index) / (2 * Owner.AmtConnectedNodes[Alignment]);
 
-            Position = new Point(
-                Owner.Position.X + Owner.Size.Width / 2
-                    + AlignmentVector.X * Owner.Size.Width / 2
-                    - AlignmentVector.Y * (sidePos - Owner.Size.Width / 2),
-                Owner.Position.Y + Owner.Size.Height / 2
-                    + AlignmentVector.Y * Owner.Size.Height / 2
-                    + AlignmentVector.X * (sidePos - Owner.Size.Height / 2)
-            );
-        }
+        public abstract void UpdatePosition(int index);
 
         public abstract void Tick(Queue<ConnectionNode> tickedNodes);
         public abstract void ConnectTo(ConnectionNode connectionNode);

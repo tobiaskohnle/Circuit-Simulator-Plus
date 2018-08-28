@@ -77,12 +77,6 @@
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
                 <MenuItem Header="Segment Display" Click="CreateSegmentDisplay"/>
             </MenuItem>
-            <MenuItem Header="Align Connection Node">
-                <MenuItem Header="Align Up" Click="AlignU_Click"/>
-                <MenuItem Header="Align Down" Click="AlignD_Click"/>
-                <MenuItem Header="Align Left" Click="AlignL_Click"/>
-                <MenuItem Header="Align Right" Click="AlignR_Click"/>
-            </MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

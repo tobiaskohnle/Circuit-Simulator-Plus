@@ -299,13 +299,6 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < Math.Min(inputs.Count, outputs.Count); i++)
                 (outputs[i] as OutputNode).ConnectTo(inputs[i] as InputNode);
         }
-
-        public void AlignConnectionNodes(ConnectionNode.Align alignment)
-        {
-            foreach (IClickable obj in SelectedObjects)
-                if (obj is ConnectionNode)
-                    (obj as ConnectionNode).Alignment = alignment;
-        }
         #endregion
 
         #region IO
@@ -1003,23 +996,6 @@ namespace CircuitSimulatorPlus
             Add(new SegmentDisplay());
         }
 
-        void AlignD_Click(object sender, RoutedEventArgs e)
-        {
-            AlignConnectionNodes(ConnectionNode.Align.D);
-        }
-        void AlignR_Click(object sender, RoutedEventArgs e)
-        {
-            AlignConnectionNodes(ConnectionNode.Align.R);
-        }
-        void AlignU_Click(object sender, RoutedEventArgs e)
-        {
-            AlignConnectionNodes(ConnectionNode.Align.U);
-        }
-        void AlignL_Click(object sender, RoutedEventArgs e)
-        {
-            AlignConnectionNodes(ConnectionNode.Align.L);
-        }
-
         void Import_Click(object sender, RoutedEventArgs e)
         {
             Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
@@ -1201,10 +1177,6 @@ namespace CircuitSimulatorPlus
         }
         void TrimInput_Click(object sender, RoutedEventArgs e)
         {
-        }
-        void Align_Click(object sender, RoutedEventArgs e)
-        {
-            AlignConnectionNodes(ConnectionNode.Align.U);
         }
 
         void InvertConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
