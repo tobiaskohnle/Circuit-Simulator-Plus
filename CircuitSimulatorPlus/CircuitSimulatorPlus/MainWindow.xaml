@@ -77,6 +77,8 @@
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
                 <MenuItem Header="Segment Display" Click="CreateSegmentDisplay"/>
             </MenuItem>
+            <MenuItem Header="Change Type to And Gate" Click="ChangeTypeToAnd_Click"></MenuItem>
+            <MenuItem Header="Change Type to Or Gate" Click="ChangeTypeToOr_Click"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

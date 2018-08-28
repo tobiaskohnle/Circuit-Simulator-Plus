@@ -285,19 +285,53 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        void ConnectAllNodes()
+        public void ConnectAllNodes()
         {
             foreach (OutputNode outputNode in SelectedObjects.Where(obj => obj is OutputNode))
                 foreach (InputNode inputNode in SelectedObjects.Where(obj => obj is InputNode))
                     outputNode.ConnectTo(inputNode);
         }
-        void ConnectOppositeNodes()
+        public void ConnectOppositeNodes()
         {
             var outputs = SelectedObjects.Where(obj => obj is OutputNode).ToList();
             var inputs = SelectedObjects.Where(obj => obj is InputNode).ToList();
 
             for (int i = 0; i < Math.Min(inputs.Count, outputs.Count); i++)
                 (outputs[i] as OutputNode).ConnectTo(inputs[i] as InputNode);
+        }
+
+        public void ChangeType(Type type)
+        {
+            foreach (IClickable obj in SelectedObjects.ToList())
+            {
+                if (obj is Gate)
+                {
+                    var gate = obj as Gate;
+
+                    Gate newGate = null;
+
+                    if (type == typeof(AndGate))
+                        newGate = new AndGate();
+                    else if (type == typeof(OrGate))
+                        newGate = new OrGate();
+
+                    newGate.CopyFrom(gate);
+
+                    ContextGate.Context.Remove(gate);
+                    ContextGate.Context.Add(newGate);
+
+                    foreach (OutputNode outputNode in newGate.Output)
+                        Tick(outputNode);
+
+                    Deselect(gate);
+                    Select(newGate);
+
+                    gate.IsRendered = false;
+                    newGate.IsRendered = true;
+
+                    UpdateClickableObjects();
+                }
+            }
         }
         #endregion
 
@@ -1004,6 +1038,15 @@ namespace CircuitSimulatorPlus
         {
             Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
             UpdateClickableObjects();
+        }
+
+        void ChangeTypeToAnd_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(AndGate));
+        }
+        void ChangeTypeToOr_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(OrGate));
         }
 
         void New_Click(object sender, RoutedEventArgs e)

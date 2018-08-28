@@ -28,6 +28,22 @@ namespace CircuitSimulatorPlus
             new GateRenderer(this);
         }
 
+        public void CopyFrom(Gate gate)
+        {
+            Input = gate.Input;
+            foreach (InputNode inputNode in Input)
+                inputNode.Owner = this;
+
+            Output = gate.Output;
+            foreach (OutputNode outputNode in Output)
+                outputNode.Owner = this;
+
+            Name = gate.Name;
+            //Tag = gate.Tag;
+            Position = gate.Position;
+            Size = gate.Size;
+        }
+
         public const double DistanceFactor = 0.2;
 
         public List<InputNode> Input = new List<InputNode>();
