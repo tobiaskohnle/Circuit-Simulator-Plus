@@ -473,8 +473,8 @@ namespace CircuitSimulatorPlus
             {
                 double minX = Double.PositiveInfinity;
                 double minY = Double.PositiveInfinity;
-                double maxX = -Double.PositiveInfinity;
-                double maxY = -Double.PositiveInfinity;
+                double maxX = Double.NegativeInfinity;
+                double maxY = Double.NegativeInfinity;
 
                 foreach (IClickable obj in objects)
                 {
@@ -502,11 +502,15 @@ namespace CircuitSimulatorPlus
 
                 Matrix matrix = canvas.RenderTransform.Value;
 
-                matrix.ScaleAtPrepend(scale, scale, CanvasCenter.X, CanvasCenter.Y);
+                if (scale < 1)
+                {
+                    matrix.ScaleAtPrepend(scale, scale, CanvasCenter.X, CanvasCenter.Y);
+                    CurrentScale *= scale;
+                }
+
                 matrix.TranslatePrepend(CanvasCenter.X - centerX, CanvasCenter.Y - centerY);
                 canvas.RenderTransform = new MatrixTransform(matrix);
 
-                CurrentScale *= scale;
                 UpdateGrid();
             }
         }
