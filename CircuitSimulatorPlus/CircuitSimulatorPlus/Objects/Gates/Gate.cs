@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
     {
         public Gate(int amtInputs, int amtOutputs)
         {
-            hitbox = new RectHitbox(this, new Rect(), DistanceFactor);
+            hitbox = new RectHitbox(new Rect(), DistanceFactor);
             Size = new Size(3, 4);
 
             for (int i = 0; i < amtInputs; i++)

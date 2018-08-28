@@ -5,18 +5,12 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Hitbox
     {
-        public Hitbox(object attachedObject, double distanceFactor)
+        public Hitbox(double distanceFactor)
         {
             this.distanceFactor = distanceFactor;
-            AttachedObject = attachedObject;
         }
 
         protected double distanceFactor;
-
-        public object AttachedObject
-        {
-            get; protected set;
-        }
 
         public abstract Rect RectBounds
         {

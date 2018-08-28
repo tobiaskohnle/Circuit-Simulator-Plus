@@ -20,7 +20,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public LineHitbox(object attachedObject, Point a, Point b, double width, double distanceFactor) : base(attachedObject, distanceFactor)
+        public LineHitbox(Point a, Point b, double width, double distanceFactor) : base(distanceFactor)
         {
             this.A = a;
             this.B = b;

@@ -24,8 +24,7 @@ namespace CircuitSimulatorPlus
 
         double radius;
 
-        public CircleHitbox(object attachedObject, Point center, double radius, double distanceFactor)
-            : base(attachedObject, distanceFactor)
+        public CircleHitbox(Point center, double radius, double distanceFactor) : base(distanceFactor)
         {
             Center = center;
             this.radius = radius;

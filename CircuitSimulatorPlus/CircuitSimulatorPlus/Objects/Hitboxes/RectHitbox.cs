@@ -7,8 +7,7 @@ namespace CircuitSimulatorPlus
     {
         public Rect Bounds;
 
-        public RectHitbox(object attachedObject, Rect bounds, double distanceFactor)
-            : base(attachedObject, distanceFactor)
+        public RectHitbox(Rect bounds, double distanceFactor) : base(distanceFactor)
         {
             Bounds = bounds;
         }
