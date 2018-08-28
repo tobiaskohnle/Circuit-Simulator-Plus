@@ -921,6 +921,21 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (e.MiddleButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
+                {
+                    return;
+                }
+            }
+            else if (e.ChangedButton == MouseButton.Right || e.ChangedButton == MouseButton.Middle)
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    return;
+                }
+            }
+
             ReleaseMouseCapture();
 
             if (MouseMoved)
