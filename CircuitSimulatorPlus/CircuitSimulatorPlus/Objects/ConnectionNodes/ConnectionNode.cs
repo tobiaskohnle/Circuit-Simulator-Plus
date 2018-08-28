@@ -174,7 +174,7 @@ namespace CircuitSimulatorPlus
         {
             IsInverted = !IsInverted;
         }
-        protected void Tick(Queue<ConnectionNode> tickedNodes, bool lastWasElementary, bool nextIsElementary)
+        protected void Tick(bool lastWasElementary, bool nextIsElementary)
         {
             stateChanged = false;
 
@@ -203,19 +203,19 @@ namespace CircuitSimulatorPlus
                 if (nextIsElementary)
                 {
                     foreach (OutputNode node in Owner.Output)
-                        tickedNodes.Enqueue(node);
+                        MainWindow.Self.TickedNodes.Enqueue(node);
                 }
                 else
                 {
                     foreach (ConnectionNode node in NextConnectedTo)
-                        tickedNodes.Enqueue(node);
+                        MainWindow.Self.TickedNodes.Enqueue(node);
                 }
             }
         }
 
         public abstract void UpdatePosition(int index);
 
-        public abstract void Tick(Queue<ConnectionNode> tickedNodes);
+        public abstract void Tick();
         public abstract void ConnectTo(ConnectionNode connectionNode);
         public abstract void Clear();
     }

@@ -139,7 +139,7 @@ namespace CircuitSimulatorPlus
             foreach (ConnectionNode ticked in tickedNodesCopy)
             {
                 ticked.IsTicked = false;
-                ticked.Tick(TickedNodes);
+                ticked.Tick();
             }
             if (TickedNodes.Count == 0)
                 Timer.Stop();

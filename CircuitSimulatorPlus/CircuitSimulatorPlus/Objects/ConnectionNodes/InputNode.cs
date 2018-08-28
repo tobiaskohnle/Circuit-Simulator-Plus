@@ -52,22 +52,24 @@ namespace CircuitSimulatorPlus
             BackConnectedTo.IsEmpty = BackConnectedTo.NextConnectedTo.Count == 0;
             BackConnectedTo = null;
             IsEmpty = true;
+
+            MainWindow.Self.Tick(this);
         }
 
-        public override void Tick(Queue<ConnectionNode> tickedNodes)
+        public override void Tick()
         {
             if (IsRisingEdge)
             {
                 if (State == false)
                     State = BackConnectedTo.State;
                 if (State)
-                    tickedNodes.Enqueue(this);
+                    MainWindow.Self.TickedNodes.Enqueue(this);
                 foreach (ConnectionNode node in NextConnectedTo)
-                    tickedNodes.Enqueue(node);
+                    MainWindow.Self.TickedNodes.Enqueue(node);
             }
             else
             {
-                Tick(tickedNodes, false, !Owner.HasContext);
+                Tick(false, !Owner.HasContext);
             }
         }
 
