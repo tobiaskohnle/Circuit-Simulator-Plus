@@ -30,13 +30,13 @@ namespace CircuitSimulatorPlus
         // TODO
         public void ReconnectInnerInputs()
         {
-            
+
         }
 
         // TODO
         public void ReconnectInnerOutputs()
         {
-            
+
         }
 
         // These are used for positional comparisons.

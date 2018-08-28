@@ -63,7 +63,7 @@ namespace CircuitSimulatorPlus
         {
             rect.Width = gate.Size.Width;
             rect.Height = gate.Size.Height;
-            Canvas.SetLeft(rect,gate.Position.X);
+            Canvas.SetLeft(rect, gate.Position.X);
             Canvas.SetTop(rect, gate.Position.Y);
             Canvas.SetLeft(indexText, gate.Position.X);
             Canvas.SetTop(indexText, gate.Position.Y);

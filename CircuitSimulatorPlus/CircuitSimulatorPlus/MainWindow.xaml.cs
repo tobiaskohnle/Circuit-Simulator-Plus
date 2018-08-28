@@ -302,15 +302,20 @@ namespace CircuitSimulatorPlus
 
         public void ChangeType(Type type)
         {
+            StorageObject storageObject = null;
+            if (type == typeof(ContextGate))
+                storageObject = StorageUtil.Load(SelectFile());
+
             foreach (IClickable obj in SelectedObjects.ToList())
             {
                 if (obj is Gate)
                 {
                     var gate = obj as Gate;
-
                     Gate newGate = null;
 
-                    if (type == typeof(AndGate))
+                    if (type == typeof(ContextGate))
+                        newGate = StorageConverter.ToGate(storageObject);
+                    else if (type == typeof(AndGate))
                         newGate = new AndGate();
                     else if (type == typeof(OrGate))
                         newGate = new OrGate();
@@ -1047,6 +1052,10 @@ namespace CircuitSimulatorPlus
         void ChangeTypeToOr_Click(object sender, RoutedEventArgs e)
         {
             ChangeType(typeof(OrGate));
+        }
+        void ChangeTypeToContext_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(ContextGate));
         }
 
         void New_Click(object sender, RoutedEventArgs e)

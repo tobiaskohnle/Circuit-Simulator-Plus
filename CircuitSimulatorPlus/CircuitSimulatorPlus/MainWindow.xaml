@@ -79,6 +79,7 @@
             </MenuItem>
             <MenuItem Header="Change Type to And Gate" Click="ChangeTypeToAnd_Click"></MenuItem>
             <MenuItem Header="Change Type to Or Gate" Click="ChangeTypeToOr_Click"></MenuItem>
+            <MenuItem Header="Change Type to Context Gate" Click="ChangeTypeToContext_Click"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

@@ -159,7 +159,7 @@ namespace CircuitSimulatorPlus
             // AAAAAAAAAAAHHHHHH
             foreach (InputNode node in new List<InputNode>(gate.Input))
                 gate.RemoveInputNode(node);
-            
+
             foreach (int id in storageObject.InputConnections)
                 gate.Input.Add(new InputNode(gate));
             if (storageObject.InvertedInputs != null)
