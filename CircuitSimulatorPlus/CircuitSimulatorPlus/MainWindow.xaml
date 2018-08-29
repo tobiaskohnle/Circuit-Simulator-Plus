@@ -12,7 +12,7 @@
         MouseDoubleClick="Window_MouseDoubleClick"
         KeyDown="Window_KeyDown"
         Closing="Window_Closing"
-        ContextMenuOpening="Window_ContextMenuOpening">
+        ContextMenuOpening="Window_ContextMenuOpening" ManipulationDelta="Window_ManipulationDelta" ManipulationInertiaStarting="Window_ManipulationInertiaStarting" ManipulationStarting="Window_ManipulationStarting">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:Commands.New}"
                         Executed="New_Click"/>
