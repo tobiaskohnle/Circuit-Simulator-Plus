@@ -1305,5 +1305,30 @@ namespace CircuitSimulatorPlus
             }
         }
         #endregion
+
+        private void Window_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+                    Matrix matrix = canvas.RenderTransform.Value;
+                    matrix.ScaleAt(e.DeltaManipulation.Scale.X,
+                    e.DeltaManipulation.Scale.X,
+                    e.ManipulationOrigin.X,
+                    e.ManipulationOrigin.Y);
+            canvas.RenderTransform = new MatrixTransform(matrix);
+
+            matrix.Translate(e.DeltaManipulation.Translation.X - e.DeltaManipulation.Translation.X, e.DeltaManipulation.Translation.Y - e.DeltaManipulation.Translation.Y);
+            
+        }
+
+        private void Window_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
+        {
+            e.TranslationBehavior.DesiredDeceleration = 9.7 * 96.0 / (1000.0 * 1000.0);
+            e.ExpansionBehavior.DesiredDeceleration = 0.1 * 95 / (1000.0 * 1000.0);
+        }
+
+        private void Window_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
+        {
+            e.ManipulationContainer = this;
+            e.Handled = true;
+        }
     }
 }
