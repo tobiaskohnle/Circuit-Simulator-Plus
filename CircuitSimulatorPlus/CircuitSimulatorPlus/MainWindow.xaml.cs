@@ -315,10 +315,18 @@ namespace CircuitSimulatorPlus
 
                     if (type == typeof(ContextGate))
                         newGate = StorageConverter.ToGate(storageObject);
+                    else if (type == typeof(InputSwitch))
+                        newGate = new InputSwitch();
+                    else if (type == typeof(OutputLight))
+                        newGate = new OutputLight();
                     else if (type == typeof(AndGate))
                         newGate = new AndGate();
                     else if (type == typeof(OrGate))
                         newGate = new OrGate();
+                    else if (type == typeof(NopGate))
+                        newGate = new NopGate();
+                    else if (type == typeof(SegmentDisplay))
+                        newGate = new SegmentDisplay();
 
                     newGate.CopyFrom(gate);
 
@@ -1059,18 +1067,34 @@ namespace CircuitSimulatorPlus
             Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
             UpdateClickableObjects();
         }
-
-        void ChangeTypeToAnd_Click(object sender, RoutedEventArgs e)
+        
+        void ChangeTypeContext(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(ContextGate));
+        }
+        void ChangeTypeInputSwitch(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(InputSwitch));
+        }
+        void ChangeTypeOutputLight(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(OutputLight));
+        }
+        void ChangeTypeAndGate(object sender, RoutedEventArgs e)
         {
             ChangeType(typeof(AndGate));
         }
-        void ChangeTypeToOr_Click(object sender, RoutedEventArgs e)
+        void ChangeTypeOrGate(object sender, RoutedEventArgs e)
         {
             ChangeType(typeof(OrGate));
         }
-        void ChangeTypeToContext_Click(object sender, RoutedEventArgs e)
+        void ChangeTypeNotGate(object sender, RoutedEventArgs e)
         {
-            ChangeType(typeof(ContextGate));
+            ChangeType(typeof(NopGate));
+        }
+        void ChangeTypeSegmentDisplay(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(SegmentDisplay));
         }
 
         void New_Click(object sender, RoutedEventArgs e)
