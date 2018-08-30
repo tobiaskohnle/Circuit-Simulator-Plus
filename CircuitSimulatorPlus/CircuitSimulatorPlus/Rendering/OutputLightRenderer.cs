@@ -55,7 +55,7 @@ namespace CircuitSimulatorPlus.Rendering
 
         public void OnStateChanged()
         {
-            rect.Fill = gate.State ? activeBrush : inactiveBrush;
+            rect.Fill = gate.Input[0].State ? activeBrush : inactiveBrush;
         }
 
         public void OnLayoutChanged()
