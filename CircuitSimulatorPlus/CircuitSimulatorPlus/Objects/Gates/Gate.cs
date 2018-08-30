@@ -40,8 +40,8 @@ namespace CircuitSimulatorPlus
 
             Name = gate.Name;
             //Tag = gate.Tag;
-            Position = gate.Position;
             Size = gate.Size;
+            Position = gate.Position;
         }
 
         public const double DistanceFactor = 0.2;
