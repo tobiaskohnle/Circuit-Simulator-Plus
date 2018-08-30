@@ -9,8 +9,8 @@ namespace CircuitSimulatorPlus
     {
         public OutputNode(Gate owner) : base(owner)
         {
-            AlignmentVector = new Vector(1, 0);
             new ConnectionNodeRenderer(this, owner, true);
+            new OutputNodeRenderer(this);
         }
 
         bool isMasterSlave = true;

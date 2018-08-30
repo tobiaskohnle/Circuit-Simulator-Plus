@@ -20,8 +20,6 @@ namespace CircuitSimulatorPlus
 
         public Gate Owner;
 
-        public Vector AlignmentVector = new Vector();
-
         public ConnectionNode BackConnectedTo
         {
             get; set;

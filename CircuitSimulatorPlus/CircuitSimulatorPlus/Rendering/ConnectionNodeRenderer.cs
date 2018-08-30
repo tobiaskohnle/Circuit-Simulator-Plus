@@ -18,8 +18,6 @@ namespace CircuitSimulatorPlus
 
         Ellipse invertionDot;
         Line connectionNodeLine;
-        Line upperRisingEdgeLine;
-        Line lowerRisingEdgeLine;
         Label nameLabel;
 
         public readonly Brush ActiveStateBrush = Brushes.Red;
@@ -61,10 +59,6 @@ namespace CircuitSimulatorPlus
                 connectionNode.OnTickedChanged += OnTickedChanged;
                 connectionNode.OnSelectionChanged += OnSelectionChanged;
                 connectionNode.OnStateChanged += OnStateChanged;
-                if (connectionNode is InputNode)
-                    (connectionNode as InputNode).OnRisingEdgeChanged += OnRisingEdgeChanged;
-                if (connectionNode is OutputNode)
-                    (connectionNode as OutputNode).OnMasterSlaveChanged += OnMasterSlaveChanged;
                 connectionNode.OnInvertedChanged += OnInvertedChanged;
                 connectionNode.OnNameChanged += OnNameChanged;
                 connectionNode.OnPositionChanged += OnPositionChanged;
@@ -72,8 +66,6 @@ namespace CircuitSimulatorPlus
                 OnTickedChanged();
                 OnStateChanged();
                 OnSelectionChanged();
-                OnRisingEdgeChanged();
-                OnMasterSlaveChanged();
                 OnInvertedChanged();
                 OnNameChanged();
                 OnPositionChanged();
@@ -82,16 +74,10 @@ namespace CircuitSimulatorPlus
             {
                 MainWindow.Self.canvas.Children.Remove(connectionNodeLine);
                 MainWindow.Self.canvas.Children.Remove(invertionDot);
-                MainWindow.Self.canvas.Children.Remove(upperRisingEdgeLine);
-                MainWindow.Self.canvas.Children.Remove(lowerRisingEdgeLine);
 
                 connectionNode.OnTickedChanged -= OnTickedChanged;
                 connectionNode.OnSelectionChanged -= OnSelectionChanged;
                 connectionNode.OnStateChanged -= OnStateChanged;
-                if (connectionNode is InputNode)
-                    (connectionNode as InputNode).OnRisingEdgeChanged -= OnRisingEdgeChanged;
-                if (connectionNode is OutputNode)
-                    (connectionNode as OutputNode).OnMasterSlaveChanged -= OnMasterSlaveChanged;
                 connectionNode.OnInvertedChanged -= OnInvertedChanged;
                 connectionNode.OnNameChanged -= OnNameChanged;
                 connectionNode.OnPositionChanged -= OnPositionChanged;
@@ -141,48 +127,6 @@ namespace CircuitSimulatorPlus
             UpdateLineStroke();
         }
 
-        public void OnRisingEdgeChanged()
-        {
-            if (isOutputNode == false)
-            {
-                if ((connectionNode as InputNode).IsRisingEdge)
-                {
-                    upperRisingEdgeLine = new Line
-                    {
-                        StrokeThickness = Constants.LineWidth,
-                        X1 = connectionNode.Position.X
-                            - connectionNode.AlignmentVector.Y * Constants.InversionDotRadius,
-                        Y1 = connectionNode.Position.Y
-                            + connectionNode.AlignmentVector.X * Constants.InversionDotRadius,
-                        X2 = connectionNode.Position.X
-                            - connectionNode.AlignmentVector.X * Constants.InversionDotDiameter,
-                        Y2 = connectionNode.Position.Y
-                            - connectionNode.AlignmentVector.Y * Constants.InversionDotDiameter
-                    };
-                    lowerRisingEdgeLine = new Line
-                    {
-                        StrokeThickness = Constants.LineWidth,
-                        X1 = connectionNode.Position.X
-                            + connectionNode.AlignmentVector.Y * Constants.InversionDotRadius,
-                        Y1 = connectionNode.Position.Y
-                            - connectionNode.AlignmentVector.X * Constants.InversionDotRadius,
-                        X2 = connectionNode.Position.X
-                            - connectionNode.AlignmentVector.X * Constants.InversionDotDiameter,
-                        Y2 = connectionNode.Position.Y
-                            - connectionNode.AlignmentVector.Y * Constants.InversionDotDiameter
-                    };
-
-                    MainWindow.Self.canvas.Children.Add(upperRisingEdgeLine);
-                    MainWindow.Self.canvas.Children.Add(lowerRisingEdgeLine);
-                }
-                else
-                {
-                    MainWindow.Self.canvas.Children.Remove(upperRisingEdgeLine);
-                    MainWindow.Self.canvas.Children.Remove(lowerRisingEdgeLine);
-                }
-            }
-        }
-
         public void OnMasterSlaveChanged()
         {
         }
@@ -199,24 +143,24 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
+            var x = isOutputNode ? 1 : -1;
+
             connectionNodeLine.X1 = connectionNode.Position.X;
             connectionNodeLine.Y1 = connectionNode.Position.Y;
 
-            connectionNodeLine.X2 = connectionNode.Position.X
-                + connectionNode.AlignmentVector.X * Constants.ConnectionNodeLineLength;
-            connectionNodeLine.Y2 = connectionNode.Position.Y
-                + connectionNode.AlignmentVector.Y * Constants.ConnectionNodeLineLength;
+            connectionNodeLine.X2 = connectionNode.Position.X + x * Constants.ConnectionNodeLineLength;
+            connectionNodeLine.Y2 = connectionNode.Position.Y;
 
             if (connectionNode.IsInverted)
             {
                 connectionNodeLine.X1 = connectionNode.Position.X
-                    + connectionNode.AlignmentVector.X * (Constants.InversionDotDiameter + Constants.LineRadius);
+                    + x * (Constants.InversionDotDiameter + Constants.LineRadius);
                 Canvas.SetLeft(invertionDot, connectionNode.Position.X
                     - invertionDot.Width / 2
-                    + connectionNode.AlignmentVector.X * invertionDot.Width / 2);
+                    + x * invertionDot.Width / 2);
                 Canvas.SetTop(invertionDot, connectionNode.Position.Y
                     - invertionDot.Height / 2
-                    + connectionNode.AlignmentVector.Y * invertionDot.Height / 2);
+                    + x * invertionDot.Height / 2);
             }
         }
     }

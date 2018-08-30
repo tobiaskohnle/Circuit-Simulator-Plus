@@ -8,8 +8,8 @@ namespace CircuitSimulatorPlus
     {
         public InputNode(Gate owner) : base(owner)
         {
-            AlignmentVector = new Vector(-1, 0);
             new ConnectionNodeRenderer(this, owner, false);
+            new InputNodeRenderer(this);
         }
 
         public event Action OnRisingEdgeChanged;

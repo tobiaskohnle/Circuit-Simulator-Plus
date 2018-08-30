@@ -87,6 +87,7 @@
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
     <Compile Include="Miscellaneous\GatePositionComparer.cs" />
+    <Compile Include="Rendering\InputNodeRenderer.cs" />
     <Compile Include="Rendering\InputSwitchRenderer.cs" />
     <Compile Include="Miscellaneous\Constants.cs" />
     <Compile Include="Controls\CableControl.xaml.cs">
@@ -129,6 +130,7 @@
     <Compile Include="Rendering\GateRenderer.cs" />
     <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
     <Compile Include="Rendering\OutputLightRenderer.cs" />
+    <Compile Include="Rendering\OutputNodeRenderer.cs" />
     <Compile Include="Rendering\SegmentDisplayRenderer.cs" />
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
