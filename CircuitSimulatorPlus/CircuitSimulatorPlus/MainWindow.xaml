@@ -86,6 +86,7 @@
                 <MenuItem Header="Not Gate" Click="ChangeTypeNotGate"/>
                 <MenuItem Header="Segment Display" Click="ChangeTypeSegmentDisplay"/>
             </MenuItem>
+            <MenuItem Header="IsRisingEdge" IsCheckable="True" Checked="RisingEdge_Checked" Unchecked="RisingEdge_Unchecked"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
@@ -139,7 +140,7 @@
             </MenuItem>
             <MenuItem Header="Debug" Width="auto">
                 <MenuItem Header="Reload" Click="Reload_Click"/>
-                <MenuItem Header="Single Ticks" IsCheckable="true" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
+                <MenuItem Header="Single Ticks" IsCheckable="True" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
             </MenuItem>
         </Menu>

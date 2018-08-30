@@ -30,6 +30,13 @@ namespace CircuitSimulatorPlus
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
             };
+
+            inputNode.OnRenderedChanged += OnRenderedChanged;
+
+            if (inputNode.IsRendered)
+            {
+                OnRenderedChanged();
+            }
         }
 
         public void OnRenderedChanged()
@@ -64,13 +71,13 @@ namespace CircuitSimulatorPlus
         public void OnPositionChanged()
         {
             upperRisingEdgeLine.X1 = inputNode.Position.X;
-            upperRisingEdgeLine.X2 = inputNode.Position.X + Constants.InversionDotDiameter;
-            upperRisingEdgeLine.Y1 = inputNode.Position.Y - Constants.InversionDotRadius;
+            upperRisingEdgeLine.X2 = inputNode.Position.X + Constants.InversionDotDiameter * 1.2;
+            upperRisingEdgeLine.Y1 = inputNode.Position.Y - Constants.InversionDotRadius * 1.2;
             upperRisingEdgeLine.Y2 = inputNode.Position.Y;
 
             lowerRisingEdgeLine.X1 = inputNode.Position.X;
-            lowerRisingEdgeLine.X2 = inputNode.Position.X + Constants.InversionDotDiameter;
-            lowerRisingEdgeLine.Y1 = inputNode.Position.Y + Constants.InversionDotRadius;
+            lowerRisingEdgeLine.X2 = inputNode.Position.X + Constants.InversionDotDiameter * 1.2;
+            lowerRisingEdgeLine.Y1 = inputNode.Position.Y + Constants.InversionDotRadius * 1.2;
             lowerRisingEdgeLine.Y2 = inputNode.Position.Y;
         }
     }

@@ -346,6 +346,17 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+
+        public void SetRisingEdge(bool risingEdge)
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is InputNode)
+                {
+                    (obj as InputNode).IsRisingEdge = risingEdge;
+                }
+            }
+        }
         #endregion
 
         #region IO
@@ -1095,6 +1106,15 @@ namespace CircuitSimulatorPlus
         void ChangeTypeSegmentDisplay(object sender, RoutedEventArgs e)
         {
             ChangeType(typeof(SegmentDisplay));
+        }
+
+        void RisingEdge_Checked(object sender, RoutedEventArgs e)
+        {
+            SetRisingEdge(true);
+        }
+        void RisingEdge_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetRisingEdge(false);
         }
 
         void New_Click(object sender, RoutedEventArgs e)

@@ -153,14 +153,9 @@ namespace CircuitSimulatorPlus
 
             if (connectionNode.IsInverted)
             {
-                connectionNodeLine.X1 = connectionNode.Position.X
-                    + x * (Constants.InversionDotDiameter + Constants.LineRadius);
-                Canvas.SetLeft(invertionDot, connectionNode.Position.X
-                    - invertionDot.Width / 2
-                    + x * invertionDot.Width / 2);
-                Canvas.SetTop(invertionDot, connectionNode.Position.Y
-                    - invertionDot.Height / 2
-                    + x * invertionDot.Height / 2);
+                connectionNodeLine.X1 = connectionNode.Position.X + x * (Constants.InversionDotDiameter + Constants.LineRadius);
+                Canvas.SetLeft(invertionDot, connectionNode.Position.X - invertionDot.Width / 2 + x * invertionDot.Width / 2);
+                Canvas.SetTop(invertionDot, connectionNode.Position.Y - invertionDot.Height / 2);
             }
         }
     }

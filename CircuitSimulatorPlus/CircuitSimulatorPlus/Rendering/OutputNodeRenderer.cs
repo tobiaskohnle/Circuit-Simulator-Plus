@@ -26,6 +26,13 @@ namespace CircuitSimulatorPlus
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
             };
+
+            outputNode.OnRenderedChanged += OnRenderedChanged;
+
+            if (outputNode.IsRendered)
+            {
+                OnRenderedChanged();
+            }
         }
 
         public void OnRenderedChanged()
