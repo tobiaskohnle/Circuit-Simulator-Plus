@@ -66,7 +66,15 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            //horzMasterSlaveLine.X1 = 
+            double len = 0.75;
+
+            horzMasterSlaveLine.Y1 = horzMasterSlaveLine.Y2 = outputNode.Position.Y - len / 2;
+            horzMasterSlaveLine.X1 = outputNode.Position.X - len;
+            horzMasterSlaveLine.X2 = outputNode.Position.X - len - len;
+
+            vertMasterSlaveLine.X1 = vertMasterSlaveLine.X2 = outputNode.Position.X - len;
+            vertMasterSlaveLine.Y1 = outputNode.Position.Y - len / 2;
+            vertMasterSlaveLine.Y2 = outputNode.Position.Y + len / 2;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
             new OutputNodeRenderer(this);
         }
 
-        bool isMasterSlave = true;
+        bool isMasterSlave;
 
         public event Action OnMasterSlaveChanged;
         /// <summary>
