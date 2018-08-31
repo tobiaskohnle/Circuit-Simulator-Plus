@@ -347,13 +347,33 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public void SetRisingEdge(bool risingEdge)
+        public void ToggleRisingEdge()
         {
             foreach (IClickable obj in SelectedObjects)
             {
                 if (obj is InputNode)
                 {
-                    (obj as InputNode).IsRisingEdge = risingEdge;
+                    (obj as InputNode).IsRisingEdge = !(obj as InputNode).IsRisingEdge;
+                }
+            }
+        }
+        public void ToggleMasterSlave()
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is OutputNode)
+                {
+                    (obj as OutputNode).IsMasterSlave = !(obj as OutputNode).IsMasterSlave;
+                }
+            }
+        }
+        public void ToggleCentered()
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is ConnectionNode)
+                {
+                    (obj as ConnectionNode).IsCentered = !(obj as ConnectionNode).IsCentered;
                 }
             }
         }
@@ -1078,7 +1098,7 @@ namespace CircuitSimulatorPlus
             Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
             UpdateClickableObjects();
         }
-        
+
         void ChangeTypeContext(object sender, RoutedEventArgs e)
         {
             ChangeType(typeof(ContextGate));
@@ -1108,13 +1128,17 @@ namespace CircuitSimulatorPlus
             ChangeType(typeof(SegmentDisplay));
         }
 
-        void RisingEdge_Checked(object sender, RoutedEventArgs e)
+        void RisingEdge_Click(object sender, RoutedEventArgs e)
         {
-            SetRisingEdge(true);
+            ToggleRisingEdge();
         }
-        void RisingEdge_Unchecked(object sender, RoutedEventArgs e)
+        void MasterSlave_Click(object sender, RoutedEventArgs e)
         {
-            SetRisingEdge(false);
+            ToggleMasterSlave();
+        }
+        void Centered_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleCentered();
         }
 
         void New_Click(object sender, RoutedEventArgs e)
@@ -1352,15 +1376,15 @@ namespace CircuitSimulatorPlus
 
         private void Window_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-                    Matrix matrix = canvas.RenderTransform.Value;
-                    matrix.ScaleAt(e.DeltaManipulation.Scale.X,
-                    e.DeltaManipulation.Scale.X,
-                    e.ManipulationOrigin.X,
-                    e.ManipulationOrigin.Y);
+            Matrix matrix = canvas.RenderTransform.Value;
+            matrix.ScaleAt(e.DeltaManipulation.Scale.X,
+            e.DeltaManipulation.Scale.X,
+            e.ManipulationOrigin.X,
+            e.ManipulationOrigin.Y);
             canvas.RenderTransform = new MatrixTransform(matrix);
 
             matrix.Translate(e.DeltaManipulation.Translation.X - e.DeltaManipulation.Translation.X, e.DeltaManipulation.Translation.Y - e.DeltaManipulation.Translation.Y);
-            
+
         }
 
         private void Window_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)

@@ -86,7 +86,9 @@
                 <MenuItem Header="Not Gate" Click="ChangeTypeNotGate"/>
                 <MenuItem Header="Segment Display" Click="ChangeTypeSegmentDisplay"/>
             </MenuItem>
-            <MenuItem Header="IsRisingEdge" IsCheckable="True" Checked="RisingEdge_Checked" Unchecked="RisingEdge_Unchecked"></MenuItem>
+            <MenuItem Header="IsRisingEdge" Click="RisingEdge_Click"></MenuItem>
+            <MenuItem Header="IsMasterSlave" Click="MasterSlave_Click"></MenuItem>
+            <MenuItem Header="IsCentered" Click="Centered_Click"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
