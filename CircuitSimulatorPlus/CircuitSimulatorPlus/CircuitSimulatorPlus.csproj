@@ -87,8 +87,8 @@
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
     <Compile Include="Miscellaneous\GatePositionComparer.cs" />
-    <Compile Include="Rendering\InputNodeRenderer.cs" />
-    <Compile Include="Rendering\InputSwitchRenderer.cs" />
+    <Compile Include="Rendering\ConnectionNodes\InputNodeRenderer.cs" />
+    <Compile Include="Rendering\Gates\InputSwitchRenderer.cs" />
     <Compile Include="Miscellaneous\Constants.cs" />
     <Compile Include="Controls\CableControl.xaml.cs">
       <DependentUpon>CableControl.xaml</DependentUpon>
@@ -122,16 +122,16 @@
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
     <Compile Include="Objects\Hitboxes\Hitbox.cs" />
     <Compile Include="Objects\Hitboxes\IClickable.cs" />
-    <Compile Include="Rendering\CableRenderer.cs" />
-    <Compile Include="Rendering\ConnectionNodeRenderer.cs" />
+    <Compile Include="Rendering\Cables\CableRenderer.cs" />
+    <Compile Include="Rendering\ConnectionNodes\ConnectionNodeRenderer.cs" />
     <Compile Include="Commands\MoveCommand.cs" />
     <Compile Include="Commands\PasteCommand.cs" />
     <Compile Include="Commands\RenameCommand.cs" />
-    <Compile Include="Rendering\GateRenderer.cs" />
+    <Compile Include="Rendering\Gates\GateRenderer.cs" />
     <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
-    <Compile Include="Rendering\OutputLightRenderer.cs" />
-    <Compile Include="Rendering\OutputNodeRenderer.cs" />
-    <Compile Include="Rendering\SegmentDisplayRenderer.cs" />
+    <Compile Include="Rendering\Gates\OutputLightRenderer.cs" />
+    <Compile Include="Rendering\ConnectionNodes\OutputNodeRenderer.cs" />
+    <Compile Include="Rendering\Gates\SegmentDisplayRenderer.cs" />
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\StorageConverter.cs" />
     <Compile Include="Storage\StorageObject.cs" />
