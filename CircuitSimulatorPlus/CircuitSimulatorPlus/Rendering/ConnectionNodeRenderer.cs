@@ -55,17 +55,16 @@ namespace CircuitSimulatorPlus
             {
                 MainWindow.Self.canvas.Children.Add(invertionDot);
                 MainWindow.Self.canvas.Children.Add(connectionNodeLine);
-
-                connectionNode.OnTickedChanged += OnTickedChanged;
-                connectionNode.OnSelectionChanged += OnSelectionChanged;
-                connectionNode.OnStateChanged += OnStateChanged;
+                
+                connectionNode.OnTickedChanged += UpdateLineStroke;
+                connectionNode.OnSelectionChanged += UpdateLineStroke;
+                connectionNode.OnStateChanged += UpdateLineStroke;
                 connectionNode.OnInvertedChanged += OnInvertedChanged;
                 connectionNode.OnNameChanged += OnNameChanged;
+                connectionNode.OnCenteredChanged += OnPositionChanged;
                 connectionNode.OnPositionChanged += OnPositionChanged;
 
-                OnTickedChanged();
-                OnStateChanged();
-                OnSelectionChanged();
+                UpdateLineStroke();
                 OnInvertedChanged();
                 OnNameChanged();
                 OnPositionChanged();
@@ -75,11 +74,12 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(connectionNodeLine);
                 MainWindow.Self.canvas.Children.Remove(invertionDot);
 
-                connectionNode.OnTickedChanged -= OnTickedChanged;
-                connectionNode.OnSelectionChanged -= OnSelectionChanged;
-                connectionNode.OnStateChanged -= OnStateChanged;
+                connectionNode.OnTickedChanged -= UpdateLineStroke;
+                connectionNode.OnSelectionChanged -= UpdateLineStroke;
+                connectionNode.OnStateChanged -= UpdateLineStroke;
                 connectionNode.OnInvertedChanged -= OnInvertedChanged;
                 connectionNode.OnNameChanged -= OnNameChanged;
+                connectionNode.OnCenteredChanged -= OnPositionChanged;
                 connectionNode.OnPositionChanged -= OnPositionChanged;
             }
         }
@@ -112,21 +112,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public void OnTickedChanged()
-        {
-            UpdateLineStroke();
-        }
-
-        public void OnStateChanged()
-        {
-            UpdateLineStroke();
-        }
-
-        public void OnSelectionChanged()
-        {
-            UpdateLineStroke();
-        }
-
         public void OnMasterSlaveChanged()
         {
         }
@@ -143,18 +128,24 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            var x = isOutputNode ? 1 : -1;
+            var sX = isOutputNode ? 1 : -1;
+            var y = connectionNode.Position.Y;
+
+            if (connectionNode.IsCentered)
+            {
+                y = connectionNode.Owner.Position.Y + connectionNode.Owner.Size.Height / 2;
+            }
 
             connectionNodeLine.X1 = connectionNode.Position.X;
-            connectionNodeLine.Y1 = connectionNode.Position.Y;
+            connectionNodeLine.Y1 = y;
 
-            connectionNodeLine.X2 = connectionNode.Position.X + x * Constants.ConnectionNodeLineLength;
-            connectionNodeLine.Y2 = connectionNode.Position.Y;
+            connectionNodeLine.X2 = connectionNode.Position.X + sX * Constants.ConnectionNodeLineLength;
+            connectionNodeLine.Y2 = y;
 
             if (connectionNode.IsInverted)
             {
-                connectionNodeLine.X1 = connectionNode.Position.X + x * (Constants.InversionDotDiameter + Constants.LineRadius);
-                Canvas.SetLeft(invertionDot, connectionNode.Position.X - invertionDot.Width / 2 + x * invertionDot.Width / 2);
+                connectionNodeLine.X1 = connectionNode.Position.X + sX * (Constants.InversionDotDiameter + Constants.LineRadius);
+                Canvas.SetLeft(invertionDot, connectionNode.Position.X - invertionDot.Width / 2 + sX * invertionDot.Width / 2);
                 Canvas.SetTop(invertionDot, connectionNode.Position.Y - invertionDot.Height / 2);
             }
         }

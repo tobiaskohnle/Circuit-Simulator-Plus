@@ -131,6 +131,21 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public event Action OnCenteredChanged;
+        bool isCentered;
+        public bool IsCentered
+        {
+            get
+            {
+                return isCentered;
+            }
+            set
+            {
+                isCentered = value;
+                OnCenteredChanged?.Invoke();
+            }
+        }
+
         public event Action OnPositionChanged;
         Point position;
         public Point Position
