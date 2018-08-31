@@ -18,7 +18,6 @@ namespace CircuitSimulatorPlus
 
         Ellipse invertionDot;
         Line connectionNodeLine;
-        Label nameLabel;
 
         public readonly Brush ActiveStateBrush = Brushes.Red;
         public readonly Brush DefaultStateBrush = Brushes.Black;

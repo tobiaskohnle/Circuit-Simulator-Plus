@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -15,6 +12,8 @@ namespace CircuitSimulatorPlus
 
         Line upperRisingEdgeLine;
         Line lowerRisingEdgeLine;
+
+        Label nameLabel;
 
         public InputNodeRenderer(InputNode inputNode)
         {
@@ -29,6 +28,15 @@ namespace CircuitSimulatorPlus
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
+            };
+
+            nameLabel = new Label
+            {
+                Padding = new Thickness(0.2, 0, 0, 0),
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Height = 1,
+                FontSize = 0.5
             };
 
             inputNode.OnRenderedChanged += OnRenderedChanged;
@@ -46,10 +54,15 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Add(upperRisingEdgeLine);
                 MainWindow.Self.canvas.Children.Add(lowerRisingEdgeLine);
 
+                MainWindow.Self.canvas.Children.Add(nameLabel);
+
                 inputNode.OnRisingEdgeChanged += OnRisingEdgeChanged;
+                inputNode.OnRisingEdgeChanged += OnPositionChanged;
+                inputNode.OnNameChanged += OnNameChanged;
                 inputNode.OnPositionChanged += OnPositionChanged;
 
                 OnRisingEdgeChanged();
+                OnNameChanged();
                 OnPositionChanged();
             }
             else
@@ -57,7 +70,11 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(upperRisingEdgeLine);
                 MainWindow.Self.canvas.Children.Remove(lowerRisingEdgeLine);
 
+                MainWindow.Self.canvas.Children.Remove(nameLabel);
+
                 inputNode.OnRisingEdgeChanged -= OnRisingEdgeChanged;
+                inputNode.OnRisingEdgeChanged -= OnPositionChanged;
+                inputNode.OnNameChanged -= OnNameChanged;
                 inputNode.OnPositionChanged -= OnPositionChanged;
             }
         }
@@ -66,6 +83,11 @@ namespace CircuitSimulatorPlus
         {
             Visibility lineVisibility = inputNode.IsRisingEdge ? Visibility.Visible : Visibility.Collapsed;
             upperRisingEdgeLine.Visibility = lowerRisingEdgeLine.Visibility = lineVisibility;
+        }
+
+        public void OnNameChanged()
+        {
+            nameLabel.Content = inputNode.Name;
         }
 
         public void OnPositionChanged()
@@ -79,6 +101,16 @@ namespace CircuitSimulatorPlus
             lowerRisingEdgeLine.X2 = inputNode.Position.X + Constants.InversionDotDiameter * 1.2;
             lowerRisingEdgeLine.Y1 = inputNode.Position.Y + Constants.InversionDotRadius * 1.2;
             lowerRisingEdgeLine.Y2 = inputNode.Position.Y;
+
+            if (inputNode.IsRisingEdge)
+            {
+                Canvas.SetLeft(nameLabel, inputNode.Position.X + Constants.InversionDotDiameter * 1.2);
+            }
+            else
+            {
+                Canvas.SetLeft(nameLabel, inputNode.Position.X);
+            }
+            Canvas.SetTop(nameLabel, inputNode.Position.Y - nameLabel.Height / 2);
         }
     }
 }

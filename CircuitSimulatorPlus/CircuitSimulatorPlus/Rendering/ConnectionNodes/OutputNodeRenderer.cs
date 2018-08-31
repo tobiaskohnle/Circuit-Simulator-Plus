@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -11,6 +12,8 @@ namespace CircuitSimulatorPlus
 
         Line horzMasterSlaveLine;
         Line vertMasterSlaveLine;
+
+        Label nameLabel;
 
         public OutputNodeRenderer(OutputNode outputNode)
         {
@@ -25,6 +28,16 @@ namespace CircuitSimulatorPlus
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
+            };
+
+            nameLabel = new Label
+            {
+                Padding = new Thickness(0, 0, 0.2, 0),
+                HorizontalContentAlignment = HorizontalAlignment.Right,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Width = outputNode.Owner.Size.Width,
+                Height = 1,
+                FontSize = 0.5
             };
 
             outputNode.OnRenderedChanged += OnRenderedChanged;
@@ -42,10 +55,15 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Add(horzMasterSlaveLine);
                 MainWindow.Self.canvas.Children.Add(vertMasterSlaveLine);
 
+                MainWindow.Self.canvas.Children.Add(nameLabel);
+
                 outputNode.OnMasterSlaveChanged += OnMasterSlaveChanged;
+                outputNode.OnMasterSlaveChanged += OnPositionChanged;
+                outputNode.OnNameChanged += OnNameChanged;
                 outputNode.OnPositionChanged += OnPositionChanged;
 
                 OnMasterSlaveChanged();
+                OnNameChanged();
                 OnPositionChanged();
             }
             else
@@ -53,7 +71,11 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(horzMasterSlaveLine);
                 MainWindow.Self.canvas.Children.Remove(vertMasterSlaveLine);
 
+                MainWindow.Self.canvas.Children.Remove(nameLabel);
+
                 outputNode.OnMasterSlaveChanged -= OnMasterSlaveChanged;
+                outputNode.OnMasterSlaveChanged -= OnPositionChanged;
+                outputNode.OnNameChanged -= OnNameChanged;
                 outputNode.OnPositionChanged -= OnPositionChanged;
             }
         }
@@ -62,6 +84,11 @@ namespace CircuitSimulatorPlus
         {
             Visibility lineVisibility = outputNode.IsMasterSlave ? Visibility.Visible : Visibility.Collapsed;
             horzMasterSlaveLine.Visibility = vertMasterSlaveLine.Visibility = lineVisibility;
+        }
+
+        public void OnNameChanged()
+        {
+            nameLabel.Content = outputNode.Name;
         }
 
         public void OnPositionChanged()
@@ -75,6 +102,16 @@ namespace CircuitSimulatorPlus
             vertMasterSlaveLine.X1 = vertMasterSlaveLine.X2 = outputNode.Position.X - len;
             vertMasterSlaveLine.Y1 = outputNode.Position.Y - len / 2;
             vertMasterSlaveLine.Y2 = outputNode.Position.Y + len / 2;
+
+            if (outputNode.IsMasterSlave)
+            {
+                Canvas.SetLeft(nameLabel, outputNode.Position.X - len - len - nameLabel.Width);
+            }
+            else
+            {
+                Canvas.SetLeft(nameLabel, outputNode.Position.X - nameLabel.Width);
+            }
+            Canvas.SetTop(nameLabel, outputNode.Position.Y - nameLabel.Height / 2);
         }
     }
 }
