@@ -393,7 +393,7 @@ namespace CircuitSimulatorPlus
             }
 
             ContextGate = new ContextGate();
-            ClickableObjects.Clear();
+            UpdateClickableObjects();
         }
 
         public string SelectFile()
