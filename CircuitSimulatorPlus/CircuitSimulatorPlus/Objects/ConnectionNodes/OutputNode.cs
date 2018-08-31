@@ -80,7 +80,7 @@ namespace CircuitSimulatorPlus
 
         public override void Tick()
         {
-            Tick(!Owner.HasContext, false);
+            Tick(!Owner.HasContext, false, false);
         }
 
         public override void UpdatePosition(int index)

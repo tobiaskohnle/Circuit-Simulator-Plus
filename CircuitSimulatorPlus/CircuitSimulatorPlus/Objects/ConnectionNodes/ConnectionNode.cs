@@ -16,7 +16,7 @@ namespace CircuitSimulatorPlus
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
 
-        bool stateChanged;
+        protected bool stateChanged;
 
         public Gate Owner;
 
@@ -71,6 +71,14 @@ namespace CircuitSimulatorPlus
                     isRendered = value;
                     OnRenderedChanged?.Invoke();
                 }
+            }
+        }
+
+        public virtual bool LogicState
+        {
+            get
+            {
+                return State;
             }
         }
 
@@ -172,32 +180,26 @@ namespace CircuitSimulatorPlus
         {
             IsInverted = !IsInverted;
         }
-        protected void Tick(bool lastWasElementary, bool nextIsElementary)
+
+        protected void Tick(bool lastWasElementary, bool nextIsElementary, bool forceUpdate)
         {
             stateChanged = false;
 
             if (lastWasElementary)
             {
-                State = Owner.Eval();
+                State = Owner.Eval() != IsInverted;
             }
             else if (BackConnectedTo != null)
             {
-                State = BackConnectedTo.State;
+                State = BackConnectedTo.LogicState != IsInverted;
             }
             else
             {
-                State = false;
+                State = IsInverted;
             }
 
-            if (IsInverted)
+            if (stateChanged || forceUpdate)
             {
-                State = !State;
-            }
-
-            if (stateChanged)
-            {
-                stateChanged = false;
-
                 if (nextIsElementary)
                 {
                     foreach (OutputNode node in Owner.Output)
