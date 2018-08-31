@@ -1147,8 +1147,12 @@ namespace CircuitSimulatorPlus
         }
         void Open_Click(object sender, RoutedEventArgs e)
         {
-            New();
-            Open(SelectFile());
+            var filePath = SelectFile();
+            if (filePath != "")
+            {
+                New();
+                Open(filePath);
+            }
         }
         void RecentFiles_Click(object sender, RoutedEventArgs e)
         {
