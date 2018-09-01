@@ -305,46 +305,7 @@ namespace CircuitSimulatorPlus
             StorageObject storageObject = null;
             if (type == typeof(ContextGate))
                 storageObject = StorageUtil.Load(SelectFile());
-
-            foreach (IClickable obj in SelectedObjects.ToList())
-            {
-                if (obj is Gate)
-                {
-                    var gate = obj as Gate;
-                    Gate newGate = null;
-
-                    if (type == typeof(ContextGate))
-                        newGate = StorageConverter.ToGate(storageObject);
-                    else if (type == typeof(InputSwitch))
-                        newGate = new InputSwitch();
-                    else if (type == typeof(OutputLight))
-                        newGate = new OutputLight();
-                    else if (type == typeof(AndGate))
-                        newGate = new AndGate();
-                    else if (type == typeof(OrGate))
-                        newGate = new OrGate();
-                    else if (type == typeof(NopGate))
-                        newGate = new NopGate();
-                    else if (type == typeof(SegmentDisplay))
-                        newGate = new SegmentDisplay();
-
-                    newGate.CopyFrom(gate);
-
-                    ContextGate.Context.Remove(gate);
-                    ContextGate.Context.Add(newGate);
-
-                    foreach (OutputNode outputNode in newGate.Output)
-                        Tick(outputNode);
-
-                    Deselect(gate);
-                    Select(newGate);
-
-                    gate.IsRendered = false;
-                    newGate.IsRendered = true;
-
-                    UpdateClickableObjects();
-                }
-            }
+            PerformCommand(new ChangeTypeCommand(type,SelectedObjects));
         }
 
         public void ToggleRisingEdge()
