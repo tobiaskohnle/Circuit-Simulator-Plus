@@ -129,15 +129,10 @@ namespace CircuitSimulatorPlus
 
                     var vert = (i & 1) != 0;
 
-                    //var sx = vert ? point.x : lastpoint.x;
-                    //var sy = vert ? lastpoint.y : point.y;
-                    //var ex = vert ? point.x : nextpoint.x;
-                    //var ey = vert ? nextpoint.y : point.y;
-
-                    double sx = 0;
-                    double sy = 0;
-                    double ex = 0;
-                    double ey = 0;
+                    double sx = vert ? point : lastpoint;
+                    double sy = vert ? lastpoint : point;
+                    double ex = vert ? point : nextpoint;
+                    double ey = vert ? nextpoint : point;
 
                     double dist = vert ? Math.Abs(pos.X - sx) : Math.Abs(pos.Y - sy);
 
