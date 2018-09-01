@@ -123,25 +123,25 @@ namespace CircuitSimulatorPlus
 
                 for (int i = 0; i < Points.Count; i++)
                 {
-                    var point = Points[i];
-                    var lastpoint = Points[i - 1];
-                    var nextpoint = Points[i + 1];
+                    var point = Points[i + 2];
+                    var lastPoint = Points[i + 2 - 1];
+                    var nextPoint = Points[i + 2 + 1];
 
                     var vert = (i & 1) != 0;
 
-                    double sx = vert ? point : lastpoint;
-                    double sy = vert ? lastpoint : point;
-                    double ex = vert ? point : nextpoint;
-                    double ey = vert ? nextpoint : point;
+                    double startX = vert ? point : lastPoint;
+                    double startY = vert ? lastPoint : point;
+                    double endX = vert ? point : nextPoint;
+                    double endY = vert ? nextPoint : point;
 
-                    double dist = vert ? Math.Abs(pos.X - sx) : Math.Abs(pos.Y - sy);
+                    double dist = vert ? Math.Abs(pos.X - startX) : Math.Abs(pos.Y - startY);
 
-                    double lastdist = vert ? Math.Abs(pos.Y - sy) : Math.Abs(pos.X - sx);
-                    double nextdist = vert ? Math.Abs(pos.Y - ey) : Math.Abs(pos.X - ex);
+                    double lastDist = vert ? Math.Abs(pos.Y - startY) : Math.Abs(pos.X - startX);
+                    double nextDist = vert ? Math.Abs(pos.Y - endY) : Math.Abs(pos.X - endX);
 
-                    var len = vert ? Math.Abs(ey - sy) : Math.Abs(ex - sx);
+                    var len = vert ? Math.Abs(endY - startY) : Math.Abs(endX - startX);
 
-                    if (lastdist < len && nextdist < len)
+                    if (lastDist < len && nextDist < len)
                     {
                         if (dist < segmentDistance || dist == segmentDistance && !prioritizedFound)
                         {
@@ -152,7 +152,7 @@ namespace CircuitSimulatorPlus
                         continue;
                     }
 
-                    double mindist = Math.Min(lastdist, nextdist);
+                    double mindist = Math.Min(lastDist, nextDist);
                     double sidedist = Math.Max(dist, mindist);
 
                     bool prioritize = dist > mindist;
