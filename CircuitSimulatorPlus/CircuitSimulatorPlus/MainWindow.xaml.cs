@@ -393,7 +393,7 @@ namespace CircuitSimulatorPlus
             }
 
             ContextGate = new ContextGate();
-            ClickableObjects.Clear();
+            UpdateClickableObjects();
         }
 
         public string SelectFile()
@@ -786,7 +786,6 @@ namespace CircuitSimulatorPlus
                 return matrix.Transform(new Point(canvas.ActualWidth / 2, canvas.ActualHeight / 2));
             }
         }
-
         #endregion
 
         #region Window Event Handlers
