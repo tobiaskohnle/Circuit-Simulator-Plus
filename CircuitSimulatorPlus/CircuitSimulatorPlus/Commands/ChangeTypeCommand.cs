@@ -8,19 +8,22 @@ namespace CircuitSimulatorPlus
 {
     public class ChangeTypeCommand : Command
     {
-        public ChangeTypeCommand(Gate gate, Gate newGate) : base($"Changed Type to {newGate.GetType()}")
+        Type Oldtype;
+        Type Newtype;
+        public ChangeTypeCommand(Type oldtype, Type newtype) : base($"Changed Type to {newtype.Name}")
         {
-
+            this.Oldtype = oldtype;
+            this.Newtype = newtype;
         }
 
         public override void Redo()
         {
-
+            MainWindow.Self.ChangeType(Newtype);
         }
 
         public override void Undo()
         {
-
+            MainWindow.Self.ChangeType(Oldtype);
         }
     }
 }
