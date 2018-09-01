@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
     public class Cable
     {
-        public Cable(InputNode inputNode, OutputNode outputNode)
+        public Cable()
         {
-            InputNode = inputNode;
-            OutputNode = outputNode;
             new CableRenderer(this);
             IsRendered = true;
         }
@@ -39,7 +30,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        //public List<double> ;
+        public List<double> Points;
 
         public Point StartPos
         {
@@ -66,12 +57,9 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
-        public void CreateCable()
+        public void AutoComplete()
         {
-        }
 
-        public void DeleteCable()
-        {
         }
     }
 }
