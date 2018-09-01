@@ -689,12 +689,22 @@ namespace CircuitSimulatorPlus
         {
 
         }
-        public void AddInputTo(Gate gate)
+        public void AddInputToSelected()
         {
             foreach(IClickable obj in SelectedObjects) {
                 if (obj is Gate)
                 {
                     PerformCommand(new AddInputCommand(obj as Gate));
+                }
+            }
+        }
+        public void RemoveInputFromSelected()
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is Gate)
+                {
+                    PerformCommand(new DeleteInputCommand(obj as Gate));
                 }
             }
         }
@@ -1324,7 +1334,7 @@ namespace CircuitSimulatorPlus
         }
         void AddInput_Click(object sender, RoutedEventArgs e)
         {
-            AddInputTo(gate);
+            AddInputToSelected();
         }
         void TrimInput_Click(object sender, RoutedEventArgs e)
         {
