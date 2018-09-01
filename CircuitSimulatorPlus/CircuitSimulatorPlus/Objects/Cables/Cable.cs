@@ -184,5 +184,10 @@ namespace CircuitSimulatorPlus
             HitScan(point);
             return index == segmentDistance;
         }
+
+        public Rect LineBounds(int index)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
