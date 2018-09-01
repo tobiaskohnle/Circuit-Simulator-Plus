@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class LineHitbox
+    public class LineHitbox : Hitbox
     {
     }
 }

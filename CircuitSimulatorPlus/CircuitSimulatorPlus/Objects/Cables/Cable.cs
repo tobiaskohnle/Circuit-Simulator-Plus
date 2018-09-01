@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class Cable
+    public class Cable: IClickable, IMovable
     {
         public Cable()
         {
@@ -59,6 +59,32 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
+        public Hitbox Hitbox
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool IsSelected
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         /// <summary>
         /// Adds points to make a valid cable
         /// </summary>
@@ -74,6 +100,11 @@ namespace CircuitSimulatorPlus
             else
                 Points.Add(point.Y);
             vertical = !vertical;
+        }
+
+        public void Move(Vector vector)
+        {
+            throw new NotImplementedException();
         }
     }
 }
