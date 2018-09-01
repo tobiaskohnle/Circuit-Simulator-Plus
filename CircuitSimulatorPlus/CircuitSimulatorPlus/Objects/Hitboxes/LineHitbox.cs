@@ -9,8 +9,19 @@ namespace CircuitSimulatorPlus
 {
     public class LineHitbox : Hitbox
     {
-        public Point A, B;
-        double width;
+        Cable parent;
+        int index;
+
+        double distance;
+
+        public LineHitbox(Cable parent, int index) : base(DistanceFactor)
+        {
+            this.parent = parent;
+            this.index = index;
+        }
+
+        public const double DistanceFactor = 0.2;
+        public const double Width = 1.0;
 
         public override Rect RectBounds
         {
@@ -20,31 +31,19 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public LineHitbox(Point a, Point b, double width, double distanceFactor) : base(distanceFactor)
-        {
-            this.A = a;
-            this.B = b;
-            this.width = width;
-        }
-
-        private Point M(Point d)
-        {
-            return A + ((A - B).Length + (A - d).Length - (B - d).Length) / 2 * (B - A) / (A - B).Length;
-        }
-
         public override double DistanceTo(Point pos)
         {
-            return (M(pos) - pos).LengthSquared;
+            throw new NotImplementedException();
         }
 
         public override bool IncludesPos(Point pos)
         {
-            return (M(pos) - pos).LengthSquared < width * width;
+            throw new NotImplementedException();
         }
 
         public override bool IsIncludedIn(Rect rect)
         {
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

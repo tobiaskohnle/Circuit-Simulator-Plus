@@ -691,7 +691,8 @@ namespace CircuitSimulatorPlus
         }
         public void AddInputToSelected()
         {
-            foreach(IClickable obj in SelectedObjects) {
+            foreach (IClickable obj in SelectedObjects)
+            {
                 if (obj is Gate)
                 {
                     PerformCommand(new AddInputCommand(obj as Gate));
@@ -703,7 +704,7 @@ namespace CircuitSimulatorPlus
             foreach (IClickable obj in SelectedObjects)
             {
                 if (obj is InputNode)
-                {   
+                {
                     PerformCommand(new DeleteInputCommand(obj as InputNode));
                 }
             }

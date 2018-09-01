@@ -16,12 +16,10 @@ namespace CircuitSimulatorPlus
 
         public override void Redo()
         {
-            Cable.CreateCable();
         }
 
         public override void Undo()
         {
-            Cable.DeleteCable();
         }
     }
 }

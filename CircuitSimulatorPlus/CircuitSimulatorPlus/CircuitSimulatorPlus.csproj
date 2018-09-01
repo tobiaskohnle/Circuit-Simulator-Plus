@@ -87,6 +87,7 @@
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
     <Compile Include="Miscellaneous\GatePositionComparer.cs" />
+    <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
     <Compile Include="Rendering\ConnectionNodes\InputNodeRenderer.cs" />
     <Compile Include="Rendering\Gates\InputSwitchRenderer.cs" />
     <Compile Include="Miscellaneous\Constants.cs" />
@@ -116,7 +117,6 @@
     <Compile Include="Objects\Gates\OutputLight.cs" />
     <Compile Include="Objects\Gates\SegmentDisplay.cs" />
     <Compile Include="Objects\Hitboxes\IMovable.cs" />
-    <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
     <Compile Include="Commands\ChangeTypeCommand.cs" />
     <Compile Include="Commands\CreatGateCommand.cs" />
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
