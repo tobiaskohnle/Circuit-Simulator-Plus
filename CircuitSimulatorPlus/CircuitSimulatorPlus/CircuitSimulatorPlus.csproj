@@ -86,7 +86,6 @@
     <Compile Include="Commands\DeleteInputCommand.cs" />
     <Compile Include="Commands\InvertConnectionCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
-    <Compile Include="Miscellaneous\GatePositionComparer.cs" />
     <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
     <Compile Include="Rendering\ConnectionNodes\InputNodeRenderer.cs" />
     <Compile Include="Rendering\Gates\InputSwitchRenderer.cs" />

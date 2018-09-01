@@ -224,18 +224,6 @@ namespace CircuitSimulatorPlus
                 Remove(input);
             foreach (OutputNode output in gate.Output)
                 Remove(output);
-            if (gate is InputSwitch)
-            {
-                InputSwitch inputSwitch = ((InputSwitch)gate);
-                inputSwitch.Parent.Input.RemoveAt(inputSwitch.Index);
-                inputSwitch.Parent = null;
-            }
-            if (gate is OutputLight)
-            {
-                OutputLight outputLight = ((OutputLight)gate);
-                outputLight.Parent.Output.RemoveAt(outputLight.Index);
-                outputLight.Parent = null;
-            }
             gate.IsRendered = false;
             ClickableObjects.Remove(gate);
             ContextGate.Context.Remove(gate);
@@ -1043,13 +1031,13 @@ namespace CircuitSimulatorPlus
         #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            var inputSwitch = new InputSwitch(ContextGate);
+            var inputSwitch = new InputSwitch();
             ContextGate.Input.Add(new InputNode(inputSwitch));
             Add(inputSwitch);
         }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
-            var outputLight = new OutputLight(ContextGate);
+            var outputLight = new OutputLight();
             ContextGate.Output.Add(new OutputNode(outputLight));
             Add(outputLight);
         }

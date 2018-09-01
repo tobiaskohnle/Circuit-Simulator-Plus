@@ -47,23 +47,7 @@ namespace CircuitSimulatorPlus
                 int nextId = 1;
                 var nodeToId = new Dictionary<ConnectionNode, int>();
                 store.Context = new List<StorageObject>();
-                store.InnerInputConnections = new int[gate.Input.Count];
-                for (int i = 0; i < gate.Input.Count; i++)
-                {
-                    InputNode contextInput = gate.Input[i];
-                    if (contextInput.NextConnectedTo.Count > 0)
-                    {
-                        nodeToId[contextInput] = nextId;
-                        foreach (ConnectionNode next in contextInput.NextConnectedTo)
-                            nodeToId[next] = nextId;
-                        store.InnerInputConnections[i] = nextId;
-                        nextId++;
-                    }
-                    else
-                    {
-                        store.InnerInputConnections[i] = 0;
-                    }
-                }
+                
                 foreach (Gate innerGate in contextGate.Context)
                 {
                     foreach (OutputNode output in innerGate.Output)
@@ -81,14 +65,7 @@ namespace CircuitSimulatorPlus
                         }
                     }
                 }
-                store.InnerOutputConnections = new int[gate.Output.Count];
-                for (int i = 0; i < gate.Output.Count; i++)
-                {
-                    if (nodeToId.ContainsKey(gate.Output[i]))
-                        store.InnerOutputConnections[i] = nodeToId[gate.Output[i]];
-                    else
-                        store.InnerOutputConnections[i] = 0;
-                }
+                
                 foreach (Gate innerGate in contextGate.Context)
                 {
                     StorageObject innerStore = ToStorageObject(innerGate);
@@ -113,6 +90,47 @@ namespace CircuitSimulatorPlus
             }
 
             return store;
+        }
+
+        public static ContextGate ToGateTopLayer(StorageObject storageObject)
+        {
+            if (storageObject.Type != "ContextGate")
+                throw new Exception("Object does not store an ContextGate");
+            ContextGate contextGate = new ContextGate();
+            contextGate.Name = storageObject.Name;
+
+            var idToNode = new Dictionary<int, ConnectionNode>();
+            foreach (StorageObject innerStore in storageObject.Context)
+            {
+                Gate innerGate = ToGate(innerStore);
+                contextGate.Context.Add(innerGate);
+                for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
+                {
+                    int id = innerStore.OutputConnections[i];
+                    if (id != 0)
+                        idToNode[id] = innerGate.Output[i];
+                }
+            }
+
+            for (int i = 0; i < storageObject.Context.Count; i++)
+            {
+                StorageObject innerStore = storageObject.Context[i];
+                Gate innerGate = contextGate.Context[i];
+                for (int j = 0; j < innerStore.InputConnections.Count(); j++)
+                {
+                    int id = innerStore.InputConnections[j];
+                    if (id != 0)
+                    {
+                        if (!idToNode.ContainsKey(id))
+                            throw new InvalidOperationException("Invalid connection");
+                        ConnectionNode outputNode = idToNode[id];
+                        outputNode.ConnectTo(innerGate.Input[j]);
+                        innerGate.Input[j].State = outputNode.State;
+                    }
+                }
+            }
+
+            return contextGate;
         }
 
         public static Gate ToGate(StorageObject storageObject)
@@ -148,14 +166,6 @@ namespace CircuitSimulatorPlus
             gate.Name = storageObject.Name;
             gate.Position = storageObject.Position;
 
-            if (storageObject.InputConnections == null)
-            {
-                if (storageObject.Type == "ContextGate")
-                    storageObject.InputConnections = new int[storageObject.InnerInputConnections.Count()];
-                else
-                    storageObject.InputConnections = new int[0];
-            }
-
             // AAAAAAAAAAAHHHHHH
             foreach (InputNode node in new List<InputNode>(gate.Input))
                 gate.RemoveInputNode(node);
@@ -165,14 +175,6 @@ namespace CircuitSimulatorPlus
             if (storageObject.InvertedInputs != null)
                 foreach (int index in storageObject.InvertedInputs)
                     gate.Input[index].Invert();
-
-            if (storageObject.OutputConnections == null)
-            {
-                if (storageObject.Type == "ContextGate")
-                    storageObject.OutputConnections = new int[storageObject.InnerOutputConnections.Count()];
-                else
-                    storageObject.OutputConnections = new int[0];
-            }
 
             // AAAAAAAAAAAHHHHHH
             foreach (OutputNode node in new List<OutputNode>(gate.Output))
@@ -191,13 +193,17 @@ namespace CircuitSimulatorPlus
             {
                 ContextGate contextGate = gate as ContextGate;
                 var idToNode = new Dictionary<int, ConnectionNode>();
+                List<StorageObject> inputStores = new List<StorageObject>();
                 foreach (StorageObject innerStore in storageObject.Context)
                 {
+                    if (innerStore.Type == "InputSwitch")
+                    {
+                        inputStores.Add(innerStore);
+                        continue;
+                    }
+                    else if (innerStore.Type == "OutputLight")
+                        continue;
                     Gate innerGate = ToGate(innerStore);
-                    if (innerGate is InputSwitch)
-                        ((InputSwitch)innerGate).Parent = contextGate;
-                    else if (innerGate is OutputLight)
-                        ((OutputLight)innerGate).Parent = contextGate;
                     contextGate.Context.Add(innerGate);
                     for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
                     {
@@ -206,46 +212,67 @@ namespace CircuitSimulatorPlus
                             idToNode[id] = innerGate.Output[i];
                     }
                 }
-                for (int i = 0; i < storageObject.InnerInputConnections.Count(); i++)
+                inputStores.Sort(ComparePosition);
+                foreach (StorageObject inputStore in inputStores)
                 {
-                    int id = storageObject.InnerInputConnections[i];
+                    int id = inputStore.OutputConnections.First();
+                    var inputNode = new InputNode(contextGate);
+                    contextGate.Input.Add(inputNode);
                     if (id != 0)
-                        idToNode[id] = gate.Input[i];
+                        idToNode[id] = inputNode;
                 }
+
+                List<StorageObject> outputStores = new List<StorageObject>();
                 for (int i = 0; i < storageObject.Context.Count; i++)
                 {
                     StorageObject innerStore = storageObject.Context[i];
+                    if (innerStore.Type == "OutputLight")
+                    {
+                        outputStores.Add(innerStore);
+                        continue;
+                    }
+                    else if (innerStore.Type == "InputSwitch")
+                        continue;
                     Gate innerGate = contextGate.Context[i];
                     for (int j = 0; j < innerStore.InputConnections.Count(); j++)
                     {
                         int id = innerStore.InputConnections[j];
                         if (id != 0)
                         {
-                            if (idToNode.ContainsKey(id))
-                            {
-                                ConnectionNode outputNode = idToNode[id];
-                                outputNode.ConnectTo(innerGate.Input[j]);
-                                innerGate.Input[j].State = outputNode.State;
-                            }
-                            else
+                            if (!idToNode.ContainsKey(id))
                                 throw new InvalidOperationException("Invalid connection");
+                            ConnectionNode outputNode = idToNode[id];
+                            outputNode.ConnectTo(innerGate.Input[j]);
+                            innerGate.Input[j].State = outputNode.State;
                         }
                     }
                 }
-                for (int i = 0; i < storageObject.InnerOutputConnections.Count(); i++)
+                outputStores.Sort(ComparePosition);
+                foreach (StorageObject outputStore in outputStores)
                 {
-                    int id = storageObject.InnerOutputConnections[i];
+                    int id = outputStore.InputConnections.First();
                     if (id != 0)
                     {
-                        if (idToNode.ContainsKey(id))
-                            idToNode[id].ConnectTo(gate.Output[i]);
-                        else
+                        if (!idToNode.ContainsKey(id))
                             throw new InvalidOperationException("Invalid connection");
+                        ConnectionNode outputNode = idToNode[id];
+                        OutputNode contextNode = new OutputNode(contextGate);
+                        contextGate.Output.Add(contextNode);
+                        outputNode.ConnectTo(contextNode);
+                        contextNode.State = outputNode.State;
                     }
                 }
             }
 
             return gate;
+        }
+
+        private static int ComparePosition(StorageObject a, StorageObject b)
+        {
+            int res = (int)a.Position.Y - (int)b.Position.Y;
+            if (res == 0)
+                res = (int)a.Position.X - (int)b.Position.X;
+            return res;
         }
     }
 }
