@@ -689,6 +689,15 @@ namespace CircuitSimulatorPlus
         {
 
         }
+        public void AddInputTo(Gate gate)
+        {
+            foreach(IClickable obj in SelectedObjects) {
+                if (obj is Gate)
+                {
+                    PerformCommand(new AddInputCommand(obj as Gate));
+                }
+            }
+        }
         public void InvertConnection()
         {
             foreach (IClickable obj in SelectedObjects)
@@ -1315,7 +1324,7 @@ namespace CircuitSimulatorPlus
         }
         void AddInput_Click(object sender, RoutedEventArgs e)
         {
-
+            AddInputTo(gate);
         }
         void TrimInput_Click(object sender, RoutedEventArgs e)
         {
