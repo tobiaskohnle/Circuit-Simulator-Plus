@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
     public class InvertConnectionCommand : Command
     {
         List<IClickable> Selected;
-        
+
         public InvertConnectionCommand(List<IClickable> List) : base("Invert Connection")
         {
             this.Selected = List;
@@ -19,7 +19,7 @@ namespace CircuitSimulatorPlus
         {
             foreach (ConnectionNode item in Selected)
             {
-               item.Invert();
+                item.Invert();
             }
         }
 

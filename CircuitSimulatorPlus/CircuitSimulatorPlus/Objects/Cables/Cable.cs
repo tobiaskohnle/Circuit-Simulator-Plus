@@ -65,7 +65,6 @@ namespace CircuitSimulatorPlus
             {
                 throw new NotImplementedException();
             }
-
             set
             {
                 throw new NotImplementedException();
@@ -78,7 +77,6 @@ namespace CircuitSimulatorPlus
             {
                 throw new NotImplementedException();
             }
-
             set
             {
                 throw new NotImplementedException();

@@ -54,7 +54,7 @@ namespace CircuitSimulatorPlus
             {
                 MainWindow.Self.canvas.Children.Add(invertionDot);
                 MainWindow.Self.canvas.Children.Add(connectionNodeLine);
-                
+
                 connectionNode.OnTickedChanged += UpdateLineStroke;
                 connectionNode.OnSelectionChanged += UpdateLineStroke;
                 connectionNode.OnStateChanged += UpdateLineStroke;
