@@ -39,7 +39,22 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public List<Point> Points;
+        //public List<double> ;
+
+        public Point StartPos
+        {
+            get
+            {
+                return OutputNode.Position;
+            }
+        }
+        public Point EndPos
+        {
+            get
+            {
+                return InputNode.Position;
+            }
+        }
 
         public OutputNode OutputNode
         {
