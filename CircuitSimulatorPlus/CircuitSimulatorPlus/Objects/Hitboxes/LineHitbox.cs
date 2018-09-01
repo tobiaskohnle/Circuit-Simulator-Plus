@@ -12,6 +12,8 @@ namespace CircuitSimulatorPlus
         Cable parent;
         int index;
 
+        double distance;
+
         public LineHitbox(Cable parent, int index) : base(DistanceFactor)
         {
             this.parent = parent;
