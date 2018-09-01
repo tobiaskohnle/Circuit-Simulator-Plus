@@ -9,6 +9,7 @@ namespace CircuitSimulatorPlus.Actions
     class DeleteInputCommand : Command
     {
         Gate Gate;
+        InputNode InputNode;
         public DeleteInputCommand(Gate gate) : base("Delete Input")
         {
             this.Gate = gate;
@@ -16,16 +17,15 @@ namespace CircuitSimulatorPlus.Actions
 
         public override void Redo()
         {
-            var inputNode = new InputNode(Gate);
-            Gate.Input.Remove(inputNode);
-            MainWindow.Self.ClickableObjects.Remove(inputNode);
+            Gate.Input.Remove(InputNode);
+            MainWindow.Self.ClickableObjects.Remove(InputNode);
         }
 
         public override void Undo()
         {
-            var inputNode = new InputNode(Gate);
-            Gate.Input.Add(inputNode);
-            MainWindow.Self.ClickableObjects.Add(inputNode);
+            InputNode = new InputNode(Gate);
+            Gate.Input.Add(InputNode);
+            MainWindow.Self.ClickableObjects.Add(InputNode);
         }
     }
 }
