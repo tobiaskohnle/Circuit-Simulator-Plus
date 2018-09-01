@@ -714,7 +714,7 @@ namespace CircuitSimulatorPlus
                 if (obj is ConnectionNode)
                 {
                     ConnectionNode connectionNode = obj as ConnectionNode;
-                    connectionNode.Invert();
+                    PerformCommand(new InvertConnectionCommand(SelectedObjects));
                     Tick(connectionNode);
                 }
         }
