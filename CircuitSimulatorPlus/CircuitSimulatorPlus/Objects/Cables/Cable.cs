@@ -30,6 +30,8 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        bool vertical;
+
         public List<double> Points;
 
         public Point StartPos
@@ -57,9 +59,21 @@ namespace CircuitSimulatorPlus
             get; set;
         }
 
+        /// <summary>
+        /// Adds points to make a valid cable
+        /// </summary>
         public void AutoComplete()
         {
 
+        }
+
+        public void AddPoint(Point point)
+        {
+            if (vertical)
+                Points.Add(point.X);
+            else
+                Points.Add(point.Y);
+            vertical = !vertical;
         }
     }
 }
