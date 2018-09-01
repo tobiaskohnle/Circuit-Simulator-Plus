@@ -10,9 +10,10 @@ namespace CircuitSimulatorPlus.Actions
     {
         Gate Gate;
         InputNode InputNode;
-        public DeleteInputCommand(Gate gate) : base("Delete Input")
+        public DeleteInputCommand(Gate gate,InputNode inputNode) : base("Delete Input")
         {
             this.Gate = gate;
+            this.InputNode = inputNode;
         }
 
         public override void Redo()
@@ -23,7 +24,6 @@ namespace CircuitSimulatorPlus.Actions
 
         public override void Undo()
         {
-            InputNode = new InputNode(Gate);
             Gate.Input.Add(InputNode);
             MainWindow.Self.ClickableObjects.Add(InputNode);
         }
