@@ -27,23 +27,23 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                throw new NotImplementedException();
+                return parent.LineBounds(index);
             }
         }
 
         public override double DistanceTo(Point pos)
         {
-            throw new NotImplementedException();
+            return parent.SegmentDistance(pos, index) * DistanceFactor;
         }
 
         public override bool IncludesPos(Point pos)
         {
-            throw new NotImplementedException();
+            return parent.SegmentSelected(pos, index) && parent.SegmentDistance(pos, index) < Width;
         }
 
         public override bool IsIncludedIn(Rect rect)
         {
-            throw new NotImplementedException();
+            return parent.LineBounds(index).IntersectsWith(rect);
         }
     }
 }
