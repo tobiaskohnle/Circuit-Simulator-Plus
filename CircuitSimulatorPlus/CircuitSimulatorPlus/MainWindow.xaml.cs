@@ -702,9 +702,9 @@ namespace CircuitSimulatorPlus
         {
             foreach (IClickable obj in SelectedObjects)
             {
-                if (obj is Gate)
-                {
-                    PerformCommand(new DeleteInputCommand(obj as Gate));
+                if (obj is InputNode.Owner)
+                {   
+                    PerformCommand(new DeleteInputCommand(obj as InputNode.Owner));
                 }
             }
         }
