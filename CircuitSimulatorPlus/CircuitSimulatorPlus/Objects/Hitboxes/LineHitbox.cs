@@ -9,9 +9,17 @@ namespace CircuitSimulatorPlus
 {
     public class LineHitbox : Hitbox
     {
-        public LineHitbox(double distanceFactor) : base(distanceFactor)
+        Cable parent;
+        int index;
+
+        public LineHitbox(Cable parent, int index) : base(DistanceFactor)
         {
+            this.parent = parent;
+            this.index = index;
         }
+
+        public const double DistanceFactor = 0.2;
+        public const double Width = 1.0;
 
         public override Rect RectBounds
         {
