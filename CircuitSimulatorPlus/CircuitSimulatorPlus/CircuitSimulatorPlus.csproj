@@ -117,7 +117,7 @@
     <Compile Include="Objects\Gates\SegmentDisplay.cs" />
     <Compile Include="Objects\Hitboxes\IMovable.cs" />
     <Compile Include="Commands\ChangeTypeCommand.cs" />
-    <Compile Include="Commands\CreatGateCommand.cs" />
+    <Compile Include="Commands\CreateGateCommand.cs" />
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
     <Compile Include="Objects\Hitboxes\Hitbox.cs" />
     <Compile Include="Objects\Hitboxes\IClickable.cs" />
