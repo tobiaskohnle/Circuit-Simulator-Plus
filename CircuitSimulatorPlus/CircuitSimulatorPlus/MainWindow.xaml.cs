@@ -798,53 +798,52 @@ namespace CircuitSimulatorPlus
 
             MouseMoved = false;
 
+            IClickable nearestObject = FindNearestObjectAt(LastCanvasClick);
+
             if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
                 MovingScreen = true;
+
+                LastClickedObject = nearestObject;
             }
-            else
+            else if (CreatingCable)
             {
-                IClickable nearestObject = FindNearestObjectAt(LastCanvasClick);
-
-                if (CreatingCable)
+                if (nearestObject is ConnectionNode)
                 {
-                    if (nearestObject is ConnectionNode)
-                    {
-                        var connectionNode = nearestObject as ConnectionNode;
-                        CreatedCable.ConnectTo(connectionNode);
+                    var connectionNode = nearestObject as ConnectionNode;
+                    CreatedCable.ConnectTo(connectionNode);
 
-                        connectionNode.ConnectTo(CableOrigin);
-                        Tick(connectionNode);
-                        Tick(CableOrigin);
+                    connectionNode.ConnectTo(CableOrigin);
+                    Tick(connectionNode);
+                    Tick(CableOrigin);
 
-                        CreatingCable = false;
-                    }
-                    else
-                    {
-                        CreatedCable.AddPoint(LastCanvasClick);
-                    }
+                    CreatingCable = false;
                 }
                 else
                 {
-                    LastClickedObject = nearestObject;
+                    CreatedCable.AddPoint(LastCanvasClick);
+                }
+            }
+            else
+            {
+                LastClickedObject = nearestObject;
 
-                    if (LastClickedObject == null)
-                    {
-                        MakingSelection = true;
-                    }
-                    else if (LastClickedObject is IMovable)
-                    {
-                        MovingObjects = true;
-                    }
-                    else if (LastClickedObject is ConnectionNode)
-                    {
-                        //CreatingCable = true;
-                        //CreateCable();
-                    }
-                    else
-                    {
-                        MakingSelection = true;
-                    }
+                if (LastClickedObject == null)
+                {
+                    MakingSelection = true;
+                }
+                else if (LastClickedObject is IMovable)
+                {
+                    MovingObjects = true;
+                }
+                else if (LastClickedObject is ConnectionNode)
+                {
+                    //CreatingCable = true;
+                    //CreateCable();
+                }
+                else
+                {
+                    MakingSelection = true;
                 }
             }
 
@@ -1004,10 +1003,6 @@ namespace CircuitSimulatorPlus
                 {
                     MoveObjects();
                 }
-
-                //if (CreatingCable)
-                //{
-                //}
             }
             else
             {
