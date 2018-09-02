@@ -368,6 +368,7 @@ namespace CircuitSimulatorPlus
             CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
             ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
+            RecursiveTickAll(ContextGate);
             RenderContext();
             UpdateClickableObjects();
         }
@@ -1067,6 +1068,8 @@ namespace CircuitSimulatorPlus
             if (store == null)
                 return;
             Gate gate = StorageConverter.ToGate(store);
+            if (gate.HasContext)
+                RecursiveTickAll((ContextGate)gate);
             Add(gate);
             UpdateClickableObjects();
         }
@@ -1340,12 +1343,18 @@ namespace CircuitSimulatorPlus
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Gate gate in ContextGate.Context)
+            RecursiveTickAll(ContextGate);
+        }
+        void RecursiveTickAll(ContextGate contextGate)
+        {
+            foreach (Gate gate in contextGate.Context)
             {
                 foreach (InputNode inputNode in gate.Input)
                     Tick(inputNode);
                 foreach (OutputNode outputNode in gate.Output)
                     Tick(outputNode);
+                if (gate.HasContext)
+                    RecursiveTickAll((ContextGate)gate);
             }
         }
         #endregion
