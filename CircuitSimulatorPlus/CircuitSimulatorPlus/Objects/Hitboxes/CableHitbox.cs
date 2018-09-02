@@ -95,11 +95,11 @@ namespace CircuitSimulatorPlus
 
                 bool prioritizedFound = false;
 
-                for (int i = 2; i < Points.Count - 4; i++)
+                for (int i = 2; i < Points.Count - 2; i++)
                 {
-                    double point = Points[i];
-                    double lastPoint = Points[i - 1];
-                    double nextPoint = Points[i + 1];
+                    double point = Points[i - 1];
+                    double lastPoint = Points[i - 1 - 1];
+                    double nextPoint = Points[i - 1 + 1];
 
                     bool vert = (i & 1) != 0;
 
@@ -121,7 +121,7 @@ namespace CircuitSimulatorPlus
                         {
                             SegmentDistance = dist;
                             prioritizedFound = true;
-                            SegmentIndex = i;
+                            SegmentIndex = i - 2;
                         }
                         continue;
                     }
@@ -135,7 +135,7 @@ namespace CircuitSimulatorPlus
                     {
                         SegmentDistance = sidedist;
                         prioritizedFound = prioritize;
-                        SegmentIndex = i;
+                        SegmentIndex = i - 2;
                     }
                 }
             }

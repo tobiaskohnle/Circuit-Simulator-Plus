@@ -150,8 +150,8 @@ namespace CircuitSimulatorPlus
             if (!obj.IsSelected)
             {
                 SelectedObjects.Add(obj);
-                obj.IsSelected = true;
             }
+            obj.IsSelected = true;
         }
         public void Deselect(IClickable obj)
         {
@@ -288,7 +288,7 @@ namespace CircuitSimulatorPlus
             //StorageObject storageObject = null;
             //if (type == typeof(ContextGate))
             //    storageObject = StorageUtil.Load(SelectFile());
-            PerformCommand(new ChangeTypeCommand(type,SelectedObjects));
+            PerformCommand(new ChangeTypeCommand(type, SelectedObjects));
         }
 
         public void ToggleRisingEdge()
@@ -609,6 +609,8 @@ namespace CircuitSimulatorPlus
 
             CableOrigin = startNode;
             CreatedCable = new Cable(startNode);
+
+            ClickableObjects.Add(CreatedCable);
         }
 
         public void EmptyInput()
