@@ -123,7 +123,6 @@
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
     <Compile Include="Objects\Hitboxes\Hitbox.cs" />
     <Compile Include="Objects\Hitboxes\IClickable.cs" />
-    <Compile Include="Rendering\Cables\CableRenderer.cs" />
     <Compile Include="Rendering\ConnectionNodes\ConnectionNodeRenderer.cs" />
     <Compile Include="Commands\MoveCommand.cs" />
     <Compile Include="Commands\PasteCommand.cs" />
