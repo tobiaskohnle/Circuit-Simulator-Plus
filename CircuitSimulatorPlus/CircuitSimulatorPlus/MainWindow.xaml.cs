@@ -44,6 +44,9 @@ namespace CircuitSimulatorPlus
             UpdateClickableObjects();
 
             Timer.Tick += Timer_Tick;
+
+            canvas.Children.Add(NewCable);
+            Panel.SetZIndex(NewCable, 1);
         }
 
         #region Properties
@@ -70,6 +73,13 @@ namespace CircuitSimulatorPlus
         public string CurrentFilePath;
 
         public double CurrentScale;
+
+        public Line NewCable = new Line
+        {
+            Stroke = Brushes.DarkTurquoise,
+            StrokeThickness = Constants.LineWidth,
+            StrokeDashArray = new DoubleCollection { Constants.DefaultGridSize / 2, Constants.DefaultGridSize / 2 }
+        };
 
         public Queue<ConnectionNode> TickedNodes = new Queue<ConnectionNode>();
         public DispatcherTimer Timer = new DispatcherTimer();
@@ -600,6 +610,7 @@ namespace CircuitSimulatorPlus
         }
         public void CreateCable()
         {
+            NewCable.Visibility = Visibility.Collapsed;
             var startNode = LastClickedObject as ConnectionNode;
 
             IClickable clickedObject = FindNearestObjectAt(LastCanvasPos);
@@ -790,6 +801,9 @@ namespace CircuitSimulatorPlus
                 }
                 else if (LastClickedObject is ConnectionNode)
                 {
+                    NewCable.Visibility = Visibility.Visible;
+                    NewCable.X1 = NewCable.X2 = (LastClickedObject as ConnectionNode).Position.X;
+                    NewCable.Y1 = NewCable.Y2 = (LastClickedObject as ConnectionNode).Position.Y;
                     CreatingCable = true;
                 }
                 else
@@ -889,7 +903,12 @@ namespace CircuitSimulatorPlus
 
                 if (CreatingCable)
                 {
-                    // TODO
+                    NewCable.X2 = LastCanvasPos.X;
+                    NewCable.Y2 = LastCanvasPos.Y;
+
+                    NewCable.StrokeDashOffset = Constants.DefaultGridSize * -0.25 * Math.Sqrt(
+                        Math.Pow(NewCable.X1 - NewCable.X2, 2) + Math.Pow(NewCable.Y1 - NewCable.Y2, 2)
+                    );
                 }
 
                 LastWindowPos = currentWindowPos;
