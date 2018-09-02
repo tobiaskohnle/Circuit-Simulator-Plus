@@ -156,7 +156,7 @@ namespace CircuitSimulatorPlus
                         ConnectionNode otherNode = idToNode[id];
                         otherNode.NextConnectedTo.Add(thisNode);
                         thisNode.BackConnectedTo = otherNode;
-                        thisNode.State = otherNode.State;
+                        thisNode.State = thisNode.IsInverted ? !otherNode.State : otherNode.State;
                     }
                 }
             }
@@ -270,7 +270,7 @@ namespace CircuitSimulatorPlus
                             ConnectionNode otherNode = idToNode[id];
                             otherNode.NextConnectedTo.Add(thisNode);
                             thisNode.BackConnectedTo = otherNode;
-                            thisNode.State = otherNode.State;
+                            thisNode.State = thisNode.IsInverted ? !otherNode.State : otherNode.State;
                         }
                     }
                 }
@@ -300,7 +300,10 @@ namespace CircuitSimulatorPlus
 
             if (storageObject.InvertedInputs != null)
                 foreach (int index in storageObject.InvertedInputs)
+                {
                     gate.Input[index].Invert();
+                    gate.Input[index].State = !gate.Input[index].State;
+                }
             if (storageObject.InvertedOutputs != null)
                 foreach (int index in storageObject.InvertedOutputs)
                     gate.Output[index].Invert();
