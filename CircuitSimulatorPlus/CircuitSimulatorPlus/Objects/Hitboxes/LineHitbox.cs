@@ -9,13 +9,15 @@ namespace CircuitSimulatorPlus
 {
     public class LineHitbox : Hitbox
     {
-        List<Point> points;
+        Cable cable;
         int index;
+        bool vert;
 
-        public LineHitbox(List<Point> points, int index) : base(Cable.DistanceFactor)
+        public LineHitbox(Cable cable, int index) : base(Cable.DistanceFactor)
         {
-            this.points = points;
+            this.cable = cable;
             this.index = index;
+            vert = (index & 1) != 0;
         }
 
         public override Rect RectBounds
@@ -28,11 +30,9 @@ namespace CircuitSimulatorPlus
 
         double Dist(Point pos)
         {
-            Point point = points[index];
-            Point lastPoint = points[Math.Max(0, index - 1)];
-            Point nextPoint = points[Math.Min(points.Count - 1, index + 1)];
-
-            bool vert = (index & 1) != 0;
+            Point point = cable.GetPoint(index);
+            Point lastPoint = cable.GetPoint(index - 1);
+            Point nextPoint = cable.GetPoint(index + 1);
 
             double startX = vert ? point.X : lastPoint.X;
             double startY = vert ? lastPoint.Y : point.Y;

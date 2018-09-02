@@ -13,14 +13,12 @@ namespace CircuitSimulatorPlus
             points.Add(StartPos);
             points.Add(EndPos);
             
-            Segments.Add(new CableSegment(this, Segments.Count));
-            Segments.Add(new CableSegment(this, Segments.Count));
+            new CableSegment(this, 0);
+            new CableSegment(this, 1);
         }
 
         public const double DistanceFactor = 0.2;
         public const double SegmentWidth = 1.0;
-
-        public List<CableSegment> Segments = new List<CableSegment>();
 
         public bool IsCompleted;
 
@@ -30,6 +28,12 @@ namespace CircuitSimulatorPlus
         public event Action OnPointsChanged;
 
         List<Point> points = new List<Point>();
+
+        public void MovePoint(int index, Vector vector)
+        {
+            if (index > 0 && index < points.Count - 1)
+                points[index] += vector;
+        }
 
         public Point GetPoint(int index)
         {
@@ -110,10 +114,8 @@ namespace CircuitSimulatorPlus
 
         public void AddPoint(Point point)
         {
-            Points.Insert(Points.Count - 1, point);
+            points.Insert(points.Count - 1, point);
             vertical = !vertical;
-
-            Segments.Add(new CableSegment(this, Segments.Count));
 
             OnPointsChanged?.Invoke();
         }

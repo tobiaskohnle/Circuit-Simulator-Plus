@@ -11,9 +11,12 @@ namespace CircuitSimulatorPlus
 
         Line line;
 
+        bool vert;
+
         public CableSegmentRenderer(CableSegment cableSegment)
         {
             this.cableSegment = cableSegment;
+            vert = (cableSegment.Index & 1) != 0;
 
             line = new Line
             {
@@ -63,11 +66,10 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            Point point = cableSegment.Parent.Points[cableSegment.Index];
-            Point lastPoint = cableSegment.Parent.Points[Math.Max(0, cableSegment.Index - 1)];
-            Point nextPoint = cableSegment.Parent.Points[Math.Min(cableSegment.Parent.Points.Count - 1, cableSegment.Index + 1)];
+            Point point = cableSegment.Parent.GetPoint(cableSegment.Index);
+            Point lastPoint = cableSegment.Parent.GetPoint(cableSegment.Index - 1);
+            Point nextPoint = cableSegment.Parent.GetPoint(cableSegment.Index + 1);
 
-            bool vert = (cableSegment.Index & 1) != 0;
             line.X1 = vert ? point.X : lastPoint.X;
             line.Y1 = vert ? lastPoint.Y : point.Y;
             line.X2 = vert ? point.X : nextPoint.X;

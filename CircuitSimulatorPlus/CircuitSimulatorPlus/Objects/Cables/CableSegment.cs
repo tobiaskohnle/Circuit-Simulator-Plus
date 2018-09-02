@@ -18,7 +18,7 @@ namespace CircuitSimulatorPlus
             new CableSegmentRenderer(this);
             IsRendered = true;
 
-            hitbox = new LineHitbox(parent.Points, index);
+            hitbox = new LineHitbox(Parent, index);
 
             MainWindow.Self.ClickableObjects.Add(this);
         }
@@ -70,8 +70,7 @@ namespace CircuitSimulatorPlus
 
         public void Move(Vector vector)
         {
-            if (Index > 0 && Index < Parent.Points.Count - 1)
-                Parent.Points[Index] += vector;
+            Parent.MovePoint(Index, vector);
             OnPointsChanged?.Invoke();
         }
     }
