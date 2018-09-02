@@ -609,8 +609,6 @@ namespace CircuitSimulatorPlus
 
             CableOrigin = startNode;
             CreatedCable = new Cable(startNode);
-
-            ClickableObjects.Add(CreatedCable);
         }
 
         public void EmptyInput()

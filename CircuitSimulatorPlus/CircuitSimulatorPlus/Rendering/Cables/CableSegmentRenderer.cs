@@ -36,8 +36,10 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Add(line);
 
                 cableSegment.OnSelectedChanged += OnSelectedChanged;
+                MainWindow.Self.OnLastCanvasPosChanged += OnPositionChanged;
 
                 OnSelectedChanged();
+                OnPositionChanged();
             }
             else
             {
@@ -61,20 +63,15 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
-            if ((cableSegment.Index & 1) != 0)
-            {
-                line.X1 = cableSegment.Points[cableSegment.Index].X;
-                line.Y1 = cableSegment.Points[cableSegment.Index - 1].Y;
-                line.X2 = cableSegment.Points[cableSegment.Index].X;
-                line.Y2 = cableSegment.Points[cableSegment.Index + 1].Y;
-            }
-            else
-            {
-                line.X1 = cableSegment.Points[cableSegment.Index - 1].X;
-                line.Y1 = cableSegment.Points[cableSegment.Index].Y;
-                line.X2 = cableSegment.Points[cableSegment.Index + 1].X;
-                line.Y2 = cableSegment.Points[cableSegment.Index].Y;
-            }
+            Point point = cableSegment.Parent.Points[cableSegment.Index];
+            Point lastPoint = cableSegment.Parent.Points[Math.Max(0, cableSegment.Index - 1)];
+            Point nextPoint = cableSegment.Parent.Points[Math.Min(cableSegment.Parent.Points.Count - 1, cableSegment.Index + 1)];
+
+            bool vert = (cableSegment.Index & 1) != 0;
+            line.X1 = vert ? point.X : lastPoint.X;
+            line.Y1 = vert ? lastPoint.Y : point.Y;
+            line.X2 = vert ? point.X : nextPoint.X;
+            line.Y2 = vert ? nextPoint.Y : point.Y;
         }
     }
 }

@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
     public class CableSegment : IClickable, IMovable
     {
-        public List<Point> Points;
+        public Cable Parent;
+
         public int Index;
 
-        public CableSegment(List<Point> points, int index)
+        public CableSegment(Cable parent, int index)
         {
-            Points = points;
+            Parent = parent;
             Index = index;
+
+            new CableSegmentRenderer(this);
+            IsRendered = true;
+
+            hitbox = new LineHitbox(parent.Points, index);
+
+            MainWindow.Self.ClickableObjects.Add(this);
         }
+
+        public event Action OnPointsChanged;
 
         public event Action OnRenderedChanged;
         bool isRendered;
@@ -63,8 +70,9 @@ namespace CircuitSimulatorPlus
 
         public void Move(Vector vector)
         {
-            if (Index > 0 && Index < Points.Count - 1)
-                Points[Index] += vector;
+            if (Index > 0 && Index < Parent.Points.Count - 1)
+                Parent.Points[Index] += vector;
+            OnPointsChanged?.Invoke();
         }
     }
 }

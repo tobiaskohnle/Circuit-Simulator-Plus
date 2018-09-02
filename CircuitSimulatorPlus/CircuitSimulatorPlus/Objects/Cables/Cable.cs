@@ -10,30 +10,17 @@ namespace CircuitSimulatorPlus
         {
             StartNode = startNode;
 
-            new CableRenderer(this);
-            IsRendered = true;
+            points.Add(StartPos);
+            points.Add(EndPos);
+            
+            Segments.Add(new CableSegment(this, Segments.Count));
+            Segments.Add(new CableSegment(this, Segments.Count));
         }
 
         public const double DistanceFactor = 0.2;
         public const double SegmentWidth = 1.0;
 
-        public event Action OnRenderedChanged;
-        protected bool isRendered;
-        public bool IsRendered
-        {
-            get
-            {
-                return isRendered;
-            }
-            set
-            {
-                if (isRendered != value)
-                {
-                    isRendered = value;
-                    OnRenderedChanged?.Invoke();
-                }
-            }
-        }
+        public List<CableSegment> Segments = new List<CableSegment>();
 
         public bool IsCompleted;
 
@@ -43,17 +30,14 @@ namespace CircuitSimulatorPlus
         public event Action OnPointsChanged;
 
         List<Point> points = new List<Point>();
-        public List<Point> Points
+
+        public Point GetPoint(int index)
         {
-            get
-            {
-                return points;
-            }
-            set
-            {
-                points = value;
-                OnPointsChanged?.Invoke();
-            }
+            if (index <= 0)
+                return StartPos;
+            if (index >= points.Count - 1)
+                return EndPos;
+            return points[index - 1];
         }
 
         public Point StartPos
@@ -103,21 +87,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public event Action OnSelectedChanged;
-        bool isSelected;
-        public bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                OnSelectedChanged?.Invoke();
-            }
-        }
-
         OutputNode outputNode;
 
         public bool State
@@ -128,9 +97,6 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        /// <summary>
-        /// Adds points to make a valid cable
-        /// </summary>
         public void AutoComplete()
         {
             throw new NotImplementedException();
@@ -144,8 +110,10 @@ namespace CircuitSimulatorPlus
 
         public void AddPoint(Point point)
         {
-            Points.Add(point);
+            Points.Insert(Points.Count - 1, point);
             vertical = !vertical;
+
+            Segments.Add(new CableSegment(this, Segments.Count));
 
             OnPointsChanged?.Invoke();
         }

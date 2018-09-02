@@ -29,8 +29,8 @@ namespace CircuitSimulatorPlus
         double Dist(Point pos)
         {
             Point point = points[index];
-            Point lastPoint = points[index - 1];
-            Point nextPoint = points[index - 1];
+            Point lastPoint = points[Math.Max(0, index - 1)];
+            Point nextPoint = points[Math.Min(points.Count - 1, index + 1)];
 
             bool vert = (index & 1) != 0;
 
