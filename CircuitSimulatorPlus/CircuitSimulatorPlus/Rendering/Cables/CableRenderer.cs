@@ -29,7 +29,7 @@ namespace CircuitSimulatorPlus
             {
                 UpdateLineSegments();
 
-                cable.OnSelectedChanged += OnLayoutChanged;
+                cable.OnSelectedChanged += UpdateSegmentColor;
                 cable.OnLayoutChanged += OnLayoutChanged;
                 cable.OnPointsChanged += UpdateLineSegments;
                 MainWindow.Self.OnLastCanvasPosChanged += OnLayoutChanged;
@@ -54,7 +54,10 @@ namespace CircuitSimulatorPlus
 
             if (cable.IsSelected)
             {
-                segments[cable.hitbox.SegmentIndex].Stroke = SystemColors.MenuHighlightBrush;
+                if (cable.hitbox.SegmentIndex >= 0)
+                {
+                    segments[cable.hitbox.SegmentIndex].Stroke = SystemColors.MenuHighlightBrush;
+                }
             }
         }
 
@@ -82,17 +85,17 @@ namespace CircuitSimulatorPlus
             {
                 if ((i & 1) != 0)
                 {
-                    segments[i].X1 = cable.GetPointAt(i + 1);
-                    segments[i].Y1 = cable.GetPointAt(i);
-                    segments[i].X2 = cable.GetPointAt(i + 1);
-                    segments[i].Y2 = cable.GetPointAt(i + 2);
+                    segments[i].X1 = cable.Points[i + 1];
+                    segments[i].Y1 = cable.Points[i];
+                    segments[i].X2 = cable.Points[i + 1];
+                    segments[i].Y2 = cable.Points[i + 2];
                 }
                 else
                 {
-                    segments[i].X1 = cable.GetPointAt(i);
-                    segments[i].Y1 = cable.GetPointAt(i + 1);
-                    segments[i].X2 = cable.GetPointAt(i + 2);
-                    segments[i].Y2 = cable.GetPointAt(i + 1);
+                    segments[i].X1 = cable.Points[i];
+                    segments[i].Y1 = cable.Points[i + 1];
+                    segments[i].X2 = cable.Points[i + 2];
+                    segments[i].Y2 = cable.Points[i + 1];
                 }
             }
         }

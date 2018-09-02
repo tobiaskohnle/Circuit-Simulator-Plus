@@ -10,10 +10,15 @@ namespace CircuitSimulatorPlus
         {
             StartNode = startNode;
 
-            hitbox = new CableHitbox(points);
+            UpdatePoints();
+
+            hitbox = new CableHitbox(Points);
 
             new CableRenderer(this);
             IsRendered = true;
+
+            MainWindow.Self.OnLastCanvasPosChanged += UpdatePoints;
+            startNode.OnPositionChanged += UpdatePoints;
         }
 
         public event Action OnRenderedChanged;
@@ -41,38 +46,45 @@ namespace CircuitSimulatorPlus
         public event Action OnLayoutChanged;
         public event Action OnPointsChanged;
 
-        List<double> points = new List<double>();
+        List<double> segmentPoints = new List<double>();
         public List<double> SegmentPoints
         {
             get
             {
-                return points;
+                return segmentPoints;
             }
             set
             {
-                points = value;
+                segmentPoints = value;
                 hitbox.Points = value;
+                UpdatePoints();
                 OnPointsChanged?.Invoke();
             }
         }
 
-        public double GetPointAt(int index)
+        public List<double> Points = new List<double>();
+
+        public void UpdatePoints()
         {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException();
-            if (index == 0)
-                return StartPos.X;
-            if (index == 1)
-                return StartPos.Y;
+            while (Points.Count < segmentPoints.Count + 4)
+            {
+                Points.Add(0);
+            }
+            while (Points.Count > segmentPoints.Count + 4)
+            {
+                Points.RemoveAt(Points.Count - 1);
+            }
 
-            if (index == 2 + points.Count)
-                return vertical ? EndPos.Y : EndPos.X;
-            if (index == 2 + points.Count + 1)
-                return vertical ? EndPos.X : EndPos.Y;
-            if (index > 2 + points.Count + 1)
-                throw new ArgumentOutOfRangeException();
+            Points[0] = StartPos.X;
+            Points[1] = StartPos.Y;
+            
+            for (int i = 0; i < segmentPoints.Count; i++)
+                Points[i + 2] = segmentPoints[i];
 
-            return points[index - 2];
+            Points[Points.Count - 2] = vertical ? EndPos.Y : EndPos.X;
+            Points[Points.Count - 1] = vertical ? EndPos.X : EndPos.Y;
+
+            Console.WriteLine(Points.Count);
         }
 
         public Point StartPos
@@ -165,7 +177,7 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public void AutoComplete()
         {
-            IsCompleted = true;
+            throw new NotImplementedException();
         }
 
         public void ConnectTo(ConnectionNode endNode)
@@ -182,6 +194,7 @@ namespace CircuitSimulatorPlus
                 SegmentPoints.Add(point.X);
             vertical = !vertical;
 
+            UpdatePoints();
             OnPointsChanged?.Invoke();
         }
 
@@ -192,7 +205,12 @@ namespace CircuitSimulatorPlus
 
         public void Move(Vector vector)
         {
-            throw new NotImplementedException();
+            if (hitbox.SegmentIndex > 0 && hitbox.SegmentIndex < segmentPoints.Count)
+            {
+                bool vert = (hitbox.SegmentIndex & 1) != 0;
+                segmentPoints[hitbox.SegmentIndex - 1] += vert ? vector.X : vector.Y;
+                UpdatePoints();
+            }
         }
     }
 }
