@@ -4,10 +4,14 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    public class Cable
+    public class Cable : IClickable, IMovable
     {
-        public Cable()
+        public Cable(ConnectionNode startNode)
         {
+            StartNode = startNode;
+
+            hitbox = new CableHitbox(points);
+
             new CableRenderer(this);
             IsRendered = true;
         }
@@ -32,17 +36,27 @@ namespace CircuitSimulatorPlus
 
         public bool IsCompleted;
 
-        public bool StartAtOutputNode;
-
         bool vertical;
 
-        public List<double> Points;
+        List<double> points;
+        public List<double> Points
+        {
+            get
+            {
+                return points;
+            }
+            set
+            {
+                points = value;
+                hitbox.Points = value;
+            }
+        }
 
         public Point StartPos
         {
             get
             {
-                return StartAtOutputNode ? OutputNode.Position : InputNode.Position;
+                return StartNode.Position;
             }
         }
         public Point EndPos
@@ -50,19 +64,47 @@ namespace CircuitSimulatorPlus
             get
             {
                 if (IsCompleted)
-                    return StartAtOutputNode ? InputNode.Position : OutputNode.Position;
+                    return EndNode.Position;
                 return MainWindow.Self.LastCanvasPos;
             }
         }
 
-        public OutputNode OutputNode
+        public ConnectionNode StartNode
         {
             get; set;
         }
 
-        public InputNode InputNode
+        public ConnectionNode EndNode
         {
             get; set;
+        }
+
+        CableHitbox hitbox;
+        public Hitbox Hitbox
+        {
+            get
+            {
+                return hitbox as Hitbox;
+            }
+            set
+            {
+                hitbox = value as CableHitbox;
+            }
+        }
+
+        public event Action OnSelectedChanged;
+        bool isSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                isSelected = value;
+                OnSelectedChanged?.Invoke();
+            }
         }
 
         /// <summary>
@@ -82,82 +124,12 @@ namespace CircuitSimulatorPlus
             vertical = !vertical;
         }
 
-        Point lastPosScanned;
-
-        int segmentIndex;
-        double segmentDistance;
-
-        public void HitScan(Point pos)
+        public void MoveSegment(int index, Vector vector)
         {
-            if (pos != lastPosScanned)
-            {
-                lastPosScanned = pos;
 
-                segmentIndex = -1;
-                segmentDistance = Double.PositiveInfinity;
-
-                bool prioritizedFound = false;
-
-                for (int i = 0; i < Points.Count - 4; i++)
-                {
-                    var point = Points[i + 2];
-                    var lastPoint = Points[i + 2 - 1];
-                    var nextPoint = Points[i + 2 + 1];
-
-                    var vert = (i & 1) != 0;
-
-                    double startX = vert ? point : lastPoint;
-                    double startY = vert ? lastPoint : point;
-                    double endX = vert ? point : nextPoint;
-                    double endY = vert ? nextPoint : point;
-
-                    double dist = vert ? Math.Abs(pos.X - startX) : Math.Abs(pos.Y - startY);
-
-                    double lastDist = vert ? Math.Abs(pos.Y - startY) : Math.Abs(pos.X - startX);
-                    double nextDist = vert ? Math.Abs(pos.Y - endY) : Math.Abs(pos.X - endX);
-
-                    var len = vert ? Math.Abs(endY - startY) : Math.Abs(endX - startX);
-
-                    if (lastDist < len && nextDist < len)
-                    {
-                        if (dist < segmentDistance || dist == segmentDistance && !prioritizedFound)
-                        {
-                            segmentDistance = dist;
-                            prioritizedFound = true;
-                            segmentIndex = i;
-                        }
-                        continue;
-                    }
-
-                    double mindist = Math.Min(lastDist, nextDist);
-                    double sidedist = Math.Max(dist, mindist);
-
-                    bool prioritize = dist > mindist;
-
-                    if (sidedist < segmentDistance || sidedist == segmentDistance && prioritize && !prioritizedFound)
-                    {
-                        segmentDistance = sidedist;
-                        prioritizedFound = prioritize;
-                        segmentIndex = i;
-                    }
-                }
-            }
         }
 
-        public double SegmentDistance(Point point, int index)
-        {
-            if (SegmentSelected(point, index))
-                return segmentDistance;
-            return Double.PositiveInfinity;
-        }
-
-        public bool SegmentSelected(Point point, int index)
-        {
-            HitScan(point);
-            return index == segmentDistance;
-        }
-
-        public Rect LineBounds(int index)
+        public void Move(Vector vector)
         {
             throw new NotImplementedException();
         }

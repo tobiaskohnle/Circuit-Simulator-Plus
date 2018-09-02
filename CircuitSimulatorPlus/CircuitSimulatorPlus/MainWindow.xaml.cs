@@ -598,9 +598,13 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        public void SetupCable()
+        public void CreateCable()
         {
-            ConnectionNode firstNode = LastClickedObject as ConnectionNode;
+            ConnectionNode startNode = LastClickedObject as ConnectionNode;
+
+            var cable = new Cable(startNode);
+
+
         }
 
         public void EmptyInput()
@@ -769,7 +773,7 @@ namespace CircuitSimulatorPlus
                 else if (LastClickedObject is ConnectionNode)
                 {
                     CreatingCable = true;
-                    SetupCable();
+                    CreateCable();
                 }
                 else
                 {

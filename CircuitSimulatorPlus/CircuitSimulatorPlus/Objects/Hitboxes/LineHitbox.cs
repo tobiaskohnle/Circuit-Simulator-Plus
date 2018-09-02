@@ -33,12 +33,12 @@ namespace CircuitSimulatorPlus
 
         public override double DistanceTo(Point pos)
         {
-            return parent.SegmentDistance(pos, index) * DistanceFactor;
+            return parent.SegmentDistance(index, pos) * DistanceFactor;
         }
 
         public override bool IncludesPos(Point pos)
         {
-            return parent.SegmentSelected(pos, index) && parent.SegmentDistance(pos, index) < Width;
+            return parent.SegmentSelected(index, pos) && parent.SegmentDistance(index, pos) < Width;
         }
 
         public override bool IsIncludedIn(Rect rect)
