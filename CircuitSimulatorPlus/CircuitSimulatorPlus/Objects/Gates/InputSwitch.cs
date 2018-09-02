@@ -31,5 +31,10 @@ namespace CircuitSimulatorPlus
         {
             return State;
         }
+
+        public void Toggle()
+        {
+            state = !state;
+        }
     }
 }
