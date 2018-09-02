@@ -250,7 +250,8 @@ namespace CircuitSimulatorPlus
 
         public void ToggleObjects()
         {
-            foreach (IClickable obj in SelectedObjects)
+            PerformCommand(new ToggleObjectsCommand(SelectedObjects));
+            /*foreach (IClickable obj in SelectedObjects)
             {
                 if (obj is InputSwitch)
                 {
@@ -266,7 +267,7 @@ namespace CircuitSimulatorPlus
                     connectionNode.Invert();
                     Tick(connectionNode);
                 }
-            }
+            }*/
         }
         public void ConnectAllNodes()
         {
@@ -1318,6 +1319,7 @@ namespace CircuitSimulatorPlus
         }
         void Rename_Click(object sender, RoutedEventArgs e)
         {
+            //PerformCommand(new RenameCommand(SelectedObjects,name));
         }
         void Resize_Click(object sender, RoutedEventArgs e)
         {

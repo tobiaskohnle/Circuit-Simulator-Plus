@@ -1,32 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System;using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CircuitSimulatorPlus
 {
-    public class RenameGateCommand : Command
+    public class RenameCommand : Command
     {
-        Gate gate;
+        List<IClickable> SelectedObjects;
         string oldName;
         string newName;
 
-        public RenameGateCommand(Gate gate, string name) : base($"Renamed Gate to {name}")
+        public RenameCommand(List<IClickable> selectedObjects, string name) : base($"Renamed Gate to {name}")
         {
-            this.gate = gate;
+            this.SelectedObjects = selectedObjects;
             newName = name;
-            oldName = gate.Name;
         }
 
         public override void Redo()
         {
-            gate.Name = oldName;
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is Gate)
+                {
+                    oldName = (obj as Gate).Name;
+                    (obj as Gate).Name =newName;
+                }
+                else if (obj is ConnectionNode)
+                {
+                    oldName = (obj as ConnectionNode).Name;
+                    (obj as ConnectionNode).Name = newName;
+                }
+            }
         }
 
         public override void Undo()
         {
-            gate.Name = newName;
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is Gate)
+                {
+                    (obj as Gate).Name = oldName;
+                }
+                else if (obj is ConnectionNode)
+                {
+                    (obj as ConnectionNode).Name = oldName;
+                }
+            }
         }
     }
 }
