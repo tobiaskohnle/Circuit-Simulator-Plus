@@ -106,18 +106,7 @@ namespace CircuitSimulatorPlus
         public void Add(Gate gate)
         {
             gate.Position = new Point(Math.Round(LastCanvasClick.X), Math.Round(LastCanvasClick.Y));
-
-            //PerformAction(new CreateGateAction(contextGate, gate));
-
-            gate.IsRendered = true;
-            foreach (ConnectionNode node in gate.Input)
-                node.IsRendered = true;
-            foreach (ConnectionNode node in gate.Output)
-                node.IsRendered = true;
-
-            Select(gate);
-            ClickableObjects.Add(gate);
-            ContextGate.Context.Add(gate);
+            PerformCommand(new CreateGateCommand(gate));
         }
 
         public void Tick(ConnectionNode node)
