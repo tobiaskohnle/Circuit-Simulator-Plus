@@ -1,62 +1,123 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
 {
     public class Cable
     {
-        public Cable(InputNode inputNode, OutputNode outputNode)
+        public Cable(ConnectionNode startNode)
         {
-            InputNode = inputNode;
-            OutputNode = outputNode;
-            new CableRenderer(this);
-            IsRendered = true;
+            StartNode = startNode;
+
+            points.Add(StartPos);
+            points.Add(EndPos);
+            
+            new CableSegment(this, 0);
+            new CableSegment(this, 1);
         }
 
-        public event Action OnRenderedChanged;
-        protected bool isRendered;
-        public bool IsRendered
+        public const double DistanceFactor = 0.2;
+        public const double SegmentWidth = 1.0;
+
+        public bool IsCompleted;
+
+        bool vertical;
+
+        public event Action OnLayoutChanged;
+        public event Action OnPointsChanged;
+
+        List<Point> points = new List<Point>();
+
+        public void MovePoint(int index, Vector vector)
+        {
+            if (index > 0 && index < points.Count - 1)
+                points[index] += vector;
+        }
+
+        public Point GetPoint(int index)
+        {
+            if (index <= 0)
+                return StartPos;
+            if (index >= points.Count - 1)
+                return EndPos;
+            return points[index - 1];
+        }
+
+        public Point StartPos
         {
             get
             {
-                return isRendered;
+                return StartNode.Position;
+            }
+        }
+        public Point EndPos
+        {
+            get
+            {
+                if (IsCompleted)
+                    return EndNode.Position;
+                return MainWindow.Self.LastCanvasPos;
+            }
+        }
+
+        ConnectionNode startNode;
+        public ConnectionNode StartNode
+        {
+            get
+            {
+                return startNode;
             }
             set
             {
-                if (isRendered != value)
-                {
-                    isRendered = value;
-                    OnRenderedChanged?.Invoke();
-                }
+                startNode = value;
+                if (value is OutputNode)
+                    outputNode = value as OutputNode;
             }
         }
 
-        public List<Point> Points;
-
-        public OutputNode OutputNode
+        ConnectionNode endNode;
+        public ConnectionNode EndNode
         {
-            get; set;
+            get
+            {
+                return endNode;
+            }
+            set
+            {
+                endNode = value;
+                if (value is OutputNode)
+                    outputNode = value as OutputNode;
+            }
         }
 
-        public InputNode InputNode
+        OutputNode outputNode;
+
+        public bool State
         {
-            get; set;
+            get
+            {
+                return outputNode?.State ?? false;
+            }
         }
 
-        public void CreateCable()
+        public void AutoComplete()
         {
+            throw new NotImplementedException();
         }
 
-        public void DeleteCable()
+        public void ConnectTo(ConnectionNode endNode)
         {
+            EndNode = endNode;
+            IsCompleted = true;
+        }
+
+        public void AddPoint(Point point)
+        {
+            points.Insert(points.Count - 1, point);
+            vertical = !vertical;
+
+            OnPointsChanged?.Invoke();
         }
     }
 }

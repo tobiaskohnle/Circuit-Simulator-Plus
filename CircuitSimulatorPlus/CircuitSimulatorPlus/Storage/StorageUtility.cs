@@ -14,31 +14,14 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// Loads a Context from a JSON file.
         /// Shows a MessageBox on error.
-        /// Mind the Gates won't be rendered.
         /// </summary>
         /// <param name="filepath">Path to load from</param>
-        /// <returns>If successful returns a context object. Otherwise an "empty" representation is returned.</returns>
+        /// <returns>If successful returns a StorageObject. Otherwise null is returned.</returns>
         public static StorageObject Load(string filepath)
         {
             StorageObject store = null;
-            var ser = new JsonSerializer();
-
-            try
-            {
-                using (var file = new StreamReader(filepath))
-                using (var reader = new JsonTextReader(file))
-                {
-                    store = ser.Deserialize<StorageObject>(reader);
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Error loading file");
-            }
-
-            if (store == null)
-                store = new StorageObject();
-
+            using (var reader = new StreamReader(filepath))
+                store = Deserialize(reader);
             return store;
         }
 
@@ -50,21 +33,75 @@ namespace CircuitSimulatorPlus
         /// <param name="store">Object to save</param>
         public static void Save(string filepath, StorageObject store)
         {
-            var ser = new JsonSerializer();
-            ser.Formatting = Formatting.Indented;
-            ser.NullValueHandling = NullValueHandling.Ignore;
+            using (var writer = new StreamWriter(filepath))
+                Serialize(store, writer);
+        }
 
+        public static string CreateText(StorageObject store)
+        {
+            string text = "";
+            using (var writer = new StringWriter())
+            {
+                Serialize(store, writer);
+                text = writer.ToString();
+            }
+            return text;
+        }
+
+        public static StorageObject LoadString(string text)
+        {
+            StorageObject store;
+            using (var reader = new StringReader(text))
+                store = Deserialize(reader);
+            return store;
+        }
+
+
+
+        private static void Serialize(StorageObject store, TextWriter writer)
+        {
             try
             {
-                using (var file = new StreamWriter(filepath))
-                using (var writer = new JsonTextWriter(file))
-                {
-                    ser.Serialize(writer, store);
-                }
+                using (var jwriter = new JsonTextWriter(writer))
+                    serializer.Serialize(jwriter, store);
             }
             catch
             {
-                MessageBox.Show("Error saving file");
+                MessageBox.Show("Saving failed");
+            }
+        }
+
+        private static StorageObject Deserialize(TextReader reader)
+        {
+            StorageObject store = null;
+
+            try
+            {
+                using (var jreader = new JsonTextReader(reader))
+                    store = serializer.Deserialize<StorageObject>(jreader);
+            }
+            catch
+            {
+                MessageBox.Show("Loading failed");
+            }
+
+            return store;
+        }
+
+        private static JsonSerializer _serializer;
+        private static JsonSerializer serializer
+        {
+            get
+            {
+                if (_serializer == null)
+                {
+                    _serializer = new JsonSerializer()
+                    {
+                        Formatting = Formatting.Indented,
+                        NullValueHandling = NullValueHandling.Ignore
+                    };
+                }
+                return _serializer;
             }
         }
     }

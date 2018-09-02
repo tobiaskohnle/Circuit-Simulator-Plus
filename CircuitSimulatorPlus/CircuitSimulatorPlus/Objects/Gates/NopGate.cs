@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
         public override bool Eval()
         {
             foreach (InputNode input in Input)
-                return input.State;
+                return input.LogicState;
             return false;
         }
     }

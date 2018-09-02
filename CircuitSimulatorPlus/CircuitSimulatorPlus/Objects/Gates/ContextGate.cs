@@ -14,7 +14,7 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public List<Gate> Context { get; set; } = new List<Gate>();
 
-        public new bool HasContext
+        public override bool HasContext
         {
             get
             {
@@ -30,13 +30,13 @@ namespace CircuitSimulatorPlus
         // TODO
         public void ReconnectInnerInputs()
         {
-            
+
         }
 
         // TODO
         public void ReconnectInnerOutputs()
         {
-            
+
         }
 
         // These are used for positional comparisons.

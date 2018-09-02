@@ -12,7 +12,7 @@
         MouseDoubleClick="Window_MouseDoubleClick"
         KeyDown="Window_KeyDown"
         Closing="Window_Closing"
-        ContextMenuOpening="Window_ContextMenuOpening">
+        ContextMenuOpening="Window_ContextMenuOpening" ManipulationDelta="Window_ManipulationDelta" ManipulationInertiaStarting="Window_ManipulationInertiaStarting" ManipulationStarting="Window_ManipulationStarting">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:Commands.New}"
                         Executed="New_Click"/>
@@ -66,9 +66,6 @@
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
-            <MenuItem x:Name="contxtMenu_contextGate" Header="Add Context Gate">
-                <MenuItem Header="Import From File" Click="Import_Click"/>
-            </MenuItem>
             <MenuItem x:Name="contxtMenu_basicGate" Header="Add Component">
                 <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
                 <MenuItem Header="Output Light" Click="CreateOutputLight"/>
@@ -77,8 +74,21 @@
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
                 <MenuItem Header="Segment Display" Click="CreateSegmentDisplay"/>
             </MenuItem>
-            <MenuItem Header="Change Type to And Gate" Click="ChangeTypeToAnd_Click"></MenuItem>
-            <MenuItem Header="Change Type to Or Gate" Click="ChangeTypeToOr_Click"></MenuItem>
+            <MenuItem x:Name="contxtMenu_contextGate" Header="Add Context Gate">
+                <MenuItem Header="Import From File" Click="Import_Click"/>
+            </MenuItem>
+            <MenuItem Header="Change Type">
+                <MenuItem Header="Context Gate" Click="ChangeTypeContext"/>
+                <MenuItem Header="Input Switch" Click="ChangeTypeInputSwitch"/>
+                <MenuItem Header="Output Light" Click="ChangeTypeOutputLight"/>
+                <MenuItem Header="And Gate" Click="ChangeTypeAndGate"/>
+                <MenuItem Header="Or Gate" Click="ChangeTypeOrGate"/>
+                <MenuItem Header="Not Gate" Click="ChangeTypeNotGate"/>
+                <MenuItem Header="Segment Display" Click="ChangeTypeSegmentDisplay"/>
+            </MenuItem>
+            <MenuItem Header="IsRisingEdge" Click="RisingEdge_Click"></MenuItem>
+            <MenuItem Header="IsMasterSlave" Click="MasterSlave_Click"></MenuItem>
+            <MenuItem Header="IsCentered" Click="Centered_Click"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
@@ -132,7 +142,7 @@
             </MenuItem>
             <MenuItem Header="Debug" Width="auto">
                 <MenuItem Header="Reload" Click="Reload_Click"/>
-                <MenuItem Header="Single Ticks" IsCheckable="true" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
+                <MenuItem Header="Single Ticks" IsCheckable="True" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
             </MenuItem>
         </Menu>

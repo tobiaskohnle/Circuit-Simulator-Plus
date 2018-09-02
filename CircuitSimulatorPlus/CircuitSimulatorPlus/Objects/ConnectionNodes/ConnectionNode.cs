@@ -16,11 +16,9 @@ namespace CircuitSimulatorPlus
         public const double HitboxRadius = 2.5;
         public const double DistanceFactor = 1;
 
-        bool stateChanged;
+        protected bool stateChanged;
 
         public Gate Owner;
-
-        public Vector AlignmentVector = new Vector();
 
         public ConnectionNode BackConnectedTo
         {
@@ -76,6 +74,14 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public virtual bool LogicState
+        {
+            get
+            {
+                return State;
+            }
+        }
+
         public event Action OnStateChanged;
         bool state;
         public bool State
@@ -122,6 +128,21 @@ namespace CircuitSimulatorPlus
             {
                 isSelected = value;
                 OnSelectionChanged?.Invoke();
+            }
+        }
+
+        public event Action OnCenteredChanged;
+        bool isCentered;
+        public bool IsCentered
+        {
+            get
+            {
+                return isCentered;
+            }
+            set
+            {
+                isCentered = value;
+                OnCenteredChanged?.Invoke();
             }
         }
 
@@ -174,32 +195,26 @@ namespace CircuitSimulatorPlus
         {
             IsInverted = !IsInverted;
         }
-        protected void Tick(bool lastWasElementary, bool nextIsElementary)
+
+        protected void Tick(bool lastWasElementary, bool nextIsElementary, bool forceUpdate)
         {
             stateChanged = false;
 
             if (lastWasElementary)
             {
-                State = Owner.Eval();
+                State = Owner.Eval() != IsInverted;
             }
             else if (BackConnectedTo != null)
             {
-                State = BackConnectedTo.State;
+                State = BackConnectedTo.LogicState != IsInverted;
             }
             else
             {
-                State = false;
+                State = IsInverted;
             }
 
-            if (IsInverted)
+            if (stateChanged || forceUpdate)
             {
-                State = !State;
-            }
-
-            if (stateChanged)
-            {
-                stateChanged = false;
-
                 if (nextIsElementary)
                 {
                     foreach (OutputNode node in Owner.Output)

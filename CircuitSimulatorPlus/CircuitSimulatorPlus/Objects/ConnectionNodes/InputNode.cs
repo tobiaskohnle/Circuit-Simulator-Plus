@@ -8,8 +8,8 @@ namespace CircuitSimulatorPlus
     {
         public InputNode(Gate owner) : base(owner)
         {
-            AlignmentVector = new Vector(-1, 0);
             new ConnectionNodeRenderer(this, owner, false);
+            new InputNodeRenderer(this);
         }
 
         public event Action OnRisingEdgeChanged;
@@ -26,7 +26,20 @@ namespace CircuitSimulatorPlus
             set
             {
                 isRisingEdge = value;
+                MainWindow.Self.Tick(this);
                 OnRisingEdgeChanged?.Invoke();
+            }
+        }
+
+        public override bool LogicState
+        {
+            get
+            {
+                if (IsRisingEdge)
+                {
+                    return State && stateChanged;
+                }
+                return State;
             }
         }
 
@@ -58,46 +71,15 @@ namespace CircuitSimulatorPlus
 
         public override void Tick()
         {
-            if (IsRisingEdge)
+            Tick(false, !Owner.HasContext, IsRisingEdge && LogicState);
+            if (IsRisingEdge && LogicState)
             {
-                if (State == false)
-                    State = BackConnectedTo.State;
-                if (State)
-                    MainWindow.Self.TickedNodes.Enqueue(this);
-                foreach (ConnectionNode node in NextConnectedTo)
-                    MainWindow.Self.TickedNodes.Enqueue(node);
-            }
-            else
-            {
-                Tick(false, !Owner.HasContext);
+                MainWindow.Self.Tick(this);
             }
         }
 
         public override void ConnectTo(ConnectionNode connectionNode)
         {
-            //ConnectionNode localNode = this;
-            //ConnectionNode remoteNode = connectionNode;
-
-            //if (connectionNode.Owner is InputSwitch)
-            //{
-            //    InputSwitch inputSwitch = (InputSwitch)Owner;
-            //    ContextGate context = inputSwitch.Parent;
-            //    if (context == null)
-            //        throw new Exception("InputSwitch has no parent");
-            //    remoteNode = context.Input[inputSwitch.Index];
-            //}
-            //if (Owner is OutputLight)
-            //{
-            //    OutputLight outputLight = (OutputLight)connectionNode.Owner;
-            //    ContextGate context = outputLight.Parent;
-            //    if (context == null)
-            //        throw new Exception("OutputLight has no parent");
-            //    localNode = context.Output[outputLight.Index];
-            //}
-
-            //remoteNode.NextConnectedTo.Add(localNode);
-            //localNode.BackConnectedTo = connectionNode;
-
             BackConnectedTo = connectionNode;
             connectionNode.NextConnectedTo.Add(this);
 

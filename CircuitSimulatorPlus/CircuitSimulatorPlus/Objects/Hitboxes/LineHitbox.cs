@@ -9,8 +9,16 @@ namespace CircuitSimulatorPlus
 {
     public class LineHitbox : Hitbox
     {
-        public Point A, B;
-        double width;
+        Cable cable;
+        int index;
+        bool vert;
+
+        public LineHitbox(Cable cable, int index) : base(Cable.DistanceFactor)
+        {
+            this.cable = cable;
+            this.index = index;
+            vert = (index & 1) != 0;
+        }
 
         public override Rect RectBounds
         {
@@ -20,31 +28,49 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public LineHitbox(Point a, Point b, double width, double distanceFactor) : base(distanceFactor)
+        double Dist(Point pos)
         {
-            this.A = a;
-            this.B = b;
-            this.width = width;
-        }
+            Point point = cable.GetPoint(index);
+            Point lastPoint = cable.GetPoint(index - 1);
+            Point nextPoint = cable.GetPoint(index + 1);
 
-        private Point M(Point d)
-        {
-            return A + ((A - B).Length + (A - d).Length - (B - d).Length) / 2 * (B - A) / (A - B).Length;
+            double startX = vert ? point.X : lastPoint.X;
+            double startY = vert ? lastPoint.Y : point.Y;
+            double endX = vert ? point.X : nextPoint.X;
+            double endY = vert ? nextPoint.Y : point.Y;
+
+            double dist = vert ? Math.Abs(pos.X - startX) : Math.Abs(pos.Y - startY);
+
+            double lastDist = vert ? Math.Abs(pos.Y - startY) : Math.Abs(pos.X - startX);
+            double nextDist = vert ? Math.Abs(pos.Y - endY) : Math.Abs(pos.X - endX);
+
+            double len = vert ? Math.Abs(endY - startY) : Math.Abs(endX - startX);
+
+            if (lastDist < len && nextDist < len)
+                return dist - 1e-7;
+
+            double minDist = Math.Min(lastDist, nextDist);
+            double sideDist = Math.Max(dist, minDist);
+
+            if (dist > minDist)
+                return sideDist - 1e-7;
+
+            return sideDist;
         }
 
         public override double DistanceTo(Point pos)
         {
-            return (M(pos) - pos).LengthSquared;
+            return Dist(pos) * Cable.DistanceFactor;
         }
 
         public override bool IncludesPos(Point pos)
         {
-            return (M(pos) - pos).LengthSquared < width * width;
+            return Dist(pos) <= Cable.SegmentWidth;
         }
 
         public override bool IsIncludedIn(Rect rect)
         {
-            return false;
+            return RectBounds.IntersectsWith(rect);
         }
     }
 }

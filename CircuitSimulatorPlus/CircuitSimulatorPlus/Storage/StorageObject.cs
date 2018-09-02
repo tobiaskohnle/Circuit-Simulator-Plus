@@ -25,14 +25,6 @@ namespace CircuitSimulatorPlus
         {
             get; set;
         }
-        public int[] InnerInputConnections
-        {
-            get; set;
-        }
-        public int[] InnerOutputConnections
-        {
-            get; set;
-        }
         public int[] InputConnections
         {
             get; set;

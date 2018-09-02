@@ -153,6 +153,7 @@ namespace CircuitSimulatorPlus
             {
                 size = value;
                 hitbox.Bounds.Size = value;
+                UpdateConnectionNodePos();
                 OnSizeChanged?.Invoke();
             }
         }
