@@ -731,6 +731,13 @@ namespace CircuitSimulatorPlus
                 return SelectedObjects.Exists(obj => obj is ConnectionNode);
             }
         }
+        public bool AnySegmentSelected
+        {
+            get
+            {
+                return SelectedObjects.Exists(obj => obj is CableSegment);
+            }
+        }
 
         public bool ControlPressed
         {
@@ -857,6 +864,18 @@ namespace CircuitSimulatorPlus
             else
             {
                 ToggleObjects();
+
+
+                foreach (IClickable obj in ClickableObjects)
+                {
+                    if (obj is CableSegment)
+                    {
+                        foreach (CableSegment segment in (obj as CableSegment).Parent.Segments)
+                        {
+                            Select(segment);
+                        }
+                    }
+                }
             }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
