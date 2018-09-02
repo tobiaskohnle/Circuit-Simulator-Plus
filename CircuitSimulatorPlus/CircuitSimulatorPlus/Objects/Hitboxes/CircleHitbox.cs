@@ -24,7 +24,7 @@ namespace CircuitSimulatorPlus
 
         double radius;
 
-        public CircleHitbox(Point center, double radius, double distanceFactor) : base(distanceFactor)
+        public CircleHitbox(Point center, double radius)
         {
             Center = center;
             this.radius = radius;
@@ -32,7 +32,7 @@ namespace CircuitSimulatorPlus
 
         public override double DistanceTo(Point pos)
         {
-            return distanceFactor * (pos - Center).LengthSquared;
+            return ConnectionNode.DistanceFactor * (pos - Center).LengthSquared;
         }
 
         public override bool IncludesPos(Point pos)

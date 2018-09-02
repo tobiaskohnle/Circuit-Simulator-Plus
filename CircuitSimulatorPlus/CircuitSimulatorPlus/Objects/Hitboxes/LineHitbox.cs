@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
         int index;
         bool vert;
 
-        public LineHitbox(Cable cable, int index) : base(Cable.DistanceFactor)
+        public LineHitbox(Cable cable, int index)
         {
             this.cable = cable;
             this.index = index;

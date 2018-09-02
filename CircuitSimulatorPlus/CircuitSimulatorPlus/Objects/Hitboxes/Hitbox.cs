@@ -5,13 +5,6 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Hitbox
     {
-        public Hitbox(double distanceFactor)
-        {
-            this.distanceFactor = distanceFactor;
-        }
-
-        protected double distanceFactor;
-
         public abstract Rect RectBounds
         {
             get;

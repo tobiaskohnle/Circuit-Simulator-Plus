@@ -7,7 +7,7 @@ namespace CircuitSimulatorPlus
     {
         public Rect Bounds;
 
-        public RectHitbox(Rect bounds, double distanceFactor) : base(distanceFactor)
+        public RectHitbox(Rect bounds)
         {
             Bounds = bounds;
         }
@@ -25,7 +25,7 @@ namespace CircuitSimulatorPlus
             var center = new Point(
                 Bounds.X + Bounds.Width / 2,
                 Bounds.Y + Bounds.Height / 2);
-            return distanceFactor * (center - pos).LengthSquared;
+            return Gate.DistanceFactor * (center - pos).LengthSquared;
         }
 
         public override bool IncludesPos(Point pos)

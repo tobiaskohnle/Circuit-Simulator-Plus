@@ -10,7 +10,7 @@ namespace CircuitSimulatorPlus
         {
             Owner = owner;
             IsEmpty = true;
-            hitbox = new CircleHitbox(Position, HitboxRadius, DistanceFactor);
+            hitbox = new CircleHitbox(Position, HitboxRadius);
         }
 
         public const double HitboxRadius = 2.5;
