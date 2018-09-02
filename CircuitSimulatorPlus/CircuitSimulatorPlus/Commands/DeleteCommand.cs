@@ -49,7 +49,10 @@ namespace CircuitSimulatorPlus
                     }
                     else if (obj is OutputNode)
                     {
-
+                        foreach (ConnectionNode node in ((obj as OutputNode).NextConnectedTo))
+                        {
+                            (obj as OutputNode).ConnectTo(node);
+                        }
                     }
                 }
             }
