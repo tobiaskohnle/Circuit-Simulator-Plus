@@ -589,6 +589,8 @@ namespace CircuitSimulatorPlus
         }
         public void CreateCable()
         {
+            CreatingCable = true;
+
             ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
             CableOrigin = startNode;
@@ -1412,7 +1414,10 @@ namespace CircuitSimulatorPlus
         {
             ConnectOppositeNodes();
         }
+        void CreateCable_Click(object sender, RoutedEventArgs e)
+        {
+            CreateCable();
+        }
         #endregion
-
     }
 }
