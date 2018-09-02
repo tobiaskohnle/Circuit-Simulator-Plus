@@ -36,7 +36,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(args[1]));
+                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]));
             else
                 ContextGate = new ContextGate();
             RenderContext();
@@ -366,7 +366,7 @@ namespace CircuitSimulatorPlus
 
             CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-            ContextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(filePath));
+            ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
             RenderContext();
             UpdateClickableObjects();
         }
@@ -1316,11 +1316,11 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            //var storageObject = StorageConverter.ToStorageObject(ContextGate);
-            //New();
-            //ContextGate = (ContextGate)StorageConverter.ToGate(storageObject);
-            //RenderContext();
-            //UpdateClickableObjects();
+            var storageObject = StorageConverter.ToStorageObject(ContextGate);
+            New();
+            ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(storageObject);
+            RenderContext();
+            UpdateClickableObjects();
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {

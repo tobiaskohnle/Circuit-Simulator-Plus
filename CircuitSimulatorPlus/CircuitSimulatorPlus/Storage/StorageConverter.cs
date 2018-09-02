@@ -169,54 +169,52 @@ namespace CircuitSimulatorPlus
             // AAAAAAAAAAAHHHHHH
             foreach (InputNode node in new List<InputNode>(gate.Input))
                 gate.RemoveInputNode(node);
-
-            if (storageObject.InputConnections == null)
-                storageObject.InputConnections = new int[0];
-            foreach (int id in storageObject.InputConnections)
-                gate.Input.Add(new InputNode(gate));
-            if (storageObject.InvertedInputs != null)
-                foreach (int index in storageObject.InvertedInputs)
-                    gate.Input[index].Invert();
-
-            // AAAAAAAAAAAHHHHHH
             foreach (OutputNode node in new List<OutputNode>(gate.Output))
                 gate.RemoveOutputNode(node);
 
+            if (storageObject.InputConnections == null)
+                storageObject.InputConnections = new int[0];
             if (storageObject.OutputConnections == null)
                 storageObject.OutputConnections = new int[0];
-            foreach (int id in storageObject.OutputConnections)
-                gate.Output.Add(new OutputNode(gate));
-            if (storageObject.InvertedOutputs != null)
-                foreach (int index in storageObject.InvertedOutputs)
-                    gate.Output[index].Invert();
-            if (storageObject.InitialActiveOutputs != null)
-                foreach (int index in storageObject.InitialActiveOutputs)
-                    gate.Output[index].State = true;
 
             if (storageObject.Type == "ContextGate")
             {
                 ContextGate contextGate = gate as ContextGate;
                 var idToNode = new Dictionary<int, ConnectionNode>();
-                List<StorageObject> inputStores = new List<StorageObject>();
+                var inputStores = new List<StorageObject>();
+                var outputStores = new List<StorageObject>();
+                var gateStores = new List<StorageObject>();
+
                 foreach (StorageObject innerStore in storageObject.Context)
                 {
-                    if (innerStore.Type == "InputSwitch")
+                    switch (innerStore.Type)
                     {
-                        inputStores.Add(innerStore);
-                        continue;
+                        case "InputSwitch":
+                            inputStores.Add(innerStore);
+                            break;
+                        case "OutputLight":
+                            outputStores.Add(innerStore);
+                            break;
+                        default:
+                            gateStores.Add(innerStore);
+                            break;
                     }
-                    else if (innerStore.Type == "OutputLight")
-                        continue;
-                    Gate innerGate = ToGate(innerStore);
+                }
+
+                inputStores.Sort(ComparePosition);
+                outputStores.Sort(ComparePosition);
+
+                foreach (StorageObject gateStore in gateStores)
+                {
+                    Gate innerGate = ToGate(gateStore);
                     contextGate.Context.Add(innerGate);
-                    for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
+                    for (int i = 0; i < gateStore.OutputConnections.Count(); i++)
                     {
-                        int id = innerStore.OutputConnections[i];
+                        int id = gateStore.OutputConnections[i];
                         if (id != 0)
                             idToNode[id] = innerGate.Output[i];
                     }
                 }
-                inputStores.Sort(ComparePosition);
                 foreach (StorageObject inputStore in inputStores)
                 {
                     int id = inputStore.OutputConnections.First();
@@ -226,17 +224,9 @@ namespace CircuitSimulatorPlus
                         idToNode[id] = inputNode;
                 }
 
-                List<StorageObject> outputStores = new List<StorageObject>();
-                for (int i = 0; i < storageObject.Context.Count; i++)
+                for (int i = 0; i < gateStores.Count; i++)
                 {
-                    StorageObject innerStore = storageObject.Context[i];
-                    if (innerStore.Type == "OutputLight")
-                    {
-                        outputStores.Add(innerStore);
-                        continue;
-                    }
-                    else if (innerStore.Type == "InputSwitch")
-                        continue;
+                    StorageObject innerStore = gateStores[i];
                     Gate innerGate = contextGate.Context[i];
                     for (int j = 0; j < innerStore.InputConnections.Count(); j++)
                     {
@@ -251,7 +241,6 @@ namespace CircuitSimulatorPlus
                         }
                     }
                 }
-                outputStores.Sort(ComparePosition);
                 foreach (StorageObject outputStore in outputStores)
                 {
                     int id = outputStore.InputConnections.First();
@@ -267,6 +256,24 @@ namespace CircuitSimulatorPlus
                     }
                 }
             }
+            else
+            {
+                foreach (int id in storageObject.InputConnections)
+                    gate.Input.Add(new InputNode(gate));
+                foreach (int id in storageObject.OutputConnections)
+                    gate.Output.Add(new OutputNode(gate));
+            }
+
+            if (storageObject.InvertedInputs != null)
+                foreach (int index in storageObject.InvertedInputs)
+                    gate.Input[index].Invert();
+            if (storageObject.InvertedOutputs != null)
+                foreach (int index in storageObject.InvertedOutputs)
+                    gate.Output[index].Invert();
+
+            if (storageObject.InitialActiveOutputs != null)
+                foreach (int index in storageObject.InitialActiveOutputs)
+                    gate.Output[index].State = true;
 
             return gate;
         }
