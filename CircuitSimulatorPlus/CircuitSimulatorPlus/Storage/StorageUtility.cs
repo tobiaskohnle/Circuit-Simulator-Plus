@@ -14,10 +14,9 @@ namespace CircuitSimulatorPlus
         /// <summary>
         /// Loads a Context from a JSON file.
         /// Shows a MessageBox on error.
-        /// Mind the Gates won't be rendered.
         /// </summary>
         /// <param name="filepath">Path to load from</param>
-        /// <returns>If successful returns a context object. Otherwise an "empty" representation is returned.</returns>
+        /// <returns>If successful returns a StorageObject. Otherwise null is returned.</returns>
         public static StorageObject Load(string filepath)
         {
             StorageObject store = null;
@@ -35,9 +34,6 @@ namespace CircuitSimulatorPlus
             {
                 MessageBox.Show("Error loading file");
             }
-
-            if (store == null)
-                store = new StorageObject();
 
             return store;
         }

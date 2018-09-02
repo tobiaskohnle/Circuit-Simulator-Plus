@@ -36,7 +36,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(args[1]));
+                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]));
             else
                 ContextGate = new ContextGate();
             RenderContext();
@@ -214,18 +214,6 @@ namespace CircuitSimulatorPlus
                 Remove(input);
             foreach (OutputNode output in gate.Output)
                 Remove(output);
-            if (gate is InputSwitch)
-            {
-                InputSwitch inputSwitch = ((InputSwitch)gate);
-                inputSwitch.Parent.Input.RemoveAt(inputSwitch.Index);
-                inputSwitch.Parent = null;
-            }
-            if (gate is OutputLight)
-            {
-                OutputLight outputLight = ((OutputLight)gate);
-                outputLight.Parent.Output.RemoveAt(outputLight.Index);
-                outputLight.Parent = null;
-            }
             gate.IsRendered = false;
             ClickableObjects.Remove(gate);
             ContextGate.Context.Remove(gate);
@@ -292,49 +280,10 @@ namespace CircuitSimulatorPlus
 
         public void ChangeType(Type type)
         {
-            StorageObject storageObject = null;
-            if (type == typeof(ContextGate))
-                storageObject = StorageUtil.Load(SelectFile());
-
-            foreach (IClickable obj in SelectedObjects.ToList())
-            {
-                if (obj is Gate)
-                {
-                    var gate = obj as Gate;
-                    Gate newGate = null;
-
-                    if (type == typeof(ContextGate))
-                        newGate = StorageConverter.ToGate(storageObject);
-                    else if (type == typeof(InputSwitch))
-                        newGate = new InputSwitch();
-                    else if (type == typeof(OutputLight))
-                        newGate = new OutputLight();
-                    else if (type == typeof(AndGate))
-                        newGate = new AndGate();
-                    else if (type == typeof(OrGate))
-                        newGate = new OrGate();
-                    else if (type == typeof(NopGate))
-                        newGate = new NopGate();
-                    else if (type == typeof(SegmentDisplay))
-                        newGate = new SegmentDisplay();
-
-                    newGate.CopyFrom(gate);
-
-                    ContextGate.Context.Remove(gate);
-                    ContextGate.Context.Add(newGate);
-
-                    foreach (OutputNode outputNode in newGate.Output)
-                        Tick(outputNode);
-
-                    Deselect(gate);
-                    Select(newGate);
-
-                    gate.IsRendered = false;
-                    newGate.IsRendered = true;
-
-                    UpdateClickableObjects();
-                }
-            }
+            //StorageObject storageObject = null;
+            //if (type == typeof(ContextGate))
+            //    storageObject = StorageUtil.Load(SelectFile());
+            PerformCommand(new ChangeTypeCommand(type,SelectedObjects));
         }
 
         public void ToggleRisingEdge()
@@ -390,7 +339,8 @@ namespace CircuitSimulatorPlus
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = Constants.FileFilter;
-            dialog.ShowDialog();
+            if (dialog.ShowDialog() != true)
+                return "";
             return dialog.FileName;
         }
 
@@ -407,7 +357,8 @@ namespace CircuitSimulatorPlus
 
             CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-            ContextGate = (ContextGate)StorageConverter.ToGate(StorageUtil.Load(filePath));
+            ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
+            RecursiveTickAll(ContextGate);
             RenderContext();
             UpdateClickableObjects();
         }
@@ -1063,15 +1014,11 @@ namespace CircuitSimulatorPlus
         #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            var inputSwitch = new InputSwitch(ContextGate);
-            ContextGate.Input.Add(new InputNode(inputSwitch));
-            Add(inputSwitch);
+            Add(new InputSwitch());
         }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
-            var outputLight = new OutputLight(ContextGate);
-            ContextGate.Output.Add(new OutputNode(outputLight));
-            Add(outputLight);
+            Add(new OutputLight());
         }
         void CreateAndGate(object sender, RoutedEventArgs e)
         {
@@ -1095,7 +1042,16 @@ namespace CircuitSimulatorPlus
 
         void Import_Click(object sender, RoutedEventArgs e)
         {
-            Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
+            string filepath = SelectFile();
+            if (filepath == "")
+                return;
+            StorageObject store = StorageUtil.Load(filepath);
+            if (store == null)
+                return;
+            Gate gate = StorageConverter.ToGate(store);
+            if (gate.HasContext)
+                RecursiveTickAll((ContextGate)gate);
+            Add(gate);
             UpdateClickableObjects();
         }
 
@@ -1348,11 +1304,11 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            //var storageObject = StorageConverter.ToStorageObject(ContextGate);
-            //New();
-            //ContextGate = (ContextGate)StorageConverter.ToGate(storageObject);
-            //RenderContext();
-            //UpdateClickableObjects();
+            var storageObject = StorageConverter.ToStorageObject(ContextGate);
+            New();
+            ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(storageObject);
+            RenderContext();
+            UpdateClickableObjects();
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
@@ -1368,12 +1324,18 @@ namespace CircuitSimulatorPlus
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Gate gate in ContextGate.Context)
+            RecursiveTickAll(ContextGate);
+        }
+        void RecursiveTickAll(ContextGate contextGate)
+        {
+            foreach (Gate gate in contextGate.Context)
             {
                 foreach (InputNode inputNode in gate.Input)
                     Tick(inputNode);
                 foreach (OutputNode outputNode in gate.Output)
                     Tick(outputNode);
+                if (gate.HasContext)
+                    RecursiveTickAll((ContextGate)gate);
             }
         }
         #endregion
