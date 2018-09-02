@@ -165,6 +165,13 @@ namespace CircuitSimulatorPlus
         /// </summary>
         public void AutoComplete()
         {
+            IsCompleted = true;
+        }
+
+        public void ConnectTo(ConnectionNode endNode)
+        {
+            EndNode = endNode;
+            IsCompleted = true;
         }
 
         public void AddPoint(Point point)

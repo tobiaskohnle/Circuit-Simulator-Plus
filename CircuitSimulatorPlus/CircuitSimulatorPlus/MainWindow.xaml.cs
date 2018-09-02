@@ -85,6 +85,7 @@ namespace CircuitSimulatorPlus
         public double CurrentScale;
 
         public Cable CreatedCable;
+        public ConnectionNode CableOrigin;
 
         public Queue<ConnectionNode> TickedNodes = new Queue<ConnectionNode>();
         public DispatcherTimer Timer = new DispatcherTimer();
@@ -606,6 +607,7 @@ namespace CircuitSimulatorPlus
         {
             ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
+            CableOrigin = startNode;
             CreatedCable = new Cable(startNode);
         }
 
@@ -763,13 +765,29 @@ namespace CircuitSimulatorPlus
             }
             else
             {
+                IClickable nearestObject = FindNearestObjectAt(LastCanvasClick);
+
                 if (CreatingCable)
                 {
-                    CreatedCable.AddPoint(LastCanvasClick);
+                    if (nearestObject is ConnectionNode)
+                    {
+                        var connectionNode = nearestObject as ConnectionNode;
+                        CreatedCable.ConnectTo(connectionNode);
+
+                        connectionNode.ConnectTo(CableOrigin);
+                        Tick(connectionNode);
+                        Tick(CableOrigin);
+
+                        CreatingCable = false;
+                    }
+                    else
+                    {
+                        CreatedCable.AddPoint(LastCanvasClick);
+                    }
                 }
                 else
                 {
-                    LastClickedObject = FindNearestObjectAt(LastCanvasClick);
+                    LastClickedObject = nearestObject;
 
                     if (LastClickedObject == null)
                     {
@@ -800,7 +818,14 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ToggleObjects();
+            if (CreatingCable)
+            {
+                CreatedCable.AutoComplete();
+            }
+            else
+            {
+                ToggleObjects();
+            }
         }
         void Window_MouseMove(object sender, MouseEventArgs e)
         {
