@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
         List<IClickable> SelectedObjects;
         public ToggleObjectsCommand(List<IClickable> selectedObjects) : base("Toggle Objects")
         {
-            this.SelectedObjects = selectedObjects;
+            SelectedObjects = selectedObjects;
         }
 
         public override void Redo()

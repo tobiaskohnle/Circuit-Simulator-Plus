@@ -220,15 +220,15 @@ namespace CircuitSimulatorPlus
                 {
                     switch (innerStore.Type)
                     {
-                        case "InputSwitch":
-                            inputStores.Add(innerStore);
-                            break;
-                        case "OutputLight":
-                            outputStores.Add(innerStore);
-                            break;
-                        default:
-                            gateStores.Add(innerStore);
-                            break;
+                    case "InputSwitch":
+                        inputStores.Add(innerStore);
+                        break;
+                    case "OutputLight":
+                        outputStores.Add(innerStore);
+                        break;
+                    default:
+                        gateStores.Add(innerStore);
+                        break;
                     }
                 }
 

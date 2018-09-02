@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
         Cable Cable;
         public CreateConnectionCommand(Cable cable) : base("Create Connection")
         {
-            this.Cable = cable;
+            Cable = cable;
         }
 
         public override void Redo()

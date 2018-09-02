@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
 
         public InvertConnectionCommand(List<IClickable> List) : base("Invert Connection")
         {
-            this.Selected = List;
+            Selected = List;
         }
 
         public override void Redo()

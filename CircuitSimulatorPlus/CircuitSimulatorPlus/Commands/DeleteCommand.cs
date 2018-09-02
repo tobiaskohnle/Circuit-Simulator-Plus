@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         IList<IClickable> DeletedObjects;
         public DeleteCommand(IList<IClickable> selectedObjects) : base("Deleted object")
         {
-            this.SelectedObjects = selectedObjects;
+            SelectedObjects = selectedObjects;
         }
 
         public override void Redo()

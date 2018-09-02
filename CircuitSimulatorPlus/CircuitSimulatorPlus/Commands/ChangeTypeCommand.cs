@@ -9,12 +9,12 @@ namespace CircuitSimulatorPlus
     public class ChangeTypeCommand : Command
     {
         StorageObject storageObject = null;
-        Type Type,oldtype;
+        Type Type, oldtype;
         IList<IClickable> SelectedObjects;
-        public ChangeTypeCommand(Type type,IList<IClickable> selectedObjects) : base($"Changed Type to {type.Name}")
+        public ChangeTypeCommand(Type type, IList<IClickable> selectedObjects) : base($"Changed Type to {type.Name}")
         {
-            this.Type = type;
-            this.SelectedObjects = selectedObjects;
+            Type = type;
+            SelectedObjects = selectedObjects;
             oldtype = typeof(Gate);
         }
 

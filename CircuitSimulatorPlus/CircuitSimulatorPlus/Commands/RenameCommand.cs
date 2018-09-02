@@ -1,4 +1,5 @@
-﻿using System;using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace CircuitSimulatorPlus
 
         public RenameCommand(List<IClickable> selectedObjects, string name) : base($"Renamed Gate to {name}")
         {
-            this.SelectedObjects = selectedObjects;
+            SelectedObjects = selectedObjects;
             newName = name;
         }
 

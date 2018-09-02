@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         InputNode InputNode;
         public AddInputCommand(Gate gate) : base("Added input to gate")
         {
-            this.Gate = gate;
+            Gate = gate;
         }
 
         public override void Redo()

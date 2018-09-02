@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         Gate CreatedGate;
         public CreateGateCommand(Gate createdGate) : base($"created {createdGate.GetType()}")
         {
-            this.CreatedGate = createdGate;
+            CreatedGate = createdGate;
         }
 
         public override void Redo()
