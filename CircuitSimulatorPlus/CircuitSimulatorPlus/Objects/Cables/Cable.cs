@@ -30,6 +30,10 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public bool IsCompleted;
+
+        public bool StartAtOutputNode;
+
         bool vertical;
 
         public List<double> Points;
@@ -38,14 +42,16 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return OutputNode.Position;
+                return StartAtOutputNode ? OutputNode.Position : InputNode.Position;
             }
         }
         public Point EndPos
         {
             get
             {
-                return InputNode.Position;
+                if (IsCompleted)
+                    return StartAtOutputNode ? InputNode.Position : OutputNode.Position;
+                return MainWindow.Self.LastCanvasPos;
             }
         }
 
@@ -121,7 +127,7 @@ namespace CircuitSimulatorPlus
 
                 bool prioritizedFound = false;
 
-                for (int i = 0; i < Points.Count; i++)
+                for (int i = 0; i < Points.Count - 4; i++)
                 {
                     var point = Points[i + 2];
                     var lastPoint = Points[i + 2 - 1];
