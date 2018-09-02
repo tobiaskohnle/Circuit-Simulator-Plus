@@ -767,7 +767,6 @@ namespace CircuitSimulatorPlus
             LastWindowClick = e.GetPosition(this);
 
             MouseMoved = false;
-            LastClickedObject = FindNearestObjectAt(LastCanvasClick);
 
             if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
@@ -779,22 +778,27 @@ namespace CircuitSimulatorPlus
                 {
                     CreatedCable.AddPoint(LastCanvasClick);
                 }
-                else if (LastClickedObject == null)
-                {
-                    MakingSelection = true;
-                }
-                else if (LastClickedObject is IMovable)
-                {
-                    MovingObjects = true;
-                }
-                else if (LastClickedObject is ConnectionNode)
-                {
-                    CreatingCable = true;
-                    CreateCable();
-                }
                 else
                 {
-                    MakingSelection = true;
+                    LastClickedObject = FindNearestObjectAt(LastCanvasClick);
+
+                    if (LastClickedObject == null)
+                    {
+                        MakingSelection = true;
+                    }
+                    else if (LastClickedObject is IMovable)
+                    {
+                        MovingObjects = true;
+                    }
+                    else if (LastClickedObject is ConnectionNode)
+                    {
+                        CreatingCable = true;
+                        CreateCable();
+                    }
+                    else
+                    {
+                        MakingSelection = true;
+                    }
                 }
             }
 
