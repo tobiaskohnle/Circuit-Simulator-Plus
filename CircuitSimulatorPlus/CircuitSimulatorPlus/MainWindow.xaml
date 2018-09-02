@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:CircuitSimulatorPlus"
         xmlns:properties="clr-namespace:CircuitSimulatorPlus.Properties"
 
-        xmlns:Controls="clr-namespace:CircuitSimulatorPlus.Controls" x:Class="CircuitSimulatorPlus.MainWindow"
+        x:Class="CircuitSimulatorPlus.MainWindow"
 
         Height="700" Width="1000"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
