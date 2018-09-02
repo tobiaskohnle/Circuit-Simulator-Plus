@@ -629,7 +629,7 @@ namespace CircuitSimulatorPlus
                     startNode.ConnectTo(endNode);
                     Tick(endNode);
 
-                    var cable = new Cable(endNode as InputNode, startNode as OutputNode);
+                    //var cable = new Cable(endNode as InputNode, startNode as OutputNode);
                 }
             }
         }
