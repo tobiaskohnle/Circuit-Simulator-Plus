@@ -836,11 +836,6 @@ namespace CircuitSimulatorPlus
                 {
                     MovingObjects = true;
                 }
-                else if (LastClickedObject is ConnectionNode)
-                {
-                    //CreatingCable = true;
-                    //CreateCable();
-                }
                 else
                 {
                     MakingSelection = true;
