@@ -85,17 +85,17 @@ namespace CircuitSimulatorPlus
             {
                 if ((i & 1) != 0)
                 {
-                    segments[i].X1 = cable.Points[i + 1];
-                    segments[i].Y1 = cable.Points[i];
-                    segments[i].X2 = cable.Points[i + 1];
-                    segments[i].Y2 = cable.Points[i + 2];
+                    segments[i].X1 = cable.Points[i].X;
+                    segments[i].Y1 = cable.Points[i - 1].Y;
+                    segments[i].X2 = cable.Points[i].X;
+                    segments[i].Y2 = cable.Points[i + 1].Y;
                 }
                 else
                 {
-                    segments[i].X1 = cable.Points[i];
-                    segments[i].Y1 = cable.Points[i + 1];
-                    segments[i].X2 = cable.Points[i + 2];
-                    segments[i].Y2 = cable.Points[i + 1];
+                    segments[i].X1 = cable.Points[i - 1].X;
+                    segments[i].Y1 = cable.Points[i].Y;
+                    segments[i].X2 = cable.Points[i + 1].X;
+                    segments[i].Y2 = cable.Points[i].Y;
                 }
             }
         }

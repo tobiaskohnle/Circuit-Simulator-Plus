@@ -88,6 +88,7 @@
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
     <Compile Include="Objects\Cables\CableSegment.cs" />
     <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
+    <Compile Include="Rendering\Cables\CableSegmentRenderer.cs" />
     <Compile Include="Rendering\ConnectionNodes\InputNodeRenderer.cs" />
     <Compile Include="Rendering\Gates\InputSwitchRenderer.cs" />
     <Compile Include="Miscellaneous\Constants.cs" />

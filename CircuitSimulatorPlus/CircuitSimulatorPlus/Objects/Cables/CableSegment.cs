@@ -9,13 +9,28 @@ namespace CircuitSimulatorPlus
 {
     public class CableSegment : IClickable, IMovable
     {
-        List<Point> points;
-        int index;
+        public List<Point> Points;
+        public int Index;
 
         public CableSegment(List<Point> points, int index)
         {
-            this.points = points;
-            this.index = index;
+            Points = points;
+            Index = index;
+        }
+
+        public event Action OnRenderedChanged;
+        bool isRendered;
+        public bool IsRendered
+        {
+            get
+            {
+                return isRendered;
+            }
+            set
+            {
+                isRendered = value;
+                OnRenderedChanged?.Invoke();
+            }
         }
 
         LineHitbox hitbox;
@@ -48,8 +63,8 @@ namespace CircuitSimulatorPlus
 
         public void Move(Vector vector)
         {
-            if (index > 0 && index < points.Count - 1)
-                points[index] += vector;
+            if (Index > 0 && Index < Points.Count - 1)
+                Points[Index] += vector;
         }
     }
 }
