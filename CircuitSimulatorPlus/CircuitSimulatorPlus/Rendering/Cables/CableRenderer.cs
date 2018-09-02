@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -14,17 +9,11 @@ namespace CircuitSimulatorPlus
     public class CableRenderer
     {
         Cable cable;
-        Line line;
+        List<Line> segments = new List<Line>();
 
         public CableRenderer(Cable cable)
         {
             this.cable = cable;
-
-            line = new Line
-            {
-                Stroke = Brushes.Black,
-                StrokeThickness = Constants.LineWidth
-            };
 
             cable.OnRenderedChanged += OnRenderedChanged;
 
@@ -38,62 +27,74 @@ namespace CircuitSimulatorPlus
         {
             if (cable.IsRendered)
             {
+                UpdateLineSegments();
+
+                cable.OnSelectedChanged += OnLayoutChanged;
+                cable.OnLayoutChanged += OnLayoutChanged;
+                cable.OnPointsChanged += UpdateLineSegments;
+                MainWindow.Self.OnLastCanvasPosChanged += OnLayoutChanged;
+            }
+            else
+            {
+                foreach (Line segment in segments)
+                {
+                    MainWindow.Self.canvas.Children.Remove(segment);
+                }
+            }
+        }
+
+        public void UpdateSegmentColor()
+        {
+            SolidColorBrush segmentStroke = cable.State ? Brushes.Red : Brushes.Black;
+
+            foreach (Line segment in segments)
+            {
+                segment.Stroke = segmentStroke;
+            }
+
+            if (cable.IsSelected)
+            {
+                segments[cable.hitbox.SegmentIndex].Stroke = SystemColors.MenuHighlightBrush;
+            }
+        }
+
+        public void UpdateLineSegments()
+        {
+            int amtSegments = cable.SegmentPoints.Count + 2;
+
+            while (segments.Count < amtSegments)
+            {
+                var line = new Line { Stroke = Brushes.Black, StrokeThickness = Constants.LineWidth };
+                segments.Add(line);
                 MainWindow.Self.canvas.Children.Add(line);
-
-                cable.InputNode.OnPositionChanged += OnPositionChanged;
-                cable.OutputNode.OnPositionChanged += OnPositionChanged;
-                cable.InputNode.OnSelectionChanged += OnSelectionChanged;
-                cable.OutputNode.OnSelectionChanged += OnSelectionChanged;
-                cable.InputNode.OnEmptyChanged += OnEmptyChanged;
-                cable.OutputNode.OnEmptyChanged += OnEmptyChanged;
-                cable.OutputNode.OnStateChanged += OnStateChanged;
-
-                OnSelectionChanged();
-                OnPositionChanged();
-                OnStateChanged();
             }
-            else
+            while (segments.Count > amtSegments)
             {
-                MainWindow.Self.canvas.Children.Remove(line);
-
-                cable.InputNode.OnPositionChanged -= OnPositionChanged;
-                cable.OutputNode.OnPositionChanged -= OnPositionChanged;
-                cable.InputNode.OnSelectionChanged -= OnSelectionChanged;
-                cable.OutputNode.OnSelectionChanged -= OnSelectionChanged;
-                cable.InputNode.OnEmptyChanged -= OnEmptyChanged;
-                cable.OutputNode.OnEmptyChanged -= OnEmptyChanged;
-                cable.OutputNode.OnStateChanged -= OnStateChanged;
+                segments.RemoveAt(segments.Count - 1);
             }
+
+            OnLayoutChanged();
         }
 
-        public void OnSelectionChanged()
+        public void OnLayoutChanged()
         {
-            if (cable.OutputNode.IsSelected || cable.InputNode.IsSelected)
+            for (int i = 0; i < segments.Count; i++)
             {
-                line.Stroke = SystemColors.MenuHighlightBrush;
+                if ((i & 1) != 0)
+                {
+                    segments[i].X1 = cable.GetPointAt(i + 1);
+                    segments[i].Y1 = cable.GetPointAt(i);
+                    segments[i].X2 = cable.GetPointAt(i + 1);
+                    segments[i].Y2 = cable.GetPointAt(i + 2);
+                }
+                else
+                {
+                    segments[i].X1 = cable.GetPointAt(i);
+                    segments[i].Y1 = cable.GetPointAt(i + 1);
+                    segments[i].X2 = cable.GetPointAt(i + 2);
+                    segments[i].Y2 = cable.GetPointAt(i + 1);
+                }
             }
-            else
-            {
-                OnStateChanged();
-            }
-        }
-
-        public void OnEmptyChanged()
-        {
-            cable.IsRendered = !cable.OutputNode.IsEmpty && !cable.InputNode.IsEmpty;
-        }
-
-        public void OnStateChanged()
-        {
-            line.Stroke = cable.OutputNode.State ? Brushes.Red : Brushes.Black;
-        }
-
-        public void OnPositionChanged()
-        {
-            line.X1 = cable.OutputNode.Position.X;
-            line.Y1 = cable.OutputNode.Position.Y;
-            line.X2 = cable.InputNode.Position.X;
-            line.Y2 = cable.InputNode.Position.Y;
         }
     }
 }
