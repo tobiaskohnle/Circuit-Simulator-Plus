@@ -1031,15 +1031,11 @@ namespace CircuitSimulatorPlus
         #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            var inputSwitch = new InputSwitch();
-            ContextGate.Input.Add(new InputNode(inputSwitch));
-            Add(inputSwitch);
+            Add(new InputSwitch());
         }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
-            var outputLight = new OutputLight();
-            ContextGate.Output.Add(new OutputNode(outputLight));
-            Add(outputLight);
+            Add(new OutputLight());
         }
         void CreateAndGate(object sender, RoutedEventArgs e)
         {
@@ -1063,7 +1059,8 @@ namespace CircuitSimulatorPlus
 
         void Import_Click(object sender, RoutedEventArgs e)
         {
-            Add(StorageConverter.ToGate(StorageUtil.Load(SelectFile())));
+            Gate gate = StorageConverter.ToGate(StorageUtil.Load(SelectFile()));
+            Add(gate);
             UpdateClickableObjects();
         }
 
