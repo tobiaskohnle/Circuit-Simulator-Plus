@@ -13,14 +13,16 @@ namespace CircuitSimulatorPlus
             points.Add(StartPos);
             points.Add(EndPos);
             
-            new CableSegment(this, 0);
-            new CableSegment(this, 1);
+            new CableSegment(this, amtSegments++);
+            new CableSegment(this, amtSegments++);
         }
 
         public const double DistanceFactor = 0.2;
         public const double SegmentWidth = 1.0;
 
         public bool IsCompleted;
+
+        int amtSegments;
 
         bool vertical;
 
@@ -114,8 +116,10 @@ namespace CircuitSimulatorPlus
 
         public void AddPoint(Point point)
         {
-            points.Insert(points.Count - 1, point);
+            points.Add(point);
             vertical = !vertical;
+
+            new CableSegment(this, amtSegments++);
 
             OnPointsChanged?.Invoke();
         }

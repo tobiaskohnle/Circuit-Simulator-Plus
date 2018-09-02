@@ -45,6 +45,8 @@ namespace CircuitSimulatorPlus
             connectionNode.BackConnectedTo = this;
 
             IsEmpty = connectionNode.IsEmpty = false;
+
+            MainWindow.Self.Tick(this);
         }
         /// <summary>
         /// Clears this OutputNode.

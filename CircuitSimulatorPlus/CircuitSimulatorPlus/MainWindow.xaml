@@ -89,6 +89,7 @@
             <MenuItem Header="IsRisingEdge" Click="RisingEdge_Click"></MenuItem>
             <MenuItem Header="IsMasterSlave" Click="MasterSlave_Click"></MenuItem>
             <MenuItem Header="IsCentered" Click="Centered_Click"></MenuItem>
+            <MenuItem Header="Connect Parallel" Click="ConnectParallel_Click"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

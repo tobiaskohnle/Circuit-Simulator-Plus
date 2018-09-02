@@ -829,8 +829,8 @@ namespace CircuitSimulatorPlus
                     }
                     else if (LastClickedObject is ConnectionNode)
                     {
-                        CreatingCable = true;
-                        CreateCable();
+                        //CreatingCable = true;
+                        //CreateCable();
                     }
                     else
                     {
@@ -1379,6 +1379,11 @@ namespace CircuitSimulatorPlus
                 if (gate.HasContext)
                     RecursiveTickAll((ContextGate)gate);
             }
+        }
+
+        void ConnectParallel_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectOppositeNodes();
         }
         #endregion
 
