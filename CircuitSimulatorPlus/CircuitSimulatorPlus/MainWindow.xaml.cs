@@ -290,9 +290,9 @@ namespace CircuitSimulatorPlus
 
         public void ChangeType(Type type)
         {
-            StorageObject storageObject = null;
-            if (type == typeof(ContextGate))
-                storageObject = StorageUtil.Load(SelectFile());
+            //StorageObject storageObject = null;
+            //if (type == typeof(ContextGate))
+            //    storageObject = StorageUtil.Load(SelectFile());
             PerformCommand(new ChangeTypeCommand(type,SelectedObjects));
         }
 
@@ -349,7 +349,8 @@ namespace CircuitSimulatorPlus
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = Constants.FileFilter;
-            dialog.ShowDialog();
+            if (dialog.ShowDialog() != true)
+                return "";
             return dialog.FileName;
         }
 
@@ -1059,7 +1060,13 @@ namespace CircuitSimulatorPlus
 
         void Import_Click(object sender, RoutedEventArgs e)
         {
-            Gate gate = StorageConverter.ToGate(StorageUtil.Load(SelectFile()));
+            string filepath = SelectFile();
+            if (filepath == "")
+                return;
+            StorageObject store = StorageUtil.Load(filepath);
+            if (store == null)
+                return;
+            Gate gate = StorageConverter.ToGate(store);
             Add(gate);
             UpdateClickableObjects();
         }
