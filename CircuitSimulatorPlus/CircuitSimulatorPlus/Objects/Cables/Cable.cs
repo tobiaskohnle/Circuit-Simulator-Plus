@@ -9,9 +9,6 @@ namespace CircuitSimulatorPlus
         public Cable(ConnectionNode startNode)
         {
             StartNode = startNode;
-
-            points.Add(StartPos);
-            points.Add(EndPos);
             
             new CableSegment(this, amtSegments++);
             new CableSegment(this, amtSegments++);
@@ -41,9 +38,9 @@ namespace CircuitSimulatorPlus
         {
             if (index <= 0)
                 return StartPos;
-            if (index >= points.Count - 1)
+            if (index >= points.Count + 1)
                 return EndPos;
-            return points[index - 1];
+            return points[index - 1]; 
         }
 
         public Point StartPos

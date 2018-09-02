@@ -1416,7 +1416,8 @@ namespace CircuitSimulatorPlus
         }
         void CreateCable_Click(object sender, RoutedEventArgs e)
         {
-            CreateCable();
+            if (LastClickedObject != null)
+                CreateCable();
         }
         #endregion
     }

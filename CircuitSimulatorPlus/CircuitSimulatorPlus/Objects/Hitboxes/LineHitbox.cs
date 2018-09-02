@@ -65,7 +65,7 @@ namespace CircuitSimulatorPlus
 
         public override bool IncludesPos(Point pos)
         {
-            return Dist(pos) <= Cable.SegmentWidth;
+            return Dist(pos) <= Cable.SegmentWidth && cable.IsCompleted;
         }
 
         public override bool IsIncludedIn(Rect rect)
