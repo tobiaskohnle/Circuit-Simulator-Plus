@@ -97,46 +97,7 @@ namespace CircuitSimulatorPlus
 
                 for (int i = 2; i < Points.Count - 2; i++)
                 {
-                    double point = Points[i - 1];
-                    double lastPoint = Points[i - 1 - 1];
-                    double nextPoint = Points[i - 1 + 1];
-
-                    bool vert = (i & 1) != 0;
-
-                    double startX = vert ? point : lastPoint;
-                    double startY = vert ? lastPoint : point;
-                    double endX = vert ? point : nextPoint;
-                    double endY = vert ? nextPoint : point;
-
-                    double dist = vert ? Math.Abs(pos.X - startX) : Math.Abs(pos.Y - startY);
-
-                    double lastDist = vert ? Math.Abs(pos.Y - startY) : Math.Abs(pos.X - startX);
-                    double nextDist = vert ? Math.Abs(pos.Y - endY) : Math.Abs(pos.X - endX);
-
-                    double len = vert ? Math.Abs(endY - startY) : Math.Abs(endX - startX);
-
-                    if (lastDist < len && nextDist < len)
-                    {
-                        if (dist < SegmentDistance || dist == SegmentDistance && !prioritizedFound)
-                        {
-                            SegmentDistance = dist;
-                            prioritizedFound = true;
-                            SegmentIndex = i - 2;
-                        }
-                        continue;
-                    }
-
-                    double mindist = Math.Min(lastDist, nextDist);
-                    double sidedist = Math.Max(dist, mindist);
-
-                    bool prioritize = dist > mindist;
-
-                    if (sidedist < SegmentDistance || sidedist == SegmentDistance && prioritize && !prioritizedFound)
-                    {
-                        SegmentDistance = sidedist;
-                        prioritizedFound = prioritize;
-                        SegmentIndex = i - 2;
-                    }
+                    
                 }
             }
         }

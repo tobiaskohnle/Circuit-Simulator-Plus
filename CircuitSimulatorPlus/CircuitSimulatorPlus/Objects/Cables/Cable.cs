@@ -21,6 +21,9 @@ namespace CircuitSimulatorPlus
             startNode.OnPositionChanged += UpdatePoints;
         }
 
+        public const double DistanceFactor = 0.2;
+        public const double SegmentWidth = 1.0;
+
         public event Action OnRenderedChanged;
         protected bool isRendered;
         public bool IsRendered
@@ -46,31 +49,29 @@ namespace CircuitSimulatorPlus
         public event Action OnLayoutChanged;
         public event Action OnPointsChanged;
 
-        List<double> segmentPoints = new List<double>();
-        public List<double> SegmentPoints
+        List<Point> points = new List<Point>();
+        public List<Point> Points
         {
             get
             {
-                return segmentPoints;
+                return points;
             }
             set
             {
-                segmentPoints = value;
+                points = value;
                 hitbox.Points = value;
                 UpdatePoints();
                 OnPointsChanged?.Invoke();
             }
         }
 
-        public List<double> Points = new List<double>();
-
         public void UpdatePoints()
         {
-            while (Points.Count < segmentPoints.Count + 4)
+            while (Points.Count < points.Count + 4)
             {
                 Points.Add(0);
             }
-            while (Points.Count > segmentPoints.Count + 4)
+            while (Points.Count > points.Count + 4)
             {
                 Points.RemoveAt(Points.Count - 1);
             }
@@ -78,8 +79,8 @@ namespace CircuitSimulatorPlus
             Points[0] = StartPos.X;
             Points[1] = StartPos.Y;
             
-            for (int i = 0; i < segmentPoints.Count; i++)
-                Points[i + 2] = segmentPoints[i];
+            for (int i = 0; i < points.Count; i++)
+                Points[i + 2] = points[i];
 
             Points[Points.Count - 2] = vertical ? EndPos.Y : EndPos.X;
             Points[Points.Count - 1] = vertical ? EndPos.X : EndPos.Y;
@@ -189,9 +190,9 @@ namespace CircuitSimulatorPlus
         public void AddPoint(Point point)
         {
             if (vertical)
-                SegmentPoints.Add(point.Y);
+                Points.Add(point.Y);
             else
-                SegmentPoints.Add(point.X);
+                Points.Add(point.X);
             vertical = !vertical;
 
             UpdatePoints();
@@ -205,10 +206,10 @@ namespace CircuitSimulatorPlus
 
         public void Move(Vector vector)
         {
-            if (hitbox.SegmentIndex > 0 && hitbox.SegmentIndex < segmentPoints.Count)
+            if (hitbox.SegmentIndex > 0 && hitbox.SegmentIndex < points.Count)
             {
                 bool vert = (hitbox.SegmentIndex & 1) != 0;
-                segmentPoints[hitbox.SegmentIndex - 1] += vert ? vector.X : vector.Y;
+                points[hitbox.SegmentIndex - 1] += vert ? vector.X : vector.Y;
                 UpdatePoints();
             }
         }

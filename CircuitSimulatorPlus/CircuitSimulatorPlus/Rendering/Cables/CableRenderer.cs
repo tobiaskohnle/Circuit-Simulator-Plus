@@ -63,7 +63,7 @@ namespace CircuitSimulatorPlus
 
         public void UpdateLineSegments()
         {
-            int amtSegments = cable.SegmentPoints.Count + 2;
+            int amtSegments = cable.Points.Count + 2;
 
             while (segments.Count < amtSegments)
             {
