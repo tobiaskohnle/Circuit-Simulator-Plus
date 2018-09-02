@@ -24,7 +24,13 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                throw new NotImplementedException();
+                Point point = cable.GetPoint(index);
+                Point lastPoint = cable.GetPoint(index - 1);
+                Point nextPoint = cable.GetPoint(index + 1);
+
+                if (vert)
+                    return new Rect(point.X, Math.Min(lastPoint.Y, nextPoint.Y), 0, Math.Abs(nextPoint.Y - lastPoint.Y));
+                return new Rect(Math.Min(lastPoint.X, nextPoint.X), point.Y, Math.Abs(nextPoint.X - lastPoint.X), 0);
             }
         }
 
