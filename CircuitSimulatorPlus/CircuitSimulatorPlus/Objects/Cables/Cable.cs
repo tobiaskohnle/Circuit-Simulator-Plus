@@ -38,8 +38,11 @@ namespace CircuitSimulatorPlus
 
         bool vertical;
 
-        List<double> points;
-        public List<double> Points
+        public event Action OnLayoutChanged;
+        public event Action OnPointsChanged;
+
+        List<double> points = new List<double>();
+        public List<double> SegmentPoints
         {
             get
             {
@@ -49,7 +52,27 @@ namespace CircuitSimulatorPlus
             {
                 points = value;
                 hitbox.Points = value;
+                OnPointsChanged?.Invoke();
             }
+        }
+
+        public double GetPointAt(int index)
+        {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException();
+            if (index == 0)
+                return StartPos.X;
+            if (index == 1)
+                return StartPos.Y;
+
+            if (index == 2 + points.Count)
+                return vertical ? EndPos.Y : EndPos.X;
+            if (index == 2 + points.Count + 1)
+                return vertical ? EndPos.X : EndPos.Y;
+            if (index > 2 + points.Count + 1)
+                throw new ArgumentOutOfRangeException();
+
+            return points[index - 2];
         }
 
         public Point StartPos
@@ -69,17 +92,37 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        ConnectionNode startNode;
         public ConnectionNode StartNode
         {
-            get; set;
+            get
+            {
+                return startNode;
+            }
+            set
+            {
+                startNode = value;
+                if (value is OutputNode)
+                    outputNode = value as OutputNode;
+            }
         }
 
+        ConnectionNode endNode;
         public ConnectionNode EndNode
         {
-            get; set;
+            get
+            {
+                return endNode;
+            }
+            set
+            {
+                endNode = value;
+                if (value is OutputNode)
+                    outputNode = value as OutputNode;
+            }
         }
 
-        CableHitbox hitbox;
+        public CableHitbox hitbox; // FIXME
         public Hitbox Hitbox
         {
             get
@@ -107,21 +150,32 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        OutputNode outputNode;
+
+        public bool State
+        {
+            get
+            {
+                return outputNode?.State ?? false;
+            }
+        }
+
         /// <summary>
         /// Adds points to make a valid cable
         /// </summary>
         public void AutoComplete()
         {
-
         }
 
         public void AddPoint(Point point)
         {
             if (vertical)
-                Points.Add(point.X);
+                SegmentPoints.Add(point.Y);
             else
-                Points.Add(point.Y);
+                SegmentPoints.Add(point.X);
             vertical = !vertical;
+
+            OnPointsChanged?.Invoke();
         }
 
         public void MoveSegment(int index, Vector vector)

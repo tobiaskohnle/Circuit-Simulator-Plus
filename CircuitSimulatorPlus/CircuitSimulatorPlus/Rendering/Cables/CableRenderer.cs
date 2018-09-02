@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -14,6 +9,7 @@ namespace CircuitSimulatorPlus
     public class CableRenderer
     {
         Cable cable;
+        List<Line> segments = new List<Line>();
 
         public CableRenderer(Cable cable)
         {
@@ -31,26 +27,74 @@ namespace CircuitSimulatorPlus
         {
             if (cable.IsRendered)
             {
+                UpdateLineSegments();
+
+                cable.OnSelectedChanged += OnLayoutChanged;
+                cable.OnLayoutChanged += OnLayoutChanged;
+                cable.OnPointsChanged += UpdateLineSegments;
+                MainWindow.Self.OnLastCanvasPosChanged += OnLayoutChanged;
             }
             else
             {
+                foreach (Line segment in segments)
+                {
+                    MainWindow.Self.canvas.Children.Remove(segment);
+                }
             }
         }
 
-        public void OnSelectionChanged()
+        public void UpdateSegmentColor()
         {
+            SolidColorBrush segmentStroke = cable.State ? Brushes.Red : Brushes.Black;
+
+            foreach (Line segment in segments)
+            {
+                segment.Stroke = segmentStroke;
+            }
+
+            if (cable.IsSelected)
+            {
+                segments[cable.hitbox.SegmentIndex].Stroke = SystemColors.MenuHighlightBrush;
+            }
         }
 
-        public void OnEmptyChanged()
+        public void UpdateLineSegments()
         {
+            int amtSegments = cable.SegmentPoints.Count + 2;
+
+            while (segments.Count < amtSegments)
+            {
+                var line = new Line { Stroke = Brushes.Black, StrokeThickness = Constants.LineWidth };
+                segments.Add(line);
+                MainWindow.Self.canvas.Children.Add(line);
+            }
+            while (segments.Count > amtSegments)
+            {
+                segments.RemoveAt(segments.Count - 1);
+            }
+
+            OnLayoutChanged();
         }
 
-        public void OnStateChanged()
+        public void OnLayoutChanged()
         {
-        }
-
-        public void OnPositionChanged()
-        {
+            for (int i = 0; i < segments.Count; i++)
+            {
+                if ((i & 1) != 0)
+                {
+                    segments[i].X1 = cable.GetPointAt(i + 1);
+                    segments[i].Y1 = cable.GetPointAt(i);
+                    segments[i].X2 = cable.GetPointAt(i + 1);
+                    segments[i].Y2 = cable.GetPointAt(i + 2);
+                }
+                else
+                {
+                    segments[i].X1 = cable.GetPointAt(i);
+                    segments[i].Y1 = cable.GetPointAt(i + 1);
+                    segments[i].X2 = cable.GetPointAt(i + 2);
+                    segments[i].Y2 = cable.GetPointAt(i + 1);
+                }
+            }
         }
     }
 }

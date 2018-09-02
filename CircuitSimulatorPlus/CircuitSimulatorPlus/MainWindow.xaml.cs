@@ -54,7 +54,20 @@ namespace CircuitSimulatorPlus
         public Point LastWindowPos;
         public Point LastWindowClick;
 
-        public Point LastCanvasPos;
+        public event Action OnLastCanvasPosChanged;
+        Point lastCanvasPos;
+        public Point LastCanvasPos
+        {
+            get
+            {
+                return lastCanvasPos;
+            }
+            set
+            {
+                lastCanvasPos = value;
+                OnLastCanvasPosChanged?.Invoke();
+            }
+        }
         public Point LastCanvasClick;
 
         public bool MakingSelection;
@@ -70,6 +83,8 @@ namespace CircuitSimulatorPlus
         public string CurrentFilePath;
 
         public double CurrentScale;
+
+        public Cable CreatedCable;
 
         public Queue<ConnectionNode> TickedNodes = new Queue<ConnectionNode>();
         public DispatcherTimer Timer = new DispatcherTimer();
@@ -602,9 +617,7 @@ namespace CircuitSimulatorPlus
         {
             ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
-            var cable = new Cable(startNode);
-
-
+            CreatedCable = new Cable(startNode);
         }
 
         public void EmptyInput()
@@ -762,7 +775,11 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                if (LastClickedObject == null)
+                if (CreatingCable)
+                {
+                    CreatedCable.AddPoint(LastCanvasClick);
+                }
+                else if (LastClickedObject == null)
                 {
                     MakingSelection = true;
                 }
@@ -957,7 +974,6 @@ namespace CircuitSimulatorPlus
             MakingSelection = false;
             MovingObjects = false;
             MovingScreen = false;
-            CreatingCable = false;
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
