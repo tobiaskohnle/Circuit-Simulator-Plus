@@ -438,7 +438,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected)
             {
-
+                CopyToClipboard();
             }
         }
         public void Cut()
@@ -450,7 +450,7 @@ namespace CircuitSimulatorPlus
         {
             if (DataOnClipboard)
             {
-
+                PasteFromClipboard(CanvasCenter);
             }
         }
         #endregion
@@ -661,6 +661,52 @@ namespace CircuitSimulatorPlus
                     node.IsRendered = true;
                 }
             }
+        }
+        public void CopyToClipboard()
+        {
+            var storeContext = new ContextGate();
+            Point ltcorner = new Point(double.PositiveInfinity, double.PositiveInfinity);
+            foreach (IClickable obj in SelectedObjects)
+            {
+                Gate gate = obj as Gate;
+                if (gate == null)
+                    continue;
+                storeContext.Context.Add(gate);
+                if (gate.Position.X < ltcorner.X)
+                    ltcorner.X = gate.Position.X;
+                if (gate.Position.Y < ltcorner.Y)
+                    ltcorner.Y = gate.Position.Y;
+            }
+            var store = StorageConverter.ToStorageObject(storeContext);
+            foreach (StorageObject innerStore in store.Context)
+                innerStore.Position = (Point)(innerStore.Position - ltcorner);
+            string storeText = StorageUtil.CreateText(store);
+            Clipboard.SetData(Constants.FileExtention, storeText);
+        }
+        public void PasteFromClipboard(Point at)
+        {
+            at.X = Math.Round(at.X);
+            at.Y = Math.Round(at.Y);
+            string text = (string)Clipboard.GetData(Constants.FileExtention);
+            var store = StorageUtil.LoadString(text);
+            if (store == null)
+                return;
+            ContextGate storeContext = StorageConverter.ToGateTopLayer(store);
+            foreach (Gate gate in storeContext.Context)
+            {
+                gate.Position = at + (Vector)gate.Position;
+
+                gate.IsRendered = true;
+                foreach (ConnectionNode node in gate.Input)
+                    node.IsRendered = true;
+                foreach (ConnectionNode node in gate.Output)
+                    node.IsRendered = true;
+
+                Select(gate);
+                ClickableObjects.Add(gate);
+                ContextGate.Context.Add(gate);
+            }
+            UpdateClickableObjects();
         }
         #endregion
 

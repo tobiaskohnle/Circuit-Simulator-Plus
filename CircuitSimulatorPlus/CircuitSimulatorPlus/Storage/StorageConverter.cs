@@ -312,6 +312,9 @@ namespace CircuitSimulatorPlus
                 foreach (int index in storageObject.InitialActiveOutputs)
                     gate.Output[index].State = true;
 
+            if (storageObject.Type == "InputSwitch")
+                ((InputSwitch)gate).State = gate.Output.First().State;
+
             return gate;
         }
 
