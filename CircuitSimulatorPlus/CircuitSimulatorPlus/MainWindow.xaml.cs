@@ -852,13 +852,6 @@ namespace CircuitSimulatorPlus
                     MakingSelection = true;
                 }
             }
-
-            if (MakingSelection)
-            {
-                Canvas.SetLeft(selectVisual, LastWindowClick.X);
-                Canvas.SetTop(selectVisual, LastWindowClick.Y);
-                selectVisual.Visibility = Visibility.Visible;
-            }
         }
         void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -940,6 +933,10 @@ namespace CircuitSimulatorPlus
                         else
                             Deselect(obj);
                     }
+
+                    Canvas.SetLeft(selectVisual, LastWindowClick.X);
+                    Canvas.SetTop(selectVisual, LastWindowClick.Y);
+                    selectVisual.Visibility = Visibility.Visible;
 
                     if (currentWindowPos.X < LastWindowClick.X)
                     {
