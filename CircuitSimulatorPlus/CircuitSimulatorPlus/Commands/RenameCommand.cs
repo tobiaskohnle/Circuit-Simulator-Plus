@@ -8,24 +8,24 @@ namespace CircuitSimulatorPlus
 {
     public class RenameCommand : Command
     {
-        List<IClickable> SelectedObjects;
+        List<IClickable> selectedObjects;
         string oldName;
         string newName;
 
-        public RenameCommand(List<IClickable> selectedObjects, string name) : base($"Renamed Gate to {name}")
+        public RenameCommand(List<IClickable> selectedObjects, string name) : base($"Renamed to {name}")
         {
-            SelectedObjects = selectedObjects;
+            this.selectedObjects = selectedObjects;
             newName = name;
         }
 
         public override void Redo()
         {
-            foreach (IClickable obj in SelectedObjects)
+            foreach (IClickable obj in selectedObjects)
             {
                 if (obj is Gate)
                 {
                     oldName = (obj as Gate).Name;
-                    (obj as Gate).Name =newName;
+                    (obj as Gate).Name = newName;
                 }
                 else if (obj is ConnectionNode)
                 {
@@ -37,7 +37,7 @@ namespace CircuitSimulatorPlus
 
         public override void Undo()
         {
-            foreach (IClickable obj in SelectedObjects)
+            foreach (IClickable obj in selectedObjects)
             {
                 if (obj is Gate)
                 {

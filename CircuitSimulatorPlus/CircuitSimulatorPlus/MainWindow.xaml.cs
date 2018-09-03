@@ -316,6 +316,16 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+
+        public void Rename()
+        {
+            var renameWindow = new Controls.RenameWindow();
+
+            if (renameWindow.ShowDialog() == true)
+            {
+                PerformCommand(new RenameCommand(SelectedObjects, renameWindow.Name));
+            }
+        }
         #endregion
 
         #region IO
@@ -1356,7 +1366,7 @@ namespace CircuitSimulatorPlus
         }
         void Rename_Click(object sender, RoutedEventArgs e)
         {
-            //PerformCommand(new RenameCommand(SelectedObjects,name));
+            Rename();
         }
         void Resize_Click(object sender, RoutedEventArgs e)
         {
