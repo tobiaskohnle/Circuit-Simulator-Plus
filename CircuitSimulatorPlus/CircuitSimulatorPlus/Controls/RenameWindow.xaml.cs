@@ -8,6 +8,8 @@ namespace CircuitSimulatorPlus.Controls
         public RenameWindow()
         {
             InitializeComponent();
+
+            InputTextBox.Focus();
         }
 
         public string Name

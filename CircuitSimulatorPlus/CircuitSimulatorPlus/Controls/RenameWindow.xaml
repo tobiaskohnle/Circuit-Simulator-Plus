@@ -13,7 +13,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Name="BtnOk" Content="OK" Grid.Column="0" Margin="0,0,5,0" Padding="8" Click="BtnOk_Click"/>
+            <Button Name="BtnOk" IsDefault="True" Content="OK" Grid.Column="0" Margin="0,0,5,0" Padding="8" Click="BtnOk_Click"/>
             <Button Name="BtnCancel" Content="Cancel" Grid.Column="1" Margin="5,0,0,0" Padding="8" Click="BtnCancel_Click"/>
         </Grid>
     </StackPanel>
