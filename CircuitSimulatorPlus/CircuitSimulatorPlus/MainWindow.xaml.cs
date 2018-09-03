@@ -617,14 +617,19 @@ namespace CircuitSimulatorPlus
         }
         public void CreateCable()
         {
-            if (LastClickedObject != null)
+            foreach (IClickable obj in SelectedObjects)
             {
-                CreatingCable = true;
+                if (obj is ConnectionNode)
+                {
+                    CreatingCable = true;
 
-                ConnectionNode startNode = LastClickedObject as ConnectionNode;
+                    ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
-                CableOrigin = startNode;
-                CreatedCable = new Cable(startNode);
+                    CableOrigin = startNode;
+                    CreatedCable = new Cable(startNode);
+
+                    return;
+                }
             }
         }
 
@@ -710,18 +715,9 @@ namespace CircuitSimulatorPlus
             foreach (Gate gate in storeContext.Context)
             {
                 gate.Position = at + (Vector)gate.Position;
-
-                //gate.IsRendered = true;
-                //foreach (ConnectionNode node in gate.Input)
-                //    node.IsRendered = true;
-                //foreach (ConnectionNode node in gate.Output)
-                //    node.IsRendered = true;
-
+                gate.Add();
                 Select(gate);
-                //ClickableObjects.Add(gate); // FIXME
-                ContextGate.Context.Add(gate);
             }
-            //UpdateClickableObjects();
         }
         #endregion
 
@@ -1075,7 +1071,7 @@ namespace CircuitSimulatorPlus
                 SplitSegments();
             }
 
-            if (e.Key == Key.C && LastClickedObject is ConnectionNode)
+            if (e.Key == Key.C)
             {
                 CreateCable();
             }

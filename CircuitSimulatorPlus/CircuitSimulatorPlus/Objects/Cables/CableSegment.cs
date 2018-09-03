@@ -16,6 +16,8 @@ namespace CircuitSimulatorPlus
             Index = index;
 
             hitbox = new LineHitbox(this);
+
+            Add();
         }
 
         public event Action OnPointsChanged;
@@ -78,6 +80,7 @@ namespace CircuitSimulatorPlus
         {
             hitbox = new LineHitbox(this);
             MainWindow.Self.ClickableObjects.Add(this);
+            MainWindow.Self.refs.Add(new WeakReference<IClickable>(this));//temp
             new CableSegmentRenderer(this);
             IsRendered = true;
         }
