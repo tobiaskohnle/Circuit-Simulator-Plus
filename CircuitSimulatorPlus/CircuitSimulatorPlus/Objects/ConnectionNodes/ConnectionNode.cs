@@ -236,6 +236,7 @@ namespace CircuitSimulatorPlus
         {
             hitbox = new CircleHitbox(Position, HitboxRadius);
             MainWindow.Self.ClickableObjects.Add(this);
+            MainWindow.Self.refs.Add(new WeakReference<IClickable>(this));//temp
         }
         public void Remove()
         {

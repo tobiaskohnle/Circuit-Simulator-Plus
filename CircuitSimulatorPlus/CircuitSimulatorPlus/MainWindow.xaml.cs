@@ -30,7 +30,6 @@ namespace CircuitSimulatorPlus
         {
             InitializeComponent();
 
-
             Self = this;
 
             DrawGrid();
@@ -1457,11 +1456,6 @@ namespace CircuitSimulatorPlus
         }
         void LogReferences_Click(object sender, RoutedEventArgs e)
         {
-            while (refs.Count < ClickableObjects.Count)
-            {
-                refs.Add(new WeakReference<IClickable>(ClickableObjects[refs.Count]));
-            }
-
             foreach (var refr in refs)
             {
                 IClickable target = null;
