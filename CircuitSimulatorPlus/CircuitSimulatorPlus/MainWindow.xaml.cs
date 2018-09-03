@@ -355,10 +355,11 @@ namespace CircuitSimulatorPlus
 
         public string SelectFile()
         {
-            var dialog = new OpenFileDialog();
-            dialog.Filter = Constants.FileFilter;
-            if (dialog.ShowDialog() != true)
-                return "";
+            var dialog = new OpenFileDialog
+            {
+                Filter = Constants.FileFilter
+            };
+            dialog.ShowDialog();
             return dialog.FileName;
         }
 
