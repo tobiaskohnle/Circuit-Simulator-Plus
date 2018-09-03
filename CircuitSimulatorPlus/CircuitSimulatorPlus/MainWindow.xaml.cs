@@ -1054,6 +1054,11 @@ namespace CircuitSimulatorPlus
             {
                 SplitSegments();
             }
+
+            if (e.Key == Key.C && LastClickedObject is ConnectionNode)
+            {
+                CreateCable();
+            }
         }
 
         void Window_MouseWheel(object sender, MouseWheelEventArgs e)
