@@ -459,7 +459,7 @@ namespace CircuitSimulatorPlus
         {
             if (DataOnClipboard)
             {
-                PasteFromClipboard(CanvasCenter);
+                PasteFromClipboard(LastCanvasPos);
             }
         }
         #endregion
