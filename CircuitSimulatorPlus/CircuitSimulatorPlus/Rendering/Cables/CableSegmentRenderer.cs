@@ -18,7 +18,8 @@ namespace CircuitSimulatorPlus
             line = new Line
             {
                 Stroke = Brushes.Black,
-                StrokeThickness = Constants.LineWidth
+                StrokeThickness = Constants.LineWidth,
+                StrokeStartLineCap = PenLineCap.Square
             };
 
             cableSegment.OnRenderedChanged += OnRenderedChanged;
