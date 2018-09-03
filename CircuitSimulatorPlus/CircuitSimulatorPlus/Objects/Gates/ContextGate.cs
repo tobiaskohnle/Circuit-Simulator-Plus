@@ -23,16 +23,9 @@ namespace CircuitSimulatorPlus
             throw new InvalidOperationException();
         }
 
-        // TODO
-        public void ReconnectInnerInputs()
+        public override void CreateDefaultConnectionNodes()
         {
-
-        }
-
-        // TODO
-        public void ReconnectInnerOutputs()
-        {
-
+            throw new InvalidOperationException();
         }
 
         // These are used for positional comparisons.

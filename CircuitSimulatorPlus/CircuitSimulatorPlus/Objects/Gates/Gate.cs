@@ -178,6 +178,8 @@ namespace CircuitSimulatorPlus
 
         public abstract bool Eval();
 
+        public abstract void CreateDefaultConnectionNodes();
+
         public void CreateConnectionNodes(int amtInputs, int amtOutputs)
         {
             for (int i = 0; i < amtInputs; i++)

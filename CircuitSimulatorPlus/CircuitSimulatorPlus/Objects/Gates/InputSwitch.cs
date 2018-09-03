@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace CircuitSimulatorPlus
@@ -9,6 +8,11 @@ namespace CircuitSimulatorPlus
         public InputSwitch()
         {
             Size = new Size(2, 2);
+        }
+
+        public override void CreateDefaultConnectionNodes()
+        {
+            CreateConnectionNodes(0, 1);
         }
 
         public event Action OnStateChanged;
@@ -33,7 +37,7 @@ namespace CircuitSimulatorPlus
 
         public void Toggle()
         {
-            state = !state;
+            State = !State;
         }
     }
 }

@@ -12,6 +12,11 @@ namespace CircuitSimulatorPlus
             Tag = "1";
         }
 
+        public override void CreateDefaultConnectionNodes()
+        {
+            CreateConnectionNodes(1, 1);
+        }
+
         public override bool Eval()
         {
             foreach (InputNode input in Input)

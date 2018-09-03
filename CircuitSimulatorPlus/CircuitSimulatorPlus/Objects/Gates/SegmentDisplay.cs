@@ -14,6 +14,11 @@ namespace CircuitSimulatorPlus
             Size = new Size(5, 7);
         }
 
+        public override void CreateDefaultConnectionNodes()
+        {
+            CreateConnectionNodes(7, 0);
+        }
+
         public override bool Eval()
         {
             throw new InvalidOperationException();
