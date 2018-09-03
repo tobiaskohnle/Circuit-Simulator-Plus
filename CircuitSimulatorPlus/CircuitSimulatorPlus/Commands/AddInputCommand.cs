@@ -19,13 +19,13 @@ namespace CircuitSimulatorPlus
         {
             InputNode = new InputNode(Gate);
             Gate.Input.Add(InputNode);
-            MainWindow.Self.ClickableObjects.Add(InputNode);
+            //MainWindow.Self.ClickableObjects.Add(InputNode);
         }
 
         public override void Undo()
         {
             Gate.Input.Remove(InputNode);
-            MainWindow.Self.ClickableObjects.Remove(InputNode);
+            //MainWindow.Self.ClickableObjects.Remove(InputNode);
         }
     }
 }

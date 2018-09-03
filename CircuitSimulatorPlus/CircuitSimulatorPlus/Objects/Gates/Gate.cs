@@ -142,12 +142,12 @@ namespace CircuitSimulatorPlus
         public void RemoveInputNode(InputNode inputNode)
         {
             Input.Remove(inputNode);
-            inputNode.IsRendered = false;
+            inputNode.Remove();
         }
         public void RemoveOutputNode(OutputNode outputNode)
         {
             Output.Remove(outputNode);
-            outputNode.IsRendered = false;
+            outputNode.Remove();
         }
 
         RectHitbox hitbox;

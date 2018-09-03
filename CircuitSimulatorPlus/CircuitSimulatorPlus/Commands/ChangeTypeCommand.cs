@@ -53,10 +53,10 @@ namespace CircuitSimulatorPlus
                     MainWindow.Self.Deselect(gate);
                     MainWindow.Self.Select(newGate);
 
-                    gate.IsRendered = false;
-                    newGate.IsRendered = true;
+                    //gate.IsRendered = false;
+                    //newGate.IsRendered = true;
 
-                    MainWindow.Self.UpdateClickableObjects();
+                    //MainWindow.Self.UpdateClickableObjects();
                 }
             }
         }
@@ -95,10 +95,10 @@ namespace CircuitSimulatorPlus
                     MainWindow.Self.Deselect(gate);
                     MainWindow.Self.Select(newGate);
 
-                    gate.IsRendered = false;
-                    newGate.IsRendered = true;
+                    //gate.IsRendered = false;
+                    //newGate.IsRendered = true;
 
-                    MainWindow.Self.UpdateClickableObjects();
+                    //MainWindow.Self.UpdateClickableObjects();
                 }
             }
         }

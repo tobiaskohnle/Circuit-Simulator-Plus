@@ -17,13 +17,13 @@ namespace CircuitSimulatorPlus
         public override void Redo()
         {
             inputNode.Owner.Input.Remove(inputNode);
-            MainWindow.Self.ClickableObjects.Remove(inputNode);
+            //MainWindow.Self.ClickableObjects.Remove(inputNode);
         }
 
         public override void Undo()
         {
             inputNode.Owner.Input.Add(inputNode);
-            MainWindow.Self.ClickableObjects.Add(inputNode);
+            //MainWindow.Self.ClickableObjects.Add(inputNode);
         }
     }
 }

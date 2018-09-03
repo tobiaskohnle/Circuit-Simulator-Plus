@@ -41,7 +41,7 @@ namespace CircuitSimulatorPlus
                 ContextGate = new ContextGate();
             RenderContext();
 
-            UpdateClickableObjects();
+            //UpdateClickableObjects();
 
             Timer.Tick += Timer_Tick;
         }
@@ -323,14 +323,14 @@ namespace CircuitSimulatorPlus
             {
                 foreach (IClickable obj in ClickableObjects)
                 {
-                    if (obj is Gate)
-                        (obj as Gate).IsRendered = false;
-                    else if (obj is ConnectionNode)
-                        (obj as ConnectionNode).IsRendered = false;
+                    //if (obj is Gate)
+                    //    (obj as Gate).IsRendered = false;
+                    //else if (obj is ConnectionNode)
+                    //    (obj as ConnectionNode).IsRendered = false;
                 }
 
                 ContextGate = new ContextGate();
-                UpdateClickableObjects();
+                //UpdateClickableObjects();
 
                 return true;
             }
@@ -367,7 +367,7 @@ namespace CircuitSimulatorPlus
                 ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
                 RecursiveTickAll(ContextGate);
                 RenderContext();
-                UpdateClickableObjects();
+                //UpdateClickableObjects();
             }
         }
 
@@ -569,18 +569,18 @@ namespace CircuitSimulatorPlus
             UndoStack.Push(command);
             RedoStack.Clear();
         }
-        public void UpdateClickableObjects()
-        {
-            ClickableObjects.Clear();
-            foreach (Gate gate in ContextGate.Context)
-            {
-                ClickableObjects.Add(gate);
-                foreach (InputNode input in gate.Input)
-                    ClickableObjects.Add(input);
-                foreach (OutputNode output in gate.Output)
-                    ClickableObjects.Add(output);
-            }
-        }
+        //public void UpdateClickableObjects()
+        //{
+        //    ClickableObjects.Clear();
+        //    foreach (Gate gate in ContextGate.Context)
+        //    {
+        //        ClickableObjects.Add(gate);
+        //        foreach (InputNode input in gate.Input)
+        //            ClickableObjects.Add(input);
+        //        foreach (OutputNode output in gate.Output)
+        //            ClickableObjects.Add(output);
+        //    }
+        //}
 
         public void MoveObjects()
         {
@@ -661,18 +661,18 @@ namespace CircuitSimulatorPlus
         }
         public void RenderContext()
         {
-            foreach (Gate gate in ContextGate.Context)
-            {
-                gate.IsRendered = true;
-                foreach (ConnectionNode node in gate.Input)
-                {
-                    node.IsRendered = true;
-                }
-                foreach (ConnectionNode node in gate.Output)
-                {
-                    node.IsRendered = true;
-                }
-            }
+            //foreach (Gate gate in ContextGate.Context)
+            //{
+            //    gate.IsRendered = true;
+            //    foreach (ConnectionNode node in gate.Input)
+            //    {
+            //        node.IsRendered = true;
+            //    }
+            //    foreach (ConnectionNode node in gate.Output)
+            //    {
+            //        node.IsRendered = true;
+            //    }
+            //}
         }
         public void CopyToClipboard()
         {
@@ -708,17 +708,17 @@ namespace CircuitSimulatorPlus
             {
                 gate.Position = at + (Vector)gate.Position;
 
-                gate.IsRendered = true;
-                foreach (ConnectionNode node in gate.Input)
-                    node.IsRendered = true;
-                foreach (ConnectionNode node in gate.Output)
-                    node.IsRendered = true;
+                //gate.IsRendered = true;
+                //foreach (ConnectionNode node in gate.Input)
+                //    node.IsRendered = true;
+                //foreach (ConnectionNode node in gate.Output)
+                //    node.IsRendered = true;
 
                 Select(gate);
-                ClickableObjects.Add(gate); // FIXME
+                //ClickableObjects.Add(gate); // FIXME
                 ContextGate.Context.Add(gate);
             }
-            UpdateClickableObjects();
+            //UpdateClickableObjects();
         }
         #endregion
 
@@ -1166,7 +1166,7 @@ namespace CircuitSimulatorPlus
             if (gate.HasContext)
                 RecursiveTickAll((ContextGate)gate);
             Create(gate);
-            UpdateClickableObjects();
+            //UpdateClickableObjects();
         }
 
         void ChangeTypeContext(object sender, RoutedEventArgs e)
@@ -1428,7 +1428,7 @@ namespace CircuitSimulatorPlus
             {
                 ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(storageObject);
                 RenderContext();
-                UpdateClickableObjects();
+                //UpdateClickableObjects();
             }
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
