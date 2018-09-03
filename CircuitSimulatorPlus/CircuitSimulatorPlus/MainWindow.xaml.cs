@@ -332,20 +332,25 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region IO
-        public void New()
+        public bool New()
         {
-            SavePrompt();
-
-            foreach (IClickable obj in ClickableObjects)
+            if (SavePrompt())
             {
-                if (obj is Gate)
-                    (obj as Gate).IsRendered = false;
-                else if (obj is ConnectionNode)
-                    (obj as ConnectionNode).IsRendered = false;
+                foreach (IClickable obj in ClickableObjects)
+                {
+                    if (obj is Gate)
+                        (obj as Gate).IsRendered = false;
+                    else if (obj is ConnectionNode)
+                        (obj as ConnectionNode).IsRendered = false;
+                }
+
+                ContextGate = new ContextGate();
+                UpdateClickableObjects();
+
+                return true;
             }
 
-            ContextGate = new ContextGate();
-            UpdateClickableObjects();
+            return false;
         }
 
         public string SelectFile()
@@ -359,21 +364,25 @@ namespace CircuitSimulatorPlus
 
         public void Open(string filePath)
         {
-            CurrentFilePath = filePath;
-
-            if (Properties.Settings.Default.RecentFiles == null)
+            if (New())
             {
-                Properties.Settings.Default.RecentFiles = new StringCollection();
+                CurrentFilePath = filePath;
+
+                if (Properties.Settings.Default.RecentFiles == null)
+                {
+                    Properties.Settings.Default.RecentFiles = new StringCollection();
+                }
+                Properties.Settings.Default.RecentFiles.Remove(filePath);
+                Properties.Settings.Default.RecentFiles.Insert(0, filePath);
+                Properties.Settings.Default.Save();
+
+                CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
+
+                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
+                RecursiveTickAll(ContextGate);
+                RenderContext();
+                UpdateClickableObjects();
             }
-            Properties.Settings.Default.RecentFiles.Remove(filePath);
-            Properties.Settings.Default.RecentFiles.Insert(0, filePath);
-
-            CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
-
-            ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
-            RecursiveTickAll(ContextGate);
-            RenderContext();
-            UpdateClickableObjects();
         }
 
         public bool SavePrompt()
@@ -1216,13 +1225,15 @@ namespace CircuitSimulatorPlus
             var filePath = SelectFile();
             if (filePath != "")
             {
-                New();
                 Open(filePath);
             }
         }
         void RecentFiles_Click(object sender, RoutedEventArgs e)
         {
-            Open((e.OriginalSource as MenuItem).Header.ToString());
+            if (e.Source != e.OriginalSource)
+            {
+                Open((e.OriginalSource as MenuItem).Header.ToString());
+            }
         }
         void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
@@ -1418,10 +1429,12 @@ namespace CircuitSimulatorPlus
         void Reload_Click(object sender, RoutedEventArgs e)
         {
             var storageObject = StorageConverter.ToStorageObject(ContextGate);
-            New();
-            ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(storageObject);
-            RenderContext();
-            UpdateClickableObjects();
+            if (New())
+            {
+                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(storageObject);
+                RenderContext();
+                UpdateClickableObjects();
+            }
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
@@ -1438,6 +1451,10 @@ namespace CircuitSimulatorPlus
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
             RecursiveTickAll(ContextGate);
+        }
+        void ResetSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Reset();
         }
         void RecursiveTickAll(ContextGate contextGate)
         {

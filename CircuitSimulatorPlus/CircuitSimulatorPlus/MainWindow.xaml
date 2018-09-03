@@ -103,6 +103,7 @@
                 <MenuItem Command="{x:Static local:Commands.New}"/>
                 <MenuItem Command="{x:Static local:Commands.Open}"/>
                 <MenuItem Header="Open Recent"
+                          IsEnabled="True"
                           ItemsSource="{Binding RecentFiles, Source={x:Static properties:Settings.Default}}"
                           Click="RecentFiles_Click"/>
                 <MenuItem Command="{x:Static local:Commands.OpenFolder}"/>
@@ -146,6 +147,7 @@
                 <MenuItem Header="Reload" Click="Reload_Click"/>
                 <MenuItem Header="Single Ticks" IsCheckable="True" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
+                <MenuItem Header="Reset Settings" Click="ResetSettings_Click"/>
             </MenuItem>
         </Menu>
         <Canvas x:Name="backgoundLayerCanvas" Grid.Row="2" SnapsToDevicePixels="True"/>
