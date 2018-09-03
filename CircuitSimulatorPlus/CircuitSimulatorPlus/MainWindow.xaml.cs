@@ -108,7 +108,7 @@ namespace CircuitSimulatorPlus
         #region Object
         public void Create(Gate gate)
         {
-            gate.Position = new Point(Math.Round(LastCanvasClick.X), Math.Round(LastCanvasClick.Y));
+            gate.Position = Round(LastCanvasClick);
             gate.CreateDefaultConnectionNodes();
             PerformCommand(new CreateGateCommand(gate));
         }
@@ -324,16 +324,19 @@ namespace CircuitSimulatorPlus
         {
             if (SavePrompt())
             {
-                foreach (IClickable obj in ClickableObjects)
+                foreach (Gate gate in ContextGate.Context.ToList())
                 {
-                    //if (obj is Gate)
-                    //    (obj as Gate).IsRendered = false;
-                    //else if (obj is ConnectionNode)
-                    //    (obj as ConnectionNode).IsRendered = false;
+                    gate.Remove();
                 }
 
                 ContextGate = new ContextGate();
-                //UpdateClickableObjects();
+
+                DeselectAll();
+
+                TickedNodes.Clear();
+                Timer.Stop();
+
+                ResetView();
 
                 return true;
             }
@@ -798,6 +801,11 @@ namespace CircuitSimulatorPlus
                 return matrix.Transform(new Point(canvas.ActualWidth / 2, canvas.ActualHeight / 2));
             }
         }
+
+        public Point Round(Point point)
+        {
+            return new Point(Math.Round(point.X), Math.Round(point.Y));
+        }
         #endregion
 
         #region Window Event Handlers
@@ -835,7 +843,7 @@ namespace CircuitSimulatorPlus
             }
             else if (CreatingCable)
             {
-                if (nearestObject is ConnectionNode)
+                if (nearestObject is ConnectionNode && nearestObject is InputNode != CableOrigin is InputNode)
                 {
                     var connectionNode = nearestObject as ConnectionNode;
                     CreatedCable.ConnectTo(connectionNode);
@@ -848,7 +856,7 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    CreatedCable.AddSegment(LastCanvasClick);
+                    CreatedCable.AddSegment(Round(LastCanvasClick));
                 }
             }
             else
