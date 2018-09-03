@@ -22,12 +22,14 @@ namespace CircuitSimulatorPlus
             upperRisingEdgeLine = new Line
             {
                 Stroke = Brushes.Black,
-                StrokeThickness = Constants.LineWidth
+                StrokeThickness = Constants.LineWidth,
+                StrokeEndLineCap = PenLineCap.Round
             };
             lowerRisingEdgeLine = new Line
             {
                 Stroke = Brushes.Black,
-                StrokeThickness = Constants.LineWidth
+                StrokeThickness = Constants.LineWidth,
+                StrokeEndLineCap = PenLineCap.Round
             };
 
             nameLabel = new Label
