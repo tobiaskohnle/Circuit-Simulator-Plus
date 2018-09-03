@@ -186,22 +186,26 @@ namespace CircuitSimulatorPlus
             {
                 var inputNode = new InputNode(this);
                 Input.Add(inputNode);
-                inputNode.Add();
             }
             for (int i = 0; i < amtOutputs; i++)
             {
                 var outputNode = new OutputNode(this);
                 Output.Add(outputNode);
-                outputNode.Add();
             }
+            UpdateConnectionNodePos();
         }
 
         public virtual void Add()
         {
-            hitbox = new RectHitbox(new Rect());
+            hitbox = new RectHitbox(new Rect(Position, Size));
             MainWindow.Self.ClickableObjects.Add(this);
             new GateRenderer(this);
-            isRendered = true;
+            IsRendered = true;
+            
+            foreach (InputNode inputNode in Input)
+                inputNode.Add();
+            foreach (OutputNode outputNode in Output)
+                outputNode.Add();
         }
         public virtual void Remove()
         {
@@ -209,6 +213,7 @@ namespace CircuitSimulatorPlus
                 input.Remove();
             foreach (OutputNode output in Output)
                 output.Remove();
+
             IsRendered = false;
             MainWindow.Self.ClickableObjects.Remove(this);
             MainWindow.Self.ContextGate.Context.Remove(this);

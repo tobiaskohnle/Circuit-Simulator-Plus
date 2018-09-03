@@ -107,6 +107,7 @@ namespace CircuitSimulatorPlus
         public void Create(Gate gate)
         {
             gate.Position = new Point(Math.Round(LastCanvasClick.X), Math.Round(LastCanvasClick.Y));
+            gate.CreateDefaultConnectionNodes();
             PerformCommand(new CreateGateCommand(gate));
         }
 

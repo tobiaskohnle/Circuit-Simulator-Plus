@@ -98,6 +98,7 @@ namespace CircuitSimulatorPlus
         {
             new ConnectionNodeRenderer(this, Owner, false);
             new InputNodeRenderer(this);
+            IsRendered = true;
             base.Add();
         }
     }
