@@ -319,11 +319,14 @@ namespace CircuitSimulatorPlus
 
         public void Rename()
         {
-            var renameWindow = new Controls.RenameWindow();
-
-            if (renameWindow.ShowDialog() == true)
+            if (AnySelected)
             {
-                PerformCommand(new RenameCommand(SelectedObjects, renameWindow.Name));
+                var renameWindow = new Controls.RenameWindow(null) { Owner = this };
+
+                if (renameWindow.ShowDialog() == true)
+                {
+                    PerformCommand(new RenameCommand(SelectedObjects, renameWindow.Name));
+                }
             }
         }
         #endregion
@@ -842,7 +845,7 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    CreatedCable.AddPoint(LastCanvasClick);
+                    CreatedCable.AddSegment(LastCanvasClick);
                 }
             }
             else
@@ -874,7 +877,7 @@ namespace CircuitSimulatorPlus
                 ToggleObjects();
 
 
-                foreach (IClickable obj in ClickableObjects)
+                foreach (IClickable obj in SelectedObjects.ToList())
                 {
                     if (obj is CableSegment)
                     {

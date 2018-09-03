@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace CircuitSimulatorPlus.Controls
 {
     public partial class RenameWindow : Window
     {
-        public RenameWindow()
+        public RenameWindow(string oldName)
         {
             InitializeComponent();
 
+            InputTextBox.Text = oldName;
+            InputTextBox.SelectAll();
             InputTextBox.Focus();
         }
 
@@ -18,16 +21,21 @@ namespace CircuitSimulatorPlus.Controls
             set;
         }
 
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
         }
 
-        private void BtnOk_Click(object sender, RoutedEventArgs e)
+        void BtnOk_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
-            Name = InputTextBox.Text;
+            Name = InputTextBox.Text == "" ? null : InputTextBox.Text;
+            Close();
+        }
+
+        void Window_Deactivated(object sender, EventArgs e)
+        {
             Close();
         }
     }

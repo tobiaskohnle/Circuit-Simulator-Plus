@@ -4,7 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Rename" Height="170" Width="300">
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Deactivated="Window_Deactivated"
+        Title="Rename" Height="160" Width="300">
     <StackPanel Margin="5">
         <TextBlock Name="TitleTextBox" Margin="0,0,0,10">New name</TextBlock>
         <TextBox Name="InputTextBox" Padding="3"/>
@@ -14,7 +18,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Name="BtnOk" IsDefault="True" Content="OK" Grid.Column="0" Margin="0,0,5,0" Padding="8" Click="BtnOk_Click"/>
-            <Button Name="BtnCancel" Content="Cancel" Grid.Column="1" Margin="5,0,0,0" Padding="8" Click="BtnCancel_Click"/>
+            <Button Name="BtnCancel" IsCancel="True" Content="Cancel" Grid.Column="1" Margin="5,0,0,0" Padding="8" Click="BtnCancel_Click"/>
         </Grid>
     </StackPanel>
 </Window>
