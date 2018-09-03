@@ -11,13 +11,11 @@ namespace CircuitSimulatorPlus
     {
         Cable cable;
         int index;
-        bool vert;
 
         public LineHitbox(Cable cable, int index)
         {
             this.cable = cable;
             this.index = index;
-            vert = (index & 1) != 0;
         }
 
         public override Rect RectBounds
@@ -28,7 +26,7 @@ namespace CircuitSimulatorPlus
                 Point lastPoint = cable.GetPoint(index - 1);
                 Point nextPoint = cable.GetPoint(index + 1);
 
-                if (vert)
+                if ((index & 1) != 0)
                     return new Rect(point.X, Math.Min(lastPoint.Y, nextPoint.Y), 0, Math.Abs(nextPoint.Y - lastPoint.Y));
                 return new Rect(Math.Min(lastPoint.X, nextPoint.X), point.Y, Math.Abs(nextPoint.X - lastPoint.X), 0);
             }
@@ -40,6 +38,7 @@ namespace CircuitSimulatorPlus
             Point lastPoint = cable.GetPoint(index - 1);
             Point nextPoint = cable.GetPoint(index + 1);
 
+            bool vert = (index & 1) != 0
             double startX = vert ? point.X : lastPoint.X;
             double startY = vert ? lastPoint.Y : point.Y;
             double endX = vert ? point.X : nextPoint.X;

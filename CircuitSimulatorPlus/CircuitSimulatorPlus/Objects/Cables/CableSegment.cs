@@ -73,5 +73,10 @@ namespace CircuitSimulatorPlus
             Parent.MovePoint(Index, vector);
             OnPointsChanged?.Invoke();
         }
+
+        public void SplitSegment()
+        {
+            Parent.SplitSegment(Index);
+        }
     }
 }

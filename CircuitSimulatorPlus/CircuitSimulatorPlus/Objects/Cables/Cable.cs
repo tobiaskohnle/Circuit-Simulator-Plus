@@ -19,6 +19,31 @@ namespace CircuitSimulatorPlus
 
         public List<CableSegment> Segments = new List<CableSegment>();
 
+        public void SplitSegment(int index)
+        {
+            if (index > 0 && index < points.Count + 1)
+            {
+                if ((index & 1) != 0)
+                {
+                    double centerY = GetPoint(index - 1).Y / 2 + GetPoint(index + 1).Y / 2;
+                    double centerX = GetPoint(index).X;
+                    points[index - 1] = new Point(centerX, centerY);
+
+                    AddPoint(index + 1, new Point(centerX - 0.5, 0));
+                    //AddPoint(index + 0, new Point(centerX + 0.5, 0));
+                }
+                else
+                {
+                    double centerX = GetPoint(index - 1).X / 2 + GetPoint(index + 1).X / 2;
+                    double centerY = GetPoint(index).Y;
+                    points[index - 1] = new Point(centerX, centerY);
+
+                    AddPoint(index + 1, new Point(0, centerY - 0.5));
+                    AddPoint(index + 0, new Point(0, centerY + 0.5));
+                }
+            }
+        }
+
         public bool IsCompleted;
 
         bool vertical;
@@ -109,6 +134,19 @@ namespace CircuitSimulatorPlus
         {
             EndNode = endNode;
             IsCompleted = true;
+        }
+
+        public void AddPoint(int index, Point point)
+        {
+            points.Insert(index - 1, point);
+            vertical = !vertical;
+
+            Segments.Insert(index, new CableSegment(this, index));
+
+            for (int i = index + 1; i < Segments.Count; i++)
+                Segments[i].Index++;
+
+            OnPointsChanged?.Invoke();
         }
 
         public void AddPoint(Point point)

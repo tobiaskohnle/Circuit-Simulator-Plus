@@ -85,6 +85,7 @@
     <Compile Include="Commands\CreateConnectionCommand.cs" />
     <Compile Include="Commands\DeleteInputCommand.cs" />
     <Compile Include="Commands\InvertConnectionCommand.cs" />
+    <Compile Include="Commands\SplitSegmentCommand.cs" />
     <Compile Include="Commands\ToggleObjectsCommand.cs" />
     <Compile Include="Objects\Cables\CableSegment.cs" />
     <Compile Include="Objects\Hitboxes\LineHitbox.cs" />

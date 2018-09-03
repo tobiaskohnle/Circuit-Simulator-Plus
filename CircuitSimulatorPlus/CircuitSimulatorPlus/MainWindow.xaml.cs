@@ -305,6 +305,17 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+
+        public void SplitSegments()
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is CableSegment)
+                {
+                    (obj as CableSegment).SplitSegment();
+                }
+            }
+        }
         #endregion
 
         #region IO
@@ -1040,6 +1051,11 @@ namespace CircuitSimulatorPlus
             if (e.Key == Key.Enter || e.Key == Key.Space || e.Key == Key.T)
             {
                 TickQueue();
+            }
+
+            if (e.Key == Key.S)
+            {
+                SplitSegments();
             }
         }
 
