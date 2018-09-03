@@ -13,6 +13,8 @@ namespace CircuitSimulatorPlus
             new OutputNodeRenderer(this);
         }
 
+        public List<Cable> ConnectedCables;
+
         bool isMasterSlave;
 
         public event Action OnMasterSlaveChanged;

@@ -11,6 +11,8 @@ namespace CircuitSimulatorPlus
             new ConnectionNodeRenderer(this, owner, false);
             new InputNodeRenderer(this);
         }
+        
+        public Cable ConnectedCable;
 
         public event Action OnRisingEdgeChanged;
         bool isRisingEdge;

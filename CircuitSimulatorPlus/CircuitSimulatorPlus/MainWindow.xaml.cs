@@ -629,12 +629,15 @@ namespace CircuitSimulatorPlus
         }
         public void CreateCable()
         {
-            CreatingCable = true;
+            if (LastClickedObject != null)
+            {
+                CreatingCable = true;
 
-            ConnectionNode startNode = LastClickedObject as ConnectionNode;
+                ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
-            CableOrigin = startNode;
-            CreatedCable = new Cable(startNode);
+                CableOrigin = startNode;
+                CreatedCable = new Cable(startNode);
+            }
         }
 
         public void EmptyInput()
@@ -1482,8 +1485,7 @@ namespace CircuitSimulatorPlus
         }
         void CreateCable_Click(object sender, RoutedEventArgs e)
         {
-            if (LastClickedObject != null)
-                CreateCable();
+            CreateCable();
         }
         #endregion
     }
