@@ -22,7 +22,7 @@ namespace CircuitSimulatorPlus
                 if (obj is Gate)
                 {
                     DeletedObjects.Add(obj as Gate);
-                    MainWindow.Self.Remove(obj as Gate);
+                    (obj as Gate).Remove();
                 }
                 else if (obj is ConnectionNode)
                 {
@@ -38,7 +38,7 @@ namespace CircuitSimulatorPlus
             {
                 if (obj is Gate)
                 {
-                    MainWindow.Self.Add(obj as Gate);
+                    MainWindow.Self.Create(obj as Gate);
                     DeletedObjects.Remove(obj as Gate);
                 }
                 else if (obj is ConnectionNode)

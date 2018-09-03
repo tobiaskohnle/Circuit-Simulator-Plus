@@ -7,9 +7,8 @@ namespace CircuitSimulatorPlus
 {
     public class OutputLight : Gate
     {
-        public OutputLight() : base(1, 0)
+        public OutputLight()
         {
-            new OutputLightRenderer(this);
             Size = new Size(2, 2);
         }
 

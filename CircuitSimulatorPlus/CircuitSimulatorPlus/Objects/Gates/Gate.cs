@@ -7,27 +7,6 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Gate : IClickable, IMovable
     {
-        public Gate(int amtInputs, int amtOutputs)
-        {
-            hitbox = new RectHitbox(new Rect());
-            Size = new Size(3, 4);
-
-            for (int i = 0; i < amtInputs; i++)
-            {
-                var inputNode = new InputNode(this);
-                Input.Add(inputNode);
-                MainWindow.Self.ClickableObjects.Add(inputNode);
-            }
-            for (int i = 0; i < amtOutputs; i++)
-            {
-                var outputNode = new OutputNode(this);
-                Output.Add(outputNode);
-                MainWindow.Self.ClickableObjects.Add(outputNode);
-            }
-
-            new GateRenderer(this);
-        }
-
         public void CopyFrom(Gate gate)
         {
             Input = gate.Input;
@@ -123,7 +102,8 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                hitbox.Bounds.Location = value;
+                if (hitbox != null)
+                    hitbox.Bounds.Location = value;
                 UpdateConnectionNodePos();
                 OnPositionChanged?.Invoke();
             }
@@ -152,7 +132,8 @@ namespace CircuitSimulatorPlus
             set
             {
                 size = value;
-                hitbox.Bounds.Size = value;
+                if (hitbox != null)
+                    hitbox.Bounds.Size = value;
                 UpdateConnectionNodePos();
                 OnSizeChanged?.Invoke();
             }
@@ -196,5 +177,39 @@ namespace CircuitSimulatorPlus
         }
 
         public abstract bool Eval();
+
+        public void CreateConnectionNodes(int amtInputs, int amtOutputs)
+        {
+            for (int i = 0; i < amtInputs; i++)
+            {
+                var inputNode = new InputNode(this);
+                Input.Add(inputNode);
+                inputNode.Add();
+            }
+            for (int i = 0; i < amtOutputs; i++)
+            {
+                var outputNode = new OutputNode(this);
+                Output.Add(outputNode);
+                outputNode.Add();
+            }
+        }
+
+        public virtual void Add()
+        {
+            hitbox = new RectHitbox(new Rect());
+            MainWindow.Self.ClickableObjects.Add(this);
+            new GateRenderer(this);
+            isRendered = true;
+        }
+        public virtual void Remove()
+        {
+            foreach (InputNode input in Input)
+                input.Remove();
+            foreach (OutputNode output in Output)
+                output.Remove();
+            IsRendered = false;
+            MainWindow.Self.ClickableObjects.Remove(this);
+            MainWindow.Self.ContextGate.Context.Remove(this);
+        }
     }
 }

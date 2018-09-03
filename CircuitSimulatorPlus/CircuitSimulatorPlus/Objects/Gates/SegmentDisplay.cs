@@ -9,16 +9,20 @@ namespace CircuitSimulatorPlus
 {
     public class SegmentDisplay : Gate
     {
-        public SegmentDisplay() : base(7, 0)
+        public SegmentDisplay()
         {
-            new SegmentDisplayRenderer(this);
-
             Size = new Size(5, 7);
         }
 
         public override bool Eval()
         {
             throw new InvalidOperationException();
+        }
+
+        public override void Add()
+        {
+            new SegmentDisplayRenderer(this);
+            base.Add();
         }
     }
 }

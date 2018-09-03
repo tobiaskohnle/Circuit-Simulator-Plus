@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
     public class AndGate : Gate
     {
-        public AndGate() : base(2, 1)
+        public AndGate()
         {
+            Size = new Size(3, 4);
             Tag = "&";
         }
 

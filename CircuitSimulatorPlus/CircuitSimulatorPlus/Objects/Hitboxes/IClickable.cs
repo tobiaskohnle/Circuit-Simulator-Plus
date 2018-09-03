@@ -16,5 +16,8 @@ namespace CircuitSimulatorPlus
         {
             get; set;
         }
+
+        void Add();
+        void Remove();
     }
 }

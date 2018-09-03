@@ -71,5 +71,12 @@ namespace CircuitSimulatorPlus
                 Owner.Position.Y + Owner.Size.Height * (1 + 2 * index) / (2 * Owner.Output.Count)
             );
         }
+
+        public override void Add()
+        {
+            new ConnectionNodeRenderer(this, Owner, true);
+            new OutputNodeRenderer(this);
+            base.Add();
+        }
     }
 }

@@ -6,9 +6,8 @@ namespace CircuitSimulatorPlus
 {
     public class InputSwitch : Gate
     {
-        public InputSwitch() : base(0, 1)
+        public InputSwitch()
         {
-            new InputSwitchRenderer(this);
             Size = new Size(2, 2);
         }
 

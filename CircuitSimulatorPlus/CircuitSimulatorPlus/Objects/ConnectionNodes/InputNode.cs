@@ -8,8 +8,6 @@ namespace CircuitSimulatorPlus
     {
         public InputNode(Gate owner) : base(owner)
         {
-            new ConnectionNodeRenderer(this, owner, false);
-            new InputNodeRenderer(this);
         }
         
         public Cable ConnectedCable;
@@ -94,6 +92,13 @@ namespace CircuitSimulatorPlus
                 Owner.Position.X,
                 Owner.Position.Y + Owner.Size.Height * (1 + 2 * index) / (2 * Owner.Input.Count)
             );
+        }
+
+        public override void Add()
+        {
+            new ConnectionNodeRenderer(this, Owner, false);
+            new InputNodeRenderer(this);
+            base.Add();
         }
     }
 }

@@ -9,8 +9,6 @@ namespace CircuitSimulatorPlus
         protected ConnectionNode(Gate owner)
         {
             Owner = owner;
-            IsEmpty = true;
-            hitbox = new CircleHitbox(Position, HitboxRadius);
         }
 
         public const double HitboxRadius = 2.5;
@@ -42,7 +40,7 @@ namespace CircuitSimulatorPlus
         }
 
         public event Action OnEmptyChanged;
-        protected bool isEmpty;
+        protected bool isEmpty = true;
         public bool IsEmpty
         {
             get
@@ -233,5 +231,17 @@ namespace CircuitSimulatorPlus
         public abstract void Tick();
         public abstract void ConnectTo(ConnectionNode connectionNode);
         public abstract void Clear();
+
+        public virtual void Add()
+        {
+            hitbox = new CircleHitbox(Position, HitboxRadius);
+            MainWindow.Self.ClickableObjects.Add(this);
+        }
+        public void Remove()
+        {
+            Clear();
+            IsRendered = false;
+            MainWindow.Self.ClickableObjects.Remove(this);
+        }
     }
 }

@@ -15,12 +15,7 @@ namespace CircuitSimulatorPlus
             Parent = parent;
             Index = index;
 
-            new CableSegmentRenderer(this);
-            IsRendered = true;
-
             hitbox = new LineHitbox(this);
-
-            MainWindow.Self.ClickableObjects.Add(this);
         }
 
         public event Action OnPointsChanged;
@@ -77,6 +72,19 @@ namespace CircuitSimulatorPlus
         public void SplitSegment()
         {
             Parent.SplitSegment(Index);
+        }
+
+        public void Add()
+        {
+            hitbox = new LineHitbox(this);
+            MainWindow.Self.ClickableObjects.Add(this);
+            new CableSegmentRenderer(this);
+            IsRendered = true;
+        }
+        public void Remove()
+        {
+            IsRendered = false;
+            MainWindow.Self.ClickableObjects.Remove(this);
         }
     }
 }

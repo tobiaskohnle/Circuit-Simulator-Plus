@@ -104,7 +104,7 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Object
-        public void Add(Gate gate)
+        public void Create(Gate gate)
         {
             gate.Position = new Point(Math.Round(LastCanvasClick.X), Math.Round(LastCanvasClick.Y));
             PerformCommand(new CreateGateCommand(gate));
@@ -172,6 +172,7 @@ namespace CircuitSimulatorPlus
                 Select(obj);
             }
         }
+
         public IEnumerable<IClickable> GetObjectsIn(Rect rect)
         {
             return ClickableObjects.Where(obj => obj.Hitbox.IsIncludedIn(rect));
@@ -204,7 +205,7 @@ namespace CircuitSimulatorPlus
             {
                 if (obj is Gate)
                 {
-                    Remove(obj as Gate);
+                    (obj as Gate).Remove();
                 }
                 else if (obj is ConnectionNode)
                 {
@@ -212,22 +213,6 @@ namespace CircuitSimulatorPlus
                 }
             }
             DeselectAll();
-        }
-        public void Remove(Gate gate)
-        {
-            foreach (InputNode input in gate.Input)
-                Remove(input);
-            foreach (OutputNode output in gate.Output)
-                Remove(output);
-            gate.IsRendered = false;
-            ClickableObjects.Remove(gate);
-            ContextGate.Context.Remove(gate);
-        }
-        public void Remove(ConnectionNode connectionNode)
-        {
-            connectionNode.IsRendered = false;
-            connectionNode.Clear();
-            ClickableObjects.Remove(connectionNode);
         }
 
         public IClickable FindNearestObjectAt(Point pos)
@@ -730,7 +715,7 @@ namespace CircuitSimulatorPlus
                     node.IsRendered = true;
 
                 Select(gate);
-                ClickableObjects.Add(gate);
+                ClickableObjects.Add(gate); // FIXME
                 ContextGate.Context.Add(gate);
             }
             UpdateClickableObjects();
@@ -1143,30 +1128,30 @@ namespace CircuitSimulatorPlus
         #region UI Event Handlers
         void CreateInputSwitch(object sender, RoutedEventArgs e)
         {
-            Add(new InputSwitch());
+            Create(new InputSwitch());
         }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
-            Add(new OutputLight());
+            Create(new OutputLight());
         }
         void CreateAndGate(object sender, RoutedEventArgs e)
         {
-            Add(new AndGate());
+            Create(new AndGate());
         }
         void CreateOrGate(object sender, RoutedEventArgs e)
         {
-            Add(new OrGate());
+            Create(new OrGate());
         }
         void CreateNotGate(object sender, RoutedEventArgs e)
         {
             var newGate = new NopGate();
-            Add(newGate);
+            Create(newGate);
             newGate.Output[0].Invert();
             Tick(newGate.Output[0]);
         }
         void CreateSegmentDisplay(object sender, RoutedEventArgs e)
         {
-            Add(new SegmentDisplay());
+            Create(new SegmentDisplay());
         }
 
         void Import_Click(object sender, RoutedEventArgs e)
@@ -1180,7 +1165,7 @@ namespace CircuitSimulatorPlus
             Gate gate = StorageConverter.ToGate(store);
             if (gate.HasContext)
                 RecursiveTickAll((ContextGate)gate);
-            Add(gate);
+            Create(gate);
             UpdateClickableObjects();
         }
 
