@@ -442,10 +442,12 @@ namespace CircuitSimulatorPlus
         }
         public void SaveAs()
         {
-            var dialog = new SaveFileDialog();
-            dialog.FileName = FileName;
-            dialog.DefaultExt = Constants.FileExtention;
-            dialog.Filter = Constants.FileFilter;
+            var dialog = new SaveFileDialog
+            {
+                FileName = FileName,
+                DefaultExt = Constants.FileExtention,
+                Filter = Constants.FileFilter
+            };
             if (dialog.ShowDialog() == true)
             {
                 CurrentFilePath = dialog.FileName;
