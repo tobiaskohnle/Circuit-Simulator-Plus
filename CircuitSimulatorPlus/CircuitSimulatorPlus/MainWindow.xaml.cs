@@ -1355,12 +1355,14 @@ namespace CircuitSimulatorPlus
         }
         void ZoomSelection_Click(object sender, RoutedEventArgs e)
         {
-            ZoomIntoView(SelectedObjects);
-        }
-
-        void ZoomSelection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = AnySelected;
+            if (AnySelected)
+            {
+                ZoomIntoView(SelectedObjects);
+            }
+            else
+            {
+                ZoomIntoView(ClickableObjects);
+            }
         }
 
         void InvertConnection_Click(object sender, RoutedEventArgs e)

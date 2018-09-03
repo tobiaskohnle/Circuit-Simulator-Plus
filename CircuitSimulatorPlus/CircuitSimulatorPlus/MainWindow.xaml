@@ -53,7 +53,7 @@
         <CommandBinding Command="{x:Static local:Commands.ZoomOut}"
                         Executed="ZoomOut_Click"/>
         <CommandBinding Command="{x:Static local:Commands.ZoomSelection}"
-                        Executed="ZoomSelection_Click" CanExecute="ZoomSelection_CanExecute"/>
+                        Executed="ZoomSelection_Click"/>
 
         <CommandBinding Command="{x:Static local:Commands.InvertConnection}"
                         Executed="InvertConnection_Click" CanExecute="InvertConnection_CanExecute"/>
