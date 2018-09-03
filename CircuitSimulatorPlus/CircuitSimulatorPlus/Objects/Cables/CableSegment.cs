@@ -18,7 +18,7 @@ namespace CircuitSimulatorPlus
             new CableSegmentRenderer(this);
             IsRendered = true;
 
-            hitbox = new LineHitbox(parent, index);
+            hitbox = new LineHitbox(this);
 
             MainWindow.Self.ClickableObjects.Add(this);
         }

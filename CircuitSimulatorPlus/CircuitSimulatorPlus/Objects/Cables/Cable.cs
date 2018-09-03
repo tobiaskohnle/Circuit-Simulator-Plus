@@ -30,7 +30,7 @@ namespace CircuitSimulatorPlus
                     points[index - 1] = new Point(centerX, centerY);
 
                     AddPoint(index + 1, new Point(centerX - 0.5, 0));
-                    //AddPoint(index + 0, new Point(centerX + 0.5, 0));
+                    AddPoint(index + 0, new Point(centerX + 0.5, 0));
                 }
                 else
                 {
