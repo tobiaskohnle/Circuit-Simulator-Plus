@@ -30,7 +30,7 @@ namespace CircuitSimulatorPlus
         {
             for (int i = 0; i < movedObjects.Count; i++)
             {
-                movedObjects[i].Move(move[-i]);
+                movedObjects[i].Move(-move[i]);
             }
         }
     }

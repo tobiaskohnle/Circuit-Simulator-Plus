@@ -591,6 +591,7 @@ namespace CircuitSimulatorPlus
         public void MoveObjects()
         {
             Vector completeMove = LastCanvasPos - LastCanvasClick;
+
             foreach (IClickable obj in SelectedObjects)
             {
                 if (obj is IMovable)
@@ -607,15 +608,50 @@ namespace CircuitSimulatorPlus
                 }
             }
 
-            if (movedObjects.Count > 0)
-            {
-                completeMove.X = Math.Round(completeMove.X);
-                completeMove.Y = Math.Round(completeMove.Y);
+            var movedVectors = new List<Vector>(movedObjects.Count);
 
-                if (completeMove.X != 0 || completeMove.Y != 0)
+            bool anyMoved = false;
+
+            for (int i = 0; i < movedObjects.Count; i++)
+            {
+                IMovable obj = movedObjects[i];
+
+                Point pos = new Point();
+
+                if (obj is Gate)
                 {
-                    PerformCommand(new MoveCommand(movedObjects, completeMove));
+                    pos = (obj as Gate).Position;
                 }
+                else if (obj is ConnectionNode)
+                {
+                    pos = (obj as ConnectionNode).Position;
+                }
+                else if (obj is CableSegment)
+                {
+                    pos = (obj as CableSegment).Parent.GetPoint((obj as CableSegment).Index);
+                }
+
+                Vector moved = new Vector();
+                if (obj is CableSegment)
+                {
+                    moved = Round(pos + completeMove, 0.5) - pos;
+                }
+                else
+                {
+                    moved = Round(pos + completeMove) - pos;
+                }
+
+                if (moved.X != 0 || moved.Y != 0)
+                {
+                    anyMoved = true;
+                }
+
+                movedVectors.Add(moved);
+            }
+
+            if (anyMoved)
+            {
+                PerformCommand(new MoveCommand(movedObjects, movedVectors));
             }
         }
         public void CreateCable()
@@ -802,9 +838,9 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public Point Round(Point point)
+        public Point Round(Point point, double a = 1)
         {
-            return new Point(Math.Round(point.X), Math.Round(point.Y));
+            return new Point(Math.Round(point.X / a) * a, Math.Round(point.Y / a) * a);
         }
         #endregion
 
@@ -856,7 +892,7 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    CreatedCable.AddSegment(Round(LastCanvasClick));
+                    CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
                 }
             }
             else

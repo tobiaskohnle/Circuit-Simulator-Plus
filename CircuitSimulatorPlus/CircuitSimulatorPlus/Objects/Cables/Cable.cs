@@ -38,8 +38,8 @@ namespace CircuitSimulatorPlus
                     double centerX = GetPoint(index).X;
                     points[index - 1] = new Point(centerX, centerY);
 
-                    AddSegment(index + 1, new Point(centerX - 0.5, 0));
-                    AddSegment(index + 0, new Point(centerX + 0.5, 0));
+                    AddSegment(index + 1, new Point(centerX + 0.5, 0));
+                    AddSegment(index + 0, new Point(centerX - 0.5, 0));
                 }
                 else
                 {
@@ -47,8 +47,8 @@ namespace CircuitSimulatorPlus
                     double centerY = GetPoint(index).Y;
                     points[index - 1] = new Point(centerX, centerY);
 
-                    AddSegment(index + 1, new Point(0, centerY - 0.5));
-                    AddSegment(index + 0, new Point(0, centerY + 0.5));
+                    AddSegment(index + 1, new Point(0, centerY + 0.5));
+                    AddSegment(index + 0, new Point(0, centerY - 0.5));
                 }
             }
         }
@@ -57,7 +57,6 @@ namespace CircuitSimulatorPlus
 
         bool vertical;
 
-        public event Action OnLayoutChanged;
         public event Action OnPointsChanged;
 
         List<Point> points = new List<Point>();
@@ -66,6 +65,8 @@ namespace CircuitSimulatorPlus
         {
             if (index > 0 && index < points.Count + 1)
                 points[index - 1] += vector;
+
+            OnPointsChanged?.Invoke();
         }
 
         public Point GetPoint(int index)
@@ -177,6 +178,8 @@ namespace CircuitSimulatorPlus
 
             AutoComplete();
             IsCompleted = true;
+            
+            OnPointsChanged?.Invoke();
         }
 
         public void RemoveSegment(int index)
