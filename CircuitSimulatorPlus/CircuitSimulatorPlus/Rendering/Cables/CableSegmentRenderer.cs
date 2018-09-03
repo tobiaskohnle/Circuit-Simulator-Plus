@@ -36,24 +36,26 @@ namespace CircuitSimulatorPlus
             {
                 MainWindow.Self.canvas.Children.Add(line);
 
-                cableSegment.OnSelectedChanged += OnSelectedChanged;
+                cableSegment.OnSelectedChanged += OnStateChanged;
                 cableSegment.Parent.OnPointsChanged += OnPositionChanged;
+                cableSegment.Parent.OnStateChanged += OnStateChanged;
                 MainWindow.Self.OnLastCanvasPosChanged += OnPositionChanged;
 
-                OnSelectedChanged();
+                OnStateChanged();
                 OnPositionChanged();
             }
             else
             {
                 MainWindow.Self.canvas.Children.Remove(line);
 
-                cableSegment.OnSelectedChanged -= OnSelectedChanged;
+                cableSegment.OnSelectedChanged -= OnStateChanged;
                 cableSegment.Parent.OnPointsChanged -= OnPositionChanged;
+                cableSegment.Parent.OnStateChanged -= OnStateChanged;
                 MainWindow.Self.OnLastCanvasPosChanged -= OnPositionChanged;
             }
         }
 
-        public void OnSelectedChanged()
+        public void OnStateChanged()
         {
             if (cableSegment.IsSelected)
             {
@@ -61,7 +63,7 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                line.Stroke = Brushes.Black;
+                line.Stroke = cableSegment.Parent.State ? Brushes.Red : Brushes.Black;
             }
         }
 

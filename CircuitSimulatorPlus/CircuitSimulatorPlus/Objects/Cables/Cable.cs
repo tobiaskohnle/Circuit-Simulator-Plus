@@ -29,8 +29,8 @@ namespace CircuitSimulatorPlus
                     double centerX = GetPoint(index).X;
                     points[index - 1] = new Point(centerX, centerY);
 
-                    AddPoint(index + 1, new Point(centerX - 0.5, 0));
-                    AddPoint(index + 0, new Point(centerX + 0.5, 0));
+                    AddSegment(index + 1, new Point(centerX - 0.5, 0));
+                    AddSegment(index + 0, new Point(centerX + 0.5, 0));
                 }
                 else
                 {
@@ -38,8 +38,8 @@ namespace CircuitSimulatorPlus
                     double centerY = GetPoint(index).Y;
                     points[index - 1] = new Point(centerX, centerY);
 
-                    AddPoint(index + 1, new Point(0, centerY - 0.5));
-                    AddPoint(index + 0, new Point(0, centerY + 0.5));
+                    AddSegment(index + 1, new Point(0, centerY - 0.5));
+                    AddSegment(index + 0, new Point(0, centerY + 0.5));
                 }
             }
         }
@@ -112,11 +112,26 @@ namespace CircuitSimulatorPlus
                 endNode = value;
                 if (value is OutputNode)
                     outputNode = value as OutputNode;
+                OnPointsChanged?.Invoke();
             }
         }
 
         OutputNode outputNode;
+        public OutputNode OutputNode
+        {
+            get
+            {
+                return outputNode;
+            }
+            set
+            {
+                outputNode = value;
+                outputNode.OnStateChanged += OnStateChanged;
+                OnStateChanged?.Invoke();
+            }
+        }
 
+        public event Action OnStateChanged;
         public bool State
         {
             get
@@ -127,19 +142,41 @@ namespace CircuitSimulatorPlus
 
         public void AutoComplete()
         {
-            throw new NotImplementedException();
+            if (points.Count == 0)
+            {
+                AddSegment(StartPos + (EndPos - StartPos) / 2);
+            }
+            else if ((points.Count & 1) == 0)
+            {
+                Point lastPoint = points[points.Count - 1];
+                AddSegment(lastPoint + (EndPos - lastPoint) / 2);
+            }
         }
 
         public void ConnectTo(ConnectionNode endNode)
         {
             EndNode = endNode;
+            AutoComplete();
             IsCompleted = true;
         }
 
-        public void AddPoint(int index, Point point)
+        public void RemoveSegment(int index)
         {
-            points.Insert(index - 1, point);
             vertical = !vertical;
+            points.RemoveAt(index - 1);
+
+            Segments.RemoveAt(index);
+
+            for (int i = index + 1; i < Segments.Count; i++)
+                Segments[i].Index--;
+
+            OnPointsChanged?.Invoke();
+        }
+
+        public void AddSegment(int index, Point point)
+        {
+            vertical = !vertical;
+            points.Insert(index - 1, point);
 
             Segments.Insert(index, new CableSegment(this, index));
 
@@ -149,10 +186,10 @@ namespace CircuitSimulatorPlus
             OnPointsChanged?.Invoke();
         }
 
-        public void AddPoint(Point point)
+        public void AddSegment(Point point)
         {
-            points.Add(point);
             vertical = !vertical;
+            points.Add(point);
 
             Segments.Add(new CableSegment(this, Segments.Count));
 
