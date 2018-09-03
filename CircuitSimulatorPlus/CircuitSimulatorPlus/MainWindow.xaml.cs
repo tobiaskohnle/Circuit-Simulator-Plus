@@ -429,11 +429,15 @@ namespace CircuitSimulatorPlus
 
         public void Save()
         {
-            if (CurrentFilePath != null)
-                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObject(ContextGate));
-            else
+            if (CurrentFilePath == null)
+            {
                 SaveAs();
-            Saved = true;
+            }
+            else
+            {
+                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObject(ContextGate));
+                Saved = true;
+            }
             UpdateTitle();
         }
         public void SaveAs()
