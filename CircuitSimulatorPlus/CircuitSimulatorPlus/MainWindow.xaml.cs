@@ -38,7 +38,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]));
+                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]));
             else
                 ContextGate = new ContextGate();
             RenderContext();
@@ -370,7 +370,7 @@ namespace CircuitSimulatorPlus
 
                 CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
+                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
                 RecursiveTickAll(ContextGate);
                 RenderContext();
                 //UpdateClickableObjects();
@@ -1469,7 +1469,7 @@ namespace CircuitSimulatorPlus
             var storageObject = StorageConverter.ToStorageObject(ContextGate);
             if (New())
             {
-                ContextGate = (ContextGate)StorageConverter.ToGateTopLayer(storageObject);
+                ContextGate = StorageConverter.ToGateTopLayer(storageObject);
                 RenderContext();
                 //UpdateClickableObjects();
             }
