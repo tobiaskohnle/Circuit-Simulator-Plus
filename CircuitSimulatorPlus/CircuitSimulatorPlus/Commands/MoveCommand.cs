@@ -9,10 +9,10 @@ namespace CircuitSimulatorPlus
 {
     public class MoveCommand : Command
     {
-        Vector move;
+        List<Vector> move;
         List<IMovable> movedObjects;
 
-        public MoveCommand(List<IMovable> movedObjects, Vector move) : base("Moved objects")
+        public MoveCommand(List<IMovable> movedObjects, List<Vector> move) : base("Moved objects")
         {
             this.move = move;
             this.movedObjects = movedObjects;
@@ -20,17 +20,17 @@ namespace CircuitSimulatorPlus
 
         public override void Redo()
         {
-            foreach (IMovable obj in movedObjects)
+            for (int i = 0; i < movedObjects.Count; i++)
             {
-                obj.Move(move);
+                movedObjects[i].Move(move[i]);
             }
         }
 
         public override void Undo()
         {
-            foreach (IMovable obj in movedObjects)
+            for (int i = 0; i < movedObjects.Count; i++)
             {
-                obj.Move(-move);
+                movedObjects[i].Move(move[-i]);
             }
         }
     }
