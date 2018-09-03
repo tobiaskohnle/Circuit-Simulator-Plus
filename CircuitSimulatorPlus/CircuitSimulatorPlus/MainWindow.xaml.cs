@@ -24,9 +24,12 @@ namespace CircuitSimulatorPlus
 {
     public partial class MainWindow : Window
     {
+        public List<WeakReference<IClickable>> refs = new List<WeakReference<IClickable>>();
+
         public MainWindow()
         {
             InitializeComponent();
+
 
             Self = this;
 
@@ -1451,6 +1454,22 @@ namespace CircuitSimulatorPlus
         void ResetSettings_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.Reset();
+        }
+        void LogReferences_Click(object sender, RoutedEventArgs e)
+        {
+            while (refs.Count < ClickableObjects.Count)
+            {
+                refs.Add(new WeakReference<IClickable>(ClickableObjects[refs.Count]));
+            }
+
+            foreach (var refr in refs)
+            {
+                IClickable target = null;
+                bool alive = refr.TryGetTarget(out target);
+                Console.WriteLine(target.GetType().Name + ": " + (alive ? "Alive" : "Destroyed"));
+            }
+
+            Console.WriteLine();
         }
         void RecursiveTickAll(ContextGate contextGate)
         {
