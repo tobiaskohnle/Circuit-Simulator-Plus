@@ -109,8 +109,8 @@
     <Compile Include="Rendering\ConnectionNodes\OutputNodeRenderer.cs" />
     <Compile Include="Rendering\Gates\SegmentDisplayRenderer.cs" />
     <Compile Include="Storage\StorageUtility.cs" />
-    <Compile Include="Storage\StorageConverter.cs" />
-    <Compile Include="Storage\StorageObject.cs" />
+    <Compile Include="Storage\GateSerializer.cs" />
+    <Compile Include="Storage\SerializedGate.cs" />
     <Page Include="Controls\RenameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

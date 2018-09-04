@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    static class StorageSerializer
+    static class GateSerializer
     {
         public static SerializedGate SerilaizeTopLayer(ContextGate contextGate, List<Cable> cables)
         {
