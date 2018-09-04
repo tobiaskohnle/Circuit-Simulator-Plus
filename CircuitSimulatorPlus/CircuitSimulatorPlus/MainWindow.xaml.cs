@@ -1229,7 +1229,7 @@ namespace CircuitSimulatorPlus
         }
         void Window_Closing(object sender, CancelEventArgs e)
         {
-
+            e.Cancel = !SavePrompt();
         }
 
         void Window_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
