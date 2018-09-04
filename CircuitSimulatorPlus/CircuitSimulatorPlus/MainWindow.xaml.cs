@@ -476,21 +476,27 @@ namespace CircuitSimulatorPlus
             return dialog.FileName;
         }
 
+        public void Open()
+        {
+            if (SavePrompt())
+            {
+                Open(SelectFile());
+            }
+        }
+
         public void Open(string filePath)
         {
-            if (New())
+            if (filePath != "")
             {
+                ResetFile();
+                ResetView();
+
                 CurrentFilePath = filePath;
+                FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                Saved = true;
+                UpdateTitle();
 
-                if (Properties.Settings.Default.RecentFiles == null)
-                {
-                    Properties.Settings.Default.RecentFiles = new StringCollection();
-                }
-                Properties.Settings.Default.RecentFiles.Remove(filePath);
-                Properties.Settings.Default.RecentFiles.Insert(0, filePath);
-                Properties.Settings.Default.Save();
-
-                CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
+                AddToRecentFiles(filePath);
 
                 LoadState(StorageUtil.Load(filePath));
                 ContextGate.AddContext();
@@ -563,6 +569,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 CurrentFilePath = dialog.FileName;
+                AddToRecentFiles(CurrentFilePath);
                 FileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
                 StorageUtil.Save(CurrentFilePath, GateSerializer.SerilaizeTopLayer(ContextGate, Cables));
                 Saved = true;
@@ -588,6 +595,19 @@ namespace CircuitSimulatorPlus
             {
                 PasteFromClipboard(LastCanvasPos);
             }
+        }
+
+        public void AddToRecentFiles(string filePath)
+        {
+            if (Properties.Settings.Default.RecentFiles == null)
+            {
+                Properties.Settings.Default.RecentFiles = new StringCollection();
+            }
+            Properties.Settings.Default.RecentFiles.Remove(filePath);
+            Properties.Settings.Default.RecentFiles.Insert(0, filePath);
+            Properties.Settings.Default.Save();
+
+            CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
         }
         #endregion
 
@@ -1375,17 +1395,16 @@ namespace CircuitSimulatorPlus
         }
         void Open_Click(object sender, RoutedEventArgs e)
         {
-            var filePath = SelectFile();
-            if (filePath != "")
-            {
-                Open(filePath);
-            }
+            Open();
         }
         void RecentFiles_Click(object sender, RoutedEventArgs e)
         {
             if (e.Source != e.OriginalSource)
             {
-                Open((e.OriginalSource as MenuItem).Header.ToString());
+                if (New())
+                {
+                    Open((e.OriginalSource as MenuItem).Header.ToString());
+                }
             }
         }
         void OpenFolder_Click(object sender, RoutedEventArgs e)

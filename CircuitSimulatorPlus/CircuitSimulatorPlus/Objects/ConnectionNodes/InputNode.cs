@@ -28,13 +28,15 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        int ticksActive;
+
         public override bool LogicState
         {
             get
             {
                 if (IsRisingEdge)
                 {
-                    return State && stateChanged;
+                    return State && ticksActive < 1;
                 }
                 return State;
             }
@@ -60,10 +62,14 @@ namespace CircuitSimulatorPlus
         public override void Tick()
         {
             Tick(false, !Owner.HasContext, IsRisingEdge && LogicState);
+
             if (IsRisingEdge && LogicState)
-            {
                 MainWindow.Self.Tick(this);
-            }
+
+            if (LogicState)
+                ticksActive++;
+            else
+                ticksActive = 0;
         }
 
         public override void ConnectTo(ConnectionNode connectionNode)
