@@ -204,7 +204,8 @@ namespace CircuitSimulatorPlus
         {
             hitbox = new RectHitbox(new Rect(Position, Size));
             MainWindow.Self.ClickableObjects.Add(this);
-            MainWindow.Self.ContextGate.Context.Add(this);
+            if (!MainWindow.Self.ContextGate.Context.Contains(this))//temp
+                MainWindow.Self.ContextGate.Context.Add(this);
             MainWindow.Self.refs.Add(new WeakReference<IClickable>(this));//temp
             new GateRenderer(this);
             IsRendered = true;
