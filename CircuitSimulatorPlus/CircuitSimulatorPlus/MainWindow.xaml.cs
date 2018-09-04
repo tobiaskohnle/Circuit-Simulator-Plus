@@ -42,8 +42,6 @@ namespace CircuitSimulatorPlus
             else
                 ContextGate = new ContextGate();
 
-            //UpdateClickableObjects();
-
             Timer.Tick += Timer_Tick;
         }
 
@@ -380,7 +378,6 @@ namespace CircuitSimulatorPlus
 
                 ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
                 TickAll(ContextGate);
-                //UpdateClickableObjects();
             }
         }
 
@@ -582,18 +579,6 @@ namespace CircuitSimulatorPlus
             UndoStack.Push(command);
             RedoStack.Clear();
         }
-        //public void UpdateClickableObjects()
-        //{
-        //    ClickableObjects.Clear();
-        //    foreach (Gate gate in ContextGate.Context)
-        //    {
-        //        ClickableObjects.Add(gate);
-        //        foreach (InputNode input in gate.Input)
-        //            ClickableObjects.Add(input);
-        //        foreach (OutputNode output in gate.Output)
-        //            ClickableObjects.Add(output);
-        //    }
-        //}
 
         public void MoveObjects()
         {
@@ -713,21 +698,6 @@ namespace CircuitSimulatorPlus
                     Tick(connectionNode);
                 }
         }
-        //public void RenderContext()
-        //{
-        //    //foreach (Gate gate in ContextGate.Context)
-        //    //{
-        //    //    gate.IsRendered = true;
-        //    //    foreach (ConnectionNode node in gate.Input)
-        //    //    {
-        //    //        node.IsRendered = true;
-        //    //    }
-        //    //    foreach (ConnectionNode node in gate.Output)
-        //    //    {
-        //    //        node.IsRendered = true;
-        //    //    }
-        //    //}
-        //}
         public void CopyToClipboard()
         {
             var storeContext = new ContextGate();
@@ -1216,7 +1186,6 @@ namespace CircuitSimulatorPlus
             if (gate.HasContext)
                 TickAll((ContextGate)gate);
             Create(gate);
-            //UpdateClickableObjects();
         }
 
         void ChangeTypeContext(object sender, RoutedEventArgs e)
@@ -1478,7 +1447,6 @@ namespace CircuitSimulatorPlus
             {
                 ContextGate = StorageConverter.ToGateTopLayer(storageObject);
                 ContextGate.AddContext();
-                //UpdateClickableObjects();
             }
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
