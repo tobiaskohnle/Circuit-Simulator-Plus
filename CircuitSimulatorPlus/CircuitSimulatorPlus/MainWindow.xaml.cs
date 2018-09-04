@@ -38,10 +38,11 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]));
+                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]), Cables);
             else
                 ContextGate = new ContextGate();
 
+            ContextGate.AddContext();
             Timer.Tick += Timer_Tick;
         }
 
@@ -416,13 +417,16 @@ namespace CircuitSimulatorPlus
         public void LoadState(StorageObject storageObject)
         {
             ResetFile();
-            ContextGate = StorageConverter.ToGateTopLayer(storageObject);
+            ContextGate = StorageConverter.ToGateTopLayer(storageObject, Cables);
             ContextGate.AddContext();
         }
 
         public void ResetFile()
         {
             ContextGate.RemoveContext();
+            foreach (Cable cable in Cables)
+                cable.Remove();
+            Cables.Clear();
 
             ContextGate = new ContextGate();
 
@@ -458,7 +462,8 @@ namespace CircuitSimulatorPlus
 
                 CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
+                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath), Cables);
+                ContextGate.AddContext();
                 TickAll(ContextGate);
             }
         }
@@ -512,7 +517,7 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObject(ContextGate));
+                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
                 Saved = true;
             }
             UpdateTitle();
@@ -529,7 +534,7 @@ namespace CircuitSimulatorPlus
             {
                 CurrentFilePath = dialog.FileName;
                 FileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
-                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObject(ContextGate));
+                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
                 Saved = true;
                 UpdateTitle();
             }
@@ -657,7 +662,7 @@ namespace CircuitSimulatorPlus
         {
             Saved = false;
             UpdateTitle();
-            UndoStack.Push(StorageConverter.ToStorageObject(ContextGate));
+            UndoStack.Push(StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
             RedoStack.Clear();
         }
 
@@ -801,8 +806,11 @@ namespace CircuitSimulatorPlus
         {
             var storeContext = new ContextGate();
             Point ltcorner = new Point(double.PositiveInfinity, double.PositiveInfinity);
+            var allnodes = new List<ConnectionNode>();
             foreach (IClickable obj in SelectedObjects)
             {
+                if (obj is ConnectionNode)
+                    allnodes.Add((ConnectionNode)obj);
                 Gate gate = obj as Gate;
                 if (gate == null)
                     continue;
@@ -812,9 +820,20 @@ namespace CircuitSimulatorPlus
                 if (gate.Position.Y < ltcorner.Y)
                     ltcorner.Y = gate.Position.Y;
             }
-            var store = StorageConverter.ToStorageObject(storeContext);
+            var cables = new List<Cable>();
+            foreach (Cable cable in Cables)
+            {
+                if (allnodes.Contains(cable.StartNode) && allnodes.Contains(cable.EndNode))
+                    cables.Add(cable);
+            }
+            var store = StorageConverter.ToStorageObjectTopLayer(storeContext, cables);
             foreach (StorageObject innerStore in store.Context)
                 innerStore.Position = (Point)(innerStore.Position - ltcorner);
+            foreach (StorageObject.Cable cable in store.Cables)
+            {
+                for (int i = 0; i < cable.Points.Count; i++)
+                    cable.Points[i] = cable.Points[i] - (Vector)ltcorner;
+            }
             string storeText = StorageUtil.CreateText(store);
             Clipboard.SetData(Constants.FileExtention, storeText);
         }
@@ -826,7 +845,16 @@ namespace CircuitSimulatorPlus
             var store = StorageUtil.LoadString(text);
             if (store == null)
                 return;
-            ContextGate storeContext = StorageConverter.ToGateTopLayer(store);
+            var cables = new List<Cable>();
+            ContextGate storeContext = StorageConverter.ToGateTopLayer(store, cables);
+            foreach (Cable cable in cables)
+            {
+                for (int i = 0; i < cable.Points.Count; i++)
+                {
+                    cable.Points[i] = at + (Vector)cable.Points[i];
+                }
+                Cables.Add(cable);
+            }
             foreach (Gate gate in storeContext.Context)
             {
                 gate.Position = at + (Vector)gate.Position;
@@ -943,6 +971,8 @@ namespace CircuitSimulatorPlus
                     connectionNode.ConnectTo(CableOrigin);
                     Tick(connectionNode);
                     Tick(CableOrigin);
+
+                    Cables.Add(CreatedCable);
 
                     CreatingCable = false;
                 }
@@ -1521,7 +1551,7 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            LoadState(StorageConverter.ToStorageObject(ContextGate));
+            LoadState(StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {

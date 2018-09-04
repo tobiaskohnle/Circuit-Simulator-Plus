@@ -9,41 +9,23 @@ namespace CircuitSimulatorPlus
 {
     public class StorageObject
     {
-        public string Name
+        public string Name;
+        public Point Position;
+        public string Type;
+        public List<StorageObject> Context;
+        public int[] InputConnections;
+        public int[] OutputConnections;
+        public List<int> InvertedInputs;
+        public List<int> InvertedOutputs;
+        public List<int> InitialActiveOutputs;
+        public int[] CableEndPoints;
+        public List<StorageObject.Cable> Cables;
+        
+        public class Cable
         {
-            get; set;
-        }
-        public Point Position
-        {
-            get; set;
-        }
-        public string Type
-        {
-            get; set;
-        }
-        public List<StorageObject> Context
-        {
-            get; set;
-        }
-        public int[] InputConnections
-        {
-            get; set;
-        }
-        public int[] OutputConnections
-        {
-            get; set;
-        }
-        public List<int> InvertedInputs
-        {
-            get; set;
-        }
-        public List<int> InvertedOutputs
-        {
-            get; set;
-        }
-        public List<int> InitialActiveOutputs
-        {
-            get; set;
+            public int OutputConnection;
+            public int EndPoint;
+            public List<Point> Points;
         }
     }
 }

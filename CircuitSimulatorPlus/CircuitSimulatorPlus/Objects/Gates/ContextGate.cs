@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
@@ -10,6 +11,11 @@ namespace CircuitSimulatorPlus
         /// The circuit inside of a gate.
         /// </summary>
         public List<Gate> Context { get; set; } = new List<Gate>();
+
+        public ContextGate()
+        {
+            Size = new Size(3, 4);
+        }
 
         public override bool HasContext
         {
@@ -26,7 +32,7 @@ namespace CircuitSimulatorPlus
 
         public override void CreateDefaultConnectionNodes()
         {
-            throw new InvalidOperationException();
+            //throw new InvalidOperationException();
         }
 
         public void AddContext()

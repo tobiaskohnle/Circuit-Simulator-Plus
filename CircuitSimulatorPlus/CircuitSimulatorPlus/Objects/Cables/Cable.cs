@@ -31,13 +31,13 @@ namespace CircuitSimulatorPlus
 
         public void SplitSegment(int index)
         {
-            if (index > 0 && index < points.Count + 1)
+            if (index > 0 && index < Points.Count + 1)
             {
                 if ((index & 1) != 0)
                 {
                     double centerY = GetPoint(index - 1).Y / 2 + GetPoint(index + 1).Y / 2;
                     double centerX = GetPoint(index).X;
-                    points[index - 1] = new Point(centerX, centerY);
+                    Points[index - 1] = new Point(centerX, centerY);
 
                     AddSegment(index + 1, new Point(centerX + 0.5, 0));
                     AddSegment(index + 0, new Point(centerX - 0.5, 0));
@@ -46,7 +46,7 @@ namespace CircuitSimulatorPlus
                 {
                     double centerX = GetPoint(index - 1).X / 2 + GetPoint(index + 1).X / 2;
                     double centerY = GetPoint(index).Y;
-                    points[index - 1] = new Point(centerX, centerY);
+                    Points[index - 1] = new Point(centerX, centerY);
 
                     AddSegment(index + 1, new Point(0, centerY + 0.5));
                     AddSegment(index + 0, new Point(0, centerY - 0.5));
@@ -60,12 +60,12 @@ namespace CircuitSimulatorPlus
 
         public event Action OnPointsChanged;
 
-        List<Point> points = new List<Point>();
+        public List<Point> Points = new List<Point>();
 
         public void MovePoint(int index, Vector vector)
         {
-            if (index > 0 && index < points.Count + 1)
-                points[index - 1] += vector;
+            if (index > 0 && index < Points.Count + 1)
+                Points[index - 1] += vector;
 
             OnPointsChanged?.Invoke();
         }
@@ -74,9 +74,9 @@ namespace CircuitSimulatorPlus
         {
             if (index <= 0)
                 return StartPos;
-            if (index >= points.Count + 1)
+            if (index >= Points.Count + 1)
                 return EndPos;
-            return points[index - 1];
+            return Points[index - 1];
         }
 
         public Point StartPos
@@ -159,13 +159,13 @@ namespace CircuitSimulatorPlus
 
         public void AutoComplete()
         {
-            if (points.Count == 0)
+            if (Points.Count == 0)
             {
                 AddSegment(StartPos + (EndPos - StartPos) / 2);
             }
-            else if ((points.Count & 1) == 0)
+            else if ((Points.Count & 1) == 0)
             {
-                Point lastPoint = points[points.Count - 1];
+                Point lastPoint = Points[Points.Count - 1];
                 AddSegment(lastPoint + (EndPos - lastPoint) / 2);
             }
         }
@@ -195,14 +195,14 @@ namespace CircuitSimulatorPlus
             {
                 startNode?.Clear();
             }
-            else if (index == points.Count + 1)
+            else if (index == Points.Count + 1)
             {
                 endNode?.Clear();
             }
             else
             {
                 vertical = !vertical;
-                points.RemoveAt(index - 1);
+                Points.RemoveAt(index - 1);
 
                 Segments.RemoveAt(index);
 
@@ -216,7 +216,7 @@ namespace CircuitSimulatorPlus
         public void AddSegment(int index, Point point)
         {
             vertical = !vertical;
-            points.Insert(index - 1, point);
+            Points.Insert(index - 1, point);
 
             Segments.Insert(index, new CableSegment(this, index));
 
@@ -229,7 +229,7 @@ namespace CircuitSimulatorPlus
         public void AddSegment(Point point)
         {
             vertical = !vertical;
-            points.Add(point);
+            Points.Add(point);
 
             Segments.Add(new CableSegment(this, Segments.Count));
 
