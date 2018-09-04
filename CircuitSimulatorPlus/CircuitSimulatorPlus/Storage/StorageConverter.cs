@@ -34,6 +34,9 @@ namespace CircuitSimulatorPlus
                     if (store.InvertedInputs == null)
                         store.InvertedInputs = new List<int>();
                     store.InvertedInputs.Add(i);
+                    if (store.RisingEdgeInputs == null)
+                        store.RisingEdgeInputs = new List<int>();
+                    store.RisingEdgeInputs.Add(i);
                 }
             }
 
@@ -50,6 +53,12 @@ namespace CircuitSimulatorPlus
                     if (store.InitialActiveOutputs == null)
                         store.InitialActiveOutputs = new List<int>();
                     store.InitialActiveOutputs.Add(i);
+                }
+                if (gate.Output[i].IsMasterSlave)
+                {
+                    if (store.MasterSlaveOutputs == null)
+                        store.MasterSlaveOutputs = new List<int>();
+                    store.MasterSlaveOutputs.Add(i);
                 }
             }
 
