@@ -1551,8 +1551,9 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
+            StorageObject state = StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables);
             ResetFile();
-            LoadState(StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
+            LoadState(state);
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
