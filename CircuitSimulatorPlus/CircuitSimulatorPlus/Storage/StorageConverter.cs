@@ -377,14 +377,6 @@ namespace CircuitSimulatorPlus
                 foreach (int index in storageObject.InitialActiveOutputs)
                     gate.Output[index].State = true;
 
-            if (storageObject.RisingEdgeInputs != null)
-                foreach (int index in storageObject.RisingEdgeInputs)
-                    gate.Input[index].IsRisingEdge = true;
-
-            if (storageObject.MasterSlaveOutputs != null)
-                foreach (int index in storageObject.MasterSlaveOutputs)
-                    gate.Output[index].IsMasterSlave = true;
-
             if (storageObject.Type == "InputSwitch")
                 ((InputSwitch)gate).State = gate.Output.First().State;
 

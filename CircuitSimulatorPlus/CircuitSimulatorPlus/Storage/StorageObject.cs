@@ -18,8 +18,6 @@ namespace CircuitSimulatorPlus
         public List<int> InvertedInputs;
         public List<int> InvertedOutputs;
         public List<int> InitialActiveOutputs;
-        public List<int> RisingEdgeInputs;
-        public List<int> MasterSlaveOutputs;
         public int[] CableEndPoints;
         public List<StorageObject.Cable> Cables;
         
