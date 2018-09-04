@@ -36,7 +36,7 @@ namespace CircuitSimulatorPlus
             {
                 if (IsRisingEdge)
                 {
-                    return State && ticksActive < 1;
+                    return State && ticksActive < 3;
                 }
                 return State;
             }
@@ -66,7 +66,7 @@ namespace CircuitSimulatorPlus
             if (IsRisingEdge && LogicState)
                 MainWindow.Self.Tick(this);
 
-            if (LogicState)
+            if (State)
                 ticksActive++;
             else
                 ticksActive = 0;
