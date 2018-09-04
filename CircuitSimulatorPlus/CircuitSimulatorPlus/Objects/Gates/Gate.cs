@@ -208,6 +208,8 @@ namespace CircuitSimulatorPlus
                 inputNode.Add();
             foreach (OutputNode outputNode in Output)
                 outputNode.Add();
+
+            UpdateConnectionNodePos();
         }
         public virtual void Remove()
         {
