@@ -197,12 +197,6 @@ namespace CircuitSimulatorPlus
             gate.Name = storageObject.Name;
             gate.Position = storageObject.Position;
 
-            // AAAAAAAAAAAHHHHHH
-            foreach (InputNode node in new List<InputNode>(gate.Input))
-                gate.RemoveInputNode(node);
-            foreach (OutputNode node in new List<OutputNode>(gate.Output))
-                gate.RemoveOutputNode(node);
-
             if (storageObject.InputConnections == null)
                 storageObject.InputConnections = new int[0];
             if (storageObject.OutputConnections == null)
