@@ -478,7 +478,7 @@ namespace CircuitSimulatorPlus
 
         public void Open()
         {
-            if (New())
+            if (SavePrompt())
             {
                 Open(SelectFile());
             }
@@ -488,8 +488,12 @@ namespace CircuitSimulatorPlus
         {
             if (filePath != "")
             {
+                ResetFile();
+                ResetView();
+
                 CurrentFilePath = filePath;
                 FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                Saved = true;
                 UpdateTitle();
 
                 if (Properties.Settings.Default.RecentFiles == null)
