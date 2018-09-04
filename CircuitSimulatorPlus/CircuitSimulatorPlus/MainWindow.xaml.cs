@@ -454,7 +454,7 @@ namespace CircuitSimulatorPlus
         public void ResetFile()
         {
             ContextGate.RemoveContext();
-            foreach (Cable cable in Cables)
+            foreach (Cable cable in Cables.ToList())
                 cable.Remove();
             Cables.Clear();
 
