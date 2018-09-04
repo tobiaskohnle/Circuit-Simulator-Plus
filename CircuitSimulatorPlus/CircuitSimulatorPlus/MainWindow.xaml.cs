@@ -417,6 +417,11 @@ namespace CircuitSimulatorPlus
         {
             if (SavePrompt())
             {
+                CurrentFilePath = null;
+                FileName = Constants.DefaultTitle;
+                Saved = true;
+                UpdateTitle();
+
                 ResetFile();
                 ResetView();
 
