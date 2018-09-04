@@ -481,6 +481,8 @@ namespace CircuitSimulatorPlus
             if (New())
             {
                 CurrentFilePath = filePath;
+                FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                UpdateTitle();
 
                 if (Properties.Settings.Default.RecentFiles == null)
                 {
