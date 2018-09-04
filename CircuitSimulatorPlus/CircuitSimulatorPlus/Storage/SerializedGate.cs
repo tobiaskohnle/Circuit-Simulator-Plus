@@ -20,6 +20,8 @@ namespace CircuitSimulatorPlus
         public List<int> InitialActiveOutputs;
         public List<int> RisingEdgeInputs;
         public List<int> MasterSlaveOutputs;
+        public List<int> CenteredInputs;
+        public List<int> CenteredOutputs;
         public int[] CableEndPoints;
         public List<SerializedGate.Cable> Cables;
         public string[] InputLabels;

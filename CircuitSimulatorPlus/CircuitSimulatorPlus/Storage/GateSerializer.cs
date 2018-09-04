@@ -63,6 +63,18 @@ namespace CircuitSimulatorPlus
                         store.MasterSlaveOutputs = new List<int>();
                     store.MasterSlaveOutputs.Add(i);
                 }
+                if (gate.Input[i].IsCentered)
+                {
+                    if (store.CenteredInputs == null)
+                        store.CenteredInputs = new List<int>();
+                    store.CenteredInputs.Add(i);
+                }
+                if (gate.Output[i].IsCentered)
+                {
+                    if (store.CenteredOutputs == null)
+                        store.CenteredOutputs = new List<int>();
+                    store.CenteredOutputs.Add(i);
+                }
             }
 
             if (gate is ContextGate)
@@ -453,6 +465,14 @@ namespace CircuitSimulatorPlus
             if (storageObject.MasterSlaveOutputs != null)
                 foreach (int index in storageObject.MasterSlaveOutputs)
                     gate.Output[index].IsMasterSlave = true;
+
+            if (storageObject.CenteredInputs != null)
+                foreach (int index in storageObject.CenteredInputs)
+                    gate.Input[index].IsCentered = true;
+
+            if (storageObject.CenteredOutputs != null)
+                foreach (int index in storageObject.CenteredOutputs)
+                    gate.Output[index].IsCentered = true;
 
             if (storageObject.Type == "InputSwitch")
                 ((InputSwitch)gate).State = gate.Output.First().State;
