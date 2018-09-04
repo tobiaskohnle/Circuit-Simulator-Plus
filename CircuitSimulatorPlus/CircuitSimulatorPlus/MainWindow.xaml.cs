@@ -335,10 +335,7 @@ namespace CircuitSimulatorPlus
         {
             if (SavePrompt())
             {
-                foreach (Gate gate in ContextGate.Context.ToList())
-                {
-                    gate.Remove();
-                }
+                ContextGate.RemoveContext();
 
                 ContextGate = new ContextGate();
 
@@ -1480,6 +1477,7 @@ namespace CircuitSimulatorPlus
             if (New())
             {
                 ContextGate = StorageConverter.ToGateTopLayer(storageObject);
+                ContextGate.AddContext();
                 //UpdateClickableObjects();
             }
         }

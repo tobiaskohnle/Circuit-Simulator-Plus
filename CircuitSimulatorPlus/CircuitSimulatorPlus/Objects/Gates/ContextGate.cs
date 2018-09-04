@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CircuitSimulatorPlus
 {
@@ -28,8 +29,20 @@ namespace CircuitSimulatorPlus
             throw new InvalidOperationException();
         }
 
-        // These are used for positional comparisons.
-        public List<InputSwitch> InputSwitches = new List<InputSwitch>();
-        public List<OutputLight> OutputLights = new List<OutputLight>();
+        public void AddContext()
+        {
+            foreach (Gate gate in Context.ToList())
+            {
+                gate.Add();
+            }
+        }
+
+        public void RemoveContext()
+        {
+            foreach (Gate gate in Context.ToList())
+            {
+                gate.Remove();
+            }
+        }
     }
 }
