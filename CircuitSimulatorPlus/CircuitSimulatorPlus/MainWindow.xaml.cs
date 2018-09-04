@@ -392,7 +392,21 @@ namespace CircuitSimulatorPlus
             if (AnySelected<Gate>() || AnySelected<ConnectionNode>())
             {
                 SaveState();
-                var renameWindow = new Controls.RenameWindow(null) { Owner = this };
+
+                string oldName = null;
+                foreach (IClickable obj in SelectedObjects)
+                {
+                    if (obj is Gate)
+                    {
+                        oldName = (obj as Gate).Name;
+                    } else if (obj is ConnectionNode)
+                    {
+                        oldName = (obj as ConnectionNode).Name;
+                    }
+                    break;
+                }
+
+                var renameWindow = new Controls.RenameWindow(oldName) { Owner = this };
 
                 if (renameWindow.ShowDialog() == true)
                 {
@@ -417,6 +431,11 @@ namespace CircuitSimulatorPlus
         {
             if (SavePrompt())
             {
+                CurrentFilePath = null;
+                FileName = Constants.DefaultTitle;
+                Saved = true;
+                UpdateTitle();
+
                 ResetFile();
                 ResetView();
 
@@ -435,7 +454,7 @@ namespace CircuitSimulatorPlus
         public void ResetFile()
         {
             ContextGate.RemoveContext();
-            foreach (Cable cable in Cables)
+            foreach (Cable cable in Cables.ToList())
                 cable.Remove();
             Cables.Clear();
 
