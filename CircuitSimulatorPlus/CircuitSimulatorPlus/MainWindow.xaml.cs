@@ -332,8 +332,8 @@ namespace CircuitSimulatorPlus
 
                         newGate.CopyFrom(gate);
 
-                        ContextGate.Context.Remove(gate);
-                        ContextGate.Context.Add(newGate);
+                        gate.Remove();
+                        newGate.Add();
 
                         foreach (OutputNode outputNode in newGate.Output)
                             Tick(outputNode);
