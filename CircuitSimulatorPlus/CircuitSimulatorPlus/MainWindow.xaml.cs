@@ -38,7 +38,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = StorageSerializer.DeserializeTopLayer(StorageUtil.Load(args[1]), Cables);
+                LoadState(StorageUtil.Load(args[1]));
             else
                 ContextGate = new ContextGate();
 
@@ -416,7 +416,6 @@ namespace CircuitSimulatorPlus
 
         public void LoadState(SerializedGate storageObject)
         {
-            ResetFile();
             ContextGate = StorageSerializer.DeserializeTopLayer(storageObject, Cables);
             ContextGate.AddContext();
         }
@@ -462,7 +461,7 @@ namespace CircuitSimulatorPlus
 
                 CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-                ContextGate = StorageSerializer.DeserializeTopLayer(StorageUtil.Load(filePath), Cables);
+                LoadState(StorageUtil.Load(filePath));
                 ContextGate.AddContext();
                 TickAll(ContextGate);
             }
