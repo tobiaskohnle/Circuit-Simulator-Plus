@@ -107,7 +107,7 @@ namespace CircuitSimulatorPlus
         {
             gate.Position = Round(LastCanvasClick);
             gate.CreateDefaultConnectionNodes();
-            SaveState();
+            SaveState("Added gate");
             gate.Add();
         }
 
@@ -254,7 +254,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected<ConnectionNode>() || AnySelected<InputSwitch>())
             {
-                SaveState();
+                SaveState("Toggled objects");
                 foreach (IClickable obj in SelectedObjects)
                 {
                     if (obj is ConnectionNode)
@@ -289,7 +289,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected<Gate>())
             {
-                SaveState();
+                SaveState("Changed type to " + type.Name);
 
                 StorageObject storageObject = null;
                 if (type == typeof(ContextGate))
@@ -378,7 +378,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected<Gate>() || AnySelected<ConnectionNode>())
             {
-                SaveState();
+                SaveState("Renamed objects");
                 var renameWindow = new Controls.RenameWindow(null) { Owner = this };
 
                 if (renameWindow.ShowDialog() == true)
@@ -653,8 +653,9 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Misc
-        public void SaveState()
+        public void SaveState(string message)
         {
+            Console.WriteLine("SAVE STATE: " + message);
             Saved = false;
             UpdateTitle();
             UndoStack.Push(StorageConverter.ToStorageObject(ContextGate));
@@ -724,7 +725,7 @@ namespace CircuitSimulatorPlus
 
             if (anyMoved)
             {
-                SaveState();
+                SaveState("Moved objects");
                 for (int i = 0; i < movedObjects.Count; i++)
                 {
                     movedObjects[i].Move(movedVectors[i]);
@@ -757,7 +758,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected<Gate>())
             {
-                SaveState();
+                SaveState("Added empty input");
                 foreach (IClickable obj in SelectedObjects)
                 {
                     if (obj is Gate)
@@ -771,7 +772,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected<InputNode>())
             {
-                SaveState();
+                SaveState("Removed input");
                 foreach (IClickable obj in SelectedObjects)
                 {
                     if (obj is InputNode)
@@ -786,7 +787,7 @@ namespace CircuitSimulatorPlus
         {
             if (AnySelected<ConnectionNode>())
             {
-                SaveState();
+                SaveState("Inverted connectionNode");
                 foreach (IClickable obj in SelectedObjects)
                 {
                     if (obj is ConnectionNode)
