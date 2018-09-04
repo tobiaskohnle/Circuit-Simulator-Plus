@@ -886,7 +886,7 @@ namespace CircuitSimulatorPlus
         }
         public bool AnySelected<T>()
         {
-            return SelectedObjects.Exists(obj => obj.GetType() == typeof(T));
+            return SelectedObjects.Exists(obj => obj.GetType() == typeof(T) || obj.GetType().IsSubclassOf(typeof(T)));
         }
 
         public bool ControlPressed
@@ -1551,6 +1551,7 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
+            ResetFile();
             LoadState(StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
