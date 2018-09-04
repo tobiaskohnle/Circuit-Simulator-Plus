@@ -476,9 +476,17 @@ namespace CircuitSimulatorPlus
             return dialog.FileName;
         }
 
-        public void Open(string filePath)
+        public void Open()
         {
             if (New())
+            {
+                Open(SelectFile());
+            }
+        }
+
+        public void Open(string filePath)
+        {
+            if (filePath != "")
             {
                 CurrentFilePath = filePath;
                 FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
@@ -1377,17 +1385,16 @@ namespace CircuitSimulatorPlus
         }
         void Open_Click(object sender, RoutedEventArgs e)
         {
-            var filePath = SelectFile();
-            if (filePath != "")
-            {
-                Open(filePath);
-            }
+            Open();
         }
         void RecentFiles_Click(object sender, RoutedEventArgs e)
         {
             if (e.Source != e.OriginalSource)
             {
-                Open((e.OriginalSource as MenuItem).Header.ToString());
+                if (New())
+                {
+                    Open((e.OriginalSource as MenuItem).Header.ToString());
+                }
             }
         }
         void OpenFolder_Click(object sender, RoutedEventArgs e)
