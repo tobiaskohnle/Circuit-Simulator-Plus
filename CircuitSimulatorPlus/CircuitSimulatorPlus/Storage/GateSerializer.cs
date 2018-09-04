@@ -260,6 +260,8 @@ namespace CircuitSimulatorPlus
                         ConnectionNode otherNode = idToNode[id];
                         otherNode.NextConnectedTo.Add(thisNode);
                         thisNode.BackConnectedTo = otherNode;
+                        otherNode.IsEmpty = false;
+                        thisNode.IsEmpty = false;
                         thisNode.State = thisNode.IsInverted ? !otherNode.State : otherNode.State;
                         if (innerStore.CableEndPoints != null)
                         {
@@ -397,6 +399,8 @@ namespace CircuitSimulatorPlus
                             ConnectionNode otherNode = idToNode[id];
                             otherNode.NextConnectedTo.Add(thisNode);
                             thisNode.BackConnectedTo = otherNode;
+                            otherNode.IsEmpty = false;
+                            thisNode.IsEmpty = false;
                             thisNode.State = thisNode.IsInverted ? !otherNode.State : otherNode.State;
                         }
                     }
@@ -414,6 +418,8 @@ namespace CircuitSimulatorPlus
                         ConnectionNode otherNode = idToNode[id];
                         otherNode.NextConnectedTo.Add(contextNode);
                         contextNode.BackConnectedTo = otherNode;
+                        otherNode.IsEmpty = false;
+                        contextNode.IsEmpty = false;
                         contextNode.State = otherNode.State;
                     }
                 }
