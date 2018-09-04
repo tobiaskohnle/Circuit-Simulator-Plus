@@ -227,7 +227,10 @@ namespace CircuitSimulatorPlus
                 }
                 else if (obj is CableSegment)
                 {
-                    (obj as CableSegment).Remove();
+                    CableSegment segment = (obj as CableSegment);
+                    segment.Remove();
+                    if (segment.Parent.Segments.Count == 0)
+                        segment.Parent.Remove();
                 }
             }
             DeselectAll();

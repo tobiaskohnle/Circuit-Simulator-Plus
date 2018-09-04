@@ -242,6 +242,7 @@ namespace CircuitSimulatorPlus
             {
                 segment.Remove();
             }
+            MainWindow.Self.Cables.Remove(this);
         }
     }
 }
