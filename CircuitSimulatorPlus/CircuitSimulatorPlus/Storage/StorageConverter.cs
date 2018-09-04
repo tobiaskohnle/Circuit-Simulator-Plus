@@ -7,11 +7,11 @@ using System.Windows;
 
 namespace CircuitSimulatorPlus
 {
-    static class StorageConverter
+    static class StorageSerializer
     {
-        public static StorageObject ToStorageObjectTopLayer(ContextGate contextGate, List<Cable> cables)
+        public static SerializedGate SerilaizeTopLayer(ContextGate contextGate, List<Cable> cables)
         {
-            var store = new StorageObject();
+            var store = new SerializedGate();
             store.Name = contextGate.Name;
             store.Type = typeof(ContextGate).Name;
 
@@ -20,9 +20,9 @@ namespace CircuitSimulatorPlus
             return store;
         }
 
-        public static StorageObject ToStorageObject(Gate gate)
+        public static SerializedGate Serialize(Gate gate)
         {
-            var store = new StorageObject();
+            var store = new SerializedGate();
             store.Name = gate.Name;
             store.Position = gate.Position;
             store.Type = gate.GetType().Name;
@@ -68,14 +68,14 @@ namespace CircuitSimulatorPlus
             return store;
         }
 
-        private static void ExtractContext(StorageObject store, ContextGate contextGate, List<Cable> cables = null)
+        private static void ExtractContext(SerializedGate store, ContextGate contextGate, List<Cable> cables = null)
         {
             var contextCopy = new List<Gate>(contextGate.Context);
             int nextId = 1;
             int nextEp = 1;
             var nodeToId = new Dictionary<ConnectionNode, int>();
             var nodeToCableEp = new Dictionary<ConnectionNode, int>();
-            store.Context = new List<StorageObject>();
+            store.Context = new List<SerializedGate>();
 
             for (int i = 0; i < contextGate.Input.Count; i++)
             {
@@ -126,7 +126,7 @@ namespace CircuitSimulatorPlus
 
             foreach (Gate innerGate in contextCopy)
             {
-                StorageObject innerStore = ToStorageObject(innerGate);
+                SerializedGate innerStore = Serialize(innerGate);
                 innerStore.InputConnections = new int[innerGate.Input.Count];
                 if (cables != null)
                     innerStore.CableEndPoints = new int[innerGate.Input.Count];
@@ -158,10 +158,10 @@ namespace CircuitSimulatorPlus
 
             if (cables == null)
                 return;
-            store.Cables = new List<StorageObject.Cable>();
+            store.Cables = new List<SerializedGate.Cable>();
             foreach (Cable cable in cables)
             {
-                var cablestore = new StorageObject.Cable();
+                var cablestore = new SerializedGate.Cable();
                 cablestore.OutputConnection = nodeToId[cable.StartNode];
                 cablestore.EndPoint = nodeToCableEp[cable.EndNode];
                 cablestore.Points = new List<Point>(cable.Points);
@@ -169,7 +169,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        public static ContextGate ToGateTopLayer(StorageObject storageObject, List<Cable> cables)
+        public static ContextGate DeserializeTopLayer(SerializedGate storageObject, List<Cable> cables)
         {
             if (storageObject.Type != "ContextGate")
                 throw new Exception("Object does not store an ContextGate");
@@ -179,9 +179,9 @@ namespace CircuitSimulatorPlus
             var cableEpToNode = new Dictionary<int, ConnectionNode>();
             var uncabledNodes = new LinkedList<ConnectionNode>();
 
-            foreach (StorageObject innerStore in storageObject.Context)
+            foreach (SerializedGate innerStore in storageObject.Context)
             {
-                Gate innerGate = ToGate(innerStore);
+                Gate innerGate = Deserialize(innerStore);
                 contextGate.Context.Add(innerGate);
                 for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
                 {
@@ -193,7 +193,7 @@ namespace CircuitSimulatorPlus
 
             for (int i = 0; i < storageObject.Context.Count; i++)
             {
-                StorageObject innerStore = storageObject.Context[i];
+                SerializedGate innerStore = storageObject.Context[i];
                 Gate innerGate = contextGate.Context[i];
                 for (int j = 0; j < innerStore.InputConnections.Count(); j++)
                 {
@@ -220,7 +220,7 @@ namespace CircuitSimulatorPlus
             if (storageObject.Cables == null)
                 return contextGate;
 
-            foreach (StorageObject.Cable cablestore in storageObject.Cables)
+            foreach (SerializedGate.Cable cablestore in storageObject.Cables)
             {
                 ConnectionNode outputNode = idToNode[cablestore.OutputConnection];
                 ConnectionNode inputNode = cableEpToNode[cablestore.EndPoint];
@@ -242,7 +242,7 @@ namespace CircuitSimulatorPlus
             return contextGate;
         }
 
-        public static Gate ToGate(StorageObject storageObject)
+        public static Gate Deserialize(SerializedGate storageObject)
         {
             Gate gate;
             switch (storageObject.Type)
@@ -284,11 +284,11 @@ namespace CircuitSimulatorPlus
             {
                 ContextGate contextGate = gate as ContextGate;
                 var idToNode = new Dictionary<int, ConnectionNode>();
-                var inputStores = new List<StorageObject>();
-                var outputStores = new List<StorageObject>();
-                var gateStores = new List<StorageObject>();
+                var inputStores = new List<SerializedGate>();
+                var outputStores = new List<SerializedGate>();
+                var gateStores = new List<SerializedGate>();
 
-                foreach (StorageObject innerStore in storageObject.Context)
+                foreach (SerializedGate innerStore in storageObject.Context)
                 {
                     switch (innerStore.Type)
                     {
@@ -307,9 +307,9 @@ namespace CircuitSimulatorPlus
                 inputStores.Sort(ComparePosition);
                 outputStores.Sort(ComparePosition);
 
-                foreach (StorageObject gateStore in gateStores)
+                foreach (SerializedGate gateStore in gateStores)
                 {
-                    Gate innerGate = ToGate(gateStore);
+                    Gate innerGate = Deserialize(gateStore);
                     contextGate.Context.Add(innerGate);
                     for (int i = 0; i < gateStore.OutputConnections.Count(); i++)
                     {
@@ -318,7 +318,7 @@ namespace CircuitSimulatorPlus
                             idToNode[id] = innerGate.Output[i];
                     }
                 }
-                foreach (StorageObject inputStore in inputStores)
+                foreach (SerializedGate inputStore in inputStores)
                 {
                     int id = inputStore.OutputConnections.First();
                     var inputNode = new InputNode(contextGate);
@@ -330,7 +330,7 @@ namespace CircuitSimulatorPlus
 
                 for (int i = 0; i < gateStores.Count; i++)
                 {
-                    StorageObject innerStore = gateStores[i];
+                    SerializedGate innerStore = gateStores[i];
                     Gate innerGate = contextGate.Context[i];
                     for (int j = 0; j < innerStore.InputConnections.Count(); j++)
                     {
@@ -347,7 +347,7 @@ namespace CircuitSimulatorPlus
                         }
                     }
                 }
-                foreach (StorageObject outputStore in outputStores)
+                foreach (SerializedGate outputStore in outputStores)
                 {
                     int id = outputStore.InputConnections.First();
                     OutputNode contextNode = new OutputNode(contextGate);
@@ -400,7 +400,7 @@ namespace CircuitSimulatorPlus
             return gate;
         }
 
-        private static int ComparePosition(StorageObject a, StorageObject b)
+        private static int ComparePosition(SerializedGate a, SerializedGate b)
         {
             int res = (int)a.Position.Y - (int)b.Position.Y;
             if (res == 0)

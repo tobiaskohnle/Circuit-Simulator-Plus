@@ -38,7 +38,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]), Cables);
+                ContextGate = StorageSerializer.DeserializeTopLayer(StorageUtil.Load(args[1]), Cables);
             else
                 ContextGate = new ContextGate();
 
@@ -93,8 +93,8 @@ namespace CircuitSimulatorPlus
         public List<IClickable> ClickableObjects = new List<IClickable>();
         public List<IClickable> SelectedObjects = new List<IClickable>();
 
-        public DropOutStack<StorageObject> UndoStack = new DropOutStack<StorageObject>(Constants.UndoBufferSize);
-        public DropOutStack<StorageObject> RedoStack = new DropOutStack<StorageObject>(Constants.UndoBufferSize);
+        public DropOutStack<SerializedGate> UndoStack = new DropOutStack<SerializedGate>(Constants.UndoBufferSize);
+        public DropOutStack<SerializedGate> RedoStack = new DropOutStack<SerializedGate>(Constants.UndoBufferSize);
 
         public List<Cable> Cables = new List<Cable>();
         public ContextGate ContextGate;
@@ -292,7 +292,7 @@ namespace CircuitSimulatorPlus
             {
                 SaveState();
 
-                StorageObject storageObject = null;
+                SerializedGate storageObject = null;
                 if (type == typeof(ContextGate))
                     storageObject = StorageUtil.Load(SelectFile());
 
@@ -304,7 +304,7 @@ namespace CircuitSimulatorPlus
                         Gate newGate = null;
 
                         if (type == typeof(ContextGate))
-                            newGate = StorageConverter.ToGate(storageObject);
+                            newGate = StorageSerializer.Deserialize(storageObject);
                         else if (type == typeof(InputSwitch))
                             newGate = new InputSwitch();
                         else if (type == typeof(OutputLight))
@@ -414,10 +414,10 @@ namespace CircuitSimulatorPlus
             return false;
         }
 
-        public void LoadState(StorageObject storageObject)
+        public void LoadState(SerializedGate storageObject)
         {
             ResetFile();
-            ContextGate = StorageConverter.ToGateTopLayer(storageObject, Cables);
+            ContextGate = StorageSerializer.DeserializeTopLayer(storageObject, Cables);
             ContextGate.AddContext();
         }
 
@@ -462,7 +462,7 @@ namespace CircuitSimulatorPlus
 
                 CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath), Cables);
+                ContextGate = StorageSerializer.DeserializeTopLayer(StorageUtil.Load(filePath), Cables);
                 ContextGate.AddContext();
                 TickAll(ContextGate);
             }
@@ -494,7 +494,7 @@ namespace CircuitSimulatorPlus
         {
             if (AllowUndo)
             {
-                StorageObject lastState = UndoStack.Pop();
+                SerializedGate lastState = UndoStack.Pop();
                 LoadState(lastState);
                 RedoStack.Push(lastState);
             }
@@ -503,7 +503,7 @@ namespace CircuitSimulatorPlus
         {
             if (AllowRedo)
             {
-                StorageObject lastState = RedoStack.Pop();
+                SerializedGate lastState = RedoStack.Pop();
                 LoadState(lastState);
                 UndoStack.Push(lastState);
             }
@@ -517,7 +517,7 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
+                StorageUtil.Save(CurrentFilePath, StorageSerializer.SerilaizeTopLayer(ContextGate, Cables));
                 Saved = true;
             }
             UpdateTitle();
@@ -534,7 +534,7 @@ namespace CircuitSimulatorPlus
             {
                 CurrentFilePath = dialog.FileName;
                 FileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
-                StorageUtil.Save(CurrentFilePath, StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
+                StorageUtil.Save(CurrentFilePath, StorageSerializer.SerilaizeTopLayer(ContextGate, Cables));
                 Saved = true;
                 UpdateTitle();
             }
@@ -662,7 +662,7 @@ namespace CircuitSimulatorPlus
         {
             Saved = false;
             UpdateTitle();
-            UndoStack.Push(StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables));
+            UndoStack.Push(StorageSerializer.SerilaizeTopLayer(ContextGate, Cables));
             RedoStack.Clear();
         }
 
@@ -826,10 +826,10 @@ namespace CircuitSimulatorPlus
                 if (allnodes.Contains(cable.StartNode) && allnodes.Contains(cable.EndNode))
                     cables.Add(cable);
             }
-            var store = StorageConverter.ToStorageObjectTopLayer(storeContext, cables);
-            foreach (StorageObject innerStore in store.Context)
+            var store = StorageSerializer.SerilaizeTopLayer(storeContext, cables);
+            foreach (SerializedGate innerStore in store.Context)
                 innerStore.Position = (Point)(innerStore.Position - ltcorner);
-            foreach (StorageObject.Cable cable in store.Cables)
+            foreach (SerializedGate.Cable cable in store.Cables)
             {
                 for (int i = 0; i < cable.Points.Count; i++)
                     cable.Points[i] = cable.Points[i] - (Vector)ltcorner;
@@ -846,7 +846,7 @@ namespace CircuitSimulatorPlus
             if (store == null)
                 return;
             var cables = new List<Cable>();
-            ContextGate storeContext = StorageConverter.ToGateTopLayer(store, cables);
+            ContextGate storeContext = StorageSerializer.DeserializeTopLayer(store, cables);
             foreach (Cable cable in cables)
             {
                 for (int i = 0; i < cable.Points.Count; i++)
@@ -1288,10 +1288,10 @@ namespace CircuitSimulatorPlus
             string filepath = SelectFile();
             if (filepath == "")
                 return;
-            StorageObject store = StorageUtil.Load(filepath);
+            SerializedGate store = StorageUtil.Load(filepath);
             if (store == null)
                 return;
-            Gate gate = StorageConverter.ToGate(store);
+            Gate gate = StorageSerializer.Deserialize(store);
             if (gate.HasContext)
                 TickAll((ContextGate)gate);
             Create(gate);
@@ -1551,7 +1551,7 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            StorageObject state = StorageConverter.ToStorageObjectTopLayer(ContextGate, Cables);
+            SerializedGate state = StorageSerializer.SerilaizeTopLayer(ContextGate, Cables);
             ResetFile();
             LoadState(state);
         }

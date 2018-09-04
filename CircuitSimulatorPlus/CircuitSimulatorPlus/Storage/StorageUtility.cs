@@ -11,21 +11,21 @@ namespace CircuitSimulatorPlus
 {
     static class StorageUtil
     {
-        public static StorageObject Load(string filepath)
+        public static SerializedGate Load(string filepath)
         {
-            StorageObject store = null;
+            SerializedGate store = null;
             using (var reader = new StreamReader(filepath))
                 store = Deserialize(reader);
             return store;
         }
 
-        public static void Save(string filepath, StorageObject store)
+        public static void Save(string filepath, SerializedGate store)
         {
             using (var writer = new StreamWriter(filepath))
                 Serialize(store, writer);
         }
 
-        public static string CreateText(StorageObject store)
+        public static string CreateText(SerializedGate store)
         {
             string text = "";
             using (var writer = new StringWriter())
@@ -36,15 +36,15 @@ namespace CircuitSimulatorPlus
             return text;
         }
 
-        public static StorageObject LoadString(string text)
+        public static SerializedGate LoadString(string text)
         {
-            StorageObject store;
+            SerializedGate store;
             using (var reader = new StringReader(text))
                 store = Deserialize(reader);
             return store;
         }
 
-        private static void Serialize(StorageObject store, TextWriter writer)
+        private static void Serialize(SerializedGate store, TextWriter writer)
         {
             try
             {
@@ -57,14 +57,14 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        private static StorageObject Deserialize(TextReader reader)
+        private static SerializedGate Deserialize(TextReader reader)
         {
-            StorageObject store = null;
+            SerializedGate store = null;
 
             try
             {
                 using (var jreader = new JsonTextReader(reader))
-                    store = serializer.Deserialize<StorageObject>(jreader);
+                    store = serializer.Deserialize<SerializedGate>(jreader);
             }
             catch
             {
