@@ -38,7 +38,7 @@ namespace CircuitSimulatorPlus
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]), Cables);
+                LoadState(StorageUtil.Load(args[1]));
             else
                 ContextGate = new ContextGate();
 
@@ -416,7 +416,6 @@ namespace CircuitSimulatorPlus
 
         public void LoadState(StorageObject storageObject)
         {
-            ResetFile();
             ContextGate = StorageConverter.ToGateTopLayer(storageObject, Cables);
             ContextGate.AddContext();
         }
@@ -462,8 +461,7 @@ namespace CircuitSimulatorPlus
 
                 CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
-                ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath), Cables);
-                ContextGate.AddContext();
+                LoadState(StorageUtil.Load(filePath));
                 TickAll(ContextGate);
             }
         }
