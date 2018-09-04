@@ -41,7 +41,6 @@ namespace CircuitSimulatorPlus
                 ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(args[1]));
             else
                 ContextGate = new ContextGate();
-            RenderContext();
 
             //UpdateClickableObjects();
 
@@ -146,6 +145,18 @@ namespace CircuitSimulatorPlus
 
             foreach (var node in TickedNodes)
                 node.IsTicked = true;
+        }
+        public void TickAll(ContextGate contextGate)
+        {
+            foreach (Gate gate in contextGate.Context)
+            {
+                foreach (InputNode inputNode in gate.Input)
+                    Tick(inputNode);
+                foreach (OutputNode outputNode in gate.Output)
+                    Tick(outputNode);
+                if (gate.HasContext)
+                    TickAll((ContextGate)gate);
+            }
         }
 
         public void Select(IClickable obj)
@@ -371,8 +382,7 @@ namespace CircuitSimulatorPlus
                 CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
 
                 ContextGate = StorageConverter.ToGateTopLayer(StorageUtil.Load(filePath));
-                RecursiveTickAll(ContextGate);
-                RenderContext();
+                TickAll(ContextGate);
                 //UpdateClickableObjects();
             }
         }
@@ -706,21 +716,21 @@ namespace CircuitSimulatorPlus
                     Tick(connectionNode);
                 }
         }
-        public void RenderContext()
-        {
-            //foreach (Gate gate in ContextGate.Context)
-            //{
-            //    gate.IsRendered = true;
-            //    foreach (ConnectionNode node in gate.Input)
-            //    {
-            //        node.IsRendered = true;
-            //    }
-            //    foreach (ConnectionNode node in gate.Output)
-            //    {
-            //        node.IsRendered = true;
-            //    }
-            //}
-        }
+        //public void RenderContext()
+        //{
+        //    //foreach (Gate gate in ContextGate.Context)
+        //    //{
+        //    //    gate.IsRendered = true;
+        //    //    foreach (ConnectionNode node in gate.Input)
+        //    //    {
+        //    //        node.IsRendered = true;
+        //    //    }
+        //    //    foreach (ConnectionNode node in gate.Output)
+        //    //    {
+        //    //        node.IsRendered = true;
+        //    //    }
+        //    //}
+        //}
         public void CopyToClipboard()
         {
             var storeContext = new ContextGate();
@@ -1207,7 +1217,7 @@ namespace CircuitSimulatorPlus
                 return;
             Gate gate = StorageConverter.ToGate(store);
             if (gate.HasContext)
-                RecursiveTickAll((ContextGate)gate);
+                TickAll((ContextGate)gate);
             Create(gate);
             //UpdateClickableObjects();
         }
@@ -1470,7 +1480,6 @@ namespace CircuitSimulatorPlus
             if (New())
             {
                 ContextGate = StorageConverter.ToGateTopLayer(storageObject);
-                RenderContext();
                 //UpdateClickableObjects();
             }
         }
@@ -1488,7 +1497,7 @@ namespace CircuitSimulatorPlus
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
-            RecursiveTickAll(ContextGate);
+            TickAll(ContextGate);
         }
         void ResetSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -1504,18 +1513,6 @@ namespace CircuitSimulatorPlus
             }
 
             Console.WriteLine();
-        }
-        void RecursiveTickAll(ContextGate contextGate)
-        {
-            foreach (Gate gate in contextGate.Context)
-            {
-                foreach (InputNode inputNode in gate.Input)
-                    Tick(inputNode);
-                foreach (OutputNode outputNode in gate.Output)
-                    Tick(outputNode);
-                if (gate.HasContext)
-                    RecursiveTickAll((ContextGate)gate);
-            }
         }
 
         void ConnectParallel_Click(object sender, RoutedEventArgs e)
