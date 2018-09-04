@@ -208,7 +208,7 @@ namespace CircuitSimulatorPlus
             MainWindow.Self.refs.Add(new WeakReference<IClickable>(this));//temp
             new GateRenderer(this);
             IsRendered = true;
-            
+
             foreach (InputNode inputNode in Input)
                 inputNode.Add();
             foreach (OutputNode outputNode in Output)

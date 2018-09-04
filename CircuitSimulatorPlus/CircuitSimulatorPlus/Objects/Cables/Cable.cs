@@ -185,7 +185,7 @@ namespace CircuitSimulatorPlus
 
             AutoComplete();
             IsCompleted = true;
-            
+
             OnPointsChanged?.Invoke();
         }
 

@@ -17,7 +17,10 @@ namespace CircuitSimulatorPlus
             CreateConnectionNodes(1, 0);
         }
 
-        public bool State { get; internal set; }
+        public bool State
+        {
+            get; internal set;
+        }
 
         public override bool Eval()
         {

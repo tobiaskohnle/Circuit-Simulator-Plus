@@ -72,7 +72,7 @@ namespace CircuitSimulatorPlus
             Point point = cableSegment.Parent.GetPoint(cableSegment.Index);
             Point lastPoint = cableSegment.Parent.GetPoint(cableSegment.Index - 1);
             Point nextPoint = cableSegment.Parent.GetPoint(cableSegment.Index + 1);
-            
+
             bool vert = (cableSegment.Index & 1) != 0;
             line.X1 = vert ? point.X : lastPoint.X;
             line.Y1 = vert ? lastPoint.Y : point.Y;

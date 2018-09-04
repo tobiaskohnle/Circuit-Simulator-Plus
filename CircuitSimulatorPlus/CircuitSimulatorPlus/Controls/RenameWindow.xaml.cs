@@ -15,7 +15,7 @@ namespace CircuitSimulatorPlus.Controls
             InputTextBox.Focus();
         }
 
-        public string Name
+        public new string Name
         {
             get;
             set;
