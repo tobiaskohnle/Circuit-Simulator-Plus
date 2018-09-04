@@ -496,15 +496,7 @@ namespace CircuitSimulatorPlus
                 Saved = true;
                 UpdateTitle();
 
-                if (Properties.Settings.Default.RecentFiles == null)
-                {
-                    Properties.Settings.Default.RecentFiles = new StringCollection();
-                }
-                Properties.Settings.Default.RecentFiles.Remove(filePath);
-                Properties.Settings.Default.RecentFiles.Insert(0, filePath);
-                Properties.Settings.Default.Save();
-
-                CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
+                AddToRecentFiles(filePath);
 
                 LoadState(StorageUtil.Load(filePath));
                 ContextGate.AddContext();
@@ -577,6 +569,7 @@ namespace CircuitSimulatorPlus
             if (dialog.ShowDialog() == true)
             {
                 CurrentFilePath = dialog.FileName;
+                AddToRecentFiles(CurrentFilePath);
                 FileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
                 StorageUtil.Save(CurrentFilePath, GateSerializer.SerilaizeTopLayer(ContextGate, Cables));
                 Saved = true;
@@ -602,6 +595,19 @@ namespace CircuitSimulatorPlus
             {
                 PasteFromClipboard(LastCanvasPos);
             }
+        }
+
+        public void AddToRecentFiles(string filePath)
+        {
+            if (Properties.Settings.Default.RecentFiles == null)
+            {
+                Properties.Settings.Default.RecentFiles = new StringCollection();
+            }
+            Properties.Settings.Default.RecentFiles.Remove(filePath);
+            Properties.Settings.Default.RecentFiles.Insert(0, filePath);
+            Properties.Settings.Default.Save();
+
+            CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
         }
         #endregion
 
