@@ -407,6 +407,9 @@ namespace CircuitSimulatorPlus
                 ResetFile();
                 ResetView();
 
+                UndoStack.Clear();
+                RedoStack.Clear();
+
                 return true;
             }
 
@@ -485,22 +488,29 @@ namespace CircuitSimulatorPlus
             return true;
         }
 
+        public void SaveState(string message)
+        {
+            Console.WriteLine("SAVE STATE: " + message);
+            Saved = false;
+            UpdateTitle();
+            UndoStack.Push(StorageConverter.ToStorageObject(ContextGate));
+            RedoStack.Clear();
+        }
+
         public void Undo()
         {
             if (AllowUndo)
             {
-                StorageObject lastState = UndoStack.Pop();
-                LoadState(lastState);
-                RedoStack.Push(lastState);
+                RedoStack.Push(StorageConverter.ToStorageObject(ContextGate));
+                LoadState(UndoStack.Pop());
             }
         }
         public void Redo()
         {
             if (AllowRedo)
             {
-                StorageObject lastState = RedoStack.Pop();
-                LoadState(lastState);
-                UndoStack.Push(lastState);
+                UndoStack.Push(StorageConverter.ToStorageObject(ContextGate));
+                LoadState(RedoStack.Pop());
             }
         }
 
@@ -653,15 +663,6 @@ namespace CircuitSimulatorPlus
         #endregion
 
         #region Misc
-        public void SaveState(string message)
-        {
-            Console.WriteLine("SAVE STATE: " + message);
-            Saved = false;
-            UpdateTitle();
-            UndoStack.Push(StorageConverter.ToStorageObject(ContextGate));
-            RedoStack.Clear();
-        }
-
         public void MoveObjects()
         {
             Vector completeMove = LastCanvasPos - LastCanvasClick;
