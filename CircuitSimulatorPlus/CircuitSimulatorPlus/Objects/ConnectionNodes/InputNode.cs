@@ -61,12 +61,12 @@ namespace CircuitSimulatorPlus
                 return;
             }
 
-            ConnectedCable.Remove();
-
             BackConnectedTo.NextConnectedTo.Remove(this);
             BackConnectedTo.IsEmpty = BackConnectedTo.NextConnectedTo.Count == 0;
             BackConnectedTo = null;
             IsEmpty = true;
+
+            ConnectedCable.Remove();
 
             MainWindow.Self.Tick(this);
         }

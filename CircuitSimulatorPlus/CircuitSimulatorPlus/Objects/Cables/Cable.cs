@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace CircuitSimulatorPlus
@@ -105,8 +106,15 @@ namespace CircuitSimulatorPlus
             set
             {
                 startNode = value;
+
                 if (value is OutputNode)
+                {
                     outputNode = value as OutputNode;
+                    outputNode.OnStateChanged += RaiseStateChanged;
+                    OnStateChanged?.Invoke();
+                }
+
+                OnPointsChanged?.Invoke();
             }
         }
 
@@ -120,28 +128,27 @@ namespace CircuitSimulatorPlus
             set
             {
                 endNode = value;
+
                 if (value is OutputNode)
+                {
                     outputNode = value as OutputNode;
+                    outputNode.OnStateChanged += RaiseStateChanged;
+                    OnStateChanged?.Invoke();
+                }
+
                 OnPointsChanged?.Invoke();
             }
         }
 
         OutputNode outputNode;
-        public OutputNode OutputNode
-        {
-            get
-            {
-                return outputNode;
-            }
-            set
-            {
-                outputNode = value;
-                outputNode.OnStateChanged += OnStateChanged;
-                OnStateChanged?.Invoke();
-            }
-        }
 
         public event Action OnStateChanged;
+
+        public void RaiseStateChanged()
+        {
+            OnStateChanged?.Invoke();
+        }
+
         public bool State
         {
             get
@@ -184,15 +191,26 @@ namespace CircuitSimulatorPlus
 
         public void RemoveSegment(int index)
         {
-            vertical = !vertical;
-            points.RemoveAt(index - 1);
+            if (index == 0)
+            {
+                startNode?.Clear();
+            }
+            else if (index == points.Count + 1)
+            {
+                endNode?.Clear();
+            }
+            else
+            {
+                vertical = !vertical;
+                points.RemoveAt(index - 1);
 
-            Segments.RemoveAt(index);
+                Segments.RemoveAt(index);
 
-            for (int i = index + 1; i < Segments.Count; i++)
-                Segments[i].Index--;
+                for (int i = index; i < Segments.Count; i++)
+                    Segments[i].Index--;
 
-            OnPointsChanged?.Invoke();
+                OnPointsChanged?.Invoke();
+            }
         }
 
         public void AddSegment(int index, Point point)
@@ -220,7 +238,7 @@ namespace CircuitSimulatorPlus
 
         public void Remove()
         {
-            foreach (CableSegment segment in Segments)
+            foreach (CableSegment segment in Segments.ToList())
             {
                 segment.Remove();
             }

@@ -82,6 +82,7 @@ namespace CircuitSimulatorPlus
         }
         public void Remove()
         {
+            Parent.RemoveSegment(Index);
             IsRendered = false;
             MainWindow.Self.ClickableObjects.Remove(this);
         }

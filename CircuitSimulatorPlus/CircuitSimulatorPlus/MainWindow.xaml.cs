@@ -223,6 +223,10 @@ namespace CircuitSimulatorPlus
                 {
                     (obj as ConnectionNode).Clear();
                 }
+                else if (obj is CableSegment)
+                {
+                    (obj as CableSegment).Remove();
+                }
             }
             DeselectAll();
         }
@@ -1475,7 +1479,7 @@ namespace CircuitSimulatorPlus
             {
                 IClickable target = null;
                 bool alive = refr.TryGetTarget(out target);
-                Console.WriteLine(target.GetType().Name + ": " + (alive ? "Alive" : "Destroyed"));
+                Console.WriteLine((target?.GetType().Name ?? "null") + ": " + (alive ? "Alive" : "Destroyed"));
             }
 
             Console.WriteLine();

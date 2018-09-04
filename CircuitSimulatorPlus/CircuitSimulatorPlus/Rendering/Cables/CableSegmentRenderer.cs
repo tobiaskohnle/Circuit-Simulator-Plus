@@ -37,8 +37,8 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Add(line);
 
                 cableSegment.OnSelectedChanged += OnStateChanged;
-                cableSegment.Parent.OnPointsChanged += OnPositionChanged;
                 cableSegment.Parent.OnStateChanged += OnStateChanged;
+                cableSegment.Parent.OnPointsChanged += OnPositionChanged;
                 MainWindow.Self.OnLastCanvasPosChanged += OnPositionChanged;
 
                 OnStateChanged();
@@ -49,8 +49,8 @@ namespace CircuitSimulatorPlus
                 MainWindow.Self.canvas.Children.Remove(line);
 
                 cableSegment.OnSelectedChanged -= OnStateChanged;
-                cableSegment.Parent.OnPointsChanged -= OnPositionChanged;
                 cableSegment.Parent.OnStateChanged -= OnStateChanged;
+                cableSegment.Parent.OnPointsChanged -= OnPositionChanged;
                 MainWindow.Self.OnLastCanvasPosChanged -= OnPositionChanged;
             }
         }
