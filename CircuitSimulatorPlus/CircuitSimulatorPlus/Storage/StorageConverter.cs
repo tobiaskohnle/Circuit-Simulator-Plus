@@ -162,8 +162,19 @@ namespace CircuitSimulatorPlus
             foreach (Cable cable in cables)
             {
                 var cablestore = new SerializedGate.Cable();
-                cablestore.OutputConnection = nodeToId[cable.StartNode];
-                cablestore.EndPoint = nodeToCableEp[cable.EndNode];
+                ConnectionNode startNode, endNode;
+                if (cable.StartNode is OutputNode)
+                {
+                    startNode = cable.StartNode;
+                    endNode = cable.EndNode;
+                }
+                else
+                {
+                    endNode = cable.StartNode;
+                    startNode = cable.EndNode;
+                }
+                cablestore.OutputConnection = nodeToId[startNode];
+                cablestore.EndPoint = nodeToCableEp[endNode];
                 cablestore.Points = new List<Point>(cable.Points);
                 store.Cables.Add(cablestore);
             }
