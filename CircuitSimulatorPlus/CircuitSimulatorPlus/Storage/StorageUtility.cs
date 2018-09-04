@@ -11,12 +11,6 @@ namespace CircuitSimulatorPlus
 {
     static class StorageUtil
     {
-        /// <summary>
-        /// Loads a Context from a JSON file.
-        /// Shows a MessageBox on error.
-        /// </summary>
-        /// <param name="filepath">Path to load from</param>
-        /// <returns>If successful returns a StorageObject. Otherwise null is returned.</returns>
         public static StorageObject Load(string filepath)
         {
             StorageObject store = null;
@@ -25,12 +19,6 @@ namespace CircuitSimulatorPlus
             return store;
         }
 
-        /// <summary>
-        /// Saves a context as JSON.
-        /// Shows MessageBox on error.
-        /// </summary>
-        /// <param name="filepath">Path to save to</param>
-        /// <param name="store">Object to save</param>
         public static void Save(string filepath, StorageObject store)
         {
             using (var writer = new StreamWriter(filepath))
@@ -55,8 +43,6 @@ namespace CircuitSimulatorPlus
                 store = Deserialize(reader);
             return store;
         }
-
-
 
         private static void Serialize(StorageObject store, TextWriter writer)
         {

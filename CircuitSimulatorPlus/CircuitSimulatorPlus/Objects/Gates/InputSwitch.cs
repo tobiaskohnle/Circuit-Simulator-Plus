@@ -39,5 +39,11 @@ namespace CircuitSimulatorPlus
         {
             State = !State;
         }
+
+        public override void Add()
+        {
+            new InputSwitchRenderer(this);
+            base.Add();
+        }
     }
 }

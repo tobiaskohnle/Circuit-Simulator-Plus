@@ -18,9 +18,6 @@ namespace CircuitSimulatorPlus
         bool isMasterSlave;
 
         public event Action OnMasterSlaveChanged;
-        /// <summary>
-        /// True, if this OutputNode has a master-slave symbol next to it.
-        /// </summary>
         public bool IsMasterSlave
         {
             get
@@ -33,9 +30,7 @@ namespace CircuitSimulatorPlus
                 OnMasterSlaveChanged?.Invoke();
             }
         }
-        /// <summary>
-        /// </summary>
-        /// <param name="connectionNode"></param>
+
         public override void ConnectTo(ConnectionNode connectionNode)
         {
             if (!connectionNode.IsEmpty)
@@ -50,9 +45,7 @@ namespace CircuitSimulatorPlus
 
             MainWindow.Self.Tick(this);
         }
-        /// <summary>
-        /// Clears this OutputNode.
-        /// </summary>
+
         public override void Clear()
         {
             foreach (InputNode input in NextConnectedTo.ToList())

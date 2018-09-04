@@ -17,11 +17,20 @@ namespace CircuitSimulatorPlus
             CreateConnectionNodes(1, 0);
         }
 
-        public bool State { get; internal set; }
+        public bool State
+        {
+            get; internal set;
+        }
 
         public override bool Eval()
         {
             throw new InvalidOperationException();
+        }
+
+        public override void Add()
+        {
+            new OutputLightRenderer(this);
+            base.Add();
         }
     }
 }
