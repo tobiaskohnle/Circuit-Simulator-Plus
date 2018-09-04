@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
         {
             var store = new StorageObject();
             store.Name = contextGate.Name;
-            store.Type = "ContextGate";
+            store.Type = typeof(ContextGate).Name;
 
             ExtractContext(store, contextGate, cables);
 
@@ -313,6 +313,7 @@ namespace CircuitSimulatorPlus
                 {
                     int id = inputStore.OutputConnections.First();
                     var inputNode = new InputNode(contextGate);
+                    inputNode.Name = inputStore.Name;
                     contextGate.Input.Add(inputNode);
                     if (id != 0)
                         idToNode[id] = inputNode;
@@ -341,6 +342,7 @@ namespace CircuitSimulatorPlus
                 {
                     int id = outputStore.InputConnections.First();
                     OutputNode contextNode = new OutputNode(contextGate);
+                    contextNode.Name = outputStore.Name;
                     contextGate.Output.Add(contextNode);
                     if (id != 0)
                     {
