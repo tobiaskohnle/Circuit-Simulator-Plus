@@ -227,10 +227,19 @@ namespace CircuitSimulatorPlus
                 }
                 else if (obj is CableSegment)
                 {
-                    CableSegment segment = (obj as CableSegment);
-                    segment.Remove();
-                    if (segment.Parent.Segments.Count == 0)
-                        segment.Parent.Remove();
+                    var cableSegment = obj as CableSegment;
+                    if (cableSegment.Index == 0)
+                    {
+                        cableSegment.Parent.StartNode?.Clear();
+                    }
+                    else if (cableSegment.Index == cableSegment.Parent.Segments.Count - 1)
+                    {
+                        cableSegment.Parent.EndNode?.Clear();
+                    }
+                    else
+                    {
+                        cableSegment.Remove();
+                    }
                 }
             }
             DeselectAll();
