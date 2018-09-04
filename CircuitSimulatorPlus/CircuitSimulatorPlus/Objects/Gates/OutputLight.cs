@@ -26,5 +26,11 @@ namespace CircuitSimulatorPlus
         {
             throw new InvalidOperationException();
         }
+
+        public override void Add()
+        {
+            new OutputLightRenderer(this);
+            base.Add();
+        }
     }
 }
