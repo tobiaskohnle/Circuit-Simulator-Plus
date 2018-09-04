@@ -22,6 +22,8 @@ namespace CircuitSimulatorPlus
         public List<int> MasterSlaveOutputs;
         public int[] CableEndPoints;
         public List<SerializedGate.Cable> Cables;
+        public string[] InputLabels;
+        public string[] OutputLabels;
         
         public class Cable
         {

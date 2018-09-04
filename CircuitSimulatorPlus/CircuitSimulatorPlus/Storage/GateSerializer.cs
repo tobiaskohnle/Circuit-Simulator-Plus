@@ -150,14 +150,27 @@ namespace CircuitSimulatorPlus
                     }
                     else
                         innerStore.InputConnections[i] = 0;
+                    if (node.Name != null)
+                    {
+                        if (innerStore.InputLabels == null)
+                            innerStore.InputLabels = new string[innerGate.Input.Count];
+                        innerStore.InputLabels[i] = node.Name;
+                    }
                 }
                 innerStore.OutputConnections = new int[innerGate.Output.Count];
                 for (int i = 0; i < innerGate.Output.Count; i++)
                 {
-                    if (nodeToId.ContainsKey(innerGate.Output[i]))
-                        innerStore.OutputConnections[i] = nodeToId[innerGate.Output[i]];
+                    ConnectionNode node = innerGate.Output[i];
+                    if (nodeToId.ContainsKey(node))
+                        innerStore.OutputConnections[i] = nodeToId[node];
                     else
                         throw new InvalidOperationException("Invalid connection");
+                    if (node.Name != null)
+                    {
+                        if (innerStore.OutputLabels == null)
+                            innerStore.OutputLabels = new string[innerGate.Output.Count];
+                        innerStore.OutputLabels[i] = node.Name;
+                    }
                 }
                 store.Context.Add(innerStore);
             }
@@ -211,6 +224,15 @@ namespace CircuitSimulatorPlus
             foreach (SerializedGate innerStore in storageObject.Context)
             {
                 Gate innerGate = Deserialize(innerStore);
+                if (!(innerGate is ContextGate))
+                {
+                    if (innerStore.InputLabels != null)
+                        for (int i = 0; i < innerGate.Input.Count; i++)
+                            innerGate.Input[i].Name = innerStore.InputLabels[i];
+                    if (innerStore.OutputLabels != null)
+                        for (int i = 0; i < innerGate.Output.Count; i++)
+                            innerGate.Output[i].Name = innerStore.OutputLabels[i];
+                }
                 contextGate.Context.Add(innerGate);
                 for (int i = 0; i < innerStore.OutputConnections.Count(); i++)
                 {
