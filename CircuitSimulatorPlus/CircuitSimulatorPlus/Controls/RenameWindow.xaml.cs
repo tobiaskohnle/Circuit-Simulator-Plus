@@ -33,10 +33,5 @@ namespace CircuitSimulatorPlus.Controls
             Name = InputTextBox.Text == "" ? null : InputTextBox.Text;
             Close();
         }
-
-        void Window_Deactivated(object sender, EventArgs e)
-        {
-            Close();
-        }
     }
 }
