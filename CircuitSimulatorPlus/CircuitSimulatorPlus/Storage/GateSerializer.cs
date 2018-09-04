@@ -34,6 +34,9 @@ namespace CircuitSimulatorPlus
                     if (store.InvertedInputs == null)
                         store.InvertedInputs = new List<int>();
                     store.InvertedInputs.Add(i);
+                }
+                if (gate.Input[i].IsRisingEdge)
+                {
                     if (store.RisingEdgeInputs == null)
                         store.RisingEdgeInputs = new List<int>();
                     store.RisingEdgeInputs.Add(i);
