@@ -150,6 +150,17 @@ namespace CircuitSimulatorPlus
             outputNode.Remove();
         }
 
+        public void AddEmptyInputNode()
+        {
+            var inputNode = new InputNode(this);
+            Input.Add(inputNode);
+        }
+        public void AddEmptyOutputNode()
+        {
+            var outputNode = new OutputNode(this);
+            Output.Add(outputNode);
+        }
+
         RectHitbox hitbox;
         public Hitbox Hitbox
         {
@@ -180,13 +191,11 @@ namespace CircuitSimulatorPlus
         {
             for (int i = 0; i < amtInputs; i++)
             {
-                var inputNode = new InputNode(this);
-                Input.Add(inputNode);
+                AddEmptyInputNode();
             }
             for (int i = 0; i < amtOutputs; i++)
             {
-                var outputNode = new OutputNode(this);
-                Output.Add(outputNode);
+                AddEmptyOutputNode();
             }
             UpdateConnectionNodePos();
         }

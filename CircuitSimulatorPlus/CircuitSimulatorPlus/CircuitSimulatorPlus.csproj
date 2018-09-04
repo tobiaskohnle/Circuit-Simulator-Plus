@@ -79,15 +79,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\AddCablePointCommand.cs" />
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\AddInputCommand.cs" />
-    <Compile Include="Commands\DeleteCommand.cs" />
-    <Compile Include="Commands\CreateConnectionCommand.cs" />
-    <Compile Include="Commands\DeleteInputCommand.cs" />
-    <Compile Include="Commands\InvertConnectionCommand.cs" />
-    <Compile Include="Commands\SplitSegmentCommand.cs" />
-    <Compile Include="Commands\ToggleObjectsCommand.cs" />
     <Compile Include="Controls\RenameWindow.xaml.cs">
       <DependentUpon>RenameWindow.xaml</DependentUpon>
     </Compile>
@@ -108,15 +99,10 @@
     <Compile Include="Objects\Gates\OutputLight.cs" />
     <Compile Include="Objects\Gates\SegmentDisplay.cs" />
     <Compile Include="Objects\Hitboxes\IMovable.cs" />
-    <Compile Include="Commands\ChangeTypeCommand.cs" />
-    <Compile Include="Commands\CreateGateCommand.cs" />
     <Compile Include="Objects\Hitboxes\CircleHitbox.cs" />
     <Compile Include="Objects\Hitboxes\Hitbox.cs" />
     <Compile Include="Objects\Hitboxes\IClickable.cs" />
     <Compile Include="Rendering\ConnectionNodes\ConnectionNodeRenderer.cs" />
-    <Compile Include="Commands\MoveCommand.cs" />
-    <Compile Include="Commands\PasteCommand.cs" />
-    <Compile Include="Commands\RenameCommand.cs" />
     <Compile Include="Rendering\Gates\GateRenderer.cs" />
     <Compile Include="Objects\Hitboxes\RectHitbox.cs" />
     <Compile Include="Rendering\Gates\OutputLightRenderer.cs" />
