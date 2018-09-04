@@ -44,10 +44,6 @@ namespace CircuitSimulatorPlus
             {
                 return hitbox as Hitbox;
             }
-            set
-            {
-                hitbox = value as LineHitbox;
-            }
         }
 
         public event Action OnSelectedChanged;

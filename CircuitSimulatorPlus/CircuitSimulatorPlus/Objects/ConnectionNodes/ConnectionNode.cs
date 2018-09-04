@@ -183,10 +183,6 @@ namespace CircuitSimulatorPlus
             {
                 return hitbox;
             }
-            set
-            {
-                hitbox = value as CircleHitbox;
-            }
         }
 
         public void Invert()

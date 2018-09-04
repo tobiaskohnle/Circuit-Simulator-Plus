@@ -157,10 +157,6 @@ namespace CircuitSimulatorPlus
             {
                 return hitbox;
             }
-            set
-            {
-                hitbox = value as RectHitbox;
-            }
         }
 
         public void Move(Vector vector)
