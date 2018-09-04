@@ -319,8 +319,8 @@ namespace CircuitSimulatorPlus
 
                         newGate.CopyFrom(gate);
 
-                        ContextGate.Context.Remove(gate);
-                        ContextGate.Context.Add(newGate);
+                        gate.Remove();
+                        newGate.Add();
 
                         foreach (OutputNode outputNode in newGate.Output)
                             Tick(outputNode);
@@ -860,7 +860,7 @@ namespace CircuitSimulatorPlus
         }
         public bool AnySelected<T>()
         {
-            return SelectedObjects.Exists(obj => obj.GetType() == typeof(T));
+            return SelectedObjects.Exists(obj => obj.GetType() == typeof(T) || obj.GetType().IsSubclassOf(typeof(T)));
         }
 
         public bool ControlPressed
@@ -1523,6 +1523,7 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
+            ResetFile();
             LoadState(StorageConverter.ToStorageObject(ContextGate));
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
