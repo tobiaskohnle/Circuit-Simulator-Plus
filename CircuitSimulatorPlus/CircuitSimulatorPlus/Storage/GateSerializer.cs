@@ -75,6 +75,8 @@ namespace CircuitSimulatorPlus
             int nextEp = 1;
             var nodeToId = new Dictionary<ConnectionNode, int>();
             var nodeToCableEp = new Dictionary<ConnectionNode, int>();
+            var switches = new List<SerializedGate>();
+            var lights = new List<SerializedGate>();
             store.Context = new List<SerializedGate>();
 
             for (int i = 0; i < contextGate.Input.Count; i++)
@@ -127,6 +129,10 @@ namespace CircuitSimulatorPlus
             foreach (Gate innerGate in contextCopy)
             {
                 SerializedGate innerStore = Serialize(innerGate);
+                if (innerGate is InputSwitch)
+                    switches.Add(innerStore);
+                else if (innerGate is OutputLight)
+                    lights.Add(innerStore);
                 innerStore.InputConnections = new int[innerGate.Input.Count];
                 if (cables != null)
                     innerStore.CableEndPoints = new int[innerGate.Input.Count];
@@ -154,6 +160,18 @@ namespace CircuitSimulatorPlus
                         throw new InvalidOperationException("Invalid connection");
                 }
                 store.Context.Add(innerStore);
+            }
+
+            switches.Sort(ComparePosition);
+            lights.Sort(ComparePosition);
+
+            for (int i = 0; i < Math.Min(switches.Count, contextGate.Input.Count); i++)
+            {
+                switches[i].Name = contextGate.Input[i].Name;
+            }
+            for (int i = 0; i < Math.Min(lights.Count, contextGate.Output.Count); i++)
+            {
+                lights[i].Name = contextGate.Output[i].Name;
             }
 
             if (cables == null)
