@@ -55,7 +55,11 @@ namespace CircuitSimulatorPlus
         {
             get;
         } = new RoutedUICommand(
-            "Print", "Print", typeof(Commands)
+            "Print", "Print", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.P, ModifierKeys.Control)
+            }
         );
         #endregion
 
@@ -142,16 +146,6 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.D, ModifierKeys.Control)
             }
         );
-        public static RoutedUICommand Format
-        {
-            get;
-        } = new RoutedUICommand(
-            "Format", "Format", typeof(Commands),
-            new InputGestureCollection
-            {
-                new KeyGesture(Key.F, ModifierKeys.Control)
-            }
-        );
         #endregion
 
         #region View
@@ -220,15 +214,11 @@ namespace CircuitSimulatorPlus
         } = new RoutedUICommand(
             "Toggle Button", "ToggleButton", typeof(Commands)
         );
-        public static RoutedUICommand RemoveConnection
+        public static RoutedUICommand ToggleRisingEdge
         {
             get;
         } = new RoutedUICommand(
-            "Remove Connection", "RemoveConnection", typeof(Commands),
-            new InputGestureCollection
-            {
-                new KeyGesture(Key.OemMinus, ModifierKeys.Control | ModifierKeys.Shift)
-            }
+            "Toggle Rising Edge", "ToggleRisingEdge", typeof(Commands)
         );
         public static RoutedUICommand AddInput
         {
@@ -240,17 +230,15 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.OemPlus, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
-        public static RoutedUICommand TrimInput
+        public static RoutedUICommand RemoveInput
         {
             get;
         } = new RoutedUICommand(
-            "Trim Input", "TrimInput", typeof(Commands)
-        );
-        public static RoutedUICommand Align
-        {
-            get;
-        } = new RoutedUICommand(
-            "Align Connection Node", "Align", typeof(Commands)
+            "Remove Input", "RemoveInput", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.OemMinus, ModifierKeys.Control | ModifierKeys.Shift)
+            }
         );
         #endregion
     }

@@ -43,8 +43,6 @@
                         Executed="SelectAll_Click" CanExecute="SelectAll_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.DeselectAll}"
                         Executed="DeselectAll_Click" CanExecute="DeselectAll_CanExecute"/>
-        <CommandBinding Command="{x:Static local:Commands.Format}"
-                        Executed="Format_Click" CanExecute="Format_CanExecute"/>
 
         <CommandBinding Command="{x:Static local:Commands.ResetView}"
                         Executed="ResetView_Click"/>
@@ -59,10 +57,14 @@
                         Executed="InvertConnection_Click" CanExecute="InvertConnection_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.Rename}"
                         Executed="Rename_Click" CanExecute="Rename_CanExecute"/>
-        <CommandBinding Command="{x:Static local:Commands.RemoveConnection}"
-                        Executed="RemoveConnection_Click" CanExecute="RemoveConnection_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.ToggleButton}"
+                        Executed="ToggleButton_Click" CanExecute="ToggleButton_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.ToggleRisingEdge}"
+                        Executed="ToggleRisingEdge_Click" CanExecute="ToggleRisingEdge_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.AddInput}"
                         Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.RemoveInput}"
+                        Executed="RemoveInput_Click" CanExecute="RemoveInput_CanExecute"/>
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
@@ -86,10 +88,6 @@
                 <MenuItem Header="Not Gate" Click="ChangeTypeNotGate"/>
                 <MenuItem Header="Segment Display" Click="ChangeTypeSegmentDisplay"/>
             </MenuItem>
-            <MenuItem Header="IsRisingEdge" Click="RisingEdge_Click"></MenuItem>
-            <MenuItem Header="IsMasterSlave" Click="MasterSlave_Click"></MenuItem>
-            <MenuItem Header="IsCentered" Click="Centered_Click"></MenuItem>
-            <MenuItem Header="Connect Parallel" Click="ConnectParallel_Click"></MenuItem>
             <MenuItem Header="Create Cable" Click="CreateCable_Click"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
@@ -120,10 +118,8 @@
                 <MenuItem Command="{x:Static local:Commands.Delete}"/>
                 <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
                 <MenuItem Command="{x:Static local:Commands.DeselectAll}"/>
-                <MenuItem Command="{x:Static local:Commands.Format}"/>
             </MenuItem>
             <MenuItem Header="View" Width="auto">
-                <MenuItem Header="Main Toolbar" IsCheckable="True" Checked="MainToolbar_Checked" Unchecked="MainToolbar_Unchecked"/>
                 <MenuItem Header="Show Grid" IsCheckable="True" Checked="ShowGrid_Checked" Unchecked="ShowGrid_Unchecked"/>
                 <MenuItem Command="{x:Static local:Commands.ResetView}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
@@ -134,9 +130,9 @@
                 <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
                 <MenuItem Command="{x:Static local:Commands.Rename}"/>
                 <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
-                <MenuItem Command="{x:Static local:Commands.RemoveConnection}"/>
+                <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
                 <MenuItem Command="{x:Static local:Commands.AddInput}"/>
-                <MenuItem Command="{x:Static local:Commands.TrimInput}"/>
+                <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
             </MenuItem>
             <MenuItem Header="About" Width="auto">
                 <MenuItem Header="Version" Click="Version_Click"/>

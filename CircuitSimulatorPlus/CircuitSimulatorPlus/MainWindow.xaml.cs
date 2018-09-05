@@ -1431,19 +1431,6 @@ namespace CircuitSimulatorPlus
             ChangeType(typeof(SegmentDisplay));
         }
 
-        void RisingEdge_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleRisingEdge();
-        }
-        void MasterSlave_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleMasterSlave();
-        }
-        void Centered_Click(object sender, RoutedEventArgs e)
-        {
-            ToggleCentered();
-        }
-
         void New_Click(object sender, RoutedEventArgs e)
         {
             New();
@@ -1563,14 +1550,6 @@ namespace CircuitSimulatorPlus
             e.CanExecute = AnySelected();
         }
 
-        void MainToolbar_Checked(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        void MainToolbar_Unchecked(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         void ShowGrid_Checked(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -1615,13 +1594,17 @@ namespace CircuitSimulatorPlus
         {
             ToggleObjects();
         }
-        void RemoveConnection_Click(object sender, RoutedEventArgs e)
+        void ToggleRisingEdge_Click(object sender, RoutedEventArgs e)
         {
-            RemoveInputFromSelected();
+            ToggleRisingEdge();
         }
         void AddInput_Click(object sender, RoutedEventArgs e)
         {
             AddInputToSelected();
+        }
+        void RemoveInput_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveInputFromSelected();
         }
         void TrimInput_Click(object sender, RoutedEventArgs e)
         {
@@ -1635,17 +1618,25 @@ namespace CircuitSimulatorPlus
         {
             e.CanExecute = AnySelected();
         }
+        void ToggleButton_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<InputSwitch>();
+        }
+        void ToggleRisingEdge_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<InputNode>();
+        }
         void Resize_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected<Gate>();
         }
-        void RemoveConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = AnySelected<InputNode>() || AnySelected<Gate>();
-        }
         void AddInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected<Gate>();
+        }
+        void RemoveInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<InputNode>() || AnySelected<Gate>();
         }
 
         void Version_Click(object sender, RoutedEventArgs e)
@@ -1693,10 +1684,6 @@ namespace CircuitSimulatorPlus
             Console.WriteLine();
         }
 
-        void ConnectParallel_Click(object sender, RoutedEventArgs e)
-        {
-            ConnectOppositeNodes();
-        }
         void CreateCable_Click(object sender, RoutedEventArgs e)
         {
             CreateCable();
