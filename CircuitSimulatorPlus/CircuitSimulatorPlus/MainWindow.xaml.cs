@@ -399,7 +399,8 @@ namespace CircuitSimulatorPlus
                     if (obj is Gate)
                     {
                         oldName = (obj as Gate).Name;
-                    } else if (obj is ConnectionNode)
+                    }
+                    else if (obj is ConnectionNode)
                     {
                         oldName = (obj as ConnectionNode).Name;
                     }
@@ -840,6 +841,7 @@ namespace CircuitSimulatorPlus
         }
         public void RemoveInputFromSelected()
         {
+            bool stateSaved = false;
             if (AnySelected<InputNode>())
             {
                 SaveState();
@@ -848,7 +850,31 @@ namespace CircuitSimulatorPlus
                     if (obj is InputNode)
                     {
                         Gate owner = (obj as InputNode).Owner;
+                        if (!stateSaved)
+                        {
+                            SaveState();
+                            stateSaved = true;
+                        }
                         owner.RemoveInputNode(obj as InputNode);
+                    }
+                }
+            }
+            else if (AnySelected<Gate>())
+            {
+                foreach (IClickable obj in SelectedObjects)
+                {
+                    if (obj is Gate)
+                    {
+                        Gate gate = obj as Gate;
+                        if (gate.Input.Count > 0)
+                        {
+                            if (!stateSaved)
+                            {
+                                SaveState();
+                                stateSaved = true;
+                            }
+                            gate.RemoveInputNode(gate.Input.Last());
+                        }
                     }
                 }
             }
