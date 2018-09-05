@@ -12,6 +12,7 @@ namespace CircuitSimulatorPlus
         public string Name;
         public string Tag;
         public Point Position;
+        public Size Size;
         public string Type;
         public List<SerializedGate> Context;
         public int[] InputConnections;

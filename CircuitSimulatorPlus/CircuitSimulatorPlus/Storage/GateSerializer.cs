@@ -26,6 +26,7 @@ namespace CircuitSimulatorPlus
             store.Name = gate.Name;
             store.Position = gate.Position;
             store.Tag = gate.Tag;
+            store.Size = gate.Size;
             store.Type = gate.GetType().Name;
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -342,8 +343,9 @@ namespace CircuitSimulatorPlus
             }
 
             gate.Name = storageObject.Name;
-            gate.Position = storageObject.Position;
             gate.Tag = storageObject.Tag;
+            gate.Position = storageObject.Position;
+            gate.Size = storageObject.Size;
 
             if (storageObject.InputConnections == null)
                 storageObject.InputConnections = new int[0];
