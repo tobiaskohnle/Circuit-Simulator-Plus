@@ -122,6 +122,14 @@ namespace CircuitSimulatorPlus
             if (SingleTicks == false)
                 Timer.Start();
         }
+        public void Tick(Gate gate)
+        {
+            foreach (OutputNode outputNode in gate.Output)
+            {
+                Tick(outputNode);
+            }
+        }
+
         public void TickQueue()
         {
             if (TickedNodes.Count > 0)
@@ -338,8 +346,7 @@ namespace CircuitSimulatorPlus
                         gate.Remove();
                         newGate.Add();
 
-                        foreach (OutputNode outputNode in newGate.Output)
-                            Tick(outputNode);
+                        Tick(newGate);
 
                         Deselect(gate);
                         Select(newGate);
@@ -873,10 +880,12 @@ namespace CircuitSimulatorPlus
                     if (obj is Gate)
                     {
                         (obj as Gate).AddEmptyInputNode();
+                        Tick(obj as Gate);
                     }
                 }
             }
         }
+
         public void RemoveInputFromSelected()
         {
             bool stateSaved = false;
@@ -894,6 +903,7 @@ namespace CircuitSimulatorPlus
                             stateSaved = true;
                         }
                         owner.RemoveInputNode(obj as InputNode);
+                        Tick(owner);
                     }
                 }
             }
@@ -913,6 +923,7 @@ namespace CircuitSimulatorPlus
                             }
                             gate.RemoveInputNode(gate.Input.Last());
                         }
+                        Tick(gate);
                     }
                 }
             }
