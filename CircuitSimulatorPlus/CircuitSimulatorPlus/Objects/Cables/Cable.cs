@@ -208,7 +208,7 @@ namespace CircuitSimulatorPlus
         public void AddSegment(int index, Point point)
         {
             vertical = !vertical;
-            Points.Insert(index - 1, point);
+            Points.Insert(index - 1, MainWindow.Self.Round(point, 0.5));
 
             Segments.Insert(index, new CableSegment(this, index));
 
@@ -221,7 +221,7 @@ namespace CircuitSimulatorPlus
         public void AddSegment(Point point)
         {
             vertical = !vertical;
-            Points.Add(point);
+            Points.Add(MainWindow.Self.Round(point, 0.5));
 
             Segments.Add(new CableSegment(this, Segments.Count));
 
