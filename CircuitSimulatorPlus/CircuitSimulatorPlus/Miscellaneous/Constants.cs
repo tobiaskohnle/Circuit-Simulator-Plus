@@ -22,5 +22,6 @@ namespace CircuitSimulatorPlus
         public const double CableJointSize = 1d / 3;
         public const double ConnectionNodeLineLength = 1d;
         public const int UndoBufferSize = 3;
+        public const int RisingEdgePulse = 4;
     }
 }

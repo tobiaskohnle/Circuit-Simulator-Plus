@@ -36,7 +36,7 @@ namespace CircuitSimulatorPlus
             {
                 if (IsRisingEdge)
                 {
-                    return State && ticksActive < 3;
+                    return State && ticksActive < Constants.RisingEdgePulse;
                 }
                 return State;
             }
