@@ -41,6 +41,12 @@ namespace CircuitSimulatorPlus
                         store.RisingEdgeInputs = new List<int>();
                     store.RisingEdgeInputs.Add(i);
                 }
+                if (gate.Input[i].IsCentered)
+                {
+                    if (store.CenteredInputs == null)
+                        store.CenteredInputs = new List<int>();
+                    store.CenteredInputs.Add(i);
+                }
             }
 
             for (int i = 0; i < gate.Output.Count; i++)
@@ -62,12 +68,6 @@ namespace CircuitSimulatorPlus
                     if (store.MasterSlaveOutputs == null)
                         store.MasterSlaveOutputs = new List<int>();
                     store.MasterSlaveOutputs.Add(i);
-                }
-                if (gate.Input[i].IsCentered)
-                {
-                    if (store.CenteredInputs == null)
-                        store.CenteredInputs = new List<int>();
-                    store.CenteredInputs.Add(i);
                 }
                 if (gate.Output[i].IsCentered)
                 {
