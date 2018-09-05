@@ -10,6 +10,7 @@ namespace CircuitSimulatorPlus
     public class SerializedGate
     {
         public string Name;
+        public string Tag;
         public Point Position;
         public string Type;
         public List<SerializedGate> Context;

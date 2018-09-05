@@ -25,6 +25,7 @@ namespace CircuitSimulatorPlus
             var store = new SerializedGate();
             store.Name = gate.Name;
             store.Position = gate.Position;
+            store.Tag = gate.Tag;
             store.Type = gate.GetType().Name;
 
             for (int i = 0; i < gate.Input.Count; i++)
@@ -342,6 +343,7 @@ namespace CircuitSimulatorPlus
 
             gate.Name = storageObject.Name;
             gate.Position = storageObject.Position;
+            gate.Tag = storageObject.Tag;
 
             if (storageObject.InputConnections == null)
                 storageObject.InputConnections = new int[0];
