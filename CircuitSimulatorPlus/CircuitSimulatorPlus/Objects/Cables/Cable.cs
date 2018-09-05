@@ -191,7 +191,7 @@ namespace CircuitSimulatorPlus
 
         public void RemoveSegment(int index)
         {
-            if (index > 0 && index < Points.Count)
+            if (index > 0 && index <= Points.Count)
             {
                 vertical = !vertical;
                 Points.RemoveAt(index - 1);
