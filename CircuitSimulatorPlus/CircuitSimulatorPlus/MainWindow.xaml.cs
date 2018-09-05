@@ -1284,6 +1284,27 @@ namespace CircuitSimulatorPlus
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Escape)
+            {
+                if (CreatingCable)
+                {
+                    CreatingCable = false;
+                    if (CableOrigin is InputNode)
+                    {
+                        (CableOrigin as InputNode).ConnectedCable.Remove();
+                    }
+                    else if (CableOrigin is OutputNode)
+                    {
+                        foreach (Cable cable in (CableOrigin as OutputNode).ConnectedCables)
+                        {
+                            cable.Remove();
+                        }
+                    }
+                    CreatedCable = null;
+                    CableOrigin = null;
+                }
+            }
+
             if (e.Key == Key.Enter || e.Key == Key.Space || e.Key == Key.T)
             {
                 TickQueue();
