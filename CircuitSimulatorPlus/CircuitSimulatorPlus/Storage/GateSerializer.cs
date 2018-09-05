@@ -14,6 +14,7 @@ namespace CircuitSimulatorPlus
             var store = new SerializedGate();
             store.Name = contextGate.Name;
             store.Type = typeof(ContextGate).Name;
+            store.Size = contextGate.Size;
 
             ExtractContext(store, contextGate, cables);
 
