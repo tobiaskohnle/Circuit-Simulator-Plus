@@ -526,6 +526,20 @@ namespace CircuitSimulatorPlus
             return true;
         }
 
+        public void Import()
+        {
+            string filePath = SelectFile();
+            if (filePath == "")
+                return;
+            SerializedGate store = StorageUtil.Load(filePath);
+            if (store == null)
+                return;
+            Gate gate = GateSerializer.Deserialize(store);
+            if (gate.HasContext)
+                TickAll((ContextGate)gate);
+            Create(gate);
+        }
+
         public void Undo()
         {
             if (AllowUndo)
@@ -1335,16 +1349,7 @@ namespace CircuitSimulatorPlus
 
         void Import_Click(object sender, RoutedEventArgs e)
         {
-            string filepath = SelectFile();
-            if (filepath == "")
-                return;
-            SerializedGate store = StorageUtil.Load(filepath);
-            if (store == null)
-                return;
-            Gate gate = GateSerializer.Deserialize(store);
-            if (gate.HasContext)
-                TickAll((ContextGate)gate);
-            Create(gate);
+            Import();
         }
 
         void ChangeTypeContext(object sender, RoutedEventArgs e)
