@@ -51,9 +51,9 @@ namespace CircuitSimulatorPlus
                 using (var jwriter = new JsonTextWriter(writer))
                     serializer.Serialize(jwriter, store);
             }
-            catch
+            catch (Exception e)
             {
-                MessageBox.Show("Saving failed");
+                MessageBox.Show(e.Message, "Saving failed");
             }
         }
 
@@ -66,9 +66,9 @@ namespace CircuitSimulatorPlus
                 using (var jreader = new JsonTextReader(reader))
                     store = serializer.Deserialize<SerializedGate>(jreader);
             }
-            catch
+            catch (Exception e)
             {
-                MessageBox.Show("Loading failed");
+                MessageBox.Show(e.Message, "Loading failed");
             }
 
             return store;
