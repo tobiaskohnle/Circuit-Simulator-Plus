@@ -224,7 +224,11 @@ namespace CircuitSimulatorPlus
         {
             get;
         } = new RoutedUICommand(
-            "Remove Connection", "RemoveConnection", typeof(Commands)
+            "Remove Connection", "RemoveConnection", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.OemMinus, ModifierKeys.Control | ModifierKeys.Shift)
+            }
         );
         public static RoutedUICommand AddInput
         {
