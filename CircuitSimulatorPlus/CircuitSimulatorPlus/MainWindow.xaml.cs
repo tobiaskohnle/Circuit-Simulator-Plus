@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -30,6 +31,7 @@ namespace CircuitSimulatorPlus
         {
             InitializeComponent();
             Focus();
+            LoadContextGates();
 
             Self = this;
 
@@ -485,7 +487,6 @@ namespace CircuitSimulatorPlus
                 Open(SelectFile());
             }
         }
-
         public void Open(string filePath)
         {
             if (filePath != "")
@@ -625,6 +626,42 @@ namespace CircuitSimulatorPlus
             Properties.Settings.Default.Save();
 
             CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
+        }
+
+        public void LoadContextGates()
+        {
+            //string path = Properties.Settings.Default.ContextGatePath;
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "context_gates");
+
+            if (Directory.Exists(path))
+            {
+                LoadContextGates(contxtMenu_contextGate, path);
+            }
+            else
+            {
+                Console.WriteLine($"\"{path}\" is not a valid directory");
+            }
+        }
+
+        public void LoadContextGates(MenuItem parent, string path)
+        {
+            foreach (string dir in Directory.EnumerateDirectories(path))
+            {
+                var subMenu = new MenuItem();
+                subMenu.Header = System.IO.Path.GetFileName(dir);
+
+                parent.Items.Add(subMenu);
+                LoadContextGates(subMenu, dir);
+            }
+            foreach (string dir in Directory.EnumerateFiles(path))
+            {
+                if (System.IO.Path.GetExtension(dir) == Constants.FileExtention)
+                {
+                    var menuItem = new MenuItem();
+                    menuItem.Header = System.IO.Path.GetFileNameWithoutExtension(dir);
+                    parent.Items.Add(menuItem);
+                }
+            }
         }
         #endregion
 
