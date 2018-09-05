@@ -823,6 +823,7 @@ namespace CircuitSimulatorPlus
         {
 
         }
+
         public void AddInputToSelected()
         {
             if (AnySelected<Gate>())
@@ -852,6 +853,7 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+
         public void InvertConnection()
         {
             if (AnySelected<ConnectionNode>())
@@ -1562,15 +1564,13 @@ namespace CircuitSimulatorPlus
         {
             Rename();
         }
-        void Resize_Click(object sender, RoutedEventArgs e)
-        {
-        }
         void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             ToggleObjects();
         }
         void RemoveConnection_Click(object sender, RoutedEventArgs e)
         {
+            RemoveInputFromSelected();
         }
         void AddInput_Click(object sender, RoutedEventArgs e)
         {

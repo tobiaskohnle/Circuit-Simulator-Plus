@@ -59,8 +59,6 @@
                         Executed="InvertConnection_Click" CanExecute="InvertConnection_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.Rename}"
                         Executed="Rename_Click" CanExecute="Rename_CanExecute"/>
-        <CommandBinding Command="{x:Static local:Commands.Resize}"
-                        Executed="Resize_Click" CanExecute="Resize_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.AddInput}"
                         Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
     </Window.CommandBindings>
@@ -133,7 +131,6 @@
             <MenuItem Header="Tools" Width="auto">
                 <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
                 <MenuItem Command="{x:Static local:Commands.Rename}"/>
-                <MenuItem Command="{x:Static local:Commands.Resize}"/>
                 <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
                 <MenuItem Command="{x:Static local:Commands.RemoveConnection}"/>
                 <MenuItem Command="{x:Static local:Commands.AddInput}"/>

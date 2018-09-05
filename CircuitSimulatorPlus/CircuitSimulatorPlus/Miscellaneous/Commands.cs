@@ -214,16 +214,6 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.R, ModifierKeys.Control)
             }
         );
-        public static RoutedUICommand Resize
-        {
-            get;
-        } = new RoutedUICommand(
-            "Resize", "Resize", typeof(Commands),
-            new InputGestureCollection
-            {
-                new KeyGesture(Key.E, ModifierKeys.Control)
-            }
-        );
         public static RoutedUICommand ToggleButton
         {
             get;
