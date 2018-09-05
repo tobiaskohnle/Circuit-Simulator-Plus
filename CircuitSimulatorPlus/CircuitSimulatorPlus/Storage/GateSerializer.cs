@@ -234,6 +234,8 @@ namespace CircuitSimulatorPlus
                 throw new Exception("Object does not store an ContextGate");
             ContextGate contextGate = new ContextGate();
             contextGate.Name = storageObject.Name;
+            contextGate.Tag = storageObject.Tag;
+            contextGate.Size = storageObject.Size;
             var idToNode = new Dictionary<int, ConnectionNode>();
             var cableEpToNode = new Dictionary<int, ConnectionNode>();
             var uncabledNodes = new LinkedList<ConnectionNode>();
