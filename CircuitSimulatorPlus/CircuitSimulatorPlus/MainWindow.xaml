@@ -59,6 +59,8 @@
                         Executed="InvertConnection_Click" CanExecute="InvertConnection_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.Rename}"
                         Executed="Rename_Click" CanExecute="Rename_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.RemoveConnection}"
+                        Executed="RemoveConnection_Click" CanExecute="RemoveConnection_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.AddInput}"
                         Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
     </Window.CommandBindings>

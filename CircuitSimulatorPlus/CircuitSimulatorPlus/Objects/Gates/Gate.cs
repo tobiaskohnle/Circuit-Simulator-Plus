@@ -143,22 +143,28 @@ namespace CircuitSimulatorPlus
         {
             Input.Remove(inputNode);
             inputNode.Remove();
+            UpdateConnectionNodePos();
         }
         public void RemoveOutputNode(OutputNode outputNode)
         {
             Output.Remove(outputNode);
             outputNode.Remove();
+            UpdateConnectionNodePos();
         }
 
         public void AddEmptyInputNode()
         {
             var inputNode = new InputNode(this);
             Input.Add(inputNode);
+            inputNode.Add();
+            UpdateConnectionNodePos();
         }
         public void AddEmptyOutputNode()
         {
             var outputNode = new OutputNode(this);
             Output.Add(outputNode);
+            outputNode.Add();
+            UpdateConnectionNodePos();
         }
 
         RectHitbox hitbox;

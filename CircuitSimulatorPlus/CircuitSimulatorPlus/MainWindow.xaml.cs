@@ -1592,6 +1592,10 @@ namespace CircuitSimulatorPlus
         {
             e.CanExecute = AnySelected<Gate>();
         }
+        void RemoveConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<InputNode>();
+        }
         void AddInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected<Gate>();
