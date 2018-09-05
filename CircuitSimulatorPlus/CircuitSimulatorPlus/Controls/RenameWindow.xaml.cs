@@ -40,7 +40,7 @@ namespace CircuitSimulatorPlus.Controls
             {
                 Name = Regex.Replace(
                     InputTextBox.Text,
-                    @"\\u(?<hex>[a-zA-Z0-9]{4})",
+                    @"(\\[uU]|[uU]\+)(?<hex>[a-zA-Z0-9]{4})",
                     match =>
                     {
                         return ((char)Int32.Parse(
