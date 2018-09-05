@@ -88,7 +88,21 @@
                 <MenuItem Header="Not Gate" Click="ChangeTypeNotGate"/>
                 <MenuItem Header="Segment Display" Click="ChangeTypeSegmentDisplay"/>
             </MenuItem>
+            <Separator/>
+            <MenuItem Command="{x:Static local:Commands.Undo}"/>
+            <MenuItem Command="{x:Static local:Commands.Redo}"/>
+            <MenuItem Command="{x:Static local:Commands.Cut}"/>
+            <MenuItem Command="{x:Static local:Commands.Copy}"/>
+            <MenuItem Command="{x:Static local:Commands.Paste}"/>
+            <MenuItem Command="{x:Static local:Commands.Delete}"/>
+            <Separator/>
+            <MenuItem Command="{x:Static local:Commands.Rename}"/>
+            <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
             <MenuItem Header="Create Cable" Click="CreateCable_Click"></MenuItem>
+            <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
+            <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
+            <MenuItem Command="{x:Static local:Commands.AddInput}"/>
+            <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>

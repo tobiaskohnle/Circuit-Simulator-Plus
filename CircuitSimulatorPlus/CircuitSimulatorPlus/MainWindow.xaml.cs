@@ -29,6 +29,7 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
+            Focus();
 
             Self = this;
 
