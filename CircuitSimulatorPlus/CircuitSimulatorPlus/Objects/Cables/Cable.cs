@@ -24,7 +24,7 @@ namespace CircuitSimulatorPlus
             Segments.Add(new CableSegment(this, Segments.Count));
         }
 
-        public const double DistanceFactor = 0.9;
+        public const double DistanceFactor = 4.5;
         public const double SegmentWidth = 1.0;
 
         public List<CableSegment> Segments = new List<CableSegment>();
@@ -83,7 +83,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return StartNode.Position;
+                return StartNode.CableAnchorPoint;
             }
         }
         public Point EndPos
@@ -91,7 +91,7 @@ namespace CircuitSimulatorPlus
             get
             {
                 if (IsCompleted)
-                    return EndNode.Position;
+                    return EndNode.CableAnchorPoint;
                 return MainWindow.Self.LastCanvasPos;
             }
         }

@@ -42,6 +42,14 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public override Point CableAnchorPoint
+        {
+            get
+            {
+                return new Point(Position.X - 1, Position.Y);
+            }
+        }
+
         public override void Clear()
         {
             if (IsEmpty)

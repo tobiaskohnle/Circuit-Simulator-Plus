@@ -161,6 +161,11 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public abstract Point CableAnchorPoint
+        {
+            get;
+        }
+
         public event Action OnNameChanged;
         string name;
         public string Name
