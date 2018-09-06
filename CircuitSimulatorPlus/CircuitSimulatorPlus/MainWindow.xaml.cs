@@ -1185,7 +1185,8 @@ namespace CircuitSimulatorPlus
                 {
                     if (!LastClickedObject.IsSelected)
                     {
-                        DeselectAll();
+                        if (!ControlPressed)
+                            DeselectAll();
                         Select(LastClickedObject);
                     }
                     if (SelectedObjects.Count == 0)
