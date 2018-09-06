@@ -77,6 +77,7 @@ namespace CircuitSimulatorPlus
         public bool MovingObjects;
         public bool MovingScreen;
         public bool MouseMoved;
+        public bool CableCreated;
         public bool CreatingCable;
 
         public bool Saved = true;
@@ -117,7 +118,8 @@ namespace CircuitSimulatorPlus
 
         public void Tick(ConnectionNode node)
         {
-            node.IsTicked = true;
+            if (SingleTicks)
+                node.IsTicked = true;
             TickedNodes.Enqueue(node);
             if (SingleTicks == false)
                 Timer.Start();
@@ -853,7 +855,7 @@ namespace CircuitSimulatorPlus
             {
                 if (obj is ConnectionNode)
                 {
-                    CreatingCable = true;
+                    CableCreated = true;
 
                     ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
@@ -863,6 +865,19 @@ namespace CircuitSimulatorPlus
                     return;
                 }
             }
+        }
+        public void CompleteCable()
+        {
+            var connectionNode = LastClickedObject as ConnectionNode;
+            connectionNode.ConnectTo(CableOrigin);
+
+            CreatedCable.ConnectTo(connectionNode);
+            Tick(connectionNode);
+            Tick(CableOrigin);
+
+            Cables.Add(CreatedCable);
+
+            CableCreated = false;
         }
 
         public void EmptyInput()
@@ -1095,39 +1110,35 @@ namespace CircuitSimulatorPlus
 
             MouseMoved = false;
 
-            IClickable nearestObject = FindNearestObjectAt(LastCanvasClick);
 
             if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
                 MovingScreen = true;
-
-                LastClickedObject = nearestObject;
-            }
-            else if (CreatingCable)
-            {
-                if (nearestObject is ConnectionNode && nearestObject is InputNode != CableOrigin is InputNode)
-                {
-                    var connectionNode = nearestObject as ConnectionNode;
-                    connectionNode.ConnectTo(CableOrigin);
-
-                    CreatedCable.ConnectTo(connectionNode);
-                    Tick(connectionNode);
-                    Tick(CableOrigin);
-
-                    Cables.Add(CreatedCable);
-
-                    CreatingCable = false;
-                }
-                else
-                {
-                    CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
-                }
             }
             else
             {
-                LastClickedObject = nearestObject;
+                LastClickedObject = FindNearestObjectAt(LastCanvasClick);
 
-                if (LastClickedObject == null)
+                if (CableCreated)
+                {
+                    if (LastClickedObject is ConnectionNode && LastClickedObject is InputNode != CableOrigin is InputNode)
+                    {
+                        CompleteCable();
+                    }
+                    else
+                    {
+                        CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
+                    }
+                }
+                else if (LastClickedObject is ConnectionNode)
+                {
+                    CreatingCable = true;
+                }
+                else if (ShiftPressed)
+                {
+                    MakingSelection = true;
+                }
+                else if (LastClickedObject == null)
                 {
                     MakingSelection = true;
                 }
@@ -1143,14 +1154,13 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (CreatingCable)
+            if (CableCreated)
             {
                 CreatedCable.AutoComplete();
             }
             else
             {
                 ToggleObjects();
-
 
                 foreach (IClickable obj in SelectedObjects.ToList())
                 {
@@ -1180,8 +1190,13 @@ namespace CircuitSimulatorPlus
                     matrix.Translate(windowMoved.X, windowMoved.Y);
                     canvas.RenderTransform = new MatrixTransform(matrix);
                 }
-
-                if (MovingObjects)
+                else if (CreatingCable)
+                {
+                    Select(LastClickedObject);
+                    CreateCable();
+                    CreatingCable = false;
+                }
+                else if (MovingObjects)
                 {
                     if (!LastClickedObject.IsSelected)
                     {
@@ -1199,8 +1214,7 @@ namespace CircuitSimulatorPlus
                             (obj as IMovable).Move(canvasMoved);
                     }
                 }
-
-                if (MakingSelection)
+                else if (MakingSelection)
                 {
                     var innerRect = new Rect(LastCanvasClick, LastCanvasPos);
                     var outerRect = new Rect(LastCanvasClick, currentCanvasPos);
@@ -1330,29 +1344,21 @@ namespace CircuitSimulatorPlus
             MakingSelection = false;
             MovingObjects = false;
             MovingScreen = false;
+            CreatingCable = false;
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                if (CreatingCable)
+                if (CableCreated)
                 {
-                    CreatingCable = false;
-                    if (CableOrigin is InputNode)
-                    {
-                        (CableOrigin as InputNode).ConnectedCable.Remove();
-                    }
-                    else if (CableOrigin is OutputNode)
-                    {
-                        foreach (Cable cable in (CableOrigin as OutputNode).ConnectedCables)
-                        {
-                            cable.Remove();
-                        }
-                    }
+                    CreatedCable.Remove();
                     CreatedCable = null;
                     CableOrigin = null;
+                    CableCreated = false;
                 }
+                DeselectAll();
             }
 
             if (e.Key == Key.Enter || e.Key == Key.Space || e.Key == Key.T)

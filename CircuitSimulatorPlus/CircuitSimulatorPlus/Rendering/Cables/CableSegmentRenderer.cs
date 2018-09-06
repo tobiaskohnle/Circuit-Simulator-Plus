@@ -20,7 +20,7 @@ namespace CircuitSimulatorPlus
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth,
-                StrokeStartLineCap = PenLineCap.Square
+                StrokeStartLineCap = PenLineCap.Triangle
             };
             Panel.SetZIndex(line, 0);
 
