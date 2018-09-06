@@ -25,12 +25,14 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = Constants.LineWidth,
                 StrokeEndLineCap = PenLineCap.Round
             };
+            Panel.SetZIndex(upperRisingEdgeLine, 5);
             lowerRisingEdgeLine = new Line
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth,
                 StrokeEndLineCap = PenLineCap.Round
             };
+            Panel.SetZIndex(lowerRisingEdgeLine, 5);
 
             nameLabel = new Label
             {
@@ -40,6 +42,7 @@ namespace CircuitSimulatorPlus
                 Height = 1,
                 FontSize = 0.5
             };
+            Panel.SetZIndex(nameLabel, 5);
 
             inputNode.OnRenderedChanged += OnRenderedChanged;
 

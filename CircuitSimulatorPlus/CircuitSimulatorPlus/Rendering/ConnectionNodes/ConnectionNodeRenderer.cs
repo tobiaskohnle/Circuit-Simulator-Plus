@@ -32,6 +32,7 @@ namespace CircuitSimulatorPlus
             {
                 StrokeThickness = Constants.LineWidth
             };
+            Panel.SetZIndex(connectionNodeLine, 1);
 
             invertionDot = new Ellipse
             {
@@ -39,6 +40,7 @@ namespace CircuitSimulatorPlus
                 Height = Constants.InversionDotDiameter + Constants.LineWidth,
                 StrokeThickness = Constants.LineWidth
             };
+            Panel.SetZIndex(invertionDot, 3);
 
             connectionNode.OnRenderedChanged += OnRenderedChanged;
 

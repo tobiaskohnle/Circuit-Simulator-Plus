@@ -110,7 +110,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Menu Height="21" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+        <Menu Height="21" Panel.ZIndex="1" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="File" Width="auto">
                 <MenuItem Command="{x:Static local:Commands.New}"/>
                 <MenuItem Command="{x:Static local:Commands.Open}"/>

@@ -24,11 +24,13 @@ namespace CircuitSimulatorPlus
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
             };
+            Panel.SetZIndex(horzMasterSlaveLine, 5);
             vertMasterSlaveLine = new Line
             {
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
             };
+            Panel.SetZIndex(horzMasterSlaveLine, 5);
 
             nameLabel = new Label
             {
@@ -39,6 +41,7 @@ namespace CircuitSimulatorPlus
                 Height = 1,
                 FontSize = 0.5
             };
+            Panel.SetZIndex(nameLabel, 5);
 
             outputNode.OnRenderedChanged += OnRenderedChanged;
 

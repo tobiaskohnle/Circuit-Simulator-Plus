@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -21,6 +22,7 @@ namespace CircuitSimulatorPlus
                 StrokeThickness = Constants.LineWidth,
                 StrokeStartLineCap = PenLineCap.Square
             };
+            Panel.SetZIndex(line, 0);
 
             cableSegment.OnRenderedChanged += OnRenderedChanged;
 

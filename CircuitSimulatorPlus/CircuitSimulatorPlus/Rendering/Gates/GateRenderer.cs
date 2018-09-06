@@ -28,6 +28,7 @@ namespace CircuitSimulatorPlus
                 Stroke = Brushes.Black,
                 StrokeThickness = Constants.LineWidth
             };
+            Panel.SetZIndex(boundingBox, 2);
 
             nameLabel = new Label
             {
@@ -35,6 +36,7 @@ namespace CircuitSimulatorPlus
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 FontSize = 0.5
             };
+            Panel.SetZIndex(nameLabel, 5);
 
             tagLabel = new Label
             {
@@ -42,6 +44,7 @@ namespace CircuitSimulatorPlus
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 FontSize = 1
             };
+            Panel.SetZIndex(tagLabel, 6);
 
             gate.OnRenderedChanged += OnRenderedChanged;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -34,6 +35,14 @@ namespace CircuitSimulatorPlus
         public SegmentDisplayRenderer(SegmentDisplay gate)
         {
             this.gate = gate;
+
+            Panel.SetZIndex(top, 4);
+            Panel.SetZIndex(topLeft, 4);
+            Panel.SetZIndex(topRight, 4);
+            Panel.SetZIndex(center, 4);
+            Panel.SetZIndex(botLeft, 4);
+            Panel.SetZIndex(botRight, 4);
+            Panel.SetZIndex(bot, 4);
 
             gate.OnRenderedChanged += OnRenderedChanged;
 
