@@ -11,15 +11,6 @@ namespace CircuitSimulatorPlus
         {
             StartNode = startNode;
 
-            if (startNode is InputNode)
-            {
-                (startNode as InputNode).ConnectedCable = this;
-            }
-            if (startNode is OutputNode)
-            {
-                (startNode as OutputNode).ConnectedCables.Add(this);
-            }
-
             Segments.Add(new CableSegment(this, Segments.Count));
             Segments.Add(new CableSegment(this, Segments.Count));
         }
@@ -174,6 +165,14 @@ namespace CircuitSimulatorPlus
         {
             EndNode = endNode;
 
+            if (startNode is InputNode)
+            {
+                (startNode as InputNode).ConnectedCable = this;
+            }
+            if (startNode is OutputNode)
+            {
+                (startNode as OutputNode).ConnectedCables.Add(this);
+            }
             if (endNode is InputNode)
             {
                 (endNode as InputNode).ConnectedCable = this;
@@ -185,7 +184,7 @@ namespace CircuitSimulatorPlus
 
             AutoComplete();
             IsCompleted = true;
-            
+
             OnPointsChanged?.Invoke();
         }
 

@@ -1108,9 +1108,9 @@ namespace CircuitSimulatorPlus
                 if (nearestObject is ConnectionNode && nearestObject is InputNode != CableOrigin is InputNode)
                 {
                     var connectionNode = nearestObject as ConnectionNode;
-                    CreatedCable.ConnectTo(connectionNode);
-
                     connectionNode.ConnectTo(CableOrigin);
+
+                    CreatedCable.ConnectTo(connectionNode);
                     Tick(connectionNode);
                     Tick(CableOrigin);
 
