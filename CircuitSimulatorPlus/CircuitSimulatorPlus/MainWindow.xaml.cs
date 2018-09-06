@@ -228,30 +228,37 @@ namespace CircuitSimulatorPlus
 
         public void Delete()
         {
-            foreach (IClickable obj in SelectedObjects)
+            if (CableCreated)
             {
-                if (obj is Gate)
+                CancelCable();
+            }
+            else
+            {
+                foreach (IClickable obj in SelectedObjects)
                 {
-                    (obj as Gate).Remove();
-                }
-                else if (obj is ConnectionNode)
-                {
-                    (obj as ConnectionNode).Clear();
-                }
-                else if (obj is CableSegment)
-                {
-                    var cableSegment = obj as CableSegment;
-                    if (cableSegment.Index == 0)
+                    if (obj is Gate)
                     {
-                        cableSegment.Parent.StartNode?.Clear();
+                        (obj as Gate).Remove();
                     }
-                    else if (cableSegment.Index == cableSegment.Parent.Segments.Count - 1)
+                    else if (obj is ConnectionNode)
                     {
-                        cableSegment.Parent.EndNode?.Clear();
+                        (obj as ConnectionNode).Clear();
                     }
-                    else
+                    else if (obj is CableSegment)
                     {
-                        cableSegment.Remove();
+                        var cableSegment = obj as CableSegment;
+                        if (cableSegment.Index == 0)
+                        {
+                            cableSegment.Parent.StartNode?.Clear();
+                        }
+                        else if (cableSegment.Index == cableSegment.Parent.Segments.Count - 1)
+                        {
+                            cableSegment.Parent.EndNode?.Clear();
+                        }
+                        else
+                        {
+                            cableSegment.Remove();
+                        }
                     }
                 }
             }
@@ -883,6 +890,13 @@ namespace CircuitSimulatorPlus
 
             CableCreated = false;
         }
+        public void CancelCable()
+        {
+            CreatedCable.Remove();
+            CreatedCable = null;
+            CableOrigin = null;
+            CableCreated = false;
+        }
 
         public void EmptyInput()
         {
@@ -1357,10 +1371,7 @@ namespace CircuitSimulatorPlus
             {
                 if (CableCreated)
                 {
-                    CreatedCable.Remove();
-                    CreatedCable = null;
-                    CableOrigin = null;
-                    CableCreated = false;
+                    CancelCable();
                 }
                 DeselectAll();
             }
