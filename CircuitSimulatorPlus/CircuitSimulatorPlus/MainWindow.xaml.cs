@@ -540,7 +540,10 @@ namespace CircuitSimulatorPlus
 
         public void Import()
         {
-            string filePath = SelectFile();
+            Import(SelectFile());
+        }
+        public void Import(string filePath)
+        {
             if (filePath == "")
                 return;
             SerializedGate store = StorageUtil.Load(filePath);
@@ -668,6 +671,7 @@ namespace CircuitSimulatorPlus
                 {
                     var menuItem = new MenuItem();
                     menuItem.Header = System.IO.Path.GetFileNameWithoutExtension(dir);
+                    menuItem.Click += new RoutedEventHandler((sender, e) => Import(dir));
                     parent.Items.Add(menuItem);
                 }
             }
@@ -1119,7 +1123,11 @@ namespace CircuitSimulatorPlus
             {
                 LastClickedObject = FindNearestObjectAt(LastCanvasClick);
 
-                if (CableCreated)
+                if (ShiftPressed)
+                {
+                    MakingSelection = true;
+                }
+                else if (CableCreated)
                 {
                     if (LastClickedObject is ConnectionNode && LastClickedObject is InputNode != CableOrigin is InputNode)
                     {
@@ -1133,10 +1141,6 @@ namespace CircuitSimulatorPlus
                 else if (LastClickedObject is ConnectionNode)
                 {
                     CreatingCable = true;
-                }
-                else if (ShiftPressed)
-                {
-                    MakingSelection = true;
                 }
                 else if (LastClickedObject == null)
                 {
@@ -1738,11 +1742,6 @@ namespace CircuitSimulatorPlus
             }
 
             Console.WriteLine();
-        }
-
-        void CreateCable_Click(object sender, RoutedEventArgs e)
-        {
-            CreateCable();
         }
         #endregion
     }

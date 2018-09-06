@@ -98,7 +98,6 @@
             <Separator/>
             <MenuItem Command="{x:Static local:Commands.Rename}"/>
             <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
-            <MenuItem Header="Create Cable" Click="CreateCable_Click"></MenuItem>
             <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
             <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
             <MenuItem Command="{x:Static local:Commands.AddInput}"/>
