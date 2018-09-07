@@ -567,18 +567,18 @@ namespace CircuitSimulatorPlus
         {
             if (AllowUndo)
             {
+                RedoStack.Push(GateSerializer.SerilaizeTopLayer(ContextGate, Cables));
                 SerializedGate lastState = UndoStack.Pop();
                 LoadState(lastState);
-                RedoStack.Push(lastState);
             }
         }
         public void Redo()
         {
             if (AllowRedo)
             {
+                UndoStack.Push(GateSerializer.SerilaizeTopLayer(ContextGate, Cables));
                 SerializedGate lastState = RedoStack.Pop();
                 LoadState(lastState);
-                UndoStack.Push(lastState);
             }
         }
 
