@@ -881,6 +881,7 @@ namespace CircuitSimulatorPlus
         }
         public void CompleteCable()
         {
+            SaveState();
             var connectionNode = LastClickedObject as ConnectionNode;
             connectionNode.ConnectTo(CableOrigin);
 
