@@ -631,6 +631,7 @@ namespace CircuitSimulatorPlus
             if (DataOnClipboard)
             {
                 DeselectAll();
+                SaveState();
                 PasteFromClipboard(LastCanvasPos);
             }
         }
