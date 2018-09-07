@@ -467,6 +467,7 @@ namespace CircuitSimulatorPlus
 
         public void LoadState(SerializedGate storageObject)
         {
+            ResetFile();
             ContextGate = GateSerializer.DeserializeTopLayer(storageObject, Cables);
             ContextGate.AddContext();
         }
