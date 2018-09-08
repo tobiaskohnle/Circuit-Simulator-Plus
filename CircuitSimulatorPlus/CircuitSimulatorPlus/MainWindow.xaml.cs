@@ -869,18 +869,21 @@ namespace CircuitSimulatorPlus
         }
         public void CreateCable()
         {
-            foreach (IClickable obj in SelectedObjects)
+            if (!CableCreated)
             {
-                if (obj is ConnectionNode)
+                foreach (IClickable obj in SelectedObjects)
                 {
-                    CableCreated = true;
+                    if (obj is ConnectionNode)
+                    {
+                        CableCreated = true;
 
-                    ConnectionNode startNode = LastClickedObject as ConnectionNode;
+                        ConnectionNode startNode = LastClickedObject as ConnectionNode;
 
-                    CableOrigin = startNode;
-                    CreatedCable = new Cable(startNode);
+                        CableOrigin = startNode;
+                        CreatedCable = new Cable(startNode);
 
-                    return;
+                        return;
+                    }
                 }
             }
         }
