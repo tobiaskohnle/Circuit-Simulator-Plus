@@ -71,6 +71,11 @@ namespace CircuitSimulatorPlus
 
         public void OnPositionChanged()
         {
+            if (cableSegment.Parent.IsCompleted)
+            {
+                MainWindow.Self.OnLastCanvasPosChanged -= OnPositionChanged;
+            }
+
             Point point = cableSegment.Parent.GetPoint(cableSegment.Index);
             Point lastPoint = cableSegment.Parent.GetPoint(cableSegment.Index - 1);
             Point nextPoint = cableSegment.Parent.GetPoint(cableSegment.Index + 1);

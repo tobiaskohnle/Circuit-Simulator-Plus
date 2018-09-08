@@ -168,18 +168,22 @@ namespace CircuitSimulatorPlus
             if (startNode is InputNode)
             {
                 (startNode as InputNode).ConnectedCable = this;
+                (startNode as InputNode).OnPositionChanged += OnPointsChanged;
             }
             if (startNode is OutputNode)
             {
                 (startNode as OutputNode).ConnectedCables.Add(this);
+                (startNode as OutputNode).OnPositionChanged += OnPointsChanged;
             }
             if (endNode is InputNode)
             {
                 (endNode as InputNode).ConnectedCable = this;
+                (endNode as InputNode).OnPositionChanged += OnPointsChanged;
             }
             if (endNode is OutputNode)
             {
                 (endNode as OutputNode).ConnectedCables.Add(this);
+                (endNode as OutputNode).OnPositionChanged += OnPointsChanged;
             }
 
             AutoComplete();
