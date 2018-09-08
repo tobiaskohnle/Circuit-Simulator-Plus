@@ -1136,46 +1136,42 @@ namespace CircuitSimulatorPlus
 
             MouseMoved = false;
 
+            LastClickedObject = FindNearestObjectAt(LastCanvasClick);
 
             if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
                 MovingScreen = true;
             }
-            else
+            else if (ShiftPressed)
             {
-                LastClickedObject = FindNearestObjectAt(LastCanvasClick);
-
-                if (ShiftPressed)
+                MakingSelection = true;
+            }
+            else if (CableCreated)
+            {
+                if (LastClickedObject is ConnectionNode && LastClickedObject is InputNode != CableOrigin is InputNode)
                 {
-                    MakingSelection = true;
-                }
-                else if (CableCreated)
-                {
-                    if (LastClickedObject is ConnectionNode && LastClickedObject is InputNode != CableOrigin is InputNode)
-                    {
-                        CompleteCable();
-                    }
-                    else
-                    {
-                        CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
-                    }
-                }
-                else if (LastClickedObject is ConnectionNode)
-                {
-                    CreatingCable = true;
-                }
-                else if (LastClickedObject == null)
-                {
-                    MakingSelection = true;
-                }
-                else if (LastClickedObject is IMovable)
-                {
-                    MovingObjects = true;
+                    CompleteCable();
                 }
                 else
                 {
-                    MakingSelection = true;
+                    CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
                 }
+            }
+            else if (LastClickedObject is ConnectionNode)
+            {
+                CreatingCable = true;
+            }
+            else if (LastClickedObject == null)
+            {
+                MakingSelection = true;
+            }
+            else if (LastClickedObject is IMovable)
+            {
+                MovingObjects = true;
+            }
+            else
+            {
+                MakingSelection = true;
             }
         }
         void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
