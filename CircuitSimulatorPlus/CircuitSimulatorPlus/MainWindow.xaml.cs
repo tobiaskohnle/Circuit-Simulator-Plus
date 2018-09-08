@@ -791,6 +791,15 @@ namespace CircuitSimulatorPlus
             CurrentScale *= scale;
             UpdateGrid();
         }
+        public void Zoom(double scale, Point at)
+        {
+            Matrix matrix = canvas.RenderTransform.Value;
+            matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
+            canvas.RenderTransform = new MatrixTransform(matrix);
+
+            CurrentScale *= scale;
+            UpdateGrid();
+        }
         #endregion
 
         #region Misc
@@ -1420,19 +1429,8 @@ namespace CircuitSimulatorPlus
 
         void Window_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            Matrix matrix = canvas.RenderTransform.Value;
-            matrix.ScaleAt(
-                e.DeltaManipulation.Scale.X,
-                e.DeltaManipulation.Scale.X,
-                e.ManipulationOrigin.X,
-                e.ManipulationOrigin.Y
-            );
-            canvas.RenderTransform = new MatrixTransform(matrix);
-
-            matrix.Translate(
-                e.DeltaManipulation.Translation.X - e.DeltaManipulation.Translation.X,
-                e.DeltaManipulation.Translation.Y - e.DeltaManipulation.Translation.Y
-            );
+            Point at = new Point (e.ManipulationOrigin.X, e.ManipulationOrigin.Y);
+            Zoom(e.DeltaManipulation.Scale.X, at);
         }
         void Window_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
