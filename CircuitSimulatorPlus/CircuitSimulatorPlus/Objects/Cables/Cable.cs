@@ -98,6 +98,10 @@ namespace CircuitSimulatorPlus
             {
                 startNode = value;
 
+                if (value is InputNode)
+                {
+                    inputNode = value as InputNode;
+                }
                 if (value is OutputNode)
                 {
                     outputNode = value as OutputNode;
@@ -120,6 +124,10 @@ namespace CircuitSimulatorPlus
             {
                 endNode = value;
 
+                if (value is InputNode)
+                {
+                    inputNode = value as InputNode;
+                }
                 if (value is OutputNode)
                 {
                     outputNode = value as OutputNode;
@@ -132,6 +140,7 @@ namespace CircuitSimulatorPlus
         }
 
         OutputNode outputNode;
+        InputNode inputNode;
 
         public event Action OnStateChanged;
 
@@ -238,6 +247,11 @@ namespace CircuitSimulatorPlus
                 segment.Remove();
             }
             MainWindow.Self.Cables.Remove(this);
+        }
+
+        public void Clear()
+        {
+            inputNode?.Clear();
         }
     }
 }

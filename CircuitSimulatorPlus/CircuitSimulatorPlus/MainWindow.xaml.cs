@@ -232,6 +232,7 @@ namespace CircuitSimulatorPlus
         {
             if (CableCreated)
             {
+                SaveState();
                 CancelCable();
             }
             else
@@ -240,22 +241,26 @@ namespace CircuitSimulatorPlus
                 {
                     if (obj is Gate)
                     {
+                        SaveState();
                         (obj as Gate).Remove();
                     }
                     else if (obj is ConnectionNode)
                     {
+                        if (!(obj as ConnectionNode).IsEmpty)
+                            SaveState();
                         (obj as ConnectionNode).Clear();
                     }
                     else if (obj is CableSegment)
                     {
+                        SaveState();
                         var cableSegment = obj as CableSegment;
                         if (cableSegment.Index == 0)
                         {
-                            cableSegment.Parent.StartNode?.Clear();
+                            cableSegment.Parent.Clear();
                         }
                         else if (cableSegment.Index == cableSegment.Parent.Segments.Count - 1)
                         {
-                            cableSegment.Parent.EndNode?.Clear();
+                            cableSegment.Parent.Clear();
                         }
                         else
                         {
