@@ -359,8 +359,29 @@ namespace CircuitSimulatorPlus
 
                         newGate.CopyFrom(gate);
 
-                        gate.Remove();
-                        newGate.Add();
+                        newGate.UpdateAmtConnectionNodes();
+
+                        //<Remove>
+                        gate.IsRendered = false;
+                        ClickableObjects.Remove(gate);
+                        ContextGate.Context.Remove(gate);
+                        //</Remove>
+
+                        //<Add>
+                        
+                        newGate.hitbox = new RectHitbox(new Rect(newGate.Position, newGate.Size));
+
+                        ClickableObjects.Add(newGate);
+                        if (!ContextGate.Context.Contains(newGate))
+                            ContextGate.Context.Add(newGate);
+                        new GateRenderer(newGate);
+                        newGate.IsRendered = true;
+
+                        newGate.Input = gate.Input;
+                        newGate.Output = gate.Output;
+
+                        newGate.UpdateConnectionNodePos();
+                        //</Add>
 
                         Tick(newGate);
 

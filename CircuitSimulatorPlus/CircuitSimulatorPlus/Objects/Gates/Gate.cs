@@ -20,7 +20,7 @@ namespace CircuitSimulatorPlus
             Name = gate.Name;
             //Tag = gate.Tag;
             Position = gate.Position;
-            Size = gate.Size;
+            //Size = gate.Size;
         }
 
         public const double DistanceFactor = 0.2;
@@ -237,7 +237,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        RectHitbox hitbox;
+        public RectHitbox hitbox;
         public Hitbox Hitbox
         {
             get
