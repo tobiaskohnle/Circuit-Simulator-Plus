@@ -359,8 +359,29 @@ namespace CircuitSimulatorPlus
 
                         newGate.CopyFrom(gate);
 
-                        gate.Remove();
-                        newGate.Add();
+                        newGate.UpdateAmtConnectionNodes();
+
+                        //<Remove>
+                        gate.IsRendered = false;
+                        ClickableObjects.Remove(gate);
+                        ContextGate.Context.Remove(gate);
+                        //</Remove>
+
+                        //<Add>
+                        
+                        newGate.hitbox = new RectHitbox(new Rect(newGate.Position, newGate.Size));
+
+                        ClickableObjects.Add(newGate);
+                        if (!ContextGate.Context.Contains(newGate))
+                            ContextGate.Context.Add(newGate);
+                        new GateRenderer(newGate);
+                        newGate.IsRendered = true;
+
+                        newGate.Input = gate.Input;
+                        newGate.Output = gate.Output;
+
+                        newGate.UpdateConnectionNodePos();
+                        //</Add>
 
                         Tick(newGate);
 
@@ -904,10 +925,12 @@ namespace CircuitSimulatorPlus
         public void CompleteCable()
         {
             SaveState();
+
             var connectionNode = LastClickedObject as ConnectionNode;
-            connectionNode.ConnectTo(CableOrigin);
 
             CreatedCable.ConnectTo(connectionNode);
+
+            connectionNode.ConnectTo(CableOrigin);
             Tick(connectionNode);
             Tick(CableOrigin);
 
@@ -979,7 +1002,7 @@ namespace CircuitSimulatorPlus
                                 SaveState();
                                 stateSaved = true;
                             }
-                            gate.RemoveInputNode(gate.Input.Last());
+                            gate.RemoveInputNode();
                         }
                         Tick(gate);
                     }
@@ -1171,7 +1194,7 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
+                    CreatedCable.AddSegment(LastCanvasClick);
                 }
             }
             else if (LastClickedObject is ConnectionNode)

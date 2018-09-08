@@ -20,7 +20,7 @@ namespace CircuitSimulatorPlus
             Name = gate.Name;
             //Tag = gate.Tag;
             Position = gate.Position;
-            Size = gate.Size;
+            //Size = gate.Size;
         }
 
         public const double DistanceFactor = 0.2;
@@ -109,6 +109,55 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public virtual int MinAmtInputNodes
+        {
+            get
+            {
+                return 0;
+            }
+        }
+        public virtual int MaxAmtInputNodes
+        {
+            get
+            {
+                return Int32.MaxValue;
+            }
+        }
+        public virtual int MinAmtOutputNodes
+        {
+            get
+            {
+                return 0;
+            }
+        }
+        public virtual int MaxAmtOutputNodes
+        {
+            get
+            {
+                return Int32.MaxValue;
+            }
+        }
+
+        public void UpdateAmtConnectionNodes()
+        {
+            while (Input.Count < MinAmtInputNodes)
+            {
+                AddEmptyInputNode();
+            }
+            while (Output.Count < MinAmtOutputNodes)
+            {
+                AddEmptyOutputNode();
+            }
+            while (Input.Count > MaxAmtInputNodes)
+            {
+                RemoveInputNode();
+            }
+            while (Output.Count > MaxAmtOutputNodes)
+            {
+                RemoveOutputNode();
+            }
+        }
+
         public void UpdateConnectionNodePos()
         {
             for (int i = 0; i < Input.Count; i++)
@@ -139,35 +188,56 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public void RemoveInputNode()
+        {
+            RemoveInputNode(Input[Input.Count - 1]);
+        }
+        public void RemoveOutputNode()
+        {
+            RemoveOutputNode(Output[Output.Count - 1]);
+        }
+
         public void RemoveInputNode(InputNode inputNode)
         {
-            Input.Remove(inputNode);
-            inputNode.Remove();
-            UpdateConnectionNodePos();
+            if (Input.Count > MinAmtInputNodes)
+            {
+                Input.Remove(inputNode);
+                inputNode.Remove();
+                UpdateConnectionNodePos();
+            }
         }
         public void RemoveOutputNode(OutputNode outputNode)
         {
-            Output.Remove(outputNode);
-            outputNode.Remove();
-            UpdateConnectionNodePos();
+            if (Output.Count > MinAmtOutputNodes)
+            {
+                Output.Remove(outputNode);
+                outputNode.Remove();
+                UpdateConnectionNodePos();
+            }
         }
 
         public void AddEmptyInputNode()
         {
-            var inputNode = new InputNode(this);
-            Input.Add(inputNode);
-            inputNode.Add();
-            UpdateConnectionNodePos();
+            if (Input.Count < MaxAmtInputNodes)
+            {
+                var inputNode = new InputNode(this);
+                Input.Add(inputNode);
+                inputNode.Add();
+                UpdateConnectionNodePos();
+            }
         }
         public void AddEmptyOutputNode()
         {
-            var outputNode = new OutputNode(this);
-            Output.Add(outputNode);
-            outputNode.Add();
-            UpdateConnectionNodePos();
+            if (Output.Count < MaxAmtOutputNodes)
+            {
+                var outputNode = new OutputNode(this);
+                Output.Add(outputNode);
+                outputNode.Add();
+                UpdateConnectionNodePos();
+            }
         }
 
-        RectHitbox hitbox;
+        public RectHitbox hitbox;
         public Hitbox Hitbox
         {
             get
