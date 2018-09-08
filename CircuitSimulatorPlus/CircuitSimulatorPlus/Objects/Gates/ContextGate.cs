@@ -14,6 +14,35 @@ namespace CircuitSimulatorPlus
             Size = new Size(3, 4);
         }
 
+        public override int MinAmtInputNodes
+        {
+            get
+            {
+                return Input.Count;
+            }
+        }
+        public override int MaxAmtInputNodes
+        {
+            get
+            {
+                return Input.Count;
+            }
+        }
+        public override int MinAmtOutputNodes
+        {
+            get
+            {
+                return Output.Count;
+            }
+        }
+        public override int MaxAmtOutputNodes
+        {
+            get
+            {
+                return Output.Count;
+            }
+        }
+
         public override bool HasContext
         {
             get

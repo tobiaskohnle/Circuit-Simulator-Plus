@@ -10,6 +10,28 @@ namespace CircuitSimulatorPlus
             Size = new Size(2, 2);
         }
 
+        public override int MaxAmtInputNodes
+        {
+            get
+            {
+                return 0;
+            }
+        }
+        public override int MinAmtOutputNodes
+        {
+            get
+            {
+                return 1;
+            }
+        }
+        public override int MaxAmtOutputNodes
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
         public override void CreateDefaultConnectionNodes()
         {
             CreateConnectionNodes(0, 1);

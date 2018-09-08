@@ -972,7 +972,7 @@ namespace CircuitSimulatorPlus
                                 SaveState();
                                 stateSaved = true;
                             }
-                            gate.RemoveInputNode(gate.Input.Last());
+                            gate.RemoveInputNode();
                         }
                         Tick(gate);
                     }
