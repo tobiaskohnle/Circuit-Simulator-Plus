@@ -35,7 +35,7 @@ namespace CircuitSimulatorPlus
 
             Self = this;
 
-            DrawGrid();
+            showGrid.IsChecked = true;
             UpdateTitle();
             ResetView();
 
@@ -82,6 +82,8 @@ namespace CircuitSimulatorPlus
 
         public bool Saved = true;
         public bool SingleTicks;
+
+        public bool ShowGrid;
 
         public string FileName = Constants.DefaultTitle;
         public string CurrentFilePath;
@@ -714,13 +716,16 @@ namespace CircuitSimulatorPlus
                 TileMode = TileMode.Tile,
                 Stretch = Stretch.Fill
             };
-            backgoundLayerCanvas.Background = brush;
+            backgoundLayerCanvas.Background = ShowGrid ? brush : null;
             UpdateGrid();
         }
         public void UpdateGrid()
         {
-            BackgroundGridPen.Thickness = Constants.LineWidth / CurrentScale / 2;
-            backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
+            if (ShowGrid)
+            {
+                BackgroundGridPen.Thickness = Constants.LineWidth / CurrentScale / 2;
+                backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
+            }
         }
 
         public void ZoomIntoView(List<IClickable> objects)
@@ -1626,11 +1631,13 @@ namespace CircuitSimulatorPlus
 
         void ShowGrid_Checked(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ShowGrid = true;
+            DrawGrid();
         }
         void ShowGrid_Unchecked(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ShowGrid = false;
+            DrawGrid();
         }
         void ResetView_Click(object sender, RoutedEventArgs e)
         {
