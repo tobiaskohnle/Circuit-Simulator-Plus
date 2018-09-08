@@ -82,10 +82,17 @@ namespace CircuitSimulatorPlus
 
         public override void ConnectTo(ConnectionNode connectionNode)
         {
-            BackConnectedTo = connectionNode;
+            if (!IsEmpty)
+            {
+                Clear();
+            }
+
             connectionNode.NextConnectedTo.Add(this);
+            BackConnectedTo = connectionNode;
 
             IsEmpty = connectionNode.IsEmpty = false;
+
+            MainWindow.Self.Tick(connectionNode);
         }
 
         public override void UpdatePosition(int index)
