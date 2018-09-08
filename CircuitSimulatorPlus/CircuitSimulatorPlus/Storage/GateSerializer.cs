@@ -9,7 +9,7 @@ namespace CircuitSimulatorPlus
 {
     static class GateSerializer
     {
-        public static SerializedGate SerilaizeTopLayer(ContextGate contextGate, List<Cable> cables)
+        public static SerializedGate SerializeTopLayer(ContextGate contextGate, List<Cable> cables)
         {
             var store = new SerializedGate();
             store.Name = contextGate.Name;
