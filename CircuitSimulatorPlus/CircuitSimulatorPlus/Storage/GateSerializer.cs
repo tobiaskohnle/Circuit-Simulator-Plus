@@ -100,7 +100,8 @@ namespace CircuitSimulatorPlus
             for (int i = 0; i < contextGate.Input.Count; i++)
             {
                 var inputSwitch = new InputSwitch();
-                inputSwitch.AddEmptyOutputNode();
+                inputSwitch.Output.Add(new OutputNode(inputSwitch));
+                //inputSwitch.UpdateConnectionNodePos();
                 ConnectionNode contextNode = contextGate.Input[i];
                 ConnectionNode switchNode = inputSwitch.Output.First();
                 switchNode.NextConnectedTo = contextNode.NextConnectedTo;
@@ -129,7 +130,8 @@ namespace CircuitSimulatorPlus
             {
                 int id;
                 var outputLight = new OutputLight();
-                outputLight.AddEmptyInputNode();
+                outputLight.Input.Add(new InputNode(outputLight));
+                //outputLight.UpdateConnectionNodePos();
                 ConnectionNode contextNode = contextGate.Output[i];
                 if (nodeToId.ContainsKey(contextNode))
                 {

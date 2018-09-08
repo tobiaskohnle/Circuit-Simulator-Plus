@@ -197,11 +197,11 @@ namespace CircuitSimulatorPlus
         {
             for (int i = 0; i < amtInputs; i++)
             {
-                AddEmptyInputNode();
+                Input.Add(new InputNode(this));
             }
             for (int i = 0; i < amtOutputs; i++)
             {
-                AddEmptyOutputNode();
+                Output.Add(new OutputNode(this));
             }
             UpdateConnectionNodePos();
         }
