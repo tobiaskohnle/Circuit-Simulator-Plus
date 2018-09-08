@@ -895,10 +895,12 @@ namespace CircuitSimulatorPlus
         public void CompleteCable()
         {
             SaveState();
+
             var connectionNode = LastClickedObject as ConnectionNode;
-            connectionNode.ConnectTo(CableOrigin);
 
             CreatedCable.ConnectTo(connectionNode);
+
+            connectionNode.ConnectTo(CableOrigin);
             Tick(connectionNode);
             Tick(CableOrigin);
 
@@ -1162,7 +1164,7 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    CreatedCable.AddSegment(Round(LastCanvasClick, 0.5));
+                    CreatedCable.AddSegment(LastCanvasClick);
                 }
             }
             else if (LastClickedObject is ConnectionNode)

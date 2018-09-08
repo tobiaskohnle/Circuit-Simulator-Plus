@@ -47,8 +47,6 @@ namespace CircuitSimulatorPlus
 
         public bool IsCompleted;
 
-        bool vertical;
-
         public event Action OnPointsChanged;
 
         public List<Point> Points = new List<Point>();
@@ -172,6 +170,8 @@ namespace CircuitSimulatorPlus
 
         public void ConnectTo(ConnectionNode endNode)
         {
+            AutoComplete();
+
             EndNode = endNode;
 
             if (startNode is InputNode)
@@ -195,7 +195,6 @@ namespace CircuitSimulatorPlus
                 (endNode as OutputNode).OnPositionChanged += OnPointsChanged;
             }
 
-            AutoComplete();
             IsCompleted = true;
 
             OnPointsChanged?.Invoke();
@@ -205,7 +204,6 @@ namespace CircuitSimulatorPlus
         {
             if (index > 0 && index <= Points.Count)
             {
-                vertical = !vertical;
                 Points.RemoveAt(index - 1);
 
                 Segments.RemoveAt(index);
@@ -219,7 +217,6 @@ namespace CircuitSimulatorPlus
 
         public void AddSegment(int index, Point point)
         {
-            vertical = !vertical;
             Points.Insert(index - 1, MainWindow.Self.Round(point, 0.5));
 
             Segments.Insert(index, new CableSegment(this, index));
@@ -232,7 +229,6 @@ namespace CircuitSimulatorPlus
 
         public void AddSegment(Point point)
         {
-            vertical = !vertical;
             Points.Add(MainWindow.Self.Round(point, 0.5));
 
             Segments.Add(new CableSegment(this, Segments.Count));
