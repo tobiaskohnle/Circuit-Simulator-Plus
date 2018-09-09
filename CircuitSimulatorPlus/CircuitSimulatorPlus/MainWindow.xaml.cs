@@ -1126,7 +1126,7 @@ namespace CircuitSimulatorPlus
         }
         public bool AnySelected<T>()
         {
-            return SelectedObjects.Exists(obj => obj.GetType().IsAssignableFrom(typeof(T)));
+            return SelectedObjects.Exists(obj => typeof(T).IsAssignableFrom(obj.GetType()));
         }
 
         public bool ControlPressed
