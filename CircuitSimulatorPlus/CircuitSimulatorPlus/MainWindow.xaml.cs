@@ -1792,6 +1792,10 @@ namespace CircuitSimulatorPlus
             if (TickedNodes.Count > 0)
                 Timer.Start();
         }
+        void SaveState_Click(object sender, RoutedEventArgs e)
+        {
+            SaveState();
+        }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
             TickAll();
