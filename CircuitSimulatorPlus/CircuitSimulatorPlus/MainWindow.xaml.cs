@@ -1582,9 +1582,6 @@ namespace CircuitSimulatorPlus
             PrintDialog prnt = new PrintDialog();
             if (prnt.ShowDialog() == true)
             {
-                Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
-                canvas.Measure(pageSize);
-                canvas.Arrange(new Rect(5, 5, pageSize.Width, pageSize.Height));
                     prnt.PrintVisual(canvas, "Printing Canvas");
 
             }
