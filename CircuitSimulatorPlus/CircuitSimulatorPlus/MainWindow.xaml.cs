@@ -493,7 +493,7 @@ namespace CircuitSimulatorPlus
             {
                 if (SavePrompt())
                 {
-                    Process.Start(Application.ResourceAssembly.Location);
+                    Process.Start(Environment.CommandLine);
                     Environment.Exit(0);
                 }
             }
