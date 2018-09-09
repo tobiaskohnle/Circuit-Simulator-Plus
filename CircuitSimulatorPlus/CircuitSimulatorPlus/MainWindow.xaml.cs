@@ -1439,6 +1439,19 @@ namespace CircuitSimulatorPlus
             e.Cancel = !SavePrompt();
         }
 
+        void Window_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.All : DragDropEffects.None;
+        }
+        void Window_Drop(object sender, DragEventArgs e)
+        {
+            if (SavePrompt())
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Open(files[0]);
+            }
+        }
+
         void Window_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
             Point at = new Point(e.ManipulationOrigin.X, e.ManipulationOrigin.Y);
@@ -1678,7 +1691,7 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<DarkFantasticTheme>();
         }
-        private void SummerTheme_Click(object sender, RoutedEventArgs e)
+        void SummerTheme_Click(object sender, RoutedEventArgs e)
         {
             SetTheme<SummerTheme>();
         }
@@ -1822,8 +1835,7 @@ namespace CircuitSimulatorPlus
 
             Console.WriteLine();
         }
+
         #endregion
-
-
     }
 }
