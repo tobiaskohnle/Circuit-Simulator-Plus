@@ -156,8 +156,9 @@
             <MenuItem Header="About" Width="auto">
                 <MenuItem Header="Version" Click="Version_Click"/>
                 <MenuItem Header="Github Link" Click="GithubLink_Click"/>
+                <MenuItem Header="Enable Debug Mode" Click="DebugMode_Click"/>
             </MenuItem>
-            <MenuItem Header="Debug" Width="auto">
+            <MenuItem x:Name="debug" Header="Debug" Width="auto">
                 <MenuItem Header="Reload" Click="Reload_Click"/>
                 <MenuItem Header="Single Ticks" IsCheckable="True" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>

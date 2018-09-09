@@ -1799,6 +1799,10 @@ namespace CircuitSimulatorPlus
         {
             Process.Start("https://github.com/tobiaskohnle/Circuit-Simulator-Plus");
         }
+        void DebugMode_Click(object sender, RoutedEventArgs e)
+        {
+            debug.Visibility = Visibility.Visible;
+        }
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
