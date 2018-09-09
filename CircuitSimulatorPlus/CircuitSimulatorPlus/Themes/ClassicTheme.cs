@@ -87,6 +87,21 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public SolidColorBrush SelectionRect
+        {
+            get
+            {
+                return new SolidColorBrush(Color.FromArgb(200, 50, 150, 250));
+            }
+        }
+        public SolidColorBrush SelectionRectFill
+        {
+            get
+            {
+                return new SolidColorBrush(Color.FromArgb(63, 0, 120, 215));
+            }
+        }
+
         public SolidColorBrush FontColor
         {
             get

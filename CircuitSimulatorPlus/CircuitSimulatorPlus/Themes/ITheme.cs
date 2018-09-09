@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace CircuitSimulatorPlus
@@ -24,6 +20,9 @@ namespace CircuitSimulatorPlus
 
         SolidColorBrush SelectedHighlight { get; }
         SolidColorBrush SelectedHighlightFill { get; }
+
+        SolidColorBrush SelectionRect { get; }
+        SolidColorBrush SelectionRectFill { get; }
 
         SolidColorBrush FontColor { get; }
 

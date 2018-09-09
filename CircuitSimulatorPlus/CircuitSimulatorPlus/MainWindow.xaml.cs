@@ -728,6 +728,9 @@ namespace CircuitSimulatorPlus
                 Theme = new ClassicTheme();
                 Console.WriteLine($"Unknown theme \"{theme}\"");
             }
+
+            selectVisual.Stroke = Theme.SelectionRect;
+            selectVisual.Fill = Theme.SelectionRectFill;
         }
         #endregion
 
