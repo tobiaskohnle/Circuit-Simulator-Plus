@@ -1794,6 +1794,7 @@ namespace CircuitSimulatorPlus
 
         void Version_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show($"Current Version: {Constants.Version}", "Version");
         }
         void GithubLink_Click(object sender, RoutedEventArgs e)
         {
