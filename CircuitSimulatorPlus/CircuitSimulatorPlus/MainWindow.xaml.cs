@@ -473,6 +473,15 @@ namespace CircuitSimulatorPlus
             return false;
         }
 
+        public void Restart()
+        {
+            if (MessageBox.Show("Restart now?", "Restart required", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
+            {
+                Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+            }
+        }
+
         public void LoadState(SerializedGate storageObject)
         {
             ResetFile();
@@ -766,6 +775,7 @@ namespace CircuitSimulatorPlus
             Theme = (ITheme)Activator.CreateInstance(typeof(T));
             Properties.Settings.Default.Theme = typeof(T).ToString();
             Properties.Settings.Default.Save();
+            Restart();
         }
 
         public void ZoomIntoView(List<IClickable> objects)
