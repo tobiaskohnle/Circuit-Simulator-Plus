@@ -111,9 +111,10 @@
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\GateSerializer.cs" />
     <Compile Include="Storage\SerializedGate.cs" />
+    <Compile Include="Themes\OceanSunsetTheme.cs" />
     <Compile Include="Themes\ClassicTheme.cs" />
     <Compile Include="Themes\SummerTheme.cs" />
-    <Compile Include="Themes\DarkFantasticTheme.cs" />
+    <Compile Include="Themes\DarkBlueTheme.cs" />
     <Compile Include="Themes\LightTheme.cs" />
     <Compile Include="Themes\DarkTheme.cs" />
     <Compile Include="Themes\ITheme.cs" />

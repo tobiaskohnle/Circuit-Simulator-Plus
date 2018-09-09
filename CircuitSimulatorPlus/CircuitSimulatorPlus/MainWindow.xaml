@@ -148,6 +148,7 @@
                     <MenuItem Header="Light" Click="LightTheme_Click"/>
                     <MenuItem Header="DarkFantastic" Click="DarkFantasticTheme_Click"/>
                     <MenuItem Header="Summer" Click="SummerTheme_Click"/>
+                    <MenuItem Header="OceanSunset" Click="OceanSunsetTheme_Click"/>
                 </MenuItem>
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>

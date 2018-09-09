@@ -494,7 +494,7 @@ namespace CircuitSimulatorPlus
             {
                 if (SavePrompt())
                 {
-                    Process.Start(Application.ResourceAssembly.Location);
+                    Process.Start(Environment.CommandLine);
                     Environment.Exit(0);
                 }
             }
@@ -1715,6 +1715,10 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<SummerTheme>();
         }
+        private void OceanSunsetTheme_Click(object sender, RoutedEventArgs e)
+        {
+            SetTheme<OceanSunsetTheme>();
+        }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
             Zoom(true, CanvasCenter);
@@ -1857,5 +1861,7 @@ namespace CircuitSimulatorPlus
             Console.WriteLine();
         }
         #endregion
+
+
     }
 }
