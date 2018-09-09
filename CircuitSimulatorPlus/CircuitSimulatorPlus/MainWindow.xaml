@@ -7,6 +7,7 @@
         x:Class="CircuitSimulatorPlus.MainWindow"
 
         Height="700" Width="1000"
+        ContextMenuOpening="Window_ContextMenuOpening"
         MouseDown="Window_MouseDown" MouseUp="Window_MouseUp"
         MouseMove="Window_MouseMove" MouseWheel="Window_MouseWheel"
         MouseDoubleClick="Window_MouseDoubleClick"
@@ -17,7 +18,9 @@
         Drop="Window_Drop"
         AllowDrop="True"
 
-        ContextMenuOpening="Window_ContextMenuOpening" ManipulationDelta="Window_ManipulationDelta" ManipulationInertiaStarting="Window_ManipulationInertiaStarting" ManipulationStarting="Window_ManipulationStarting">
+        ManipulationDelta="Window_ManipulationDelta"
+        ManipulationInertiaStarting="Window_ManipulationInertiaStarting"
+        ManipulationStarting="Window_ManipulationStarting">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:Commands.New}"
                         Executed="New_Click"/>
