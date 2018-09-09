@@ -27,7 +27,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 10, 25, 25));
+                return new SolidColorBrush(Color.FromArgb(255, 20, 100, 175));
             }
         }
 
@@ -42,7 +42,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(244, 120, 120, 120));
+                return new SolidColorBrush(Color.FromArgb(255, 210, 210, 210));
             }
         }
 

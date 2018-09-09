@@ -739,7 +739,15 @@ namespace CircuitSimulatorPlus
                 TileMode = TileMode.Tile,
                 Stretch = Stretch.Fill
             };
-            backgoundLayerCanvas.Background = ShowGrid ? brush : null;
+            if (ShowGrid)
+            {
+                backgoundLayerCanvas.Background = brush;
+            }
+            else
+            {
+                backgoundLayerCanvas.Background = null;
+                Background = Theme.Background;
+            }
             UpdateGrid();
         }
         public void UpdateGrid()
