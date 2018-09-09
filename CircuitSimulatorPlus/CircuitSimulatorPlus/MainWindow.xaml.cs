@@ -1680,6 +1680,10 @@ namespace CircuitSimulatorPlus
             Properties.Settings.Default.Theme = typeof(DarkTheme).Name;
             Properties.Settings.Default.Save();
         }
+                private void CrazyTheme_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
             Zoom(true, CanvasCenter);
@@ -1803,5 +1807,7 @@ namespace CircuitSimulatorPlus
             Console.WriteLine();
         }
         #endregion
+
+
     }
 }
