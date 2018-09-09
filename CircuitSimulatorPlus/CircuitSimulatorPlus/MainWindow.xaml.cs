@@ -1693,11 +1693,11 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<DarkTheme>();
         }
-                private void LightTheme_Click(object sender, RoutedEventArgs e)
+        void LightTheme_Click(object sender, RoutedEventArgs e)
         {
             SetTheme<LightTheme>();
         }
-        private void DarkFantasticTheme_Click(object sender, RoutedEventArgs e)
+        void DarkFantasticTheme_Click(object sender, RoutedEventArgs e)
         {
             SetTheme<DarkFantasticTheme>();
         }
