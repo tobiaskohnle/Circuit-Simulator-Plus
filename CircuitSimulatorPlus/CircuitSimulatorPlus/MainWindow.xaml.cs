@@ -786,13 +786,7 @@ namespace CircuitSimulatorPlus
         public void Zoom(bool zoomIn, Point at)
         {
             double scale = zoomIn ? Constants.ScaleFactor : 1 / Constants.ScaleFactor;
-
-            Matrix matrix = canvas.RenderTransform.Value;
-            matrix.ScaleAtPrepend(scale, scale, at.X, at.Y);
-            canvas.RenderTransform = new MatrixTransform(matrix);
-
-            CurrentScale *= scale;
-            UpdateGrid();
+            Zoom(scale, at);
         }
         public void Zoom(double scale, Point at)
         {
