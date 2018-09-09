@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -703,7 +704,7 @@ namespace CircuitSimulatorPlus
             foreach (string dir in Directory.EnumerateDirectories(path))
             {
                 var subMenu = new MenuItem();
-                subMenu.Header = System.IO.Path.GetFileName(dir);
+                subMenu.Header = System.IO.Path.GetFileName(dir).Replace("_", "__");;
 
                 parent.Items.Add(subMenu);
                 LoadContextGates(subMenu, dir);
@@ -713,7 +714,7 @@ namespace CircuitSimulatorPlus
                 if (System.IO.Path.GetExtension(dir) == Constants.FileExtention)
                 {
                     var menuItem = new MenuItem();
-                    menuItem.Header = System.IO.Path.GetFileNameWithoutExtension(dir);
+                    menuItem.Header = System.IO.Path.GetFileNameWithoutExtension(dir).Replace("_", "__");
                     menuItem.Click += new RoutedEventHandler((sender, e) => Import(dir));
                     parent.Items.Add(menuItem);
                 }
