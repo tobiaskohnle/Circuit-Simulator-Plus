@@ -80,7 +80,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 238,154,0));
+                return new SolidColorBrush(Color.FromArgb(255, 0, 134, 139));
             }
         }
         public SolidColorBrush SelectedHighlightFill
@@ -102,7 +102,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(63, 0, 120, 215));
+                return new SolidColorBrush(Color.FromArgb(63, 238, 154, 0));
             }
         }
 
