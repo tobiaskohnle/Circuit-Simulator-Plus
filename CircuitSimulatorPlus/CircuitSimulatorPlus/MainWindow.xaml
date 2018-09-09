@@ -160,6 +160,7 @@
             </MenuItem>
             <MenuItem x:Name="debug" Visibility="Collapsed" Header="Debug" Width="auto">
                 <MenuItem Header="Reload" Click="Reload_Click"/>
+                <MenuItem Header="Restart" Click="Restart_Click"/>
                 <MenuItem Header="Single Ticks" IsCheckable="True" Checked="SingleTicks_Checked" Unchecked="SingleTicks_Unchecked"/>
                 <MenuItem Header="Tick All Nodes" Click="TickAll_Click"/>
                 <MenuItem Header="Reset Settings" Click="ResetSettings_Click"/>

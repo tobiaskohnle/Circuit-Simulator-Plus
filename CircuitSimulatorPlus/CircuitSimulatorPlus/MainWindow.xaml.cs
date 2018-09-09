@@ -1772,6 +1772,10 @@ namespace CircuitSimulatorPlus
             LoadState(state);
             TickAll();
         }
+        void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            Restart();
+        }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Single Ticks Enabled");
