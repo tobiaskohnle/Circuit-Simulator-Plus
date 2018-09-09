@@ -833,9 +833,9 @@ namespace CircuitSimulatorPlus
                 }
             }
 
-            var movedVectors = new List<Vector>(movedObjects.Count);
+            var points = new List<Point>(movedObjects.Count);
 
-            bool anyMoved = false;
+            bool snapToUnit = false;
 
             for (int i = 0; i < movedObjects.Count; i++)
             {
@@ -845,33 +845,39 @@ namespace CircuitSimulatorPlus
 
                 if (obj is Gate)
                 {
+                    snapToUnit = true;
                     pos = (obj as Gate).Position;
-                }
-                else if (obj is ConnectionNode)
-                {
-                    pos = (obj as ConnectionNode).Position;
                 }
                 else if (obj is CableSegment)
                 {
                     pos = (obj as CableSegment).Parent.GetPoint((obj as CableSegment).Index);
                 }
 
-                Vector moved = new Vector();
-                if (obj is CableSegment)
+                points.Add(pos);
+            }
+
+            var vectors = new List<Vector>(movedObjects.Count);
+
+            bool anyMoved = false;
+
+            for (int i = 0; i < movedObjects.Count; i++)
+            {
+                var vector = new Vector();
+                if (movedObjects[i] is CableSegment && !snapToUnit)
                 {
-                    moved = Round(pos + completeMove, 0.5) - pos;
+                    vector = Round(points[i] + completeMove, 0.5) - points[i];
                 }
                 else
                 {
-                    moved = Round(pos + completeMove) - pos;
+                    vector = Round(points[i] + completeMove) - points[i];
                 }
 
-                if (moved.X != 0 || moved.Y != 0)
+                if (vector.X != 0 || vector.Y != 0)
                 {
                     anyMoved = true;
                 }
 
-                movedVectors.Add(moved);
+                vectors.Add(vector);
             }
 
             if (anyMoved)
@@ -879,7 +885,7 @@ namespace CircuitSimulatorPlus
                 SaveState();
                 for (int i = 0; i < movedObjects.Count; i++)
                 {
-                    movedObjects[i].Move(movedVectors[i]);
+                    movedObjects[i].Move(vectors[i]);
                 }
             }
         }
@@ -1433,7 +1439,7 @@ namespace CircuitSimulatorPlus
 
         void Window_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
-            Point at = new Point (e.ManipulationOrigin.X, e.ManipulationOrigin.Y);
+            Point at = new Point(e.ManipulationOrigin.X, e.ManipulationOrigin.Y);
             Zoom(e.DeltaManipulation.Scale.X, at);
         }
         void Window_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
