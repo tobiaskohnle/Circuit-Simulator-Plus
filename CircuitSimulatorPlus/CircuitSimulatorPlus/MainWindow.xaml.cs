@@ -900,7 +900,7 @@ namespace CircuitSimulatorPlus
                 foreach (IMovable movable in movableObjects)
                 {
                     movable.Move(Round(completeMove, maxSnapSize));
-                    movable.Move(movable.Position - Round(movable.Position, movable.SnapSize));
+                    movable.Move(Round(movable.Position, movable.SnapSize) - movable.Position);
                 }
             }
         }
