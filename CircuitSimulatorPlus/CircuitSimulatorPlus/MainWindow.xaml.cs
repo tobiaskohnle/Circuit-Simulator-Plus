@@ -709,11 +709,11 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        
+
         public void LoadTheme()
         {
             string theme = Properties.Settings.Default.Theme;
-            
+
             try
             {
                 Theme = null;
@@ -722,7 +722,7 @@ namespace CircuitSimulatorPlus
             catch
             {
             }
-            
+
             if (Theme == null)
             {
                 Theme = new ClassicTheme();
@@ -1599,7 +1599,7 @@ namespace CircuitSimulatorPlus
             PrintDialog prnt = new PrintDialog();
             if (prnt.ShowDialog() == true)
             {
-                    prnt.PrintVisual(canvas, "Printing Canvas");
+                prnt.PrintVisual(canvas, "Printing Canvas");
 
             }
         }
