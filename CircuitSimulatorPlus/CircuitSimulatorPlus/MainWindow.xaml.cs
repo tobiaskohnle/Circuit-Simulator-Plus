@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -703,7 +704,7 @@ namespace CircuitSimulatorPlus
             foreach (string dir in Directory.EnumerateDirectories(path))
             {
                 var subMenu = new MenuItem();
-                subMenu.Header = System.IO.Path.GetFileName(dir);
+                subMenu.Header = StringToHeader(System.IO.Path.GetFileName(dir));
 
                 parent.Items.Add(subMenu);
                 LoadContextGates(subMenu, dir);
@@ -713,7 +714,7 @@ namespace CircuitSimulatorPlus
                 if (System.IO.Path.GetExtension(dir) == Constants.FileExtention)
                 {
                     var menuItem = new MenuItem();
-                    menuItem.Header = System.IO.Path.GetFileNameWithoutExtension(dir);
+                    menuItem.Header = StringToHeader(System.IO.Path.GetFileNameWithoutExtension(dir));
                     menuItem.Click += new RoutedEventHandler((sender, e) => Import(dir));
                     parent.Items.Add(menuItem);
                 }
@@ -900,7 +901,7 @@ namespace CircuitSimulatorPlus
                 foreach (IMovable movable in movableObjects)
                 {
                     movable.Move(Round(completeMove, maxSnapSize));
-                    movable.Move(movable.Position - Round(movable.Position, movable.SnapSize));
+                    movable.Move(Round(movable.Position, movable.SnapSize) - movable.Position);
                 }
             }
         }
@@ -1154,6 +1155,15 @@ namespace CircuitSimulatorPlus
         public Vector Round(Vector vector, double a = 1)
         {
             return new Vector(Math.Round(vector.X / a) * a, Math.Round(vector.Y / a) * a);
+        }
+
+        public string StringToHeader(string str)
+        {
+            return str.Replace("_", "__");
+        }
+        public string HeaderToString(object header)
+        {
+            return header.ToString().Replace("__", "_");
         }
         #endregion
 
@@ -1561,7 +1571,7 @@ namespace CircuitSimulatorPlus
             {
                 if (New())
                 {
-                    Open((e.OriginalSource as MenuItem).Header.ToString());
+                    Open(HeaderToString((e.OriginalSource as MenuItem).Header));
                 }
             }
         }
@@ -1845,7 +1855,6 @@ namespace CircuitSimulatorPlus
 
             Console.WriteLine();
         }
-
         #endregion
     }
 }
