@@ -820,7 +820,9 @@ namespace CircuitSimulatorPlus
             foreach (IClickable obj in SelectedObjects)
             {
                 if (obj is IMovable)
+                {
                     (obj as IMovable).Move(-completeMove);
+                }
             }
 
             var movedObjects = new List<IMovable>();
