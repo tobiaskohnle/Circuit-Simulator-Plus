@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +54,7 @@ namespace CircuitSimulatorPlus
         #region Properties
         public static MainWindow Self;
 
-        public ITheme Theme = new ClassicTheme();
+        public ITheme Theme;
 
         public Point LastMousePos;
 
@@ -347,19 +348,13 @@ namespace CircuitSimulatorPlus
                         Gate newGate = null;
 
                         if (type == typeof(ContextGate))
+                        {
                             newGate = GateSerializer.Deserialize(storageObject);
-                        else if (type == typeof(InputSwitch))
-                            newGate = new InputSwitch();
-                        else if (type == typeof(OutputLight))
-                            newGate = new OutputLight();
-                        else if (type == typeof(AndGate))
-                            newGate = new AndGate();
-                        else if (type == typeof(OrGate))
-                            newGate = new OrGate();
-                        else if (type == typeof(NopGate))
-                            newGate = new NopGate();
-                        else if (type == typeof(SegmentDisplay))
-                            newGate = new SegmentDisplay();
+                        }
+                        else
+                        {
+                            newGate = (Gate)Activator.CreateInstance(type);
+                        }
 
                         newGate.CopyFrom(gate);
 
@@ -702,13 +697,21 @@ namespace CircuitSimulatorPlus
         public void LoadTheme()
         {
             string theme = Properties.Settings.Default.Theme;
-
-            if (theme == typeof(ClassicTheme).Name)
+            
+            try
+            {
+                Theme = null;
+                Theme = (ITheme)Assembly.GetExecutingAssembly().CreateInstance(theme);
+            }
+            catch
+            {
+            }
+            
+            if (Theme == null)
+            {
                 Theme = new ClassicTheme();
-            else if (theme == typeof(DarkTheme).Name)
-                Theme = new DarkTheme();
-            else
                 Console.WriteLine($"Unknown theme \"{theme}\"");
+            }
         }
         #endregion
 
@@ -757,6 +760,13 @@ namespace CircuitSimulatorPlus
                 BackgroundGridPen.Thickness = 1 / CurrentScale / Constants.DefaultGridSize;
                 backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
             }
+        }
+
+        public void SetTheme<T>() where T : ITheme
+        {
+            Theme = (ITheme)Activator.CreateInstance(typeof(T));
+            Properties.Settings.Default.Theme = typeof(T).ToString();
+            Properties.Settings.Default.Save();
         }
 
         public void ZoomIntoView(List<IClickable> objects)
@@ -1116,7 +1126,7 @@ namespace CircuitSimulatorPlus
         }
         public bool AnySelected<T>()
         {
-            return SelectedObjects.Exists(obj => obj.GetType() == typeof(T) || obj.GetType().IsSubclassOf(typeof(T)));
+            return SelectedObjects.Exists(obj => obj.GetType().IsAssignableFrom(typeof(T)));
         }
 
         public bool ControlPressed
@@ -1670,15 +1680,11 @@ namespace CircuitSimulatorPlus
         }
         void ClassicTheme_Click(object sender, RoutedEventArgs e)
         {
-            Theme = new ClassicTheme();
-            Properties.Settings.Default.Theme = typeof(ClassicTheme).Name;
-            Properties.Settings.Default.Save();
+            SetTheme<ClassicTheme>();
         }
         void DarkTheme_Click(object sender, RoutedEventArgs e)
         {
-            Theme = new DarkTheme();
-            Properties.Settings.Default.Theme = typeof(DarkTheme).Name;
-            Properties.Settings.Default.Save();
+            SetTheme<DarkTheme>();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
