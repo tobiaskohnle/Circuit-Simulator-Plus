@@ -1678,6 +1678,10 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<DarkFantasticTheme>();
         }
+        private void SummerTheme_Click(object sender, RoutedEventArgs e)
+        {
+            SetTheme<SummerTheme>();
+        }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
             Zoom(true, CanvasCenter);
@@ -1819,5 +1823,7 @@ namespace CircuitSimulatorPlus
             Console.WriteLine();
         }
         #endregion
+
+
     }
 }
