@@ -782,7 +782,6 @@ namespace CircuitSimulatorPlus
 
         public void SetTheme<T>() where T : ITheme
         {
-            Theme = (ITheme)Activator.CreateInstance(typeof(T));
             Properties.Settings.Default.Theme = typeof(T).ToString();
             Properties.Settings.Default.Save();
             Restart();
