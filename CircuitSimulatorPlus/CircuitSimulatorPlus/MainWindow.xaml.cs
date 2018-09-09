@@ -477,8 +477,11 @@ namespace CircuitSimulatorPlus
         {
             if (MessageBox.Show("Restart now?", "Restart required", MessageBoxButton.YesNoCancel) == MessageBoxResult.Yes)
             {
-                Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
+                if (SavePrompt())
+                {
+                    Process.Start(Application.ResourceAssembly.Location);
+                    Environment.Exit(0);
+                }
             }
         }
 
