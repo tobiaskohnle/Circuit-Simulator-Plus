@@ -1580,10 +1580,13 @@ namespace CircuitSimulatorPlus
         void Print_Click(object sender, RoutedEventArgs e)
         {
             PrintDialog prnt = new PrintDialog();
-
             if (prnt.ShowDialog() == true)
             {
-                prnt.PrintVisual(canvas, "Printing Canvas");
+                Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
+                canvas.Measure(pageSize);
+                canvas.Arrange(new Rect(5, 5, pageSize.Width, pageSize.Height));
+                    prnt.PrintVisual(canvas, "Printing Canvas");
+
             }
         }
 
