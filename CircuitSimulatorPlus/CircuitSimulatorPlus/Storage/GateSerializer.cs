@@ -213,6 +213,7 @@ namespace CircuitSimulatorPlus
             foreach (Cable cable in cables)
             {
                 var cablestore = new SerializedGate.Cable();
+                cablestore.Points = new List<Point>(cable.Points);
                 ConnectionNode startNode, endNode;
                 if (cable.StartNode is OutputNode)
                 {
@@ -223,10 +224,10 @@ namespace CircuitSimulatorPlus
                 {
                     endNode = cable.StartNode;
                     startNode = cable.EndNode;
+                    cablestore.Points.Reverse();
                 }
                 cablestore.OutputConnection = nodeToId[startNode];
                 cablestore.EndPoint = nodeToCableEp[endNode];
-                cablestore.Points = new List<Point>(cable.Points);
                 store.Cables.Add(cablestore);
             }
         }
