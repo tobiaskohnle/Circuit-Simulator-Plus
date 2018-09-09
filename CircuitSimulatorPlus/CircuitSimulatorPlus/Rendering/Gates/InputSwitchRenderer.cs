@@ -14,9 +14,6 @@ namespace CircuitSimulatorPlus
     {
         InputSwitch gate;
 
-        readonly SolidColorBrush activeBrush = new SolidColorBrush(Color.FromArgb(200, 255, 20, 20));
-        readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(70, 170, 170, 170));
-
         Rectangle rect = new Rectangle();
 
         public InputSwitchRenderer(InputSwitch gate)
@@ -53,7 +50,7 @@ namespace CircuitSimulatorPlus
 
         public void OnStateChanged()
         {
-            rect.Fill = gate.State ? activeBrush : inactiveBrush;
+            rect.Fill = gate.State ? MainWindow.Self.Theme.LightHigh : MainWindow.Self.Theme.LightLow;
         }
 
         public void OnLayoutChanged()

@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
         public const string DefaultTitle = "untitled";
         public const string FileExtention = ".tici";
         public const double MinPxMouseMoved = 5;
-        public const double DefaultGridSize = 20;
+        public const double DefaultGridSize = 30;
         public const double ScaleFactor = 1.1;
         public const double LineRadius = 1d / 20;
         public const double LineWidth = 1d / 10;

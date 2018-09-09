@@ -754,7 +754,7 @@ namespace CircuitSimulatorPlus
         {
             if (ShowGrid)
             {
-                BackgroundGridPen.Thickness = Constants.LineWidth / CurrentScale / 2;
+                BackgroundGridPen.Thickness = 1 / CurrentScale / Constants.DefaultGridSize;
                 backgoundLayerCanvas.Background.Transform = canvas.RenderTransform;
             }
         }
