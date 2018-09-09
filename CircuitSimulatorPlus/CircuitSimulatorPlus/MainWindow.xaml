@@ -122,7 +122,6 @@
                 <MenuItem Command="{x:Static local:Commands.New}"/>
                 <MenuItem Command="{x:Static local:Commands.Open}"/>
                 <MenuItem Header="Open Recent"
-                          IsEnabled="True"
                           ItemsSource="{Binding RecentFiles, Source={x:Static properties:Settings.Default}}"
                           Click="RecentFiles_Click"/>
                 <MenuItem Command="{x:Static local:Commands.OpenFolder}"/>
