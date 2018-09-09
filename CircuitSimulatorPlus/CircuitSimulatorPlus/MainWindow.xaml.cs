@@ -748,8 +748,7 @@ namespace CircuitSimulatorPlus
             }
             else
             {
-                backgoundLayerCanvas.Background = null;
-                Background = Theme.Background;
+                backgoundLayerCanvas.Background = Theme.Background;
             }
             UpdateGrid();
         }
