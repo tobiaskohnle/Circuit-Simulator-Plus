@@ -342,7 +342,17 @@ namespace CircuitSimulatorPlus
 
                 SerializedGate storageObject = null;
                 if (type == typeof(ContextGate))
-                    storageObject = StorageUtil.Load(SelectFile());
+                {
+                    string filePath = SelectFile();
+                    if (filePath == "")
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        storageObject = StorageUtil.Load(filePath);
+                    }
+                }
 
                 foreach (IClickable obj in SelectedObjects.ToList())
                 {
@@ -360,11 +370,11 @@ namespace CircuitSimulatorPlus
                             newGate = (Gate)Activator.CreateInstance(type);
                         }
 
-                        newGate.CopyFrom(gate);
+                        gate.Remove(false);
 
+                        newGate.CopyFrom(gate);
                         newGate.UpdateAmtConnectionNodes();
 
-                        gate.Remove(false);
                         newGate.Add(false);
 
                         Tick(newGate);
