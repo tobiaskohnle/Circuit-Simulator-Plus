@@ -166,6 +166,10 @@ namespace CircuitSimulatorPlus
                 foreach (var node in TickedNodes)
                     node.IsTicked = true;
         }
+        public void TickAll()
+        {
+            TickAll(ContextGate);
+        }
         public void TickAll(ContextGate contextGate)
         {
             foreach (Gate gate in contextGate.Context)
@@ -540,7 +544,7 @@ namespace CircuitSimulatorPlus
 
                 LoadState(StorageUtil.Load(filePath));
                 ContextGate.AddContext();
-                TickAll(ContextGate);
+                TickAll();
             }
         }
 
@@ -1801,6 +1805,7 @@ namespace CircuitSimulatorPlus
             SerializedGate state = GateSerializer.SerializeTopLayer(ContextGate, Cables);
             ResetFile();
             LoadState(state);
+            TickAll();
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
@@ -1817,7 +1822,7 @@ namespace CircuitSimulatorPlus
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
-            TickAll(ContextGate);
+            TickAll();
         }
         void ResetSettings_Click(object sender, RoutedEventArgs e)
         {
