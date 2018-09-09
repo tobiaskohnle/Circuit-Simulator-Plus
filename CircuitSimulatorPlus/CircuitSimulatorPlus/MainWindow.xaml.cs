@@ -1370,24 +1370,16 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    if (e.LeftButton == MouseButtonState.Pressed)
+                    if (!ControlPressed && !LastClickedObject.IsSelected)
                     {
-                        if (ControlPressed == false)
-                        {
-                            DeselectAll();
-                        }
-                        bool islastClickedSelected = LastClickedObject.IsSelected;
-                        if (islastClickedSelected == false)
-                        {
-                            Select(LastClickedObject);
-                        }
+                        DeselectAll();
+                    }
+                    if (ControlPressed)
+                    {
+                        SwitchSelected(LastClickedObject);
                     }
                     else
                     {
-                        if (ControlPressed == false && LastClickedObject.IsSelected == false)
-                        {
-                            DeselectAll();
-                        }
                         Select(LastClickedObject);
                     }
                 }
