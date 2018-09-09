@@ -34,6 +34,7 @@ namespace CircuitSimulatorPlus
             {
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
+                Foreground = MainWindow.Self.Theme.FontColor,
                 FontSize = 0.5
             };
             Panel.SetZIndex(nameLabel, 5);
@@ -42,6 +43,7 @@ namespace CircuitSimulatorPlus
             {
                 Padding = new Thickness(),
                 HorizontalContentAlignment = HorizontalAlignment.Center,
+                Foreground = MainWindow.Self.Theme.FontColor,
                 FontSize = 1
             };
             Panel.SetZIndex(tagLabel, 6);

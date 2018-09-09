@@ -38,6 +38,7 @@ namespace CircuitSimulatorPlus
                 HorizontalContentAlignment = HorizontalAlignment.Right,
                 VerticalContentAlignment = VerticalAlignment.Center,
                 Width = outputNode.Owner.Size.Width,
+                Foreground = MainWindow.Self.Theme.FontColor,
                 Height = 1,
                 FontSize = 0.5
             };

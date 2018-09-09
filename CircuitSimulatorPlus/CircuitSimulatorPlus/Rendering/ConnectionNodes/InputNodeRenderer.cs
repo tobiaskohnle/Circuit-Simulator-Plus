@@ -39,6 +39,7 @@ namespace CircuitSimulatorPlus
                 Padding = new Thickness(0.2, 0, 0, 0),
                 HorizontalContentAlignment = HorizontalAlignment.Left,
                 VerticalContentAlignment = VerticalAlignment.Center,
+                Foreground = MainWindow.Self.Theme.FontColor,
                 Height = 1,
                 FontSize = 0.5
             };

@@ -705,6 +705,8 @@ namespace CircuitSimulatorPlus
 
             if (theme == typeof(ClassicTheme).Name)
                 Theme = new ClassicTheme();
+            else if (theme == typeof(DarkTheme).Name)
+                Theme = new DarkTheme();
             else
                 Console.WriteLine($"Unknown theme \"{theme}\"");
         }
@@ -1662,6 +1664,12 @@ namespace CircuitSimulatorPlus
         {
             Theme = new ClassicTheme();
             Properties.Settings.Default.Theme = typeof(ClassicTheme).Name;
+            Properties.Settings.Default.Save();
+        }
+        void DarkTheme_Click(object sender, RoutedEventArgs e)
+        {
+            Theme = new DarkTheme();
+            Properties.Settings.Default.Theme = typeof(DarkTheme).Name;
             Properties.Settings.Default.Save();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
