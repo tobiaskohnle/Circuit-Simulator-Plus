@@ -7,13 +7,13 @@ using System.Windows.Media;
 
 namespace CircuitSimulatorPlus
 {
-    class Crazy_Theme :ITheme
+    class LightTheme :ITheme
     {
         public SolidColorBrush Background
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 255, 110, 180));
+                return new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
             }
         }
         public SolidColorBrush MainColor
@@ -27,7 +27,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
             }
         }
 
@@ -42,7 +42,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(255,255,193,37));
             }
         }
 
@@ -57,7 +57,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(60, 255, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(60, 0, 139, 0));
             }
         }
 
@@ -95,7 +95,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                return new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
             }
         }
 

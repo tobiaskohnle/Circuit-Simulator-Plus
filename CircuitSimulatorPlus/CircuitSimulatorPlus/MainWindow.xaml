@@ -138,7 +138,8 @@
                 <MenuItem Header="Theme">
                     <MenuItem Header="Classic" Click="ClassicTheme_Click"/>
                     <MenuItem Header="Dark" Click="DarkTheme_Click"/>
-                    <MenuItem Header="Crazy" Click="CrazyTheme_Click"/>
+                    <MenuItem Header="Light" Click="LightTheme_Click"/>
+                    <MenuItem Header="LightDark" Click="LightDarkTheme_Click"/>
                 </MenuItem>
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>

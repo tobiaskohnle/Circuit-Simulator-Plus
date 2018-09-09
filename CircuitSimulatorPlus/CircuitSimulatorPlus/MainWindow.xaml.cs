@@ -1686,9 +1686,13 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<DarkTheme>();
         }
-                private void CrazyTheme_Click(object sender, RoutedEventArgs e)
+                private void LightTheme_Click(object sender, RoutedEventArgs e)
         {
-            SetTheme<Crazy_Theme>();
+            SetTheme<LightTheme>();
+        }
+        private void LightDarkTheme_Click(object sender, RoutedEventArgs e)
+        {
+            SetTheme<LightDarkTheme>();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
@@ -1812,6 +1816,7 @@ namespace CircuitSimulatorPlus
 
             Console.WriteLine();
         }
+
         #endregion
 
 
