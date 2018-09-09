@@ -1580,7 +1580,12 @@ namespace CircuitSimulatorPlus
         }
         void Print_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            PrintDialog prnt = new PrintDialog();
+
+            if (prnt.ShowDialog() == true)
+            {
+                prnt.PrintVisual(canvas, "Printing Canvas");
+            }
         }
 
         void OpenFolder_CanExecute(object sender, CanExecuteRoutedEventArgs e)
