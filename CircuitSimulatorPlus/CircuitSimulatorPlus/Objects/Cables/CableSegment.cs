@@ -61,6 +61,22 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public double SnapSize
+        {
+            get
+            {
+                return 0.5;
+            }
+        }
+
+        public Point Position
+        {
+            get
+            {
+                return Parent.GetPoint(Index);
+            }
+        }
+
         public void Move(Vector vector)
         {
             Parent.MovePoint(Index, vector);

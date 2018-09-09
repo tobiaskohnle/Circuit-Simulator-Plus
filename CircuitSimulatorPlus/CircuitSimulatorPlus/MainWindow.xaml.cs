@@ -861,77 +861,34 @@ namespace CircuitSimulatorPlus
         {
             Vector completeMove = LastCanvasPos - LastCanvasClick;
 
-            foreach (IClickable obj in SelectedObjects)
-            {
-                if (obj is IMovable)
-                {
-                    (obj as IMovable).Move(-completeMove);
-                }
-            }
+            var movableObjects = new List<IMovable>();
 
-            var movedObjects = new List<IMovable>();
+            double maxSnapSize = 0;
 
             foreach (IClickable obj in SelectedObjects)
             {
                 if (obj is IMovable)
                 {
-                    movedObjects.Add(obj as IMovable);
+                    IMovable movable = obj as IMovable;
+
+                    movable.Move(-completeMove);
+                    movableObjects.Add(movable);
+
+                    if (movable.SnapSize > maxSnapSize)
+                    {
+                        maxSnapSize = movable.SnapSize;
+                    }
                 }
             }
 
-            var points = new List<Point>(movedObjects.Count);
-
-            bool snapToUnit = false;
-
-            for (int i = 0; i < movedObjects.Count; i++)
-            {
-                IMovable obj = movedObjects[i];
-
-                Point pos = new Point();
-
-                if (obj is Gate)
-                {
-                    snapToUnit = true;
-                    pos = (obj as Gate).Position;
-                }
-                else if (obj is CableSegment)
-                {
-                    pos = (obj as CableSegment).Parent.GetPoint((obj as CableSegment).Index);
-                }
-
-                points.Add(pos);
-            }
-
-            var vectors = new List<Vector>(movedObjects.Count);
-
-            bool anyMoved = false;
-
-            for (int i = 0; i < movedObjects.Count; i++)
-            {
-                var vector = new Vector();
-                if (movedObjects[i] is CableSegment && !snapToUnit)
-                {
-                    vector = Round(points[i] + completeMove, 0.5) - points[i];
-                }
-                else
-                {
-                    vector = Round(points[i] + completeMove) - points[i];
-                }
-
-                if (vector.X != 0 || vector.Y != 0)
-                {
-                    anyMoved = true;
-                }
-
-                vectors.Add(vector);
-            }
-
-            if (anyMoved)
+            if (movableObjects.Count > 0)
             {
                 SaveState();
-                for (int i = 0; i < movedObjects.Count; i++)
+
+                foreach (IMovable movable in movableObjects)
                 {
-                    movedObjects[i].Move(vectors[i]);
+                    movable.Move(Round(completeMove, maxSnapSize));
+                    movable.Move(movable.Position - Round(movable.Position, movable.SnapSize));
                 }
             }
         }
@@ -1181,6 +1138,10 @@ namespace CircuitSimulatorPlus
         public Point Round(Point point, double a = 1)
         {
             return new Point(Math.Round(point.X / a) * a, Math.Round(point.Y / a) * a);
+        }
+        public Vector Round(Vector vector, double a = 1)
+        {
+            return new Vector(Math.Round(vector.X / a) * a, Math.Round(vector.Y / a) * a);
         }
         #endregion
 

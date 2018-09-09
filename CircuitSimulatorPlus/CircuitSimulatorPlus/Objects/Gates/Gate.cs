@@ -259,6 +259,14 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public double SnapSize
+        {
+            get
+            {
+                return 1.0;
+            }
+        }
+
         public abstract bool Eval();
 
         public abstract void CreateDefaultConnectionNodes();
