@@ -62,10 +62,10 @@ namespace CircuitSimulatorPlus
             State = !State;
         }
 
-        public override void Add()
+        public override void Add(bool addNodes = true)
         {
             new InputSwitchRenderer(this);
-            base.Add();
+            base.Add(addNodes);
         }
     }
 }

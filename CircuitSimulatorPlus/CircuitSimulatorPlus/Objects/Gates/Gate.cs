@@ -276,7 +276,7 @@ namespace CircuitSimulatorPlus
             UpdateConnectionNodePos();
         }
 
-        public virtual void Add()
+        public virtual void Add(bool addNodes = true)
         {
             hitbox = new RectHitbox(new Rect(Position, Size));
             MainWindow.Self.ClickableObjects.Add(this);
@@ -286,19 +286,24 @@ namespace CircuitSimulatorPlus
             new GateRenderer(this);
             IsRendered = true;
 
-            foreach (InputNode inputNode in Input)
-                inputNode.Add();
-            foreach (OutputNode outputNode in Output)
-                outputNode.Add();
-
-            UpdateConnectionNodePos();
+            if (addNodes)
+            {
+                foreach (InputNode inputNode in Input)
+                    inputNode.Add();
+                foreach (OutputNode outputNode in Output)
+                    outputNode.Add();
+                UpdateConnectionNodePos();
+            }
         }
-        public virtual void Remove()
+        public virtual void Remove(bool removeNodes = true)
         {
-            foreach (InputNode input in Input)
-                input.Remove();
-            foreach (OutputNode output in Output)
-                output.Remove();
+            if (removeNodes)
+            {
+                foreach (InputNode input in Input)
+                    input.Remove();
+                foreach (OutputNode output in Output)
+                    output.Remove();
+            }
 
             IsRendered = false;
             MainWindow.Self.ClickableObjects.Remove(this);

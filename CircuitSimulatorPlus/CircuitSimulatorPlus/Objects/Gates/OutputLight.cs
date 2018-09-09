@@ -49,10 +49,10 @@ namespace CircuitSimulatorPlus
             throw new InvalidOperationException();
         }
 
-        public override void Add()
+        public override void Add(bool addNodes = true)
         {
             new OutputLightRenderer(this);
-            base.Add();
+            base.Add(addNodes);
         }
     }
 }
