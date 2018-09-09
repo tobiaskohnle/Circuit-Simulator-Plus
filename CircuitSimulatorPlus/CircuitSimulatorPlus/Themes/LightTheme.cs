@@ -20,14 +20,14 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(255, 139,0,0));
             }
         }
         public SolidColorBrush GridLine
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+                return new SolidColorBrush(Color.FromArgb(240, 143,188,143));
             }
         }
 
@@ -35,7 +35,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(244, 0, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(244, 32,178,170));
             }
         }
         public SolidColorBrush Low
@@ -50,7 +50,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(211, 0, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(211, 32, 178, 170));
             }
         }
         public SolidColorBrush LightLow
@@ -65,7 +65,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(211, 0, 255, 0));
+                return new SolidColorBrush(Color.FromArgb(211, 32,178,170));
             }
         }
         public SolidColorBrush SegmentDisplayLow
@@ -80,7 +80,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 32,178,170));
+                return new SolidColorBrush(Color.FromArgb(255, 173,255,47));
             }
         }
         public SolidColorBrush SelectedHighlightFill
@@ -95,14 +95,14 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(200, 50, 150, 250));
+                return new SolidColorBrush(Color.FromArgb(200, 139, 0, 0));
             }
         }
         public SolidColorBrush SelectionRectFill
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(63, 0, 120, 215));
+                return new SolidColorBrush(Color.FromArgb(63, 32, 178, 170));
             }
         }
 
