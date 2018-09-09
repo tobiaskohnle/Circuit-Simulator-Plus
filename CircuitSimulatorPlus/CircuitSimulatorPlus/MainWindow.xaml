@@ -135,6 +135,9 @@
             <MenuItem Header="View" Width="auto">
                 <MenuItem x:Name="showGrid" Header="Show Grid" IsCheckable="True" Checked="ShowGrid_Checked" Unchecked="ShowGrid_Unchecked"/>
                 <MenuItem Command="{x:Static local:Commands.ResetView}"/>
+                <MenuItem Header="Theme">
+                    <MenuItem Header="Classic" Click="ClassicTheme_Click"/>
+                </MenuItem>
                 <MenuItem Command="{x:Static local:Commands.ZoomIn}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomOut}"/>
                 <MenuItem Command="{x:Static local:Commands.ZoomSelection}"/>

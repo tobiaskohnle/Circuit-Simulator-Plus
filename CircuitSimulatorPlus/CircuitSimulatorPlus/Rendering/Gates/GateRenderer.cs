@@ -25,7 +25,7 @@ namespace CircuitSimulatorPlus
 
             boundingBox = new Rectangle
             {
-                Stroke = Brushes.Black,
+                Stroke = MainWindow.Self.Theme.MainColor,
                 StrokeThickness = Constants.LineWidth
             };
             Panel.SetZIndex(boundingBox, 2);
@@ -93,13 +93,13 @@ namespace CircuitSimulatorPlus
         {
             if (gate.IsSelected)
             {
-                boundingBox.Fill = new SolidColorBrush(Color.FromArgb(30, 16, 92, 255));
-                boundingBox.Stroke = SystemColors.MenuHighlightBrush;
+                boundingBox.Fill = MainWindow.Self.Theme.SelectedHighlightFill;
+                boundingBox.Stroke = MainWindow.Self.Theme.SelectedHighlight;
             }
             else
             {
                 boundingBox.Fill = Brushes.Transparent;
-                boundingBox.Stroke = Brushes.Black;
+                boundingBox.Stroke = MainWindow.Self.Theme.MainColor;
             }
         }
 

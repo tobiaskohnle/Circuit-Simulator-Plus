@@ -21,14 +21,14 @@ namespace CircuitSimulatorPlus
 
             upperRisingEdgeLine = new Line
             {
-                Stroke = Brushes.Black,
+                Stroke = MainWindow.Self.Theme.MainColor,
                 StrokeThickness = Constants.LineWidth,
                 StrokeEndLineCap = PenLineCap.Round
             };
             Panel.SetZIndex(upperRisingEdgeLine, 5);
             lowerRisingEdgeLine = new Line
             {
-                Stroke = Brushes.Black,
+                Stroke = MainWindow.Self.Theme.MainColor,
                 StrokeThickness = Constants.LineWidth,
                 StrokeEndLineCap = PenLineCap.Round
             };

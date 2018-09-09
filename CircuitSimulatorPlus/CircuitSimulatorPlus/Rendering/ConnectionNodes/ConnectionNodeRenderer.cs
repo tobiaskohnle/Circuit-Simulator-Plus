@@ -19,9 +19,6 @@ namespace CircuitSimulatorPlus
         Ellipse invertionDot;
         Line connectionNodeLine;
 
-        public readonly Brush ActiveStateBrush = Brushes.Red;
-        public readonly Brush DefaultStateBrush = Brushes.Black;
-
         public ConnectionNodeRenderer(ConnectionNode connectionNode, Gate owner, bool isOutputNode)
         {
             this.connectionNode = connectionNode;
@@ -96,20 +93,20 @@ namespace CircuitSimulatorPlus
                 }
                 else
                 {
-                    connectionNodeLine.Stroke = SystemColors.MenuHighlightBrush;
+                    connectionNodeLine.Stroke = MainWindow.Self.Theme.SelectedHighlight;
                 }
             }
             else if (connectionNode.IsTicked)
             {
-                connectionNodeLine.Stroke = Brushes.Orange;
+                connectionNodeLine.Stroke = MainWindow.Self.Theme.Ticked;
             }
             else if (!connectionNode.IsSelected)
             {
-                connectionNodeLine.Stroke = state ? ActiveStateBrush : DefaultStateBrush;
+                connectionNodeLine.Stroke = state ? MainWindow.Self.Theme.High : MainWindow.Self.Theme.Low;
             }
             if (connectionNode.IsInverted)
             {
-                invertionDot.Stroke = !state ? ActiveStateBrush : DefaultStateBrush;
+                invertionDot.Stroke = !state ? MainWindow.Self.Theme.High : MainWindow.Self.Theme.Low;
             }
         }
 

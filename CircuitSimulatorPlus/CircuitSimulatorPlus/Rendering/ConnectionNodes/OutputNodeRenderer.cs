@@ -21,13 +21,13 @@ namespace CircuitSimulatorPlus
 
             horzMasterSlaveLine = new Line
             {
-                Stroke = Brushes.Black,
+                Stroke = MainWindow.Self.Theme.MainColor,
                 StrokeThickness = Constants.LineWidth
             };
             Panel.SetZIndex(horzMasterSlaveLine, 5);
             vertMasterSlaveLine = new Line
             {
-                Stroke = Brushes.Black,
+                Stroke = MainWindow.Self.Theme.MainColor,
                 StrokeThickness = Constants.LineWidth
             };
             Panel.SetZIndex(horzMasterSlaveLine, 5);

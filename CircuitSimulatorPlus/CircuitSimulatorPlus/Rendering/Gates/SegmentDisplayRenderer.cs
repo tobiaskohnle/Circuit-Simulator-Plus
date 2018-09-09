@@ -21,9 +21,6 @@ namespace CircuitSimulatorPlus
         const double x = 1.55;
         const double segmentScale = 0.97;
 
-        readonly SolidColorBrush activeBrush = new SolidColorBrush(Color.FromArgb(200, 255, 20, 20));
-        readonly SolidColorBrush inactiveBrush = new SolidColorBrush(Color.FromArgb(70, 170, 170, 170));
-
         Polygon top = new Polygon();
         Polygon topLeft = new Polygon();
         Polygon topRight = new Polygon();
@@ -122,13 +119,13 @@ namespace CircuitSimulatorPlus
 
         public void OnStateChanged()
         {
-            top.Fill = gate.Input[0].State ? activeBrush : inactiveBrush;
-            topRight.Fill = gate.Input[1].State ? activeBrush : inactiveBrush;
-            botRight.Fill = gate.Input[2].State ? activeBrush : inactiveBrush;
-            bot.Fill = gate.Input[3].State ? activeBrush : inactiveBrush;
-            botLeft.Fill = gate.Input[4].State ? activeBrush : inactiveBrush;
-            topLeft.Fill = gate.Input[5].State ? activeBrush : inactiveBrush;
-            center.Fill = gate.Input[6].State ? activeBrush : inactiveBrush;
+            top.Fill = gate.Input[0].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
+            topRight.Fill = gate.Input[1].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
+            botRight.Fill = gate.Input[2].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
+            bot.Fill = gate.Input[3].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
+            botLeft.Fill = gate.Input[4].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
+            topLeft.Fill = gate.Input[5].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
+            center.Fill = gate.Input[6].State ? MainWindow.Self.Theme.SegmentDisplayHigh : MainWindow.Self.Theme.SegmentDisplayLow;
         }
 
         public void OnLayoutChanged()

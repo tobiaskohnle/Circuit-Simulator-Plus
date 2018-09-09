@@ -32,6 +32,7 @@ namespace CircuitSimulatorPlus
             InitializeComponent();
             Focus();
             LoadContextGates();
+            LoadTheme();
 
             Self = this;
 
@@ -51,6 +52,8 @@ namespace CircuitSimulatorPlus
 
         #region Properties
         public static MainWindow Self;
+
+        public ITheme Theme = new ClassicTheme();
 
         public Point LastMousePos;
 
@@ -695,6 +698,16 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+        
+        public void LoadTheme()
+        {
+            string theme = Properties.Settings.Default.Theme;
+
+            if (theme == typeof(ClassicTheme).Name)
+                Theme = new ClassicTheme();
+            else
+                Console.WriteLine($"Unknown theme \"{theme}\"");
+        }
         #endregion
 
         #region Visuals
@@ -713,9 +726,9 @@ namespace CircuitSimulatorPlus
 
         public void DrawGrid()
         {
-            BackgroundGridPen = new Pen(Brushes.LightGray, 0);
+            BackgroundGridPen = new Pen(Theme.GridLine, 0);
             var geometry = new RectangleGeometry(new Rect(0, 0, 1, 1));
-            var drawing = new GeometryDrawing(Brushes.White, BackgroundGridPen, geometry);
+            var drawing = new GeometryDrawing(Theme.Background, BackgroundGridPen, geometry);
             var brush = new DrawingBrush
             {
                 Drawing = drawing,
@@ -1644,6 +1657,12 @@ namespace CircuitSimulatorPlus
         void ResetView_Click(object sender, RoutedEventArgs e)
         {
             ResetView();
+        }
+        void ClassicTheme_Click(object sender, RoutedEventArgs e)
+        {
+            Theme = new ClassicTheme();
+            Properties.Settings.Default.Theme = typeof(ClassicTheme).Name;
+            Properties.Settings.Default.Save();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {

@@ -18,7 +18,7 @@ namespace CircuitSimulatorPlus
 
             line = new Line
             {
-                Stroke = Brushes.Black,
+                Stroke = MainWindow.Self.Theme.MainColor,
                 StrokeThickness = Constants.LineWidth,
                 StrokeStartLineCap = PenLineCap.Triangle
             };
@@ -61,11 +61,11 @@ namespace CircuitSimulatorPlus
         {
             if (cableSegment.IsSelected)
             {
-                line.Stroke = SystemColors.MenuHighlightBrush;
+                line.Stroke = MainWindow.Self.Theme.SelectedHighlight;
             }
             else
             {
-                line.Stroke = cableSegment.Parent.State ? Brushes.Red : Brushes.Black;
+                line.Stroke = cableSegment.Parent.State ? MainWindow.Self.Theme.High : MainWindow.Self.Theme.Low;
             }
         }
 
