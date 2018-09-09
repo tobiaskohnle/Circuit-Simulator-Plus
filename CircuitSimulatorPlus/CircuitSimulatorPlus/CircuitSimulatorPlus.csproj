@@ -112,7 +112,7 @@
     <Compile Include="Storage\GateSerializer.cs" />
     <Compile Include="Storage\SerializedGate.cs" />
     <Compile Include="Themes\ClassicTheme.cs" />
-    <Compile Include="Themes\Crazy Theme.cs" />
+    <Compile Include="Themes\CrazyTheme.cs" />
     <Compile Include="Themes\DarkTheme.cs" />
     <Compile Include="Themes\ITheme.cs" />
     <Page Include="Controls\RenameWindow.xaml">
