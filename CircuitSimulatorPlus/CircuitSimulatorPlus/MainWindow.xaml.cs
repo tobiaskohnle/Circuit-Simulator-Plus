@@ -1688,7 +1688,7 @@ namespace CircuitSimulatorPlus
         }
                 private void CrazyTheme_Click(object sender, RoutedEventArgs e)
         {
-
+            SetTheme<Crazy_Theme>();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
