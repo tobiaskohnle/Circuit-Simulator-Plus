@@ -156,6 +156,7 @@
             <MenuItem Header="About" Width="auto">
                 <MenuItem Header="Version" Click="Version_Click"/>
                 <MenuItem Header="Github Link" Click="GithubLink_Click"/>
+                <MenuItem Header="Report a Bug" Click="GithubIssue_Click"/>
                 <MenuItem Header="Enable Debug Mode" Click="DebugMode_Click"/>
             </MenuItem>
             <MenuItem x:Name="debug" Visibility="Collapsed" Header="Debug" Width="auto">
