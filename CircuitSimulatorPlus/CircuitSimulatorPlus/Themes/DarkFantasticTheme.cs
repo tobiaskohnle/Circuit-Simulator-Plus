@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace CircuitSimulatorPlus
 {
-    class LightDarkTheme :ITheme
+    class DarkFantasticTheme :ITheme
     {
         public SolidColorBrush Background
         {

@@ -21,7 +21,7 @@ namespace CircuitSimulatorPlus
         public const double InversionDotDiameter = 1d / 2;
         public const double CableJointSize = 1d / 3;
         public const double ConnectionNodeLineLength = 1d;
-        public const int UndoBufferSize = 3;
+        public const int UndoBufferSize = 64;
         public const int RisingEdgePulse = 4;
     }
 }

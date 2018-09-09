@@ -1690,9 +1690,9 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<LightTheme>();
         }
-        private void LightDarkTheme_Click(object sender, RoutedEventArgs e)
+        private void DarkFantasticTheme_Click(object sender, RoutedEventArgs e)
         {
-            SetTheme<LightDarkTheme>();
+            SetTheme<DarkFantasticTheme>();
         }
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
