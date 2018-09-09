@@ -1793,6 +1793,7 @@ namespace CircuitSimulatorPlus
         }
         void GithubLink_Click(object sender, RoutedEventArgs e)
         {
+            Process.Start("https://github.com/tobiaskohnle/Circuit-Simulator-Plus");
         }
 
         void Reload_Click(object sender, RoutedEventArgs e)
@@ -1833,9 +1834,6 @@ namespace CircuitSimulatorPlus
 
             Console.WriteLine();
         }
-
         #endregion
-
-
     }
 }
