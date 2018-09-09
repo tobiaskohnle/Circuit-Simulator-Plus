@@ -226,8 +226,10 @@ namespace CircuitSimulatorPlus
                     startNode = cable.EndNode;
                     cablestore.Points.Reverse();
                 }
-                cablestore.OutputConnection = nodeToId[startNode];
-                cablestore.EndPoint = nodeToCableEp[endNode];
+                if (nodeToId.ContainsKey(startNode))
+                    cablestore.OutputConnection = nodeToId[startNode];
+                if (nodeToCableEp.ContainsKey(endNode))
+                    cablestore.EndPoint = nodeToCableEp[endNode];
                 store.Cables.Add(cablestore);
             }
         }
