@@ -158,8 +158,9 @@ namespace CircuitSimulatorPlus
 
             Console.WriteLine($"{TickedNodes.Count} Nodes Enqueued");
 
-            foreach (var node in TickedNodes)
-                node.IsTicked = true;
+            if (SingleTicks)
+                foreach (var node in TickedNodes)
+                    node.IsTicked = true;
         }
         public void TickAll(ContextGate contextGate)
         {
@@ -1751,6 +1752,7 @@ namespace CircuitSimulatorPlus
         {
             Console.WriteLine("Single Ticks Enabled");
             SingleTicks = true;
+            Timer.Stop();
         }
         void SingleTicks_Unchecked(object sender, RoutedEventArgs e)
         {
