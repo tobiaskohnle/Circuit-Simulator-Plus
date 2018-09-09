@@ -767,7 +767,7 @@ namespace CircuitSimulatorPlus
                     TranslatePoint(new Point(canvas.ActualWidth, canvas.ActualHeight), canvas)
                 );
 
-                double scale = Math.Min(screenSize.Width / bounds.Width, screenSize.Height / bounds.Height);
+                double scale = Math.Min(screenSize.Width / bounds.Width, screenSize.Height / bounds.Height) * 0.85;
 
                 Matrix matrix = canvas.RenderTransform.Value;
 
