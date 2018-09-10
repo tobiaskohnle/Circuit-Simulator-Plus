@@ -997,8 +997,6 @@ namespace CircuitSimulatorPlus
             var connectionNode = LastClickedObject as ConnectionNode;
 
             connectionNode.ConnectTo(CableOrigin);
-            Tick(connectionNode);
-            Tick(CableOrigin);
 
             CreatedCable.ConnectTo(connectionNode);
 

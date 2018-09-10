@@ -92,6 +92,7 @@ namespace CircuitSimulatorPlus
 
             IsEmpty = connectionNode.IsEmpty = false;
 
+            MainWindow.Self.Tick(this);
             MainWindow.Self.Tick(connectionNode);
         }
 
