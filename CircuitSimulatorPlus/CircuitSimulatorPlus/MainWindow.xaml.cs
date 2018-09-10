@@ -428,6 +428,71 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
+        public void ConnectParallel()
+        {
+            var inputNodes = new List<InputNode>();
+            var outputNodes = new List<OutputNode>();
+
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is InputNode)
+                {
+                    inputNodes.Add(obj as InputNode);
+                }
+                else if (obj is OutputNode)
+                {
+                    outputNodes.Add(obj as OutputNode);
+                }
+            }
+
+            if (inputNodes.Count > 0 || outputNodes.Count > 0)
+            {
+                SaveState();
+            }
+
+            Comparison<InputNode> compareFunction = (x, y) => (int)x.Position.Y - (int)y.Position.Y;
+            inputNodes.Sort(compareFunction);
+            inputNodes.Sort(compareFunction);
+
+            for (int i = 0; i < Math.Min(inputNodes.Count, outputNodes.Count); i++)
+            {
+                outputNodes[i].ConnectTo(inputNodes[i]);
+                var cable = new Cable(outputNodes[i], inputNodes[i]);
+                Cables.Add(cable);
+            }
+        }
+        public void ConnectAll()
+        {
+            var inputNodes = new List<InputNode>();
+            OutputNode outputNode = null;
+
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is InputNode)
+                {
+                    inputNodes.Add(obj as InputNode);
+                }
+                else if (obj is OutputNode && outputNode == null)
+                {
+                    outputNode = obj as OutputNode;
+                }
+            }
+
+            if (outputNode != null)
+            {
+                if (inputNodes.Count > 0)
+                {
+                    SaveState();
+                }
+
+                foreach (InputNode inputNode in inputNodes)
+                {
+                    inputNode.ConnectTo(outputNode);
+                    var cable = new Cable(outputNode, inputNode);
+                    Cables.Add(cable);
+                }
+            }
+        }
 
         public void Rename()
         {
@@ -1640,9 +1705,6 @@ namespace CircuitSimulatorPlus
         {
             DeselectAll();
         }
-        void Format_Click(object sender, RoutedEventArgs e)
-        {
-        }
 
         void Undo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -1676,10 +1738,6 @@ namespace CircuitSimulatorPlus
         {
             e.CanExecute = AnySelected();
         }
-        void Format_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = AnySelected();
-        }
 
         void ShowGrid_Checked(object sender, RoutedEventArgs e)
         {
@@ -1695,6 +1753,7 @@ namespace CircuitSimulatorPlus
         {
             ResetView();
         }
+
         void ClassicTheme_Click(object sender, RoutedEventArgs e)
         {
             SetTheme<ClassicTheme>();
@@ -1715,10 +1774,11 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<SummerTheme>();
         }
-        private void OceanSunsetTheme_Click(object sender, RoutedEventArgs e)
+        void OceanSunsetTheme_Click(object sender, RoutedEventArgs e)
         {
             SetTheme<OceanSunsetTheme>();
         }
+
         void ZoomIn_Click(object sender, RoutedEventArgs e)
         {
             Zoom(true, CanvasCenter);
@@ -1765,6 +1825,19 @@ namespace CircuitSimulatorPlus
         }
         void TrimInput_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        void ConnectParallel_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectParallel();
+        }
+        void ConnectAll_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectAll();
+        }
+        void SplitSegments_Click(object sender, RoutedEventArgs e)
+        {
+            SplitSegments();
         }
 
         void InvertConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -1861,7 +1934,5 @@ namespace CircuitSimulatorPlus
             Console.WriteLine();
         }
         #endregion
-
-
     }
 }

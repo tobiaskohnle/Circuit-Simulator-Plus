@@ -161,6 +161,12 @@
                 <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
                 <MenuItem Command="{x:Static local:Commands.AddInput}"/>
                 <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
+                <MenuItem Header="Cables">
+                    <MenuItem Header="Connect Parallel" Click="ConnectParallel_Click"/>
+                    <MenuItem Header="Connect All" Click="ConnectAll_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Split Cable Segment" Click="SplitSegments_Click"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="About" Width="auto">
                 <MenuItem Header="Version" Click="Version_Click"/>

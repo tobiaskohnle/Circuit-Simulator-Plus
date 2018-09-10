@@ -15,6 +15,11 @@ namespace CircuitSimulatorPlus
             Segments.Add(new CableSegment(this, Segments.Count));
         }
 
+        public Cable(ConnectionNode startNode, ConnectionNode endNode) : this(startNode)
+        {
+            ConnectTo(endNode);
+        }
+
         public const double DistanceFactor = 4.5;
         public const double SegmentWidth = 1.0;
 
