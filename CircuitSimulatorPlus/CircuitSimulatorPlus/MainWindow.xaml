@@ -146,7 +146,7 @@
                     <MenuItem Header="Classic" Click="ClassicTheme_Click"/>
                     <MenuItem Header="Dark" Click="DarkTheme_Click"/>
                     <MenuItem Header="Light" Click="LightTheme_Click"/>
-                    <MenuItem Header="DarkFantastic" Click="DarkFantasticTheme_Click"/>
+                    <MenuItem Header="DarkBlue" Click="DarkBlueTheme_Click"/>
                     <MenuItem Header="Summer" Click="SummerTheme_Click"/>
                     <MenuItem Header="OceanSunset" Click="OceanSunsetTheme_Click"/>
                 </MenuItem>

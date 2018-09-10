@@ -1764,9 +1764,9 @@ namespace CircuitSimulatorPlus
         {
             SetTheme<LightTheme>();
         }
-        void DarkFantasticTheme_Click(object sender, RoutedEventArgs e)
+        void DarkBlueTheme_Click(object sender, RoutedEventArgs e)
         {
-            SetTheme<DarkFantasticTheme>();
+            SetTheme<DarkBlueTheme>();
         }
         void SummerTheme_Click(object sender, RoutedEventArgs e)
         {
