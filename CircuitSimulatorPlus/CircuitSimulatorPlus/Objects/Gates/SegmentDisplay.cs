@@ -13,7 +13,7 @@ namespace CircuitSimulatorPlus
         {
             Size = new Size(5, 7);
         }
-        
+
         public override int MinAmtInputNodes
         {
             get

@@ -1012,11 +1012,6 @@ namespace CircuitSimulatorPlus
             CableCreated = false;
         }
 
-        public void EmptyInput()
-        {
-
-        }
-
         public void AddInputToSelected()
         {
             if (AnySelected<Gate>())
@@ -1659,7 +1654,6 @@ namespace CircuitSimulatorPlus
             if (prnt.ShowDialog() == true)
             {
                 prnt.PrintVisual(canvas, "Printing Canvas");
-
             }
         }
 

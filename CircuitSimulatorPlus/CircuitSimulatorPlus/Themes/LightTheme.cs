@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace CircuitSimulatorPlus
 {
-    class LightTheme :ITheme
+    class LightTheme : ITheme
     {
         public SolidColorBrush Background
         {
@@ -20,14 +20,14 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 139,0,0));
+                return new SolidColorBrush(Color.FromArgb(255, 139, 0, 0));
             }
         }
         public SolidColorBrush GridLine
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(240, 143,188,143));
+                return new SolidColorBrush(Color.FromArgb(240, 143, 188, 143));
             }
         }
 
@@ -35,14 +35,14 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(244, 32,178,170));
+                return new SolidColorBrush(Color.FromArgb(244, 32, 178, 170));
             }
         }
         public SolidColorBrush Low
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255,255,193,37));
+                return new SolidColorBrush(Color.FromArgb(255, 255, 193, 37));
             }
         }
 
@@ -65,7 +65,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(211, 32,178,170));
+                return new SolidColorBrush(Color.FromArgb(211, 32, 178, 170));
             }
         }
         public SolidColorBrush SegmentDisplayLow
@@ -80,7 +80,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 173,255,47));
+                return new SolidColorBrush(Color.FromArgb(255, 173, 255, 47));
             }
         }
         public SolidColorBrush SelectedHighlightFill
@@ -118,7 +118,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(255, 139,0,0));
+                return new SolidColorBrush(Color.FromArgb(255, 139, 0, 0));
             }
         }
     }

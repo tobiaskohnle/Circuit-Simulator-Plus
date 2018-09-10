@@ -8,52 +8,65 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CircuitSimulatorPlus.Properties {
-    
-    
+namespace CircuitSimulatorPlus.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.8.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection RecentFiles {
-            get {
+        public global::System.Collections.Specialized.StringCollection RecentFiles
+        {
+            get
+            {
                 return ((global::System.Collections.Specialized.StringCollection)(this["RecentFiles"]));
             }
-            set {
+            set
+            {
                 this["RecentFiles"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ContextGatePath {
-            get {
+        public string ContextGatePath
+        {
+            get
+            {
                 return ((string)(this["ContextGatePath"]));
             }
-            set {
+            set
+            {
                 this["ContextGatePath"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Theme {
-            get {
+        public string Theme
+        {
+            get
+            {
                 return ((string)(this["Theme"]));
             }
-            set {
+            set
+            {
                 this["Theme"] = value;
             }
         }

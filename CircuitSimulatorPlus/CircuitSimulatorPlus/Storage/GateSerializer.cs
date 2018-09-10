@@ -325,29 +325,29 @@ namespace CircuitSimulatorPlus
             Gate gate;
             switch (storageObject.Type)
             {
-                case "ContextGate":
-                    gate = new ContextGate();
-                    break;
-                case "AndGate":
-                    gate = new AndGate();
-                    break;
-                case "OrGate":
-                    gate = new OrGate();
-                    break;
-                case "NopGate":
-                    gate = new NopGate();
-                    break;
-                case "InputSwitch":
-                    gate = new InputSwitch();
-                    break;
-                case "OutputLight":
-                    gate = new OutputLight();
-                    break;
-                case "SegmentDisplay":
-                    gate = new SegmentDisplay();
-                    break;
-                default:
-                    throw new InvalidOperationException("Unknown type");
+            case "ContextGate":
+                gate = new ContextGate();
+                break;
+            case "AndGate":
+                gate = new AndGate();
+                break;
+            case "OrGate":
+                gate = new OrGate();
+                break;
+            case "NopGate":
+                gate = new NopGate();
+                break;
+            case "InputSwitch":
+                gate = new InputSwitch();
+                break;
+            case "OutputLight":
+                gate = new OutputLight();
+                break;
+            case "SegmentDisplay":
+                gate = new SegmentDisplay();
+                break;
+            default:
+                throw new InvalidOperationException("Unknown type");
             }
 
             gate.Name = storageObject.Name;
@@ -372,15 +372,15 @@ namespace CircuitSimulatorPlus
                 {
                     switch (innerStore.Type)
                     {
-                        case "InputSwitch":
-                            inputStores.Add(innerStore);
-                            break;
-                        case "OutputLight":
-                            outputStores.Add(innerStore);
-                            break;
-                        default:
-                            gateStores.Add(innerStore);
-                            break;
+                    case "InputSwitch":
+                        inputStores.Add(innerStore);
+                        break;
+                    case "OutputLight":
+                        outputStores.Add(innerStore);
+                        break;
+                    default:
+                        gateStores.Add(innerStore);
+                        break;
                     }
                 }
 

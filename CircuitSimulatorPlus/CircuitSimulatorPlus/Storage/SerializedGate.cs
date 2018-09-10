@@ -28,7 +28,7 @@ namespace CircuitSimulatorPlus
         public List<SerializedGate.Cable> Cables;
         public string[] InputLabels;
         public string[] OutputLabels;
-        
+
         public class Cable
         {
             public int OutputConnection;

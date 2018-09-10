@@ -10,8 +10,14 @@ namespace CircuitSimulatorPlus
     public interface IMovable
     {
         void Move(Vector vector);
-        Point Position { get; }
+        Point Position
+        {
+            get;
+        }
 
-        double SnapSize { get; }
+        double SnapSize
+        {
+            get;
+        }
     }
 }

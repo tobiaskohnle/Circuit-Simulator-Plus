@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace CircuitSimulatorPlus
 {
-    class SummerTheme :ITheme
+    class SummerTheme : ITheme
     {
         public SolidColorBrush Background
         {
@@ -35,14 +35,14 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(244, 139,0,139));
+                return new SolidColorBrush(Color.FromArgb(244, 139, 0, 139));
             }
         }
         public SolidColorBrush Low
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(244, 0,134,139));
+                return new SolidColorBrush(Color.FromArgb(244, 0, 134, 139));
             }
         }
 
@@ -87,7 +87,7 @@ namespace CircuitSimulatorPlus
         {
             get
             {
-                return new SolidColorBrush(Color.FromArgb(30, 255,69,0));
+                return new SolidColorBrush(Color.FromArgb(30, 255, 69, 0));
             }
         }
 
