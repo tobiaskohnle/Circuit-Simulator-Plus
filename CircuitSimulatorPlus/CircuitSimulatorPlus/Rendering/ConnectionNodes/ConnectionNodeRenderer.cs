@@ -87,14 +87,7 @@ namespace CircuitSimulatorPlus
             bool state = connectionNode.IsInverted ? connectionNode.State == isOutputNode : connectionNode.State;
             if (connectionNode.IsSelected)
             {
-                if (connectionNode.IsEmpty) // temp
-                {
-                    connectionNodeLine.Stroke = Brushes.Cyan; // temp
-                }
-                else
-                {
-                    connectionNodeLine.Stroke = MainWindow.Self.Theme.SelectedHighlight;
-                }
+                connectionNodeLine.Stroke = MainWindow.Self.Theme.SelectedHighlight;
             }
             else if (connectionNode.IsTicked)
             {
