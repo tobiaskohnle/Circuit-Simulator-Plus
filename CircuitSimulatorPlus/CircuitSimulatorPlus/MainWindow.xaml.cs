@@ -141,16 +141,6 @@ namespace CircuitSimulatorPlus
 
         public void TickQueue()
         {
-            if (TickedNodes.Count > 0)
-            {
-                Console.WriteLine($"Tick {TickedNodes.Count} Nodes");
-            }
-            else
-            {
-                Console.WriteLine($"No Nodes to Tick");
-                return;
-            }
-
             List<ConnectionNode> tickedNodesCopy = TickedNodes.ToList();
             TickedNodes.Clear();
             foreach (ConnectionNode ticked in tickedNodesCopy)
@@ -160,8 +150,6 @@ namespace CircuitSimulatorPlus
             }
             if (TickedNodes.Count == 0)
                 Timer.Stop();
-
-            Console.WriteLine($"{TickedNodes.Count} Nodes Enqueued");
 
             if (SingleTicks)
                 foreach (var node in TickedNodes)
@@ -758,10 +746,6 @@ namespace CircuitSimulatorPlus
             {
                 LoadContextGates(contxtMenu_contextGate, path);
             }
-            else
-            {
-                Console.WriteLine($"\"{path}\" is not a valid directory");
-            }
         }
 
         public void LoadContextGates(MenuItem parent, string path)
@@ -802,7 +786,6 @@ namespace CircuitSimulatorPlus
             if (Theme == null)
             {
                 Theme = new ClassicTheme();
-                Console.WriteLine($"Unknown theme \"{theme}\"");
             }
 
             selectVisual.Stroke = Theme.SelectionRect;
@@ -1672,17 +1655,14 @@ namespace CircuitSimulatorPlus
         }
         void Cut_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("CUT");
             Cut();
         }
         void Copy_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("COPY");
             Copy();
         }
         void Paste_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("PASTE");
             Paste();
         }
         void Delete_Click(object sender, RoutedEventArgs e)
@@ -1891,13 +1871,11 @@ namespace CircuitSimulatorPlus
         }
         void SingleTicks_Checked(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Single Ticks Enabled");
             SingleTicks = true;
             Timer.Stop();
         }
         void SingleTicks_Unchecked(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Single Ticks Disabled");
             SingleTicks = false;
             if (TickedNodes.Count > 0)
                 Timer.Start();
@@ -1920,10 +1898,7 @@ namespace CircuitSimulatorPlus
             {
                 IClickable target = null;
                 bool alive = refr.TryGetTarget(out target);
-                Console.WriteLine((target?.GetType().Name ?? "null") + ": " + (alive ? "Alive" : "Destroyed"));
             }
-
-            Console.WriteLine();
         }
         #endregion
     }
