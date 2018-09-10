@@ -494,7 +494,7 @@ namespace CircuitSimulatorPlus
             {
                 if (SavePrompt())
                 {
-                    Process.Start(Environment.CommandLine);
+                    Process.Start(Environment.CommandLine.Replace("\"", ""));
                     Environment.Exit(0);
                 }
             }
