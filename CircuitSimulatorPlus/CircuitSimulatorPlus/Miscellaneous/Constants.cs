@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         public const string FileFilter = "Circuit Simulator Plus Circuit|*" + FileExtention;
         public const string DefaultTitle = "untitled";
         public const string FileExtention = ".tici";
-        public const string Version = "Circuit-Simulator-Plus-1.0.0";
+        public const string Version = "Circuit-Simulator-Plus-1.0.1";
         public const double MinPxMouseMoved = 5;
         public const double DefaultGridSize = 30;
         public const double ScaleFactor = 1.1;
