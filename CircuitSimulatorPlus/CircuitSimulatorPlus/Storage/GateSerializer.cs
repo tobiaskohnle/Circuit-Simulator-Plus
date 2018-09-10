@@ -487,7 +487,7 @@ namespace CircuitSimulatorPlus
                     gate.Output[index].IsCentered = true;
 
             if (storageObject.Type == "InputSwitch")
-                ((InputSwitch)gate).State = gate.Output.First().State;
+                ((InputSwitch)gate).State = gate.Output.First().IsInverted ? !gate.Output.First().State : gate.Output.First().State;
 
             return gate;
         }
