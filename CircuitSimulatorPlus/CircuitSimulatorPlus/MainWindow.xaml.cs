@@ -1892,14 +1892,6 @@ namespace CircuitSimulatorPlus
         {
             Properties.Settings.Default.Reset();
         }
-        void LogReferences_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var refr in refs)
-            {
-                IClickable target = null;
-                bool alive = refr.TryGetTarget(out target);
-            }
-        }
         #endregion
     }
 }
