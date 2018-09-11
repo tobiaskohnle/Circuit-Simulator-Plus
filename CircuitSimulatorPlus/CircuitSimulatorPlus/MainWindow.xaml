@@ -78,6 +78,7 @@
         <ContextMenu>
             <MenuItem x:Name="contxtMenu_basicGate" Header="Add Component">
                 <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
+                <MenuItem Header="Input Button" Click="CreateInputButton"/>
                 <MenuItem Header="Output Light" Click="CreateOutputLight"/>
                 <MenuItem Header="And Gate" Click="CreateAndGate"/>
                 <MenuItem Header="Or Gate" Click="CreateOrGate"/>
@@ -90,6 +91,7 @@
             <MenuItem Header="Change Type">
                 <MenuItem Header="Context Gate" Click="ChangeTypeContext"/>
                 <MenuItem Header="Input Switch" Click="ChangeTypeInputSwitch"/>
+                <MenuItem Header="Input Button" Click="ChangeTypeInputButton"/>
                 <MenuItem Header="Output Light" Click="ChangeTypeOutputLight"/>
                 <MenuItem Header="And Gate" Click="ChangeTypeAndGate"/>
                 <MenuItem Header="Or Gate" Click="ChangeTypeOrGate"/>

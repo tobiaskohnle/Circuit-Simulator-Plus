@@ -1540,6 +1540,10 @@ namespace CircuitSimulatorPlus
         {
             Create(new InputSwitch());
         }
+        void CreateInputButton(object sender, RoutedEventArgs e)
+        {
+            Create(new InputButton());
+        }
         void CreateOutputLight(object sender, RoutedEventArgs e)
         {
             Create(new OutputLight());
@@ -1576,6 +1580,10 @@ namespace CircuitSimulatorPlus
         void ChangeTypeInputSwitch(object sender, RoutedEventArgs e)
         {
             ChangeType(typeof(InputSwitch));
+        }
+        void ChangeTypeInputButton(object sender, RoutedEventArgs e)
+        {
+            ChangeType(typeof(InputButton));
         }
         void ChangeTypeOutputLight(object sender, RoutedEventArgs e)
         {
