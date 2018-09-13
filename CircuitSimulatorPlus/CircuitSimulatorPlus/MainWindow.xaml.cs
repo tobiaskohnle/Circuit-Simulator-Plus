@@ -386,31 +386,43 @@ namespace CircuitSimulatorPlus
 
         public void ToggleRisingEdge()
         {
-            foreach (IClickable obj in SelectedObjects)
+            if (AnySelected<InputNode>())
             {
-                if (obj is InputNode)
+                SaveState();
+                foreach (IClickable obj in SelectedObjects)
                 {
-                    (obj as InputNode).IsRisingEdge = !(obj as InputNode).IsRisingEdge;
+                    if (obj is InputNode)
+                    {
+                        (obj as InputNode).IsRisingEdge = !(obj as InputNode).IsRisingEdge;
+                    }
                 }
             }
         }
         public void ToggleMasterSlave()
         {
-            foreach (IClickable obj in SelectedObjects)
+            if (AnySelected<OutputNode>())
             {
-                if (obj is OutputNode)
+                SaveState();
+                foreach (IClickable obj in SelectedObjects)
                 {
-                    (obj as OutputNode).IsMasterSlave = !(obj as OutputNode).IsMasterSlave;
+                    if (obj is OutputNode)
+                    {
+                        (obj as OutputNode).IsMasterSlave = !(obj as OutputNode).IsMasterSlave;
+                    }
                 }
             }
         }
         public void ToggleCentered()
         {
-            foreach (IClickable obj in SelectedObjects)
+            if (AnySelected<ConnectionNode>())
             {
-                if (obj is ConnectionNode)
+                SaveState();
+                foreach (IClickable obj in SelectedObjects)
                 {
-                    (obj as ConnectionNode).IsCentered = !(obj as ConnectionNode).IsCentered;
+                    if (obj is ConnectionNode)
+                    {
+                        (obj as ConnectionNode).IsCentered = !(obj as ConnectionNode).IsCentered;
+                    }
                 }
             }
         }
@@ -454,6 +466,11 @@ namespace CircuitSimulatorPlus
             Comparison<InputNode> compareFunction = (x, y) => (int)x.Position.Y - (int)y.Position.Y;
             inputNodes.Sort(compareFunction);
             inputNodes.Sort(compareFunction);
+
+            if (inputNodes.Count > 0 && outputNodes.Count > 0)
+            {
+                SaveState();
+            }
 
             for (int i = 0; i < Math.Min(inputNodes.Count, outputNodes.Count); i++)
             {
