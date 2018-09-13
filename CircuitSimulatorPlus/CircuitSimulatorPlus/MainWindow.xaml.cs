@@ -82,8 +82,10 @@ namespace CircuitSimulatorPlus
         public bool MovingObjects;
         public bool MovingScreen;
         public bool MouseMoved;
+
         public bool CableCreated;
         public bool CreatingCable;
+        public bool DraggingCable;
 
         public bool Saved = true;
         public bool SingleTicks;
@@ -272,16 +274,23 @@ namespace CircuitSimulatorPlus
 
         public IClickable FindNearestObjectAt(Point pos)
         {
-            IClickable nearest = null;
+            return FindNearestObjectAt<IClickable>(pos);
+        }
+        public T FindNearestObjectAt<T>(Point pos) where T : IClickable
+        {
+            T nearest = default(T);
             double best = Double.PositiveInfinity;
 
             foreach (IClickable obj in ClickableObjects.Where(obj => obj.Hitbox.IncludesPos(pos)))
             {
-                double dist = obj.Hitbox.DistanceTo(pos);
-                if (dist < best)
+                if (obj is T)
                 {
-                    nearest = obj;
-                    best = dist;
+                    double dist = obj.Hitbox.DistanceTo(pos);
+                    if (dist < best)
+                    {
+                        nearest = (T)obj;
+                        best = dist;
+                    }
                 }
             }
 
@@ -973,15 +982,13 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-        public void CompleteCable()
+        public void CompleteCable(ConnectionNode endNode)
         {
             SaveState();
 
-            var connectionNode = LastClickedObject as ConnectionNode;
+            endNode.ConnectTo(CableOrigin);
 
-            connectionNode.ConnectTo(CableOrigin);
-
-            CreatedCable.ConnectTo(connectionNode);
+            CreatedCable.ConnectTo(endNode);
 
             Cables.Add(CreatedCable);
 
@@ -993,6 +1000,7 @@ namespace CircuitSimulatorPlus
             CreatedCable = null;
             CableOrigin = null;
             CableCreated = false;
+            DraggingCable = false;
         }
 
         public void AddInputToSelected()
@@ -1233,8 +1241,29 @@ namespace CircuitSimulatorPlus
 
             MouseMoved = false;
 
-            LastClickedObject = FindNearestObjectAt(LastCanvasClick);
-
+            if (CableCreated)
+            {
+                if (CableOrigin is InputNode)
+                {
+                    LastClickedObject = FindNearestObjectAt<OutputNode>(LastCanvasClick);
+                }
+                else
+                {
+                    LastClickedObject = FindNearestObjectAt<InputNode>(LastCanvasClick);
+                }
+                if (LastClickedObject == null || ShiftPressed)
+                {
+                    CreatedCable.AddSegment(LastCanvasClick);
+                }
+                else
+                {
+                    CompleteCable(LastClickedObject as ConnectionNode);
+                }
+            }
+            else
+            {
+                LastClickedObject = FindNearestObjectAt(LastCanvasClick);
+            }
             if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed)
             {
                 MovingScreen = true;
@@ -1243,20 +1272,10 @@ namespace CircuitSimulatorPlus
             {
                 MakingSelection = true;
             }
-            else if (CableCreated)
-            {
-                if (LastClickedObject is ConnectionNode && LastClickedObject is InputNode != CableOrigin is InputNode)
-                {
-                    CompleteCable();
-                }
-                else
-                {
-                    CreatedCable.AddSegment(LastCanvasClick);
-                }
-            }
             else if (LastClickedObject is ConnectionNode)
             {
                 CreatingCable = true;
+                DraggingCable = true;
             }
             else if (LastClickedObject == null)
             {
@@ -1428,6 +1447,24 @@ namespace CircuitSimulatorPlus
                 {
                     MoveObjects();
                 }
+
+                if (DraggingCable)
+                {
+                    ConnectionNode clickedObject = null;
+
+                    if (CableOrigin is InputNode)
+                    {
+                        clickedObject = FindNearestObjectAt<OutputNode>(LastCanvasPos);
+                    }
+                    else
+                    {
+                        clickedObject = FindNearestObjectAt<InputNode>(LastCanvasPos);
+                    }
+                    if (clickedObject != null)
+                    {
+                        CompleteCable(clickedObject);
+                    }
+                }
             }
             else
             {
@@ -1456,7 +1493,9 @@ namespace CircuitSimulatorPlus
             MakingSelection = false;
             MovingObjects = false;
             MovingScreen = false;
+
             CreatingCable = false;
+            DraggingCable = false;
         }
 
         void Window_KeyDown(object sender, KeyEventArgs e)
