@@ -162,22 +162,35 @@ namespace CircuitSimulatorPlus
 
         public void AutoComplete()
         {
-            if (Points.Count == 0)
+            bool endsWithInputNode = endNode is InputNode;
+
+            Point lastPoint = Points.Count > 0 ? Points[Points.Count - 1] : StartPos;
+
+            bool leftToRight = !endsWithInputNode && endNode.CableAnchorPoint.X > lastPoint.X;
+            bool rightToLeft = endsWithInputNode && endNode.CableAnchorPoint.X < lastPoint.X;
+
+            Point referencePoint = Points.Count > 1 ? Points[Points.Count - 2] : StartPos;
+
+            if (rightToLeft || leftToRight)
             {
-                AddSegment(StartPos + (EndPos - StartPos) / 2);
+                if ((Points.Count & 1) == 0)
+                {
+                    AddSegment(referencePoint);
+                }
+
+                AddSegment(referencePoint + (EndPos - referencePoint) / 2);
+                AddSegment(endNode.CableAnchorPoint);
             }
             else if ((Points.Count & 1) == 0)
             {
-                Point lastPoint = Points[Points.Count - 1];
-                AddSegment(lastPoint + (EndPos - lastPoint) / 2);
+                AddSegment(lastPoint + (endNode.CableAnchorPoint - lastPoint) / 2);
             }
         }
 
         public void ConnectTo(ConnectionNode endNode)
         {
-            AutoComplete();
-
             EndNode = endNode;
+            AutoComplete();
 
             if (startNode is InputNode)
             {
