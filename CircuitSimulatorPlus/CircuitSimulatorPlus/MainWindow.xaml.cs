@@ -83,6 +83,8 @@ namespace CircuitSimulatorPlus
         public bool MovingScreen;
         public bool MouseMoved;
 
+        public bool OpenContextMenu;
+
         public bool CableCreated;
         public bool CreatingCable;
         public bool DraggingCable;
@@ -1269,24 +1271,33 @@ namespace CircuitSimulatorPlus
             LastWindowClick = e.GetPosition(this);
 
             MouseMoved = false;
+            OpenContextMenu = true;
 
             if (CableCreated)
             {
-                if (CableOrigin is InputNode)
+                if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    LastClickedObject = FindNearestObjectAt<OutputNode>(LastCanvasClick);
+                    CancelCable();
+                    OpenContextMenu = false;
                 }
                 else
                 {
-                    LastClickedObject = FindNearestObjectAt<InputNode>(LastCanvasClick);
-                }
-                if (LastClickedObject == null || ShiftPressed)
-                {
-                    CreatedCable.AddSegment(LastCanvasClick);
-                }
-                else
-                {
-                    CompleteCable(LastClickedObject as ConnectionNode);
+                    if (CableOrigin is InputNode)
+                    {
+                        LastClickedObject = FindNearestObjectAt<OutputNode>(LastCanvasClick);
+                    }
+                    else
+                    {
+                        LastClickedObject = FindNearestObjectAt<InputNode>(LastCanvasClick);
+                    }
+                    if (LastClickedObject == null || ShiftPressed)
+                    {
+                        CreatedCable.AddSegment(LastCanvasClick);
+                    }
+                    else
+                    {
+                        CompleteCable(LastClickedObject as ConnectionNode);
+                    }
                 }
             }
             else
@@ -1439,6 +1450,7 @@ namespace CircuitSimulatorPlus
                     SelectAllIn(new Rect(LastCanvasClick, LastCanvasPos));
                 }
                 MouseMoved = true;
+                OpenContextMenu = false;
             }
 
             LastMousePos = currentWindowPos;
@@ -1561,7 +1573,7 @@ namespace CircuitSimulatorPlus
 
         void Window_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            e.Handled = MouseMoved;
+            e.Handled = !OpenContextMenu;
         }
         void Window_Closing(object sender, CancelEventArgs e)
         {
