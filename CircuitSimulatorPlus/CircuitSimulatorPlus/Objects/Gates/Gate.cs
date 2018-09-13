@@ -23,7 +23,7 @@ namespace CircuitSimulatorPlus
             //Size = gate.Size;
         }
 
-        public const double DistanceFactor = 0.2;
+        public const double DistanceFactor = 0.4;
 
         public List<InputNode> Input = new List<InputNode>();
         public List<OutputNode> Output = new List<OutputNode>();

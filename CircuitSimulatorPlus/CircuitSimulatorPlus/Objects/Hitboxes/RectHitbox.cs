@@ -22,10 +22,7 @@ namespace CircuitSimulatorPlus
 
         public override double DistanceTo(Point pos)
         {
-            var center = new Point(
-                Bounds.X + Bounds.Width / 2,
-                Bounds.Y + Bounds.Height / 2);
-            return Gate.DistanceFactor * (center - pos).LengthSquared;
+            return Gate.DistanceFactor;
         }
 
         public override bool IncludesPos(Point pos)

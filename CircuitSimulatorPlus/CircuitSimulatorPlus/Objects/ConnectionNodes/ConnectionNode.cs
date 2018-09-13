@@ -12,7 +12,7 @@ namespace CircuitSimulatorPlus
         }
 
         public const double HitboxRadius = 2.5;
-        public const double DistanceFactor = 1;
+        public const double DistanceFactor = 2.2;
 
         protected bool stateChanged;
 

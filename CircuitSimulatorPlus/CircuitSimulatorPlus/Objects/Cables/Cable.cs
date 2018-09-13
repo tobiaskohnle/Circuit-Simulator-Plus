@@ -20,7 +20,7 @@ namespace CircuitSimulatorPlus
             ConnectTo(endNode);
         }
 
-        public const double DistanceFactor = 4.5;
+        public const double DistanceFactor = 1.5;
         public const double SegmentWidth = 1.0;
 
         public List<CableSegment> Segments = new List<CableSegment>();
