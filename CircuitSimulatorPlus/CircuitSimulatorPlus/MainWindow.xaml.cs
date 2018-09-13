@@ -209,22 +209,30 @@ namespace CircuitSimulatorPlus
         public void SelectAllIn(Rect rect)
         {
             foreach (IClickable obj in GetObjectsIn(rect))
+            {
                 Select(obj);
+            }
         }
         public void SwitchSelectionIn(Rect rect)
         {
             foreach (IClickable obj in GetObjectsIn(rect))
+            {
                 SwitchSelected(obj);
+            }
         }
         public void SelectAll()
         {
             foreach (IClickable obj in ClickableObjects)
+            {
                 Select(obj);
+            }
         }
         public void DeselectAll()
         {
             foreach (IClickable obj in SelectedObjects)
+            {
                 obj.IsSelected = false;
+            }
             SelectedObjects.Clear();
         }
 
