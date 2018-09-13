@@ -7,6 +7,7 @@ namespace CircuitSimulatorPlus
     public class InputButtonRenderer
     {
         InputButton gate;
+        double margin = 0.25;
 
         Rectangle rect = new Rectangle();
 
@@ -49,10 +50,10 @@ namespace CircuitSimulatorPlus
 
         public void OnLayoutChanged()
         {
-            rect.Width = gate.Size.Width;
-            rect.Height = gate.Size.Height;
-            Canvas.SetLeft(rect, gate.Position.X);
-            Canvas.SetTop(rect, gate.Position.Y);
+            rect.Width = gate.Size.Width - margin - margin;
+            rect.Height = gate.Size.Height - margin - margin;
+            Canvas.SetLeft(rect, gate.Position.X + margin);
+            Canvas.SetTop(rect, gate.Position.Y + margin);
         }
     }
 }
