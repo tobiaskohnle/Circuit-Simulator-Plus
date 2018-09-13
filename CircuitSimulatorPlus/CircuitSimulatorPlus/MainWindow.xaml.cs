@@ -417,11 +417,15 @@ namespace CircuitSimulatorPlus
 
         public void SplitSegments()
         {
-            foreach (IClickable obj in SelectedObjects)
+            if (AnySelected<CableSegment>())
             {
-                if (obj is CableSegment)
+                SaveState();
+                foreach (IClickable obj in SelectedObjects)
                 {
-                    (obj as CableSegment).SplitSegment();
+                    if (obj is CableSegment)
+                    {
+                        (obj as CableSegment).SplitSegment();
+                    }
                 }
             }
         }
