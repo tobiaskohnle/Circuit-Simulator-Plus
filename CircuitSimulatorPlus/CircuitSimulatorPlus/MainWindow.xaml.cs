@@ -1275,29 +1275,21 @@ namespace CircuitSimulatorPlus
 
             if (CableCreated)
             {
-                if (e.RightButton == MouseButtonState.Pressed)
+                if (CableOrigin is InputNode)
                 {
-                    CancelCable();
-                    OpenContextMenu = false;
+                    LastClickedObject = FindNearestObjectAt<OutputNode>(LastCanvasClick);
                 }
                 else
                 {
-                    if (CableOrigin is InputNode)
-                    {
-                        LastClickedObject = FindNearestObjectAt<OutputNode>(LastCanvasClick);
-                    }
-                    else
-                    {
-                        LastClickedObject = FindNearestObjectAt<InputNode>(LastCanvasClick);
-                    }
-                    if (LastClickedObject == null || ShiftPressed)
-                    {
-                        CreatedCable.AddSegment(LastCanvasClick);
-                    }
-                    else
-                    {
-                        CompleteCable(LastClickedObject as ConnectionNode);
-                    }
+                    LastClickedObject = FindNearestObjectAt<InputNode>(LastCanvasClick);
+                }
+                if (LastClickedObject == null || ShiftPressed)
+                {
+                    CreatedCable.AddSegment(LastCanvasClick);
+                }
+                else
+                {
+                    CompleteCable(LastClickedObject as ConnectionNode);
                 }
             }
             else
@@ -1451,6 +1443,14 @@ namespace CircuitSimulatorPlus
                 }
                 MouseMoved = true;
                 OpenContextMenu = false;
+            }
+            else if (CableCreated)
+            {
+                if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    CancelCable();
+                    OpenContextMenu = false;
+                }
             }
 
             LastMousePos = currentWindowPos;
