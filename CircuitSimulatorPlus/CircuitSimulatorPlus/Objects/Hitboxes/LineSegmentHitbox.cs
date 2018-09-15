@@ -2,11 +2,11 @@
 
 namespace CircuitSimulatorPlus
 {
-    public class LineSegmentHitbox : LineHitbox
+    public class CableSegmentHitbox : LineHitbox
     {
         CableSegment cableSegment;
 
-        public LineSegmentHitbox(CableSegment cableSegment) : base(Cable.HitboxWidth, Cable.DistanceFactor)
+        public CableSegmentHitbox(CableSegment cableSegment) : base(Cable.HitboxWidth, Cable.DistanceFactor)
         {
             this.cableSegment = cableSegment;
         }

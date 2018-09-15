@@ -14,7 +14,7 @@ namespace CircuitSimulatorPlus
             Parent = parent;
             Index = index;
 
-            hitbox = new LineSegmentHitbox(this);
+            hitbox = new CableSegmentHitbox(this);
 
             Add();
         }
@@ -89,7 +89,7 @@ namespace CircuitSimulatorPlus
 
         public void Add()
         {
-            hitbox = new LineSegmentHitbox(this);
+            hitbox = new CableSegmentHitbox(this);
             MainWindow.Self.ClickableObjects.Add(this);
             MainWindow.Self.refs.Add(new WeakReference<IClickable>(this));//temp
             new CableSegmentRenderer(this);
