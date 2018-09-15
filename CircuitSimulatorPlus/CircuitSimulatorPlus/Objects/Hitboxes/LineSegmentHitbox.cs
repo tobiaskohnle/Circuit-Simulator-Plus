@@ -10,7 +10,6 @@ namespace CircuitSimulatorPlus
         public LineSegmentHitbox(CableSegment cableSegment) : base(Cable.HitboxWidth, Cable.DistanceFactor)
         {
             this.cableSegment = cableSegment;
-            UpdateHitbox();
         }
 
         public override void UpdateHitbox()

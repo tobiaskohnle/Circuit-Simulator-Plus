@@ -61,7 +61,6 @@ namespace CircuitSimulatorPlus
             if (index > 0 && index < Points.Count + 1)
                 Points[index - 1] += vector;
 
-            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
 
@@ -113,7 +112,6 @@ namespace CircuitSimulatorPlus
                     OnStateChanged?.Invoke();
                 }
 
-                UpdateHitbox();
                 OnPointsChanged?.Invoke();
             }
         }
@@ -140,7 +138,6 @@ namespace CircuitSimulatorPlus
                     OnStateChanged?.Invoke();
                 }
 
-                UpdateHitbox();
                 OnPointsChanged?.Invoke();
             }
         }
@@ -159,14 +156,6 @@ namespace CircuitSimulatorPlus
             get
             {
                 return outputNode?.State ?? false;
-            }
-        }
-
-        public void UpdateHitbox()
-        {
-            foreach (CableSegment segment in Segments)
-            {
-                segment.UpdateHitbox();
             }
         }
 
@@ -227,7 +216,6 @@ namespace CircuitSimulatorPlus
 
             IsCompleted = true;
 
-            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
 
@@ -242,7 +230,6 @@ namespace CircuitSimulatorPlus
                 for (int i = index; i < Segments.Count; i++)
                     Segments[i].Index--;
 
-                UpdateHitbox();
                 OnPointsChanged?.Invoke();
             }
         }
@@ -255,7 +242,6 @@ namespace CircuitSimulatorPlus
             for (int i = index + 1; i < Segments.Count; i++)
                 Segments[i].Index++;
 
-            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
         public void AddSegment(Point point)
@@ -264,7 +250,6 @@ namespace CircuitSimulatorPlus
 
             Segments.Add(new CableSegment(this, Segments.Count));
 
-            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
 

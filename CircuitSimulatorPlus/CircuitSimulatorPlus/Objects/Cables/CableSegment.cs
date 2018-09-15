@@ -102,10 +102,5 @@ namespace CircuitSimulatorPlus
             IsRendered = false;
             MainWindow.Self.ClickableObjects.Remove(this);
         }
-
-        public void UpdateHitbox()
-        {
-            hitbox.UpdateHitbox();
-        }
     }
 }

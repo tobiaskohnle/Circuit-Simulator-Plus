@@ -23,6 +23,8 @@ namespace CircuitSimulatorPlus
         {
             get
             {
+                UpdateHitbox();
+
                 if (vert)
                 {
                     return new Rect(y, Math.Min(x, z), 0, Math.Abs(x - z));
@@ -33,6 +35,8 @@ namespace CircuitSimulatorPlus
 
         double Dist(Point pos)
         {
+            UpdateHitbox();
+
             double dist = vert ? Math.Abs(pos.X - y) : Math.Abs(pos.Y - y);
 
             double lastDist = vert ? Math.Abs(pos.Y - x) : Math.Abs(pos.X - x);

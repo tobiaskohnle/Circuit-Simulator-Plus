@@ -11,7 +11,6 @@ namespace CircuitSimulatorPlus
             this.connectionNode = connectionNode;
 
             vert = false;
-            UpdateHitbox();
         }
 
         public override void UpdateHitbox()

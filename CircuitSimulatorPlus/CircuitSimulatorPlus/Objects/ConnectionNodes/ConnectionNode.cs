@@ -155,7 +155,6 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                hitbox?.UpdateHitbox();
                 OnPositionChanged?.Invoke();
             }
         }
