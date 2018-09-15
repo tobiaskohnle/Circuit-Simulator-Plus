@@ -1324,15 +1324,18 @@ namespace CircuitSimulatorPlus
         }
         void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ToggleObjects();
-
-            foreach (IClickable obj in SelectedObjects.ToList())
+            if (!ControlPressed)
             {
-                if (obj is CableSegment)
+                ToggleObjects();
+
+                foreach (IClickable obj in SelectedObjects.ToList())
                 {
-                    foreach (CableSegment segment in (obj as CableSegment).Parent.Segments)
+                    if (obj is CableSegment)
                     {
-                        Select(segment);
+                        foreach (CableSegment segment in (obj as CableSegment).Parent.Segments)
+                        {
+                            Select(segment);
+                        }
                     }
                 }
             }
