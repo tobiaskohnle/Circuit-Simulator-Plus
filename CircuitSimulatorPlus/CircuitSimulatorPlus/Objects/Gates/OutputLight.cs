@@ -1,6 +1,5 @@
 ﻿using CircuitSimulatorPlus.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace CircuitSimulatorPlus

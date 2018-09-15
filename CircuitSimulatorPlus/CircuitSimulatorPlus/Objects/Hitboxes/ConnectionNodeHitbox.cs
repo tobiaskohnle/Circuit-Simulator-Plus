@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CircuitSimulatorPlus
+﻿namespace CircuitSimulatorPlus
 {
     public class ConnectionNodeHitbox : LineHitbox
     {
