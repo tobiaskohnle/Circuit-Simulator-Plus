@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
             Owner = owner;
         }
 
-        public const double HitboxRadius = 2.5;
+        public const double HitboxWidth = 2.5;
         public const double DistanceFactor = 2.2;
 
         protected bool stateChanged;
@@ -155,8 +155,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                if (hitbox != null)
-                    hitbox.Center = value;
+                hitbox.UpdateHitbox();
                 OnPositionChanged?.Invoke();
             }
         }
@@ -181,7 +180,7 @@ namespace CircuitSimulatorPlus
             }
         }
 
-        CircleHitbox hitbox;
+        LineHitbox hitbox;
         public Hitbox Hitbox
         {
             get
@@ -235,7 +234,7 @@ namespace CircuitSimulatorPlus
 
         public virtual void Add()
         {
-            hitbox = new CircleHitbox(Position, HitboxRadius);
+            hitbox = new ConnectionNodeHitbox(this);
             MainWindow.Self.ClickableObjects.Add(this);
             MainWindow.Self.refs.Add(new WeakReference<IClickable>(this));//temp
         }

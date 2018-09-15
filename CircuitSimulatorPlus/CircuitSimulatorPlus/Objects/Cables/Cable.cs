@@ -21,7 +21,7 @@ namespace CircuitSimulatorPlus
         }
 
         public const double DistanceFactor = 1.5;
-        public const double SegmentWidth = 1.0;
+        public const double HitboxWidth = 1.0;
 
         public List<CableSegment> Segments = new List<CableSegment>();
 

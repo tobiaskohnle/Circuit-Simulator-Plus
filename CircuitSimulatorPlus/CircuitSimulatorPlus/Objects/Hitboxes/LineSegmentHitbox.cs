@@ -7,13 +7,13 @@ namespace CircuitSimulatorPlus
     {
         CableSegment cableSegment;
 
-        public LineSegmentHitbox(CableSegment cableSegment) : base()
+        public LineSegmentHitbox(CableSegment cableSegment) : base(Cable.HitboxWidth)
         {
             this.cableSegment = cableSegment;
             UpdateHitbox();
         }
 
-        public void UpdateHitbox()
+        public override void UpdateHitbox()
         {
             Point point = cableSegment.Parent.GetPoint(cableSegment.Index);
             Point lastPoint = cableSegment.Parent.GetPoint(cableSegment.Index - 1);
