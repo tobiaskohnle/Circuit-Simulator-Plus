@@ -305,7 +305,7 @@ namespace CircuitSimulatorPlus
                 Cable cable = new Cable(outputNode);
                 foreach (Point point in cablestore.Points)
                     cable.AddSegment(point);
-                cable.ConnectTo(inputNode);
+                cable.ConnectTo(inputNode, false);
                 cables.Add(cable);
                 uncabledNodes.Remove(inputNode);
             }
@@ -313,7 +313,7 @@ namespace CircuitSimulatorPlus
             foreach (ConnectionNode node in uncabledNodes)
             {
                 Cable cable = new Cable(node.BackConnectedTo);
-                cable.ConnectTo(node);
+                cable.ConnectTo(node, false);
                 cables.Add(cable);
             }
 

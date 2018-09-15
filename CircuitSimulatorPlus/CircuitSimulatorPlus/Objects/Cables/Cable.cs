@@ -196,10 +196,13 @@ namespace CircuitSimulatorPlus
                 AddSegment(lastPoint + (endNode.CableAnchorPoint - lastPoint) / 2);
             }
         }
-        public void ConnectTo(ConnectionNode endNode)
+        public void ConnectTo(ConnectionNode endNode, bool autoComplete = true)
         {
             EndNode = endNode;
-            AutoComplete();
+            if (autoComplete)
+            {
+                AutoComplete();
+            }
 
             if (startNode is InputNode)
             {

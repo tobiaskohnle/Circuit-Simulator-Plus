@@ -1157,7 +1157,7 @@ namespace CircuitSimulatorPlus
             {
                 for (int i = 0; i < cable.Points.Count; i++)
                 {
-                    cable.Points[i] = at + (Vector)cable.Points[i];
+                    //cable.Points[i] = at + (Vector)cable.Points[i];
                 }
                 Cables.Add(cable);
             }
