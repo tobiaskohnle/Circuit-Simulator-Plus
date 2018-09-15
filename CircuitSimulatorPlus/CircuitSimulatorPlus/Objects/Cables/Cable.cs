@@ -61,6 +61,7 @@ namespace CircuitSimulatorPlus
             if (index > 0 && index < Points.Count + 1)
                 Points[index - 1] += vector;
 
+            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
 
@@ -112,6 +113,7 @@ namespace CircuitSimulatorPlus
                     OnStateChanged?.Invoke();
                 }
 
+                UpdateHitbox();
                 OnPointsChanged?.Invoke();
             }
         }
@@ -138,6 +140,7 @@ namespace CircuitSimulatorPlus
                     OnStateChanged?.Invoke();
                 }
 
+                UpdateHitbox();
                 OnPointsChanged?.Invoke();
             }
         }
@@ -146,7 +149,6 @@ namespace CircuitSimulatorPlus
         InputNode inputNode;
 
         public event Action OnStateChanged;
-
         public void RaiseStateChanged()
         {
             OnStateChanged?.Invoke();
@@ -157,6 +159,14 @@ namespace CircuitSimulatorPlus
             get
             {
                 return outputNode?.State ?? false;
+            }
+        }
+
+        public void UpdateHitbox()
+        {
+            foreach (CableSegment segment in Segments)
+            {
+                segment.UpdateHitbox();
             }
         }
 
@@ -186,7 +196,6 @@ namespace CircuitSimulatorPlus
                 AddSegment(lastPoint + (endNode.CableAnchorPoint - lastPoint) / 2);
             }
         }
-
         public void ConnectTo(ConnectionNode endNode)
         {
             EndNode = endNode;
@@ -215,6 +224,7 @@ namespace CircuitSimulatorPlus
 
             IsCompleted = true;
 
+            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
 
@@ -229,10 +239,10 @@ namespace CircuitSimulatorPlus
                 for (int i = index; i < Segments.Count; i++)
                     Segments[i].Index--;
 
+                UpdateHitbox();
                 OnPointsChanged?.Invoke();
             }
         }
-
         public void AddSegment(int index, Point point)
         {
             Points.Insert(index - 1, MainWindow.Self.Round(point, 0.5));
@@ -242,15 +252,16 @@ namespace CircuitSimulatorPlus
             for (int i = index + 1; i < Segments.Count; i++)
                 Segments[i].Index++;
 
+            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
-
         public void AddSegment(Point point)
         {
             Points.Add(MainWindow.Self.Round(point, 0.5));
 
             Segments.Add(new CableSegment(this, Segments.Count));
 
+            UpdateHitbox();
             OnPointsChanged?.Invoke();
         }
 

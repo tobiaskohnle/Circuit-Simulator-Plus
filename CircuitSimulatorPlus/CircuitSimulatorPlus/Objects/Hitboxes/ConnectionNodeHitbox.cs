@@ -6,7 +6,7 @@ namespace CircuitSimulatorPlus
     {
         ConnectionNode connectionNode;
 
-        public ConnectionNodeHitbox(ConnectionNode connectionNode) : base(ConnectionNode.HitboxWidth)
+        public ConnectionNodeHitbox(ConnectionNode connectionNode) : base(ConnectionNode.HitboxWidth, ConnectionNode.DistanceFactor)
         {
             this.connectionNode = connectionNode;
 

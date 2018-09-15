@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
             Owner = owner;
         }
 
-        public const double HitboxWidth = 2.5;
+        public const double HitboxWidth = 1.5;
         public const double DistanceFactor = 2.2;
 
         protected bool stateChanged;
@@ -155,7 +155,7 @@ namespace CircuitSimulatorPlus
             set
             {
                 position = value;
-                hitbox.UpdateHitbox();
+                hitbox?.UpdateHitbox();
                 OnPositionChanged?.Invoke();
             }
         }

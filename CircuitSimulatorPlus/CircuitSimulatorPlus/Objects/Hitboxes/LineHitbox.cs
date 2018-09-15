@@ -6,12 +6,15 @@ namespace CircuitSimulatorPlus
     public abstract class LineHitbox : Hitbox
     {
         protected double width;
+        protected double distanceFactor;
+
         protected double x, y, z;
         protected bool vert;
 
-        protected LineHitbox(double width)
+        protected LineHitbox(double width, double distanceFactor)
         {
             this.width = width;
+            this.distanceFactor = distanceFactor;
         }
 
         public abstract void UpdateHitbox();
@@ -51,12 +54,12 @@ namespace CircuitSimulatorPlus
 
         public override double DistanceTo(Point pos)
         {
-            return Dist(pos) * Cable.DistanceFactor;
+            return Dist(pos) * distanceFactor;
         }
 
         public override bool IncludesPos(Point pos)
         {
-            return Dist(pos) <= Cable.HitboxWidth;
+            return Dist(pos) <= width;
         }
 
         public override bool IsIncludedIn(Rect rect)
