@@ -83,13 +83,11 @@
       <DependentUpon>RenameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Objects\Cables\CableSegment.cs" />
-    <Compile Include="Objects\Gates\InputButton.cs" />
     <Compile Include="Objects\Hitboxes\ConnectionNodeHitbox.cs" />
     <Compile Include="Objects\Hitboxes\LineHitbox.cs" />
     <Compile Include="Objects\Hitboxes\LineSegmentHitbox.cs" />
     <Compile Include="Rendering\Cables\CableSegmentRenderer.cs" />
     <Compile Include="Rendering\ConnectionNodes\InputNodeRenderer.cs" />
-    <Compile Include="Rendering\Gates\InputButtonRenderer.cs" />
     <Compile Include="Rendering\Gates\InputSwitchRenderer.cs" />
     <Compile Include="Miscellaneous\Constants.cs" />
     <Compile Include="Miscellaneous\Commands.cs" />
