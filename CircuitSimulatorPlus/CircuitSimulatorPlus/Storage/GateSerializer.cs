@@ -298,6 +298,8 @@ namespace CircuitSimulatorPlus
 
             foreach (SerializedGate.Cable cablestore in storageObject.Cables)
             {
+                if (!idToNode.ContainsKey(cablestore.OutputConnection))
+                    continue;
                 ConnectionNode outputNode = idToNode[cablestore.OutputConnection];
                 ConnectionNode inputNode = cableEpToNode[cablestore.EndPoint];
                 Cable cable = new Cable(outputNode);
