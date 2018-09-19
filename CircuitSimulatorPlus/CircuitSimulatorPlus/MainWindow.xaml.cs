@@ -777,11 +777,11 @@ namespace CircuitSimulatorPlus
             string desktop = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dir);
 
             if (Directory.Exists(currentDirectory))
-                LoadContextGates(contxtMenu_contextGate, currentDirectory);
+                LoadContextGates(contextMenu_contextGate, currentDirectory);
             if (Directory.Exists(documents))
-                LoadContextGates(contxtMenu_contextGate, documents);
+                LoadContextGates(contextMenu_contextGate, documents);
             if (Directory.Exists(desktop))
-                LoadContextGates(contxtMenu_contextGate, desktop);
+                LoadContextGates(contextMenu_contextGate, desktop);
         }
 
         public void LoadContextGates(MenuItem parent, string path)
