@@ -770,13 +770,18 @@ namespace CircuitSimulatorPlus
 
         public void LoadContextGates()
         {
-            //string path = Properties.Settings.Default.ContextGatePath;
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "context_gates");
+            string dir = "context_gates";
 
-            if (Directory.Exists(path))
-            {
-                LoadContextGates(contxtMenu_contextGate, path);
-            }
+            string currentDirectory = Path.Combine(Environment.CurrentDirectory, dir);
+            string documents = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), dir);
+            string desktop = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dir);
+
+            if (Directory.Exists(currentDirectory))
+                LoadContextGates(contxtMenu_contextGate, currentDirectory);
+            if (Directory.Exists(documents))
+                LoadContextGates(contxtMenu_contextGate, documents);
+            if (Directory.Exists(desktop))
+                LoadContextGates(contxtMenu_contextGate, desktop);
         }
 
         public void LoadContextGates(MenuItem parent, string path)
