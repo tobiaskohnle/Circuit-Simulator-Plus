@@ -76,7 +76,7 @@
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
-            <MenuItem x:Name="contxtMenu_basicGate" Header="Add Component">
+            <MenuItem x:Name="contextMenu_basicGate" Header="Add Component">
                 <MenuItem Header="Input Switch" Click="CreateInputSwitch"/>
                 <MenuItem Header="Output Light" Click="CreateOutputLight"/>
                 <MenuItem Header="And Gate" Click="CreateAndGate"/>
@@ -84,7 +84,7 @@
                 <MenuItem Header="Not Gate" Click="CreateNotGate"/>
                 <MenuItem Header="Segment Display" Click="CreateSegmentDisplay"/>
             </MenuItem>
-            <MenuItem x:Name="contxtMenu_contextGate" Header="Add Context Gate">
+            <MenuItem x:Name="contextMenu_contextGate" Header="Add Context Gate">
                 <MenuItem Header="Import From File" Click="Import_Click"/>
             </MenuItem>
             <MenuItem Header="Change Type">
