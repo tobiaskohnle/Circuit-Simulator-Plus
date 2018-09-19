@@ -665,21 +665,22 @@ namespace CircuitSimulatorPlus
             return true;
         }
 
-        public void Import()
+        public Gate Import()
         {
-            Import(SelectFile());
+            return Import(SelectFile());
         }
-        public void Import(string filePath)
+        public Gate Import(string filePath)
         {
             if (filePath == "")
-                return;
+                return null;
             SerializedGate store = StorageUtil.Load(filePath);
             if (store == null)
-                return;
+                return null;
             Gate gate = GateSerializer.Deserialize(store);
             if (gate.HasContext)
                 TickAll((ContextGate)gate);
             Create(gate);
+            return gate;
         }
 
         public void Undo()
@@ -1578,10 +1579,12 @@ namespace CircuitSimulatorPlus
         }
         void Window_Drop(object sender, DragEventArgs e)
         {
-            if (SavePrompt())
+            Point pos = Round(LastCanvasPos);
+            foreach (string file in (string[])e.Data.GetData(DataFormats.FileDrop))
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                Open(files[0]);
+                Gate gate = Import(file);
+                gate.Position = pos;
+                pos.Y += gate.Size.Height + 1;
             }
         }
 
