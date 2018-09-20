@@ -14,32 +14,60 @@ namespace CircuitSimulatorPlus
             Size = new Size(3, 4);
         }
 
+        public override void CopyFrom(Gate gate)
+        {
+            List<InputNode> input = Input;
+            List<OutputNode> output = Output;
+
+            base.CopyFrom(gate);
+
+            minAmtInputNodes = input.Count;
+            maxAmtInputNodes = input.Count;
+            minAmtOutputNodes = output.Count;
+            maxAmtOutputNodes = output.Count;
+            UpdateAmtConnectionNodes();
+            
+            for (int i = 0; i < Math.Min(Input.Count, input.Count); i++)
+            {
+                Input[i].CopyFrom(input[i]);
+            }
+            for (int i = 0; i < Math.Min(Output.Count, output.Count); i++)
+            {
+                Output[i].CopyFrom(output[i]);
+            }
+        }
+
+        int minAmtInputNodes;
+        int maxAmtInputNodes;
+        int minAmtOutputNodes;
+        int maxAmtOutputNodes;
+
         public override int MinAmtInputNodes
         {
             get
             {
-                return Input.Count;
+                return minAmtInputNodes;
             }
         }
         public override int MaxAmtInputNodes
         {
             get
             {
-                return Input.Count;
+                return maxAmtInputNodes;
             }
         }
         public override int MinAmtOutputNodes
         {
             get
             {
-                return Output.Count;
+                return minAmtOutputNodes;
             }
         }
         public override int MaxAmtOutputNodes
         {
             get
             {
-                return Output.Count;
+                return maxAmtOutputNodes;
             }
         }
 
@@ -58,7 +86,10 @@ namespace CircuitSimulatorPlus
 
         public override void CreateDefaultConnectionNodes()
         {
-            //throw new InvalidOperationException();
+            minAmtInputNodes = Input.Count;
+            maxAmtInputNodes = Input.Count;
+            minAmtOutputNodes = Output.Count;
+            maxAmtOutputNodes = Output.Count;
         }
 
         public void AddContext()

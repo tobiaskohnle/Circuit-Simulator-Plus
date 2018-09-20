@@ -339,8 +339,10 @@ namespace CircuitSimulatorPlus
             {
                 SaveState();
 
+                bool changeToContextGate = type == typeof(ContextGate);
+
                 SerializedGate storageObject = null;
-                if (type == typeof(ContextGate))
+                if (changeToContextGate)
                 {
                     string filePath = SelectFile();
                     if (filePath == "")
@@ -360,9 +362,9 @@ namespace CircuitSimulatorPlus
                         var gate = obj as Gate;
                         Gate newGate = null;
 
-                        if (type == typeof(ContextGate))
+                        if (changeToContextGate)
                         {
-                            newGate = GateSerializer.Deserialize(storageObject);
+                            newGate = (ContextGate)GateSerializer.Deserialize(storageObject);
                         }
                         else
                         {

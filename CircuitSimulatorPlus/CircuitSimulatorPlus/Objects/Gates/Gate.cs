@@ -6,20 +6,18 @@ namespace CircuitSimulatorPlus
 {
     public abstract class Gate : IClickable, IMovable
     {
-        public void CopyFrom(Gate gate)
+        public virtual void CopyFrom(Gate gate)
         {
             Input = gate.Input;
-            foreach (InputNode inputNode in Input)
-                inputNode.Owner = this;
-
+            foreach (InputNode input in Input)
+                input.Owner = this;
+            
             Output = gate.Output;
-            foreach (OutputNode outputNode in Output)
-                outputNode.Owner = this;
+            foreach (OutputNode output in Output)
+                output.Owner = this;
 
             Name = gate.Name;
-            //Tag = gate.Tag;
             Position = gate.Position;
-            //Size = gate.Size;
         }
 
         public const double DistanceFactor = 0.4;

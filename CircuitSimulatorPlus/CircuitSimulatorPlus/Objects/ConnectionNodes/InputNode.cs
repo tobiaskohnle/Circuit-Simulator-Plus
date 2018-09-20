@@ -9,6 +9,13 @@ namespace CircuitSimulatorPlus
         {
         }
 
+        public void CopyFrom(InputNode inputNode)
+        {
+            NextConnectedTo = inputNode.NextConnectedTo;
+            IsRisingEdge = inputNode.IsRisingEdge;
+            base.CopyFrom(inputNode);
+        }
+
         public Cable ConnectedCable;
 
         public event Action OnRisingEdgeChanged;

@@ -13,6 +13,13 @@ namespace CircuitSimulatorPlus
             new OutputNodeRenderer(this);
         }
 
+        public void CopyFrom(OutputNode outputNode)
+        {
+            BackConnectedTo = outputNode.BackConnectedTo;
+            IsMasterSlave = outputNode.IsMasterSlave;
+            base.CopyFrom(outputNode);
+        }
+
         public List<Cable> ConnectedCables = new List<Cable>();
 
         bool isMasterSlave;

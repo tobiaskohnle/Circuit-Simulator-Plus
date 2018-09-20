@@ -14,6 +14,13 @@ namespace CircuitSimulatorPlus
         public const double HitboxWidth = 1.5;
         public const double DistanceFactor = 2.2;
 
+        public void CopyFrom(ConnectionNode connectionNode)
+        {
+            Name = connectionNode.Name;
+            IsInverted = connectionNode.IsInverted;
+            IsCentered = connectionNode.IsCentered;
+        }
+
         protected bool stateChanged;
 
         public Gate Owner;
