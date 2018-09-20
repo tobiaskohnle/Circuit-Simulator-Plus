@@ -1237,7 +1237,7 @@ namespace CircuitSimulatorPlus
 
         public string StringToHeader(string str)
         {
-            return str.Replace("_", "__");
+            return str?.Replace("_", "__");
         }
         public string HeaderToString(object header)
         {
@@ -1959,6 +1959,47 @@ namespace CircuitSimulatorPlus
         void SaveState_Click(object sender, RoutedEventArgs e)
         {
             SaveState();
+        }
+        void Info_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                string msg = "";
+                if (obj is Gate)
+                {
+                    var gate = obj as Gate;
+                    msg += $"Position: {gate.Position}, ";
+                    msg += $"Size: {gate.Size}, ";
+                    msg += $"Tag: {gate.Tag}, ";
+                    msg += $"HasContext: {gate.HasContext}, ";
+                    msg += $"Min #Input: {gate.MinAmtInputNodes}, ";
+                    msg += $"Max #Input: {gate.MaxAmtInputNodes}, ";
+                    msg += $"Min #Output: {gate.MinAmtOutputNodes}, ";
+                    msg += $"Max #Output: {gate.MaxAmtOutputNodes}, ";
+                    msg += $"#Input: {gate.Input.Count}, ";
+                    msg += $"#Output: {gate.Output.Count}";
+                }
+                if (obj is ConnectionNode)
+                {
+                    var node = obj as ConnectionNode;
+                    msg += $"Empty: {node.IsEmpty}, ";
+                    msg += $"Position: {node.Position}, ";
+                    msg += $"Anchor: {node.CableAnchorPoint}, ";
+                    msg += $"Empty: {node.IsEmpty}, ";
+                    msg += $"#Next: {node.NextConnectedTo.Count}, ";
+                    msg += $"Back: {node.BackConnectedTo?.ToString() ?? "null"}";
+                }
+                if (obj is CableSegment)
+                {
+                    var seg = obj as CableSegment;
+                    msg += $"Index: {seg.Index}, ";
+                    msg += $"Position: {seg.Position}";
+                }
+                if (MessageBox.Show(msg, obj.GetType().FullName, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+            }
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
