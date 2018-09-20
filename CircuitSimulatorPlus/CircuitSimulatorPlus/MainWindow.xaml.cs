@@ -23,6 +23,8 @@ namespace CircuitSimulatorPlus
         public MainWindow()
         {
             InitializeComponent();
+            Timer.Tick += Timer_Tick;
+
             Focus();
             LoadContextGates();
             LoadTheme();
@@ -31,16 +33,14 @@ namespace CircuitSimulatorPlus
 
             showGrid.IsChecked = true;
             UpdateTitle();
+            ResetFile();
             ResetView();
 
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
-                LoadState(StorageUtil.Load(args[1]));
-            else
-                ContextGate = new ContextGate();
-
-            ContextGate.AddContext();
-            Timer.Tick += Timer_Tick;
+            {
+                Open(args[1]);
+            }
         }
 
         #region Properties
@@ -593,7 +593,8 @@ namespace CircuitSimulatorPlus
 
         public void ResetFile()
         {
-            ContextGate.RemoveContext();
+            ContextGate?.RemoveContext();
+
             foreach (Cable cable in Cables.ToList())
                 cable.Remove();
             Cables.Clear();
