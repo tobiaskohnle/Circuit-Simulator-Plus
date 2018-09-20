@@ -92,7 +92,7 @@ namespace CircuitSimulatorPlus
 
         public void OnNameChanged()
         {
-            nameLabel.Content = inputNode.Name;
+            nameLabel.Content = MainWindow.Self.StringToHeader(inputNode.Name);
         }
 
         public void OnPositionChanged()

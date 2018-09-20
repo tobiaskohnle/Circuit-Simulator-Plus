@@ -101,12 +101,12 @@ namespace CircuitSimulatorPlus
 
         public void OnNameChanged()
         {
-            nameLabel.Content = gate.Name;
+            nameLabel.Content = MainWindow.Self.StringToHeader(gate.Name);
         }
 
         public void OnTagChanged()
         {
-            tagLabel.Content = gate.Tag;
+            tagLabel.Content = MainWindow.Self.StringToHeader(gate.Tag);
         }
 
         public void OnSizeChanged()
