@@ -1970,31 +1970,33 @@ namespace CircuitSimulatorPlus
                 if (obj is Gate)
                 {
                     var gate = obj as Gate;
-                    msg += $"Position: {gate.Position}, ";
-                    msg += $"Size: {gate.Size}, ";
-                    msg += $"Tag: {gate.Tag}, ";
-                    msg += $"HasContext: {gate.HasContext}, ";
-                    msg += $"Min #Input: {gate.MinAmtInputNodes}, ";
-                    msg += $"Max #Input: {gate.MaxAmtInputNodes}, ";
-                    msg += $"Min #Output: {gate.MinAmtOutputNodes}, ";
-                    msg += $"Max #Output: {gate.MaxAmtOutputNodes}, ";
-                    msg += $"#Input: {gate.Input.Count}, ";
+                    msg += $"Position: {gate.Position}\r\n";
+                    msg += $"Size: {gate.Size}\r\n";
+                    msg += $"Tag: \"{gate.Tag}\"\r\n";
+                    msg += $"Name: \"{gate.Name}\"\r\n";
+                    msg += $"HasContext: {gate.HasContext}\r\n";
+                    msg += $"Min #Input: {gate.MinAmtInputNodes}\r\n";
+                    msg += $"Max #Input: {gate.MaxAmtInputNodes}\r\n";
+                    msg += $"Min #Output: {gate.MinAmtOutputNodes}\r\n";
+                    msg += $"Max #Output: {gate.MaxAmtOutputNodes}\r\n";
+                    msg += $"#Input: {gate.Input.Count}\r\n";
                     msg += $"#Output: {gate.Output.Count}";
                 }
-                if (obj is ConnectionNode)
+                else if (obj is ConnectionNode)
                 {
                     var node = obj as ConnectionNode;
-                    msg += $"Empty: {node.IsEmpty}, ";
-                    msg += $"Position: {node.Position}, ";
-                    msg += $"Anchor: {node.CableAnchorPoint}, ";
-                    msg += $"Empty: {node.IsEmpty}, ";
-                    msg += $"#Next: {node.NextConnectedTo.Count}, ";
+                    msg += $"Empty: {node.IsEmpty}\r\n";
+                    msg += $"Position: {node.Position}\r\n";
+                    msg += $"Name: \"{node.Name}\"\r\n";
+                    msg += $"Anchor: {node.CableAnchorPoint}\r\n";
+                    msg += $"Empty: {node.IsEmpty}\r\n";
+                    msg += $"#Next: {node.NextConnectedTo.Count}\r\n";
                     msg += $"Back: {node.BackConnectedTo?.ToString() ?? "null"}";
                 }
-                if (obj is CableSegment)
+                else if (obj is CableSegment)
                 {
                     var seg = obj as CableSegment;
-                    msg += $"Index: {seg.Index}, ";
+                    msg += $"Index: {seg.Index}\r\n";
                     msg += $"Position: {seg.Position}";
                 }
                 if (MessageBox.Show(msg, obj.GetType().FullName, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
