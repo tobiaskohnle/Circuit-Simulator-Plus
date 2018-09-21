@@ -26,12 +26,12 @@ namespace CircuitSimulatorPlus
             minAmtOutputNodes = output.Count;
             maxAmtOutputNodes = output.Count;
             UpdateAmtConnectionNodes();
-            
-            for (int i = 0; i < Math.Min(Input.Count, input.Count); i++)
+
+            for (int i = 0; i < Input.Count; i++)
             {
                 Input[i].CopyFrom(input[i]);
             }
-            for (int i = 0; i < Math.Min(Output.Count, output.Count); i++)
+            for (int i = 0; i < Output.Count; i++)
             {
                 Output[i].CopyFrom(output[i]);
             }
