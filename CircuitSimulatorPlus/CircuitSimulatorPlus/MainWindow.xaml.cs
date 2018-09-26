@@ -782,9 +782,9 @@ namespace CircuitSimulatorPlus
 
             if (Directory.Exists(currentDirectory))
                 LoadContextGates(contextMenu_contextGate, currentDirectory);
-            if (Directory.Exists(documents))
+            else if (Directory.Exists(documents))
                 LoadContextGates(contextMenu_contextGate, documents);
-            if (Directory.Exists(desktop))
+            else if (Directory.Exists(desktop))
                 LoadContextGates(contextMenu_contextGate, desktop);
         }
 
