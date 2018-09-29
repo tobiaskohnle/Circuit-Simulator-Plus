@@ -15,6 +15,14 @@ namespace CircuitSimulatorPlus
             return store;
         }
 
+        public static SerializedGate Load(Stream stream)
+        {
+            SerializedGate store = null;
+            using (var reader = new StreamReader(stream))
+                store = Deserialize(reader);
+            return store;
+        }
+
         public static void Save(string filepath, SerializedGate store)
         {
             using (var writer = new StreamWriter(filepath))

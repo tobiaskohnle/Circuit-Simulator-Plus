@@ -691,6 +691,17 @@ namespace CircuitSimulatorPlus
             Create(gate);
             return gate;
         }
+        public Gate Import(Stream stream)
+        {
+            SerializedGate store = StorageUtil.Load(stream);
+            if (store == null)
+                return null;
+            Gate gate = GateSerializer.Deserialize(store);
+            if (gate.HasContext)
+                TickAll((ContextGate)gate);
+            Create(gate);
+            return gate;
+        }
 
         public void Undo()
         {
@@ -796,6 +807,19 @@ namespace CircuitSimulatorPlus
                 LoadContextGates(contextMenu_contextGate, documents);
             else if (Directory.Exists(desktop))
                 LoadContextGates(contextMenu_contextGate, desktop);
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var standardResourceNames = new List<string>();
+            foreach (string resourceName in assembly.GetManifestResourceNames())
+            {
+                if (resourceName.StartsWith("CircuitSimulatorPlus.StandardGates")
+                    && resourceName.EndsWith(Constants.FileExtention))
+                    standardResourceNames.Add(resourceName);
+            }
+            foreach (string resourceName in standardResourceNames)
+            {
+                LoadContextGateFromResource(contextMenu_contextGate, resourceName);
+            }
         }
 
         public void LoadContextGates(MenuItem parent, string path)
@@ -818,6 +842,41 @@ namespace CircuitSimulatorPlus
                     parent.Items.Add(menuItem);
                 }
             }
+        }
+
+        public void LoadContextGateFromResource(MenuItem parent, string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            Stream stream = assembly.GetManifestResourceStream(resourceName);
+            string[] parts = resourceName.Split('.');
+            string name = parts[parts.Length - 2];
+
+            MenuItem subMenu = parent;
+            for (int i = 2; i < parts.Length - 2; i++)
+            {
+                string menuName = StringToHeader(parts[i]);
+                MenuItem nextSubMenu = null;
+                foreach (MenuItem item in subMenu.Items)
+                {
+                    if ((string)item.Header == menuName)
+                    {
+                        nextSubMenu = item;
+                        break;
+                    }
+                }
+                if (nextSubMenu == null)
+                {
+                    nextSubMenu = new MenuItem();
+                    nextSubMenu.Header = menuName;
+                    subMenu.Items.Add(nextSubMenu);
+                }
+                subMenu = nextSubMenu;
+            }
+
+            var menuItem = new MenuItem();
+            menuItem.Header = StringToHeader(name);
+            menuItem.Click += new RoutedEventHandler((sender, e) => Import(stream));
+            subMenu.Items.Add(menuItem);
         }
 
         public void LoadTheme()

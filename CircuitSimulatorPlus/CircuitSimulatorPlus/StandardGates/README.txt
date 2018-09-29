@@ -1,0 +1,1 @@
+﻿For every file you add set the "Build Action"-Property to "Embedded Resource".
