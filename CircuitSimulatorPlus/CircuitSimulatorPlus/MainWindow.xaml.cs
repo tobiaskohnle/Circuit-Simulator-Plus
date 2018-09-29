@@ -1938,10 +1938,9 @@ namespace CircuitSimulatorPlus
 
         void Reload_Click(object sender, RoutedEventArgs e)
         {
-            SerializedGate state = GateSerializer.SerializeTopLayer(ContextGate, Cables);
-            ResetFile();
-            LoadState(state);
-            TickAll();
+            Save();
+            if (CurrentFilePath != null)
+                Open(CurrentFilePath);
         }
         void Restart_Click(object sender, RoutedEventArgs e)
         {
