@@ -1,0 +1,48 @@
+{
+  "Position": "0,0",
+  "Size": "3,4",
+  "Type": "ContextGate",
+  "Context": [
+    {
+      "Position": "2,2",
+      "Size": "2,2",
+      "Type": "InputSwitch",
+      "InputConnections": [],
+      "OutputConnections": [
+        0
+      ],
+      "CableEndPoints": []
+    },
+    {
+      "Position": "2,6",
+      "Size": "2,2",
+      "Type": "InputSwitch",
+      "InputConnections": [],
+      "OutputConnections": [
+        0
+      ],
+      "CableEndPoints": []
+    },
+    {
+      "Position": "2,12",
+      "Size": "2,2",
+      "Type": "InputSwitch",
+      "InputConnections": [],
+      "OutputConnections": [
+        0
+      ],
+      "CableEndPoints": []
+    },
+    {
+      "Position": "2,16",
+      "Size": "2,2",
+      "Type": "InputSwitch",
+      "InputConnections": [],
+      "OutputConnections": [
+        0
+      ],
+      "CableEndPoints": []
+    }
+  ],
+  "Cables": []
+}

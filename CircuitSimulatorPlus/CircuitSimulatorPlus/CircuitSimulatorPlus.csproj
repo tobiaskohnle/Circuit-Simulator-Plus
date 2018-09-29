@@ -174,7 +174,26 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EmbeddedResource Include="StandardGates\test\half_adder.tici" />
+    <EmbeddedResource Include="StandardGates\ff\d-ff.tici" />
+    <EmbeddedResource Include="StandardGates\ff\jk-ff.tici" />
+    <EmbeddedResource Include="StandardGates\ff\jk-ms-ff.tici" />
+    <EmbeddedResource Include="StandardGates\ff\jkc-ff.tici" />
+    <EmbeddedResource Include="StandardGates\ff\rs-ff.tici" />
+    <EmbeddedResource Include="StandardGates\ff\rsc-ff.tici" />
+    <EmbeddedResource Include="StandardGates\ff\t-ff.tici" />
+    <EmbeddedResource Include="StandardGates\util\2-bit-comp.tici" />
+    <EmbeddedResource Include="StandardGates\util\2-bit-full-adder.tici" />
+    <EmbeddedResource Include="StandardGates\util\3-xor.tici" />
+    <EmbeddedResource Include="StandardGates\util\4-bit-comp-2.tici" />
+    <EmbeddedResource Include="StandardGates\util\4-bit-comp-copy.tici" />
+    <EmbeddedResource Include="StandardGates\util\4-bit-comp.tici" />
+    <EmbeddedResource Include="StandardGates\util\4-bit-full-adder.tici" />
+    <EmbeddedResource Include="StandardGates\util\adder.tici" />
+    <EmbeddedResource Include="StandardGates\util\comp-c.tici" />
+    <EmbeddedResource Include="StandardGates\util\comp.tici" />
+    <EmbeddedResource Include="StandardGates\util\full-adder.tici" />
+    <EmbeddedResource Include="StandardGates\util\hex-to-segment-display.tici" />
+    <EmbeddedResource Include="StandardGates\util\xor.tici" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

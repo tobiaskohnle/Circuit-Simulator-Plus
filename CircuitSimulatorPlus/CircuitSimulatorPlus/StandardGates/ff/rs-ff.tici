@@ -1,0 +1,150 @@
+{
+  "Position": "0,0",
+  "Size": "3,4",
+  "Type": "ContextGate",
+  "Context": [
+    {
+      "Name": "R",
+      "Position": "4,4",
+      "Size": "2,2",
+      "Type": "InputSwitch",
+      "InputConnections": [],
+      "OutputConnections": [
+        1
+      ],
+      "CableEndPoints": []
+    },
+    {
+      "Name": "S",
+      "Position": "4,10",
+      "Size": "2,2",
+      "Type": "InputSwitch",
+      "InputConnections": [],
+      "OutputConnections": [
+        2
+      ],
+      "CableEndPoints": []
+    },
+    {
+      "Tag": "≥1",
+      "Position": "14,3",
+      "Size": "3,4",
+      "Type": "OrGate",
+      "InputConnections": [
+        1,
+        4
+      ],
+      "OutputConnections": [
+        3
+      ],
+      "InvertedOutputs": [
+        0
+      ],
+      "CableEndPoints": [
+        1,
+        2
+      ]
+    },
+    {
+      "Tag": "≥1",
+      "Position": "14,9",
+      "Size": "3,4",
+      "Type": "OrGate",
+      "InputConnections": [
+        3,
+        2
+      ],
+      "OutputConnections": [
+        4
+      ],
+      "InvertedOutputs": [
+        0
+      ],
+      "InitialActiveOutputs": [
+        0
+      ],
+      "CableEndPoints": [
+        3,
+        4
+      ]
+    },
+    {
+      "Position": "25,4",
+      "Size": "2,2",
+      "Type": "OutputLight",
+      "InputConnections": [
+        3
+      ],
+      "OutputConnections": [],
+      "CableEndPoints": [
+        5
+      ]
+    },
+    {
+      "Position": "25,10",
+      "Size": "2,2",
+      "Type": "OutputLight",
+      "InputConnections": [
+        3
+      ],
+      "OutputConnections": [],
+      "CableEndPoints": [
+        6
+      ]
+    }
+  ],
+  "Cables": [
+    {
+      "OutputConnection": 1,
+      "EndPoint": 1,
+      "Points": [
+        "10,3.5"
+      ]
+    },
+    {
+      "OutputConnection": 2,
+      "EndPoint": 4,
+      "Points": [
+        "10,11.5"
+      ]
+    },
+    {
+      "OutputConnection": 3,
+      "EndPoint": 3,
+      "Points": [
+        "18,8",
+        "11.5,8",
+        "13,8.5"
+      ]
+    },
+    {
+      "OutputConnection": 4,
+      "EndPoint": 2,
+      "Points": [
+        "18,16",
+        "7.5,14",
+        "12,10"
+      ]
+    },
+    {
+      "OutputConnection": 3,
+      "EndPoint": 5,
+      "Points": [
+        "21,5"
+      ]
+    },
+    {
+      "OutputConnection": 3,
+      "EndPoint": 6,
+      "Points": [
+        "21,10.5"
+      ]
+    }
+  ],
+  "InvertedOutputs": [
+    1
+  ],
+  "InitialActiveOutputs": [
+    1
+  ]
+}
