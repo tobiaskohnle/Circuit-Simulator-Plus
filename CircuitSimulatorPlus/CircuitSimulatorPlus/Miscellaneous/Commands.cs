@@ -268,20 +268,5 @@ namespace CircuitSimulatorPlus
             "Split Cable Segment", "SplitSegment", typeof(Commands)
         );
         #endregion
-
-        #region Context
-        public static RoutedUICommand ViewContext
-        {
-            get;
-        } = new RoutedUICommand(
-            "Open Context", "ViewContext", typeof(Commands)
-        );
-        public static RoutedUICommand ReloadContext
-        {
-            get;
-        } = new RoutedUICommand(
-            "Reload Context", "ReloadContext", typeof(Commands)
-        );
-        #endregion
     }
 }

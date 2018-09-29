@@ -82,11 +82,6 @@
                         Executed="ConnectAll_Click" CanExecute="ConnectAll_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.SplitSegment}"
                         Executed="SplitSegment_Click" CanExecute="SplitSegment_CanExecute"/>
-        
-        <CommandBinding Command="{x:Static local:Commands.ViewContext}"
-                        Executed="ViewContext_Click" CanExecute="ViewContext_CanExecute"/>
-        <CommandBinding Command="{x:Static local:Commands.ReloadContext}"
-                        Executed="ReloadContext_Click" CanExecute="ReloadContext_CanExecute"/>
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
@@ -122,8 +117,6 @@
             <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
             <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
             <MenuItem Command="{x:Static local:Commands.AddInput}"/>
-            <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
-            <MenuItem Command="{x:Static local:Commands.ViewContext}"/>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
@@ -153,7 +146,7 @@
                 <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
                 <MenuItem Command="{x:Static local:Commands.DeselectAll}"/>
             </MenuItem>
-            <MenuItem Header="View" Width="auto">
+            <MenuItem Header="0" Width="auto">
                 <MenuItem x:Name="showGrid" Header="Show Grid" IsCheckable="True" Checked="ShowGrid_Checked" Unchecked="ShowGrid_Unchecked"/>
                 <MenuItem Command="{x:Static local:Commands.ResetView}"/>
                 <MenuItem Header="Theme">
@@ -175,8 +168,6 @@
                 <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
                 <MenuItem Command="{x:Static local:Commands.AddInput}"/>
                 <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
-                <MenuItem Command="{x:Static local:Commands.ViewContext}"/>
-                <MenuItem Command="{x:Static local:Commands.ReloadContext}"/>
 
                 <MenuItem Command="{x:Static local:Commands.ConnectParallel}"/>
                 <MenuItem Command="{x:Static local:Commands.ConnectAll}"/>
