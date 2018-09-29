@@ -1642,14 +1642,27 @@ namespace CircuitSimulatorPlus
                 TickQueue();
             }
 
-            if (e.Key == Key.S)
-            {
-                SplitSegments();
-            }
-
             if (e.Key == Key.C)
             {
                 CreateCable();
+            }
+
+            if (e.Key == Key.I)
+            {
+                InvertConnection();
+            }
+
+            if (e.Key == Key.P)
+            {
+                ConnectParallel();
+            }
+            if (e.Key == Key.A)
+            {
+                ConnectAll();
+            }
+            if (e.Key == Key.S)
+            {
+                SplitSegments();
             }
         }
 
@@ -1964,21 +1977,20 @@ namespace CircuitSimulatorPlus
         {
             RemoveInputFromSelected();
         }
-        void TrimInput_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        void ConnectParallel_Click(object sender, RoutedEventArgs e)
+        void ConnectParallel_Click(object sender, ExecutedRoutedEventArgs e)
         {
             ConnectParallel();
         }
-        void ConnectAll_Click(object sender, RoutedEventArgs e)
+        void ConnectAll_Click(object sender, ExecutedRoutedEventArgs e)
         {
             ConnectAll();
         }
-        void SplitSegments_Click(object sender, RoutedEventArgs e)
+        void SplitSegment_Click(object sender, ExecutedRoutedEventArgs e)
         {
             SplitSegments();
+        }
+        void TrimInput_Click(object sender, RoutedEventArgs e)
+        {
         }
 
         void InvertConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -2008,6 +2020,18 @@ namespace CircuitSimulatorPlus
         void RemoveInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected<InputNode>() || AnySelected<Gate>();
+        }
+        void ConnectParallel_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<InputNode>() && AnySelected<OutputNode>();
+        }
+        void ConnectAll_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<InputNode>() && AnySelected<OutputNode>();
+        }
+        void SplitSegment_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<CableSegment>();
         }
 
         void ViewContext_Click(object sender, ExecutedRoutedEventArgs e)

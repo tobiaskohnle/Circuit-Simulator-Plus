@@ -242,6 +242,27 @@ namespace CircuitSimulatorPlus
         );
         #endregion
 
+        #region Cables
+        public static RoutedUICommand ConnectParallel
+        {
+            get;
+        } = new RoutedUICommand(
+            "Connect Parallel Nodes", "ConnectParallel", typeof(Commands)
+        );
+        public static RoutedUICommand ConnectAll
+        {
+            get;
+        } = new RoutedUICommand(
+            "Connect All Nodes", "ConnectAll", typeof(Commands)
+        );
+        public static RoutedUICommand SplitSegment
+        {
+            get;
+        } = new RoutedUICommand(
+            "Split Cable Segment", "SplitSegment", typeof(Commands)
+        );
+        #endregion
+
         #region Context
         public static RoutedUICommand ViewContext
         {

@@ -73,6 +73,13 @@
                         Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.RemoveInput}"
                         Executed="RemoveInput_Click" CanExecute="RemoveInput_CanExecute"/>
+
+        <CommandBinding Command="{x:Static local:Commands.ConnectParallel}"
+                        Executed="ConnectParallel_Click" CanExecute="ConnectParallel_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.ConnectAll}"
+                        Executed="ConnectAll_Click" CanExecute="ConnectAll_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.SplitSegment}"
+                        Executed="SplitSegment_Click" CanExecute="SplitSegment_CanExecute"/>
         
         <CommandBinding Command="{x:Static local:Commands.ViewContext}"
                         Executed="ViewContext_Click" CanExecute="ViewContext_CanExecute"/>
@@ -170,12 +177,10 @@
                 <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
                 <MenuItem Command="{x:Static local:Commands.ViewContext}"/>
                 <MenuItem Command="{x:Static local:Commands.ReloadContext}"/>
-                <MenuItem Header="Cables">
-                    <MenuItem Header="Connect Parallel" Click="ConnectParallel_Click"/>
-                    <MenuItem Header="Connect All" Click="ConnectAll_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Split Cable Segment" Click="SplitSegments_Click"/>
-                </MenuItem>
+
+                <MenuItem Command="{x:Static local:Commands.ConnectParallel}"/>
+                <MenuItem Command="{x:Static local:Commands.ConnectAll}"/>
+                <MenuItem Command="{x:Static local:Commands.SplitSegment}"/>
             </MenuItem>
             <MenuItem Header="About" Width="auto">
                 <MenuItem Header="Version" Click="Version_Click"/>
