@@ -1108,7 +1108,6 @@ namespace CircuitSimulatorPlus
                 }
             }
         }
-
         public void RemoveInputFromSelected()
         {
             bool stateSaved = false;
@@ -1147,6 +1146,25 @@ namespace CircuitSimulatorPlus
                             gate.RemoveInputNode();
                         }
                         Tick(gate);
+                    }
+                }
+            }
+        }
+        
+        public void SelectEmptyInput()
+        {
+            foreach (IClickable obj in SelectedObjects.ToList())
+            {
+                if (obj is Gate)
+                {
+                    Gate gate = obj as Gate;
+                    foreach (InputNode inputNode in gate.Input)
+                    {
+                        if (inputNode.IsEmpty && !inputNode.IsSelected)
+                        {
+                            Select(inputNode);
+                            break;
+                        }
                     }
                 }
             }
@@ -1652,6 +1670,11 @@ namespace CircuitSimulatorPlus
                 InvertConnection();
             }
 
+            if (e.Key == Key.N)
+            {
+                SelectEmptyInput();
+            }
+
             if (e.Key == Key.P)
             {
                 ConnectParallel();
@@ -1989,8 +2012,9 @@ namespace CircuitSimulatorPlus
         {
             SplitSegments();
         }
-        void TrimInput_Click(object sender, RoutedEventArgs e)
+        void SelectEmptyInput_Click(object sender, ExecutedRoutedEventArgs e)
         {
+            SelectEmptyInput();
         }
 
         void InvertConnection_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -2032,6 +2056,10 @@ namespace CircuitSimulatorPlus
         void SplitSegment_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected<CableSegment>();
+        }
+        void SelectEmptyInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<Gate>();
         }
 
         void ViewContext_Click(object sender, ExecutedRoutedEventArgs e)

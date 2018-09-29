@@ -240,6 +240,12 @@ namespace CircuitSimulatorPlus
                 new KeyGesture(Key.OemMinus, ModifierKeys.Control | ModifierKeys.Shift)
             }
         );
+        public static RoutedUICommand SelectEmptyInput
+        {
+            get;
+        } = new RoutedUICommand(
+            "Select Empty Input Node", "SelectEmptyInput", typeof(Commands)
+        );
         #endregion
 
         #region Cables

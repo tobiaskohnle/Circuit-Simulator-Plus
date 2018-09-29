@@ -73,6 +73,8 @@
                         Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.RemoveInput}"
                         Executed="RemoveInput_Click" CanExecute="RemoveInput_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.SelectEmptyInput}"
+                        Executed="SelectEmptyInput_Click" CanExecute="SelectEmptyInput_CanExecute"/>
 
         <CommandBinding Command="{x:Static local:Commands.ConnectParallel}"
                         Executed="ConnectParallel_Click" CanExecute="ConnectParallel_CanExecute"/>
@@ -119,11 +121,9 @@
             <MenuItem Command="{x:Static local:Commands.Rename}"/>
             <MenuItem Command="{x:Static local:Commands.InvertConnection}"/>
             <MenuItem Command="{x:Static local:Commands.ToggleButton}"/>
-            <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
             <MenuItem Command="{x:Static local:Commands.AddInput}"/>
             <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
             <MenuItem Command="{x:Static local:Commands.ViewContext}"/>
-            <MenuItem Command="{x:Static local:Commands.ReloadContext}"/>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
@@ -181,6 +181,8 @@
                 <MenuItem Command="{x:Static local:Commands.ConnectParallel}"/>
                 <MenuItem Command="{x:Static local:Commands.ConnectAll}"/>
                 <MenuItem Command="{x:Static local:Commands.SplitSegment}"/>
+                
+                <MenuItem Command="{x:Static local:Commands.SelectEmptyInput}"/>
             </MenuItem>
             <MenuItem Header="About" Width="auto">
                 <MenuItem Header="Version" Click="Version_Click"/>
