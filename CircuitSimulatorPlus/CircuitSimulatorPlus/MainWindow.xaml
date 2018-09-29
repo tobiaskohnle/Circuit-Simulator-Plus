@@ -146,7 +146,7 @@
                 <MenuItem Command="{x:Static local:Commands.SelectAll}"/>
                 <MenuItem Command="{x:Static local:Commands.DeselectAll}"/>
             </MenuItem>
-            <MenuItem Header="0" Width="auto">
+            <MenuItem Header="View" Width="auto">
                 <MenuItem x:Name="showGrid" Header="Show Grid" IsCheckable="True" Checked="ShowGrid_Checked" Unchecked="ShowGrid_Unchecked"/>
                 <MenuItem Command="{x:Static local:Commands.ResetView}"/>
                 <MenuItem Header="Theme">
