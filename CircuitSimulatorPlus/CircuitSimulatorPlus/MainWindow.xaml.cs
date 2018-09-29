@@ -795,19 +795,6 @@ namespace CircuitSimulatorPlus
 
         public void LoadContextGates()
         {
-            string dir = "context_gates";
-
-            string currentDirectory = Path.Combine(Environment.CurrentDirectory, dir);
-            string documents = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), dir);
-            string desktop = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dir);
-
-            if (Directory.Exists(currentDirectory))
-                LoadContextGates(contextMenu_contextGate, currentDirectory);
-            else if (Directory.Exists(documents))
-                LoadContextGates(contextMenu_contextGate, documents);
-            else if (Directory.Exists(desktop))
-                LoadContextGates(contextMenu_contextGate, desktop);
-
             var assembly = Assembly.GetExecutingAssembly();
             var standardResourceNames = new List<string>();
             foreach (string resourceName in assembly.GetManifestResourceNames())
@@ -820,6 +807,19 @@ namespace CircuitSimulatorPlus
             {
                 LoadContextGateFromResource(contextMenu_contextGate, resourceName);
             }
+
+            string dir = "context_gates";
+
+            string currentDirectory = Path.Combine(Environment.CurrentDirectory, dir);
+            string documents = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), dir);
+            string desktop = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dir);
+
+            if (Directory.Exists(currentDirectory))
+                LoadContextGates(contextMenu_contextGate, currentDirectory);
+            else if (Directory.Exists(documents))
+                LoadContextGates(contextMenu_contextGate, documents);
+            else if (Directory.Exists(desktop))
+                LoadContextGates(contextMenu_contextGate, desktop);
         }
 
         public void LoadContextGates(MenuItem parent, string path)
