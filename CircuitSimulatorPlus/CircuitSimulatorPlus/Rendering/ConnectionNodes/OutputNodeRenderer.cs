@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace CircuitSimulatorPlus
@@ -20,13 +21,15 @@ namespace CircuitSimulatorPlus
             horzMasterSlaveLine = new Line
             {
                 Stroke = MainWindow.Self.Theme.MainColor,
-                StrokeThickness = Constants.LineWidth
+                StrokeThickness = Constants.LineWidth,
+                StrokeStartLineCap = PenLineCap.Triangle
             };
             Panel.SetZIndex(horzMasterSlaveLine, 5);
             vertMasterSlaveLine = new Line
             {
                 Stroke = MainWindow.Self.Theme.MainColor,
-                StrokeThickness = Constants.LineWidth
+                StrokeThickness = Constants.LineWidth,
+                StrokeStartLineCap = PenLineCap.Triangle
             };
             Panel.SetZIndex(horzMasterSlaveLine, 5);
 
@@ -96,18 +99,19 @@ namespace CircuitSimulatorPlus
         public void OnPositionChanged()
         {
             double len = 0.75;
+            double dist = 0.4;
 
             horzMasterSlaveLine.Y1 = horzMasterSlaveLine.Y2 = outputNode.Position.Y - len / 2;
-            horzMasterSlaveLine.X1 = outputNode.Position.X - len;
-            horzMasterSlaveLine.X2 = outputNode.Position.X - len - len;
+            horzMasterSlaveLine.X1 = outputNode.Position.X - dist;
+            horzMasterSlaveLine.X2 = outputNode.Position.X - dist - len;
 
-            vertMasterSlaveLine.X1 = vertMasterSlaveLine.X2 = outputNode.Position.X - len;
+            vertMasterSlaveLine.X1 = vertMasterSlaveLine.X2 = outputNode.Position.X - dist;
             vertMasterSlaveLine.Y1 = outputNode.Position.Y - len / 2;
             vertMasterSlaveLine.Y2 = outputNode.Position.Y + len / 2;
 
             if (outputNode.IsMasterSlave)
             {
-                Canvas.SetLeft(nameLabel, outputNode.Position.X - len - len - nameLabel.Width);
+                Canvas.SetLeft(nameLabel, outputNode.Position.X - dist - len - nameLabel.Width);
             }
             else
             {
