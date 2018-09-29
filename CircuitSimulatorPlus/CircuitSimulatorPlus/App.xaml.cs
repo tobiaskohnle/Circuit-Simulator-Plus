@@ -5,7 +5,7 @@ namespace CircuitSimulatorPlus
 {
     public partial class App : Application
     {
-        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.Exception.ToString());
         }

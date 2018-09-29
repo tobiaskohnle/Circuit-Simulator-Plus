@@ -1977,7 +1977,8 @@ namespace CircuitSimulatorPlus
                 SelectedObjects.Count.ToString() + " / " + ClickableObjects.Count.ToString(),
                 "Selected / Total",
                 MessageBoxButton.OKCancel
-            ) == MessageBoxResult.Cancel) return;
+            ) == MessageBoxResult.Cancel)
+                return;
             foreach (IClickable obj in SelectedObjects)
             {
                 string msg = "";
