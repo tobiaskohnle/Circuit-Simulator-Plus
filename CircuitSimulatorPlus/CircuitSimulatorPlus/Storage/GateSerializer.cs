@@ -99,7 +99,6 @@ namespace CircuitSimulatorPlus
             {
                 var inputSwitch = new InputSwitch();
                 inputSwitch.Output.Add(new OutputNode(inputSwitch));
-                //inputSwitch.UpdateConnectionNodePos();
                 ConnectionNode contextNode = contextGate.Input[i];
                 ConnectionNode switchNode = inputSwitch.Output.First();
                 switchNode.NextConnectedTo = contextNode.NextConnectedTo;
@@ -129,15 +128,9 @@ namespace CircuitSimulatorPlus
                 int id;
                 var outputLight = new OutputLight();
                 outputLight.Input.Add(new InputNode(outputLight));
-                //outputLight.UpdateConnectionNodePos();
                 ConnectionNode contextNode = contextGate.Output[i];
-                if (nodeToId.ContainsKey(contextNode))
-                {
-                    id = nodeToId[contextNode];
-                    nodeToId.Remove(contextNode);
-                }
-                else
-                    id = 0;
+                id = nodeToId[contextNode];
+                nodeToId.Remove(contextNode);
                 ConnectionNode switchNode = outputLight.Input.First();
                 nodeToId[switchNode] = id;
                 outputLight.Position = new Point(1, i);
@@ -157,17 +150,12 @@ namespace CircuitSimulatorPlus
                 for (int i = 0; i < innerGate.Input.Count; i++)
                 {
                     ConnectionNode node = innerGate.Input[i];
-                    if (nodeToId.ContainsKey(node))
+                    innerStore.InputConnections[i] = nodeToId[node];
+                    if (cables != null)
                     {
-                        innerStore.InputConnections[i] = nodeToId[node];
-                        if (cables != null)
-                        {
-                            innerStore.CableEndPoints[i] = nextEp;
-                            nodeToCableEp[node] = nextEp++;
-                        }
+                        innerStore.CableEndPoints[i] = nextEp;
+                        nodeToCableEp[node] = nextEp++;
                     }
-                    else
-                        innerStore.InputConnections[i] = 0;
                     if (node.Name != null)
                     {
                         if (innerStore.InputLabels == null)
@@ -224,10 +212,8 @@ namespace CircuitSimulatorPlus
                     startNode = cable.EndNode;
                     cablestore.Points.Reverse();
                 }
-                if (nodeToId.ContainsKey(startNode))
-                    cablestore.OutputConnection = nodeToId[startNode];
-                if (nodeToCableEp.ContainsKey(endNode))
-                    cablestore.EndPoint = nodeToCableEp[endNode];
+                cablestore.OutputConnection = nodeToId[startNode];
+                cablestore.EndPoint = nodeToCableEp[endNode];
                 store.Cables.Add(cablestore);
             }
         }
@@ -298,8 +284,6 @@ namespace CircuitSimulatorPlus
 
             foreach (SerializedGate.Cable cablestore in storageObject.Cables)
             {
-                if (!idToNode.ContainsKey(cablestore.OutputConnection))
-                    continue;
                 ConnectionNode outputNode = idToNode[cablestore.OutputConnection];
                 ConnectionNode inputNode = cableEpToNode[cablestore.EndPoint];
                 Cable cable = new Cable(outputNode);
@@ -423,8 +407,6 @@ namespace CircuitSimulatorPlus
                             ConnectionNode otherNode = idToNode[id];
                             otherNode.NextConnectedTo.Add(thisNode);
                             thisNode.BackConnectedTo = otherNode;
-                            //otherNode.IsEmpty = false;
-                            //thisNode.IsEmpty = false;
                             thisNode.State = thisNode.IsInverted ? !otherNode.State : otherNode.State;
                         }
                     }
@@ -442,8 +424,6 @@ namespace CircuitSimulatorPlus
                         ConnectionNode otherNode = idToNode[id];
                         otherNode.NextConnectedTo.Add(contextNode);
                         contextNode.BackConnectedTo = otherNode;
-                        //otherNode.IsEmpty = false;
-                        //contextNode.IsEmpty = false;
                         contextNode.State = otherNode.State;
                     }
                 }
