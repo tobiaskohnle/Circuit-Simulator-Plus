@@ -11,7 +11,7 @@ namespace CircuitSimulatorPlus
             Input = gate.Input;
             foreach (InputNode input in Input)
                 input.Owner = this;
-            
+
             Output = gate.Output;
             foreach (OutputNode output in Output)
                 output.Owner = this;

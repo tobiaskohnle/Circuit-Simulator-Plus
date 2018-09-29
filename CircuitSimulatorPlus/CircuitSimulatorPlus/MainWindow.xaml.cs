@@ -747,7 +747,7 @@ namespace CircuitSimulatorPlus
             {
                 CurrentFilePath = dialog.FileName;
                 AddToRecentFiles(CurrentFilePath);
-                FileName = System.IO.Path.GetFileNameWithoutExtension(dialog.SafeFileName);
+                FileName = Path.GetFileNameWithoutExtension(dialog.SafeFileName);
                 StorageUtil.Save(CurrentFilePath, GateSerializer.SerializeTopLayer(ContextGate, Cables));
                 Saved = true;
                 UpdateTitle();
@@ -827,17 +827,17 @@ namespace CircuitSimulatorPlus
             foreach (string dir in Directory.EnumerateDirectories(path))
             {
                 var subMenu = new MenuItem();
-                subMenu.Header = StringToHeader(System.IO.Path.GetFileName(dir));
+                subMenu.Header = StringToHeader(Path.GetFileName(dir));
 
                 parent.Items.Add(subMenu);
                 LoadContextGates(subMenu, dir);
             }
             foreach (string dir in Directory.EnumerateFiles(path))
             {
-                if (System.IO.Path.GetExtension(dir) == Constants.FileExtention)
+                if (Path.GetExtension(dir) == Constants.FileExtention)
                 {
                     var menuItem = new MenuItem();
-                    menuItem.Header = StringToHeader(System.IO.Path.GetFileNameWithoutExtension(dir));
+                    menuItem.Header = StringToHeader(Path.GetFileNameWithoutExtension(dir));
                     menuItem.Click += new RoutedEventHandler((sender, e) => Import(dir));
                     parent.Items.Add(menuItem);
                 }
@@ -1767,7 +1767,7 @@ namespace CircuitSimulatorPlus
         {
             if (CurrentFilePath != null)
             {
-                Process.Start(System.IO.Path.GetDirectoryName(CurrentFilePath));
+                Process.Start(Path.GetDirectoryName(CurrentFilePath));
             }
         }
         void Save_Click(object sender, RoutedEventArgs e)
