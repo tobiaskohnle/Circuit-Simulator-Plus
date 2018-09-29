@@ -634,7 +634,7 @@ namespace CircuitSimulatorPlus
                 ResetView();
 
                 CurrentFilePath = filePath;
-                FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                FileName = Path.GetFileNameWithoutExtension(filePath);
                 Saved = true;
                 UpdateTitle();
 
@@ -767,6 +767,10 @@ namespace CircuitSimulatorPlus
             }
             Properties.Settings.Default.RecentFiles.Remove(filePath);
             Properties.Settings.Default.RecentFiles.Insert(0, filePath);
+            while (Properties.Settings.Default.RecentFiles.Count > Constants.MaxRecentFiles)
+            {
+                Properties.Settings.Default.RecentFiles.RemoveAt(Properties.Settings.Default.RecentFiles.Count - 1);
+            }
             Properties.Settings.Default.Save();
 
             CollectionViewSource.GetDefaultView(Properties.Settings.Default.RecentFiles).Refresh();
