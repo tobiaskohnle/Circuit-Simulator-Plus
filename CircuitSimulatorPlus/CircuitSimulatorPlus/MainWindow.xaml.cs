@@ -595,7 +595,13 @@ namespace CircuitSimulatorPlus
 
         public void ResetFile()
         {
-            ContextGate?.RemoveContext();
+            foreach (IClickable obj in ClickableObjects.ToList())
+            {
+                if (obj is Gate)
+                {
+                    (obj as Gate).Remove();
+                }
+            }
 
             foreach (Cable cable in Cables.ToList())
                 cable.Remove();
