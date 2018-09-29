@@ -122,7 +122,7 @@ namespace CircuitSimulatorPlus
             "Delete", "Delete", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.Delete),
+                new KeyGesture(Key.Delete, ModifierKeys.None, "Del"),
                 new KeyGesture(Key.Back)
             }
         );
@@ -227,7 +227,7 @@ namespace CircuitSimulatorPlus
             "Add Empty Input", "AddInput", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.OemPlus, ModifierKeys.Control | ModifierKeys.Shift)
+                new KeyGesture(Key.OemPlus, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift++")
             }
         );
         public static RoutedUICommand RemoveInput
@@ -237,14 +237,18 @@ namespace CircuitSimulatorPlus
             "Remove Input", "RemoveInput", typeof(Commands),
             new InputGestureCollection
             {
-                new KeyGesture(Key.OemMinus, ModifierKeys.Control | ModifierKeys.Shift)
+                new KeyGesture(Key.OemMinus, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+-")
             }
         );
         public static RoutedUICommand SelectEmptyInput
         {
             get;
         } = new RoutedUICommand(
-            "Select Empty Input Node", "SelectEmptyInput", typeof(Commands)
+            "Select Empty Input Node", "SelectEmptyInput", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.None, ModifierKeys.None, "N")
+            }
         );
         #endregion
 
@@ -253,19 +257,31 @@ namespace CircuitSimulatorPlus
         {
             get;
         } = new RoutedUICommand(
-            "Connect Parallel Nodes", "ConnectParallel", typeof(Commands)
+            "Connect Parallel Nodes", "ConnectParallel", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.None, ModifierKeys.None, "P")
+            }
         );
         public static RoutedUICommand ConnectAll
         {
             get;
         } = new RoutedUICommand(
-            "Connect All Nodes", "ConnectAll", typeof(Commands)
+            "Connect All Nodes", "ConnectAll", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.None, ModifierKeys.None, "A")
+            }
         );
         public static RoutedUICommand SplitSegment
         {
             get;
         } = new RoutedUICommand(
-            "Split Cable Segment", "SplitSegment", typeof(Commands)
+            "Split Cable Segment", "SplitSegment", typeof(Commands),
+            new InputGestureCollection
+            {
+                new KeyGesture(Key.None, ModifierKeys.None, "S")
+            }
         );
         #endregion
     }
