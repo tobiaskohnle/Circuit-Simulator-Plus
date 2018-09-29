@@ -1964,8 +1964,11 @@ namespace CircuitSimulatorPlus
         }
         void Info_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("SelectedObjects.Count: " + SelectedObjects.Count.ToString(), "",
-                MessageBoxButton.OKCancel) == MessageBoxResult.Cancel) return;
+            if (MessageBox.Show(
+                SelectedObjects.Count.ToString() + " / " + ClickableObjects.Count.ToString(),
+                "Selected / Total",
+                MessageBoxButton.OKCancel
+            ) == MessageBoxResult.Cancel) return;
             foreach (IClickable obj in SelectedObjects)
             {
                 string msg = "";
