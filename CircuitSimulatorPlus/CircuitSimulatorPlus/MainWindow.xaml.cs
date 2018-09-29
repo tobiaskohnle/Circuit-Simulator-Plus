@@ -346,30 +346,20 @@ namespace CircuitSimulatorPlus
                 {
                     string filePath = SelectFile();
                     if (filePath == "")
-                    {
                         return;
-                    }
-                    else
-                    {
-                        storageObject = StorageUtil.Load(filePath);
-                    }
+                    storageObject = StorageUtil.Load(filePath);
                 }
 
                 foreach (IClickable obj in SelectedObjects.ToList())
                 {
                     if (obj is Gate)
                     {
-                        var gate = obj as Gate;
-                        Gate newGate = null;
-
+                        Gate gate = obj as Gate;
+                        Gate newGate;
                         if (changeToContextGate)
-                        {
                             newGate = (ContextGate)GateSerializer.Deserialize(storageObject);
-                        }
                         else
-                        {
                             newGate = (Gate)Activator.CreateInstance(type);
-                        }
 
                         gate.Remove(false);
 
@@ -1237,6 +1227,38 @@ namespace CircuitSimulatorPlus
                 Select(gate);
             }
         }
+
+        public void ViewContext()
+        {
+            foreach (IClickable obj in SelectedObjects)
+            {
+                if (obj is ContextGate)
+                {
+                    var contextGate = obj as ContextGate;
+                    if (contextGate.FilePath != null)
+                    {
+                        SavePrompt();
+                        Open(contextGate.FilePath);
+                        return;
+                    }
+                }
+            }
+        }
+        public void ReloadContext()
+        {
+            if (AnySelected<ContextGate>())
+            {
+                SaveState();
+                foreach (IClickable obj in SelectedObjects)
+                {
+                    if (obj is ContextGate)
+                    {
+                        var contextGate = obj as ContextGate;
+
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Util
@@ -1986,6 +2008,24 @@ namespace CircuitSimulatorPlus
         void RemoveInput_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = AnySelected<InputNode>() || AnySelected<Gate>();
+        }
+
+        void ViewContext_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            ViewContext();
+        }
+        void ReloadContext_Click(object sender, ExecutedRoutedEventArgs e)
+        {
+            ReloadContext();
+        }
+
+        void ViewContext_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<ContextGate>();
+        }
+        void ReloadContext_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = AnySelected<ContextGate>();
         }
 
         void Version_Click(object sender, RoutedEventArgs e)

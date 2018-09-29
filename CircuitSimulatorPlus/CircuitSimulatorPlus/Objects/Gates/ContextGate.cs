@@ -37,6 +37,8 @@ namespace CircuitSimulatorPlus
             }
         }
 
+        public string FilePath;
+
         int minAmtInputNodes;
         int maxAmtInputNodes;
         int minAmtOutputNodes;

@@ -73,6 +73,11 @@
                         Executed="AddInput_Click" CanExecute="AddInput_CanExecute"/>
         <CommandBinding Command="{x:Static local:Commands.RemoveInput}"
                         Executed="RemoveInput_Click" CanExecute="RemoveInput_CanExecute"/>
+        
+        <CommandBinding Command="{x:Static local:Commands.ViewContext}"
+                        Executed="ViewContext_Click" CanExecute="ViewContext_CanExecute"/>
+        <CommandBinding Command="{x:Static local:Commands.ReloadContext}"
+                        Executed="ReloadContext_Click" CanExecute="ReloadContext_CanExecute"/>
     </Window.CommandBindings>
     <Window.ContextMenu>
         <ContextMenu>
@@ -110,6 +115,8 @@
             <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
             <MenuItem Command="{x:Static local:Commands.AddInput}"/>
             <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
+            <MenuItem Command="{x:Static local:Commands.ViewContext}"/>
+            <MenuItem Command="{x:Static local:Commands.ReloadContext}"/>
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
@@ -161,6 +168,8 @@
                 <MenuItem Command="{x:Static local:Commands.ToggleRisingEdge}"/>
                 <MenuItem Command="{x:Static local:Commands.AddInput}"/>
                 <MenuItem Command="{x:Static local:Commands.RemoveInput}"/>
+                <MenuItem Command="{x:Static local:Commands.ViewContext}"/>
+                <MenuItem Command="{x:Static local:Commands.ReloadContext}"/>
                 <MenuItem Header="Cables">
                     <MenuItem Header="Connect Parallel" Click="ConnectParallel_Click"/>
                     <MenuItem Header="Connect All" Click="ConnectAll_Click"/>
