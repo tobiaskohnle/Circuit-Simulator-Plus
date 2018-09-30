@@ -16,7 +16,8 @@ namespace CircuitSimulatorPlus
         public void CopyFrom(OutputNode outputNode, int index)
         {
             BackConnectedTo = outputNode.BackConnectedTo;
-            outputNode.BackConnectedTo.NextConnectedTo[index] = this;
+            if (index < outputNode.BackConnectedTo.NextConnectedTo.Count)
+                outputNode.BackConnectedTo.NextConnectedTo[index] = this;
 
             IsMasterSlave = outputNode.IsMasterSlave;
             base.CopyFrom(outputNode);
