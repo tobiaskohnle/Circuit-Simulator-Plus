@@ -1240,6 +1240,60 @@ namespace CircuitSimulatorPlus
                 Select(gate);
             }
         }
+
+        public void PrintDebugInfo()
+        {
+            if (MessageBox.Show(
+                SelectedObjects.Count.ToString() + " / " + ClickableObjects.Count.ToString(),
+                "Selected / Total",
+                MessageBoxButton.OKCancel
+            ) == MessageBoxResult.Cancel)
+                return;
+            foreach (IClickable obj in SelectedObjects)
+            {
+                string msg = "";
+                msg += $"Hash: {obj.GetHashCode()}\r\n";
+                if (obj is Gate)
+                {
+                    var gate = obj as Gate;
+                    msg += $"Position: {gate.Position}\r\n";
+                    msg += $"Size: {gate.Size}\r\n";
+                    msg += $"Tag: \"{gate.Tag}\"\r\n";
+                    msg += $"Name: \"{gate.Name}\"\r\n";
+                    msg += $"HasContext: {gate.HasContext}\r\n";
+                    msg += $"Min #Input: {gate.MinAmtInputNodes}\r\n";
+                    msg += $"Max #Input: {gate.MaxAmtInputNodes}\r\n";
+                    msg += $"Min #Output: {gate.MinAmtOutputNodes}\r\n";
+                    msg += $"Max #Output: {gate.MaxAmtOutputNodes}\r\n";
+                    msg += $"Input ({gate.Input.Count}): " +
+                        $"[{string.Join(", ", gate.Input.Select(input => input.GetHashCode()))}]\r\n";
+                    msg += $"Output ({gate.Output.Count}): " +
+                        $"[{string.Join(", ", gate.Output.Select(output => output.GetHashCode()))}]";
+                }
+                else if (obj is ConnectionNode)
+                {
+                    var node = obj as ConnectionNode;
+                    msg += $"Empty: {node.IsEmpty}\r\n";
+                    msg += $"Position: {node.Position}\r\n";
+                    msg += $"Name: \"{node.Name}\"\r\n";
+                    msg += $"Anchor: {node.CableAnchorPoint}\r\n";
+                    msg += $"Empty: {node.IsEmpty}\r\n";
+                    msg += $"Next ({node.NextConnectedTo.Count}): " +
+                        $"[{string.Join(", ", node.NextConnectedTo.Select(conn => conn.GetHashCode()))}]\r\n";
+                    msg += $"Back: {node.BackConnectedTo?.GetHashCode().ToString() ?? "null"}";
+                }
+                else if (obj is CableSegment)
+                {
+                    var seg = obj as CableSegment;
+                    msg += $"Index: {seg.Index}\r\n";
+                    msg += $"Position: {seg.Position}";
+                }
+                if (MessageBox.Show(msg, obj.GetType().FullName, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+            }
+        }
         #endregion
 
         #region Util
@@ -1649,6 +1703,11 @@ namespace CircuitSimulatorPlus
             if (e.Key == Key.S)
             {
                 SplitSegments();
+            }
+
+            if (e.Key == Key.D)
+            {
+                PrintDebugInfo();
             }
         }
 
@@ -2078,52 +2137,7 @@ namespace CircuitSimulatorPlus
         }
         void Info_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show(
-                SelectedObjects.Count.ToString() + " / " + ClickableObjects.Count.ToString(),
-                "Selected / Total",
-                MessageBoxButton.OKCancel
-            ) == MessageBoxResult.Cancel)
-                return;
-            foreach (IClickable obj in SelectedObjects)
-            {
-                string msg = "";
-                if (obj is Gate)
-                {
-                    var gate = obj as Gate;
-                    msg += $"Position: {gate.Position}\r\n";
-                    msg += $"Size: {gate.Size}\r\n";
-                    msg += $"Tag: \"{gate.Tag}\"\r\n";
-                    msg += $"Name: \"{gate.Name}\"\r\n";
-                    msg += $"HasContext: {gate.HasContext}\r\n";
-                    msg += $"Min #Input: {gate.MinAmtInputNodes}\r\n";
-                    msg += $"Max #Input: {gate.MaxAmtInputNodes}\r\n";
-                    msg += $"Min #Output: {gate.MinAmtOutputNodes}\r\n";
-                    msg += $"Max #Output: {gate.MaxAmtOutputNodes}\r\n";
-                    msg += $"#Input: {gate.Input.Count}\r\n";
-                    msg += $"#Output: {gate.Output.Count}";
-                }
-                else if (obj is ConnectionNode)
-                {
-                    var node = obj as ConnectionNode;
-                    msg += $"Empty: {node.IsEmpty}\r\n";
-                    msg += $"Position: {node.Position}\r\n";
-                    msg += $"Name: \"{node.Name}\"\r\n";
-                    msg += $"Anchor: {node.CableAnchorPoint}\r\n";
-                    msg += $"Empty: {node.IsEmpty}\r\n";
-                    msg += $"#Next: {node.NextConnectedTo.Count}\r\n";
-                    msg += $"Back: {node.BackConnectedTo?.ToString() ?? "null"}";
-                }
-                else if (obj is CableSegment)
-                {
-                    var seg = obj as CableSegment;
-                    msg += $"Index: {seg.Index}\r\n";
-                    msg += $"Position: {seg.Position}";
-                }
-                if (MessageBox.Show(msg, obj.GetType().FullName, MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
-                {
-                    return;
-                }
-            }
+            PrintDebugInfo();
         }
         void TickAll_Click(object sender, RoutedEventArgs e)
         {
