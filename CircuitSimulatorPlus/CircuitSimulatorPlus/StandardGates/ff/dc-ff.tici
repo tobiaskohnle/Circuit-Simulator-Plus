@@ -294,6 +294,9 @@
       ]
     }
   ],
+  "RisingEdgeInputs": [
+    1
+  ],
   "InvertedOutputs": [
     1
   ],
