@@ -19,8 +19,6 @@ namespace CircuitSimulatorPlus
             Add();
         }
 
-        public event Action OnPointsChanged;
-
         public event Action OnRenderedChanged;
         bool isRendered;
         public bool IsRendered
@@ -79,7 +77,6 @@ namespace CircuitSimulatorPlus
         public void Move(Vector vector)
         {
             Parent.MovePoint(Index, vector);
-            OnPointsChanged?.Invoke();
         }
 
         public void SplitSegment()

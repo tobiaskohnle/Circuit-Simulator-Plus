@@ -235,6 +235,11 @@ namespace CircuitSimulatorPlus
         }
         public void AddSegment(int index, Point point)
         {
+            if (startNode != null)
+                startNode.OnPositionChanged += OnPointsChanged;
+            if (endNode != null)
+                endNode.OnPositionChanged += OnPointsChanged;
+
             Points.Insert(index - 1, MainWindow.Self.Round(point, 0.5));
 
             Segments.Insert(index, new CableSegment(this, index));
@@ -246,6 +251,11 @@ namespace CircuitSimulatorPlus
         }
         public void AddSegment(Point point)
         {
+            if (startNode != null)
+                startNode.OnPositionChanged += OnPointsChanged;
+            if (endNode != null)
+                endNode.OnPositionChanged += OnPointsChanged;
+
             Points.Add(MainWindow.Self.Round(point, 0.5));
 
             Segments.Add(new CableSegment(this, Segments.Count));
