@@ -366,6 +366,9 @@ namespace CircuitSimulatorPlus
                         newGate.CopyFrom(gate);
                         newGate.UpdateAmtConnectionNodes();
 
+                        if (type == typeof(NopGate))
+                            newGate.Output[0].IsInverted = true;
+
                         newGate.Add(false);
 
                         Tick(newGate);
