@@ -12,6 +12,9 @@ namespace CircuitSimulatorPlus
         public void CopyFrom(InputNode inputNode)
         {
             NextConnectedTo = inputNode.NextConnectedTo;
+            foreach (ConnectionNode node in inputNode.NextConnectedTo)
+                node.BackConnectedTo = this;
+
             IsRisingEdge = inputNode.IsRisingEdge;
             base.CopyFrom(inputNode);
         }
