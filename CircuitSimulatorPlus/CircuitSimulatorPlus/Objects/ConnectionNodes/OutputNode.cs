@@ -13,11 +13,10 @@ namespace CircuitSimulatorPlus
             new OutputNodeRenderer(this);
         }
 
-        public void CopyFrom(OutputNode outputNode)
+        public void CopyFrom(OutputNode outputNode, int index)
         {
             BackConnectedTo = outputNode.BackConnectedTo;
-            outputNode.BackConnectedTo.NextConnectedTo.Clear();
-            outputNode.BackConnectedTo.NextConnectedTo.Add(this);
+            outputNode.BackConnectedTo.NextConnectedTo[index] = this;
 
             IsMasterSlave = outputNode.IsMasterSlave;
             base.CopyFrom(outputNode);
