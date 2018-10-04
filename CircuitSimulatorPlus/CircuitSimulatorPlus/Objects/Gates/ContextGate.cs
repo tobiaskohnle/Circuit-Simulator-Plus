@@ -33,7 +33,7 @@ namespace CircuitSimulatorPlus
             }
             for (int i = 0; i < Output.Count; i++)
             {
-                Output[i].CopyFrom(output[i], i);
+                Output[i].CopyFrom(output[i]);
             }
         }
 

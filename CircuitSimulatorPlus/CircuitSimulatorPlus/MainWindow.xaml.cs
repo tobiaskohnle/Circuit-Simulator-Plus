@@ -128,6 +128,17 @@ namespace CircuitSimulatorPlus
         }
         public void Tick(Gate gate)
         {
+            if (gate is ContextGate)
+            {
+                foreach (InputNode inputNode in gate.Input)
+                {
+                    Tick(inputNode);
+                }
+                foreach (Gate innerGate in (gate as ContextGate).Context)
+                {
+                    Tick(innerGate);
+                }
+            }
             foreach (OutputNode outputNode in gate.Output)
             {
                 Tick(outputNode);
