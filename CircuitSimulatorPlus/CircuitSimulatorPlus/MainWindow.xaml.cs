@@ -873,8 +873,9 @@ namespace CircuitSimulatorPlus
             }
 
             var menuItem = new MenuItem();
+            var importer = new ResourceImporter(this, resourceName);
             menuItem.Header = StringToHeader(name);
-            menuItem.Click += new RoutedEventHandler((sender, e) => Import(stream));
+            menuItem.Click += new RoutedEventHandler((sender, e) => importer.import());
             subMenu.Items.Add(menuItem);
         }
 

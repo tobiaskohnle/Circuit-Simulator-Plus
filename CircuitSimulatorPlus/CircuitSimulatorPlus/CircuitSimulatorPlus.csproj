@@ -118,6 +118,7 @@
     <Compile Include="Rendering\Gates\OutputLightRenderer.cs" />
     <Compile Include="Rendering\ConnectionNodes\OutputNodeRenderer.cs" />
     <Compile Include="Rendering\Gates\SegmentDisplayRenderer.cs" />
+    <Compile Include="ResourceImporter.cs" />
     <Compile Include="Storage\StorageUtility.cs" />
     <Compile Include="Storage\GateSerializer.cs" />
     <Compile Include="Storage\SerializedGate.cs" />
