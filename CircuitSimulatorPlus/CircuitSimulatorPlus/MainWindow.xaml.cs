@@ -845,8 +845,6 @@ namespace CircuitSimulatorPlus
 
         public void LoadContextGateFromResource(MenuItem parent, string resourceName)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream(resourceName);
             string[] parts = resourceName.Split('.');
             string name = parts[parts.Length - 2];
 
