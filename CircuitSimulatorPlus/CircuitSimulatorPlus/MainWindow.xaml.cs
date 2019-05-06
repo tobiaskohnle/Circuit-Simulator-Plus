@@ -1757,6 +1757,9 @@ namespace CircuitSimulatorPlus
         {
             Point at = new Point(e.ManipulationOrigin.X, e.ManipulationOrigin.Y);
             Zoom(e.DeltaManipulation.Scale.X, at);
+            Matrix matrix = canvas.RenderTransform.Value;
+            matrix.Translate(e.DeltaManipulation.Translation.X, e.DeltaManipulation.Translation.Y);
+            canvas.RenderTransform = new MatrixTransform(matrix);
         }
         void Window_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
